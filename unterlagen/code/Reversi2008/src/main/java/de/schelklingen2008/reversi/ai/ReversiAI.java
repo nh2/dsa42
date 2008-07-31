@@ -21,7 +21,8 @@ import de.schelklingen2008.reversi.model.Player;
 import de.schelklingen2008.reversi.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
-public class ReversiAI extends Observable {
+public class ReversiAI extends Observable
+{
 
     private static final Logger       sLogger       = LoggerFactory.create();
 
@@ -41,7 +42,8 @@ public class ReversiAI extends Observable {
 
     private final SharedStateListener stateListener = new SharedStateListener();
 
-    public ReversiAI(final GameContext gameContext, final SharedState sharedState, final GameEventListener listener) {
+    public ReversiAI(final GameContext gameContext, final SharedState sharedState, final GameEventListener listener)
+    {
         this.gameContext = gameContext;
         this.sharedState = sharedState;
         this.listener = listener;
@@ -51,7 +53,8 @@ public class ReversiAI extends Observable {
         sLogger.info("inited");
     }
 
-    public void gameChanged() {
+    public void gameChanged()
+    {
         if (sharedState == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
@@ -61,17 +64,20 @@ public class ReversiAI extends Observable {
         if (isFinished()) gameDidEnd();
     }
 
-    private boolean isFinished() {
+    private boolean isFinished()
+    {
         if (sharedState.state == GameObject.GAME_OVER) return true;
         if (sharedState.state == GameObject.CANCELLED) return true;
         return false;
     }
 
-    private GameModel getGameModel() {
+    private GameModel getGameModel()
+    {
         return gameContext.getGameModel();
     }
 
-    private void makeAMove() {
+    private void makeAMove()
+    {
         Piece move = strategy.move(getGameModel());
         if (move == null) return;
 
@@ -83,7 +89,8 @@ public class ReversiAI extends Observable {
      * Called when the game transitions to the <code>GAME_OVER</code> state. This happens when the game
      * reaches some end condition by normal means (is not cancelled or aborted).
      */
-    protected void gameDidEnd() {
+    protected void gameDidEnd()
+    {
         GameModel gameModel = getGameModel();
         Player me = gameContext.getMyPlayer();
 
@@ -119,34 +126,43 @@ public class ReversiAI extends Observable {
         listener.gameDidEnd();
     }
 
-    private void sleep(final long millis) {
-        try {
+    private void sleep(final long millis)
+    {
+        try
+        {
             Thread.sleep(millis);
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             sLogger.warning("sleep interrupted: " + e);
         }
     }
 
-    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener {
+    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener
+    {
 
-        public void attributeChanged(AttributeChangedEvent event) {
+        public void attributeChanged(AttributeChangedEvent event)
+        {
             gameChanged();
         }
 
-        public void elementUpdated(ElementUpdatedEvent event) {
+        public void elementUpdated(ElementUpdatedEvent event)
+        {
             gameChanged();
         }
 
-        public void entryAdded(EntryAddedEvent event) {
+        public void entryAdded(EntryAddedEvent event)
+        {
             gameChanged();
         }
 
-        public void entryRemoved(EntryRemovedEvent event) {
+        public void entryRemoved(EntryRemovedEvent event)
+        {
             gameChanged();
         }
 
-        public void entryUpdated(EntryUpdatedEvent event) {
+        public void entryUpdated(EntryUpdatedEvent event)
+        {
             gameChanged();
         }
     }

@@ -24,14 +24,15 @@ import de.schelklingen2008.reversi.model.Player;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
-    private static final AlphaComposite TRANSPARENCY_50_PERCENT = AlphaComposite.getInstance(
-            AlphaComposite.SRC_OVER, 0.5f);
 
-    private Controller controller;
+    private static final AlphaComposite TRANSPARENCY_50_PERCENT = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+                                                                                             0.5f);
+
+    private Controller                  controller;
 
     /** position of cursor piece */
-    private int cx = 0;
-    private int cy = 0;
+    private int                         cx                      = 0;
+    private int                         cy                      = 0;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -43,6 +44,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -52,6 +54,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -95,8 +98,7 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     public Dimension getPreferredSize()
     {
-        return new Dimension(GameModel.SIZE * Constants.SPRITE_SIZE + 1, GameModel.SIZE
-                * Constants.SPRITE_SIZE + 1);
+        return new Dimension(GameModel.SIZE * Constants.SPRITE_SIZE + 1, GameModel.SIZE * Constants.SPRITE_SIZE + 1);
     }
 
     @Override

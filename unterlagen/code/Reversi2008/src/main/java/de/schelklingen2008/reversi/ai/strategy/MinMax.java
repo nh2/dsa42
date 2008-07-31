@@ -1,10 +1,11 @@
 package de.schelklingen2008.reversi.ai.strategy;
 
-
-public enum MinMax {
+public enum MinMax
+{
     MIN, MAX;
 
-    public MinMax other() {
+    public MinMax other()
+    {
         return this == MAX ? MIN : MAX;
     }
 

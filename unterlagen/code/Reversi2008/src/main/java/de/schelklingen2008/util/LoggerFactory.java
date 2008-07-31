@@ -3,9 +3,9 @@ package de.schelklingen2008.util;
 import java.util.logging.Logger;
 
 /**
- * A factory for creating Log instances conveniently. By using this class it is no longer necessary
- * to provide a class when creating a Log instance.
- *
+ * A factory for creating Log instances conveniently. By using this class it is no longer necessary to provide
+ * a class when creating a Log instance.
+ * 
  * @author gwenz
  */
 public class LoggerFactory
@@ -19,9 +19,9 @@ public class LoggerFactory
     }
 
     /**
-     * Creates a commons logging Log instane. The log instance is initialized with the class calling
-     * this method.
-     *
+     * Creates a commons logging Log instane. The log instance is initialized with the class calling this
+     * method.
+     * 
      * @return A Logger instance.
      */
     public static Logger create()

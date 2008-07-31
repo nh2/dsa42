@@ -18,7 +18,7 @@ public class Manager extends GameManager
     private SharedState sharedState;
 
     /** Implements the game logic with an own internal model. */
-    private GameModel gameModel;
+    private GameModel   gameModel;
 
     @Override
     protected PlaceObject createPlaceObject()

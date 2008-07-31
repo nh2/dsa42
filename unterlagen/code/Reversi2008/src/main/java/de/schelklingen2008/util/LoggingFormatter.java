@@ -10,9 +10,9 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 public class LoggingFormatter extends Formatter
 {
 
-    private static final String LINE_SEP = System.getProperty("line.separator");
+    private static final String LINE_SEP      = System.getProperty("line.separator");
 
-    private MessageFormat dateFormatter = new MessageFormat("{0,time}");
+    private MessageFormat       dateFormatter = new MessageFormat("{0,time}");
 
     /**
      * Formats the given LogRecord.

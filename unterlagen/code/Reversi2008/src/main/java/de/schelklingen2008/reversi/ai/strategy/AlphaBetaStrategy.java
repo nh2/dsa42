@@ -10,7 +10,8 @@ import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
 
-public class AlphaBetaStrategy implements ReversiStrategy {
+public class AlphaBetaStrategy implements ReversiStrategy
+{
 
     private final EvaluationFunction evalFunction;
     private final int                depth;
@@ -18,18 +19,21 @@ public class AlphaBetaStrategy implements ReversiStrategy {
     private int                      count;
     private final boolean            randomMoveOnEqual;
 
-    public AlphaBetaStrategy(EvaluationFunction evalFunction, int depth, boolean randomMoveOnEqual) {
+    public AlphaBetaStrategy(EvaluationFunction evalFunction, int depth, boolean randomMoveOnEqual)
+    {
         this.evalFunction = evalFunction;
         this.depth = depth;
         this.randomMoveOnEqual = randomMoveOnEqual;
     }
 
-    public Piece move(GameModel gameModel) {
+    public Piece move(GameModel gameModel)
+    {
         count = 0;
         return alphaBeta(gameModel);
     }
 
-    private Piece alphaBeta(GameModel gameModel) {
+    private Piece alphaBeta(GameModel gameModel)
+    {
         if (!gameModel.hasLegalMoves()) return null;
 
         Player player = gameModel.getTurnHolder();
@@ -38,8 +42,10 @@ public class AlphaBetaStrategy implements ReversiStrategy {
         int bestWeight = Integer.MIN_VALUE;
 
         boolean[][] legalMoves = gameModel.getLegalMoves(player);
-        for (int i = 0; i < legalMoves.length; i++) {
-            for (int j = 0; j < legalMoves[i].length; j++) {
+        for (int i = 0; i < legalMoves.length; i++)
+        {
+            for (int j = 0; j < legalMoves[i].length; j++)
+            {
                 if (!legalMoves[i][j]) continue;
 
                 GameModel newGameModel = new GameModel(gameModel);
@@ -48,10 +54,12 @@ public class AlphaBetaStrategy implements ReversiStrategy {
                 int weight = minValue(newGameModel, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
                 System.out.println("(" + i + "," + j + ") = " + weight);
-                if (randomMoveOnEqual && weight == bestWeight && random.nextInt() % 2 == 0) {
+                if (randomMoveOnEqual && weight == bestWeight && random.nextInt() % 2 == 0)
+                {
                     bestMove = new Piece(i, j, player);
                 }
-                if (weight > bestWeight) {
+                if (weight > bestWeight)
+                {
                     bestWeight = weight;
                     bestMove = new Piece(i, j, player);
                 }
@@ -60,17 +68,21 @@ public class AlphaBetaStrategy implements ReversiStrategy {
         return bestMove;
     }
 
-    private int maxValue(GameModel gameModel, int depth, int alpha, int beta) {
+    private int maxValue(GameModel gameModel, int depth, int alpha, int beta)
+    {
         Player player = gameModel.getTurnHolder();
 
-        if (depth == 0 || !gameModel.hasLegalMoves()) {
+        if (depth == 0 || !gameModel.hasLegalMoves())
+        {
             count++;
             return evalFunction.evaluatePosition(gameModel, player);
         }
 
         boolean[][] legalMoves = gameModel.getLegalMoves(player);
-        for (int i = 0; i < legalMoves.length; i++) {
-            for (int j = 0; j < legalMoves[i].length; j++) {
+        for (int i = 0; i < legalMoves.length; i++)
+        {
+            for (int j = 0; j < legalMoves[i].length; j++)
+            {
                 if (!legalMoves[i][j]) continue;
 
                 GameModel newGameModel = new GameModel(gameModel);
@@ -83,17 +95,21 @@ public class AlphaBetaStrategy implements ReversiStrategy {
         return alpha;
     }
 
-    private int minValue(GameModel gameModel, int depth, int alpha, int beta) {
+    private int minValue(GameModel gameModel, int depth, int alpha, int beta)
+    {
         Player player = gameModel.getTurnHolder();
 
-        if (depth == 0 || !gameModel.hasLegalMoves()) {
+        if (depth == 0 || !gameModel.hasLegalMoves())
+        {
             count++;
             return evalFunction.evaluatePosition(gameModel, player);
         }
 
         boolean[][] legalMoves = gameModel.getLegalMoves(player);
-        for (int i = 0; i < legalMoves.length; i++) {
-            for (int j = 0; j < legalMoves[i].length; j++) {
+        for (int i = 0; i < legalMoves.length; i++)
+        {
+            for (int j = 0; j < legalMoves[i].length; j++)
+            {
                 if (!legalMoves[i][j]) continue;
 
                 GameModel newGameModel = new GameModel(gameModel);
@@ -107,11 +123,13 @@ public class AlphaBetaStrategy implements ReversiStrategy {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "AlphaBeta(" + evalFunction + ", " + depth + ")";
     }
 
-    public int getCount() {
+    public int getCount()
+    {
         return count;
     }
 

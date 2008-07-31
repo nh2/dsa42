@@ -16,7 +16,8 @@ import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
 /**
  * The launcher application for all ToyBox games.
  */
-public class AIToyBoxApp {
+public class AIToyBoxApp
+{
 
     // public static final ReversiStrategy REVERSI_STRATEGY = new MinimaxStrategy(new
     // CornerEvaluationFunction(), 6, false);
@@ -26,7 +27,8 @@ public class AIToyBoxApp {
 
     // public static final ReversiStrategy REVERSI_STRATEGY = new SimpleStrategy();
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception
+    {
         InputStream logCfg = AIToyBoxApp.class.getClassLoader().getResourceAsStream("logging.properties");
         LogManager.getLogManager().readConfiguration(logCfg);
         String strategyName = REVERSI_STRATEGY.toString();

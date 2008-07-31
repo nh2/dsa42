@@ -32,23 +32,23 @@ import de.schelklingen2008.util.LoggerFactory;
 public class AIDirector implements GameEventListener
 {
 
-    private static final String AI_PREFIX = "cc";
+    private static final String AI_PREFIX       = "cc";
 
-    private static final Logger sLogger = LoggerFactory.create();
+    private static final Logger sLogger         = LoggerFactory.create();
 
     private static final String TOYBOX_SERVICES = "toybox";
-    private static final String CHAT_SERVICES = "crowd";
+    private static final String CHAT_SERVICES   = "crowd";
     private static final String PARLOR_SERVICES = "parlor";
 
-    private static final int GAME_ID = -1;
+    private static final int    GAME_ID         = -1;
 
-    private final Client mClient;
+    private final Client        mClient;
 
-    private ToyBoxGameConfig mGameConfig;
+    private ToyBoxGameConfig    mGameConfig;
 
-    private LobbyObject mLobby;
+    private LobbyObject         mLobby;
 
-    private int mTableId;
+    private int                 mTableId;
 
     public AIDirector(final Client pClient)
     {
@@ -105,8 +105,7 @@ public class AIDirector implements GameEventListener
         Table table = getFirstComputerTable();
         if (table == null)
         {
-            getTableService().createTable(mClient, createTableCfg(), mGameConfig,
-                    CREATE_TABLE_LISTENER);
+            getTableService().createTable(mClient, createTableCfg(), mGameConfig, CREATE_TABLE_LISTENER);
         }
         else
         {
@@ -216,132 +215,152 @@ public class AIDirector implements GameEventListener
         return mClient.getDObjectManager();
     }
 
-    private final ToyBoxService.ResultListener GET_LOBBY_ID_LISTENER = new ToyBoxService.ResultListener()
-    {
+    private final ToyBoxService.ResultListener     GET_LOBBY_ID_LISTENER         = new ToyBoxService.ResultListener()
+                                                                                 {
 
-        public void requestProcessed(final Object result)
-        {
-            gotLobbyOid((Integer) result);
-        }
+                                                                                     public void requestProcessed(final Object result)
+                                                                                     {
+                                                                                         gotLobbyOid((Integer) result);
+                                                                                     }
 
-        public void requestFailed(final String cause)
-        {
-            sLogger.warning("Failed to get lobby oid [error=" + cause + "].");
-        }
-    };
+                                                                                     public void requestFailed(final String cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to get lobby oid [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
+                                                                                 };
 
-    private final LocationService.MoveListener MOVE_TO_LOBBY_LISTENER = new LocationService.MoveListener()
-    {
+    private final LocationService.MoveListener     MOVE_TO_LOBBY_LISTENER        = new LocationService.MoveListener()
+                                                                                 {
 
-        public void moveSucceeded(final PlaceConfig config)
-        {
-            movedToLobby((LobbyConfig) config);
-        }
+                                                                                     public void moveSucceeded(final PlaceConfig config)
+                                                                                     {
+                                                                                         movedToLobby((LobbyConfig) config);
+                                                                                     }
 
-        public void requestFailed(final String cause)
-        {
-            sLogger.warning("Failed to move to lobby [error=" + cause + "].");
-        }
-    };
-    private final LocationService.MoveListener MOVE_TO_GAME_LISTENER = new LocationService.MoveListener()
-    {
+                                                                                     public void requestFailed(final String cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to move to lobby [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
+                                                                                 };
+    private final LocationService.MoveListener     MOVE_TO_GAME_LISTENER         = new LocationService.MoveListener()
+                                                                                 {
 
-        public void moveSucceeded(final PlaceConfig config)
-        {
-            movedToGame((ToyBoxGameConfig) config);
-        }
+                                                                                     public void moveSucceeded(final PlaceConfig config)
+                                                                                     {
+                                                                                         movedToGame((ToyBoxGameConfig) config);
+                                                                                     }
 
-        public void requestFailed(final String cause)
-        {
-            sLogger.warning("Failed to move to game [error=" + cause + "].");
-        }
-    };
-    private final Subscriber<LobbyObject> SUBSCRIBE_TO_LOBBY_LISTENER = new Subscriber<LobbyObject>()
-    {
+                                                                                     public void requestFailed(final String cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to move to game [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
+                                                                                 };
+    private final Subscriber<LobbyObject>          SUBSCRIBE_TO_LOBBY_LISTENER   = new Subscriber<LobbyObject>()
+                                                                                 {
 
-        public void objectAvailable(final LobbyObject lobby)
-        {
-            subscribedToLobby(lobby);
-        }
+                                                                                     public void objectAvailable(final LobbyObject lobby)
+                                                                                     {
+                                                                                         subscribedToLobby(lobby);
+                                                                                     }
 
-        public void requestFailed(final int oid, final ObjectAccessException cause)
-        {
-            sLogger.warning("Failed to subscribe to lobby [error=" + cause + "].");
-        }
+                                                                                     public void requestFailed(final int oid,
+                                                                                                               final ObjectAccessException cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to subscribe to lobby [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
 
-    };
+                                                                                 };
 
-    private final Subscriber<SharedState> SUBSCRIBE_TO_REVERSI_LISTENER = new Subscriber<SharedState>()
-    {
+    private final Subscriber<SharedState>          SUBSCRIBE_TO_REVERSI_LISTENER = new Subscriber<SharedState>()
+                                                                                 {
 
-        public void objectAvailable(final SharedState sharedState)
-        {
-            subscribedToReversi(sharedState);
-        }
+                                                                                     public void objectAvailable(final SharedState sharedState)
+                                                                                     {
+                                                                                         subscribedToReversi(sharedState);
+                                                                                     }
 
-        public void requestFailed(final int oid, final ObjectAccessException cause)
-        {
-            sLogger.warning("Failed to subscribe to reversi [error=" + cause + "].");
-        }
-    };
+                                                                                     public void requestFailed(final int oid,
+                                                                                                               final ObjectAccessException cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to subscribe to reversi [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
+                                                                                 };
 
-    private final InvocationService.ResultListener CREATE_TABLE_LISTENER = new InvocationService.ResultListener()
-    {
+    private final InvocationService.ResultListener CREATE_TABLE_LISTENER         = new InvocationService.ResultListener()
+                                                                                 {
 
-        public void requestProcessed(final Object result)
-        {
-            createdTable((Integer) result);
-        }
+                                                                                     public void requestProcessed(final Object result)
+                                                                                     {
+                                                                                         createdTable((Integer) result);
+                                                                                     }
 
-        public void requestFailed(final String cause)
-        {
-            sLogger.warning("Failed to create lobby [error=" + cause + "].");
-        }
-    };
+                                                                                     public void requestFailed(final String cause)
+                                                                                     {
+                                                                                         sLogger.warning("Failed to create lobby [error="
+                                                                                                         + cause
+                                                                                                         + "].");
+                                                                                     }
+                                                                                 };
 
-    private final ClientAdapter CLIENT_ADAPTER = new ClientAdapter()
-    {
+    private final ClientAdapter                    CLIENT_ADAPTER                = new ClientAdapter()
+                                                                                 {
 
-        @Override
-        public void clientDidLogon(final Client client)
-        {
-            didLogon();
-        }
+                                                                                     @Override
+                                                                                     public void clientDidLogon(final Client client)
+                                                                                     {
+                                                                                         didLogon();
+                                                                                     }
 
-        @Override
-        public void clientFailedToLogon(final Client c, final Exception cause)
-        {
-            sLogger.warning("Client failed to logon: " + cause);
-            System.exit(0);
-        }
+                                                                                     @Override
+                                                                                     public void clientFailedToLogon(final Client c,
+                                                                                                                     final Exception cause)
+                                                                                     {
+                                                                                         sLogger.warning("Client failed to logon: "
+                                                                                                         + cause);
+                                                                                         System.exit(0);
+                                                                                     }
 
-        @Override
-        public void clientDidLogoff(final Client c)
-        {
-            sLogger.info("Client logged off.");
-            System.exit(0);
-        }
-    };
+                                                                                     @Override
+                                                                                     public void clientDidLogoff(final Client c)
+                                                                                     {
+                                                                                         sLogger.info("Client logged off.");
+                                                                                         System.exit(0);
+                                                                                     }
+                                                                                 };
 
-    private final ParlorReceiver PARLOR_RECEIVER = new ParlorReceiver()
-    {
+    private final ParlorReceiver                   PARLOR_RECEIVER               = new ParlorReceiver()
+                                                                                 {
 
-        public void gameIsReady(final int gameOid)
-        {
-            startedGame(gameOid);
-        }
+                                                                                     public void gameIsReady(final int gameOid)
+                                                                                     {
+                                                                                         startedGame(gameOid);
+                                                                                     }
 
-        public void receivedInvite(final int remoteId, final Name inviter, final GameConfig config)
-        {
-        }
+                                                                                     public void receivedInvite(final int remoteId,
+                                                                                                                final Name inviter,
+                                                                                                                final GameConfig config)
+                                                                                     {
+                                                                                     }
 
-        public void receivedInviteCancellation(final int remoteId)
-        {
-        }
+                                                                                     public void receivedInviteCancellation(final int remoteId)
+                                                                                     {
+                                                                                     }
 
-        public void receivedInviteResponse(final int remoteId, final int code, final Object arg)
-        {
-        }
+                                                                                     public void receivedInviteResponse(final int remoteId,
+                                                                                                                        final int code,
+                                                                                                                        final Object arg)
+                                                                                     {
+                                                                                     }
 
-    };
+                                                                                 };
 }

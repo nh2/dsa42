@@ -4,12 +4,15 @@ import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
 
-public class SimpleStrategy implements ReversiStrategy {
+public class SimpleStrategy implements ReversiStrategy
+{
 
-    public SimpleStrategy() {
+    public SimpleStrategy()
+    {
     }
 
-    public Piece move(final GameModel gameModel) {
+    public Piece move(final GameModel gameModel)
+    {
         Player player = gameModel.getTurnHolder();
 
         boolean[][] legalMoves = gameModel.getLegalMoves(player);
@@ -21,11 +24,13 @@ public class SimpleStrategy implements ReversiStrategy {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Simple";
     }
 
-    public int getCount() {
+    public int getCount()
+    {
         return 1;
     }
 

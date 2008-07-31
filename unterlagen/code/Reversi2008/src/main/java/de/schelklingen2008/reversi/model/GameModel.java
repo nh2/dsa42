@@ -5,23 +5,24 @@ package de.schelklingen2008.reversi.model;
  */
 public class GameModel
 {
-    public static final int SIZE = 8;
 
-    private static final Player PLAYER_START = Player.WHITE;
+    public static final int       SIZE             = 8;
+
+    private static final Player   PLAYER_START     = Player.WHITE;
 
     /** The initial set of pieces. */
-    private static final int[] SX = { 3, 3, 4, 4 };
-    private static final int[] SY = { 3, 4, 3, 4 };
-    private static final Player[] SO = { Player.BLACK, Player.WHITE, Player.WHITE, Player.BLACK };
-    private static final int STARTERS_COUNT = SX.length;
+    private static final int[]    SX               = { 3, 3, 4, 4 };
+    private static final int[]    SY               = { 3, 4, 3, 4 };
+    private static final Player[] SO               = { Player.BLACK, Player.WHITE, Player.WHITE, Player.BLACK };
+    private static final int      STARTERS_COUNT   = SX.length;
 
     /** The eight directions NW, N, NE, E, SE, S, SW, W. */
-    private static final int[] DX = { -1, -1, -1, 0, 1, 1, 1, 0 };
-    private static final int[] DY = { -1, 0, 1, 1, 1, 0, -1, -1 };
-    private static final int DIRECTIONS_COUNT = DX.length;
+    private static final int[]    DX               = { -1, -1, -1, 0, 1, 1, 1, 0 };
+    private static final int[]    DY               = { -1, 0, 1, 1, 1, 0, -1, -1 };
+    private static final int      DIRECTIONS_COUNT = DX.length;
 
-    private Player[][] board;
-    private Player turnHolder;
+    private Player[][]            board;
+    private Player                turnHolder;
 
     public GameModel()
     {

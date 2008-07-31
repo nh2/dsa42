@@ -9,22 +9,22 @@ import de.schelklingen2008.reversi.model.Player;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
- * Provides all necessary game information. On top of the game model it adds information on player
- * names and on which player corresponds to the client the context is used in.
+ * Provides all necessary game information. On top of the game model it adds information on player names and
+ * on which player corresponds to the client the context is used in.
  */
 public class GameContext
 {
-    private static final Logger sLogger = LoggerFactory.create();
+
+    private static final Logger sLogger     = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel gameModel = new GameModel();
+    private GameModel           gameModel   = new GameModel();
 
     /** Is the name of the player playing in this client. */
-    private String myName;
+    private String              myName;
 
     /** Provides a name for each player in the game. */
     private Map<Player, String> playerNames = new HashMap<Player, String>();
-
 
     public String getName(Player player)
     {

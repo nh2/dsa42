@@ -3,7 +3,8 @@ package de.schelklingen2008.reversi.ai.strategy;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 
-public interface ReversiStrategy {
+public interface ReversiStrategy
+{
 
     /** Requests a move from a strategy. */
     Piece move(GameModel gameModel);

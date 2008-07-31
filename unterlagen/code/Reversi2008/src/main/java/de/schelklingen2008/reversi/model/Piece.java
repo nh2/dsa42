@@ -5,8 +5,9 @@ package de.schelklingen2008.reversi.model;
  */
 public class Piece
 {
-    private int x;
-    private int y;
+
+    private int    x;
+    private int    y;
     private Player player;
 
     public Piece(Piece piece)
