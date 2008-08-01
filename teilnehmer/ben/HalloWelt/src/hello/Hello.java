@@ -7,18 +7,8 @@ import java.io.InputStreamReader;
 public class Hello
 {
 
-    String hello;
-    String name;
-
     public Hello()
     {
-        name = "Hans";
-    }
-
-    public void hello(String a) throws IOException
-    {
-        String hello = "a";
-        System.out.println(hello);
     }
 
     public void hello() throws IOException
