@@ -1,4 +1,4 @@
-//hi du nochmal ;) :-)
+//hallo zurück
 public class FibKaputt
 {
 
