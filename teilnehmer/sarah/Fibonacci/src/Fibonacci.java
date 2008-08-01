@@ -3,8 +3,7 @@ public class Fibonacci
 
     public static int fib(int number)
     {
-        if (number == 0)
-        ;
+
         if (number == 1 || number == 2)
             return 1;
 
