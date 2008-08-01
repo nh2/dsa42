@@ -13,7 +13,7 @@ public class Hello
 
     public void hello() throws IOException
     {
-        System.out.println("Hallo supertolle Welt!!");
+        System.out.println("Hallo super supertolle Welt!!");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String name = br.readLine();
         System.out.println("Hallo " + name);
