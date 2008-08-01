@@ -24,9 +24,9 @@ public class Fibonacci
 
     private void print(int n)
     {
-        if (n < 0)
+        if (n <= 0)
         {
-            System.err.println("Keine negativen Zahlen!");
+            throw new IllegalArgumentExeption("Keine negativen Zahlen!");
         }
         else
         {
