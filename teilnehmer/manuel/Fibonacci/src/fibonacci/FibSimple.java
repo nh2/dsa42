@@ -4,8 +4,39 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main
+public class FibSimple
 {
+
+    public static int fibonacci(int n)
+    {
+
+        if (n < 1)
+        {
+            throw new IllegalArgumentException(String.format("Illegal argument: %d", n));
+        }
+        if (n < 3)
+        {
+
+            return 1;
+
+        }
+        else
+        {
+
+            int last = 2, lastButOne = 1;
+
+            for (int i = 3; i < n; i++)
+            {
+                int tmp = last + lastButOne;
+                lastButOne = last;
+                last = tmp;
+            }
+
+            return last;
+
+        }
+
+    }
 
     private static String tryReadLine(BufferedReader br)
     {
@@ -38,7 +69,7 @@ public class Main
             try
             {
                 int n = Integer.parseInt(input);
-                System.out.println(Fibonacci.fibonacci(n));
+                System.out.println(fibonacci(n));
             }
             catch (NumberFormatException e)
             {
