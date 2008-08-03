@@ -1,0 +1,17 @@
+Spezifikation
+
+Spieler
+ Name
+ Geld
+ Position
+ 
+Spiel
+ Runde
+ Kartenverteilung
+ (Blinds) Grundeinsatz
+ Dealer
+ 
+Runde
+ Wer ist dran?
+ Pot
+ 
