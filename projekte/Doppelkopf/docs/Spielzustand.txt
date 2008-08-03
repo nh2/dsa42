@@ -1,0 +1,24 @@
+Dinge:
+Tisch
+-Vier Spieler
+--Karten (nur die eigenen offen)
+--Ablagestapel
+-Platz in der Mitte
+--Vier Kartenplätze
+
+Karte
+--Farbe/Zahl
+--Wertigkeit
+--Aussehen
+
+Merken:
+Für das aktuelle Spiel:
+*wer ist an der Reihe/Rauskommen
+*Plätze/Reihenfolge der Spieler
+*Anzahl der Stiche
+
+Für die ganze Runde:
+*Mischen
+*Punktestand/Ergebnisliste
+*ob ein Spiel läuft
+*ob die Runde vorbei ist (+Gewinner)
