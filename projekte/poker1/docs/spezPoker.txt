@@ -15,3 +15,17 @@ Runde
  Wer ist dran?
  Pot
  
+Spielphasen
+ Blinds (Einsätze)
+ Karten verteilen (Spieler)
+ 1. Setzphase
+ Flop (3 karten -> Mitte)
+ 2. Setzphase
+ Turn (1 Karte -> Mitte)
+ 3. Setzphase
+ River (1 Karte -> Mitte)
+ 4. Setzphase
+ Sieger ermitteln
+ Pot Sieger gutschreiben
+ 
+ 
