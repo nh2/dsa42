@@ -1,10 +1,15 @@
 package de.schelklingen2008.billiards.model;
 
+import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
+import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+
+import de.schelklingen2008.billiards.util.Vector2d;
 
 /**
  * Maintains the rules and the state of the game.
@@ -55,10 +60,10 @@ public class GameModel
 
     }
 
-    public int getPlayerScore(int player)
+    public Player getPlayer(int id)
     {
 
-        return players[player].getScore();
+        return players[id];
 
     }
 
@@ -86,7 +91,7 @@ public class GameModel
         }
 
         double remainingTime = deltaT;
-        boolean collisionHappened = false;
+        boolean collisionHappened;
 
         final double EPSILON = 0.000001;
 
@@ -106,6 +111,7 @@ public class GameModel
                 if (Double.isNaN(tCollision) || !Double.isNaN(wallCollisionTime) || wallCollisionTime < tCollision)
                 {
                     tCollision = wallCollisionTime;
+                    ball1 = ballsOnTable.get(i);
                     isWallCollision = true;
                 }
 
@@ -154,6 +160,36 @@ public class GameModel
 
     private void handleCollision(double tCollision, Ball ball1, Ball ball2, boolean isWallCollision)
     {
+
+        final double EPSILON = 0.000001;
+
+        if (isWallCollision)
+        {
+            if (ball1.getPosition().getX() < EPSILON || ball1.getPosition().getX() >= MAX_X - EPSILON)
+            {
+                ball1.setVelocity(new Vector2d(-ball1.getVelocity().getX(), ball1.getVelocity().getY()));
+            }
+            else if (ball1.getPosition().getX() < EPSILON || ball1.getPosition().getY() >= MAX_Y - EPSILON)
+            {
+                ball1.setVelocity(new Vector2d(ball1.getVelocity().getX(), -ball1.getVelocity().getY()));
+            }
+        }
+        else
+        {
+
+            double alpha = ball1.getPosition().subtract(ball2.getPosition()).getAngle();
+
+            Vector2d v1 = ball1.getVelocity().rotate(alpha);
+            Vector2d v2 = ball2.getVelocity().rotate(alpha);
+
+            double tmp = v1.getX();
+            v1 = new Vector2d(v2.getX(), v1.getY());
+            v2 = new Vector2d(tmp, v2.getY());
+
+            ball1.setVelocity(v2.rotate(-alpha));
+            ball2.setVelocity(v2.rotate(-alpha));
+
+        }
 
     }
 
