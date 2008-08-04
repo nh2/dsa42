@@ -1,5 +1,7 @@
 package de.schelklingen2008.billiards.client.view;
 
+import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
+import de.schelklingen2008.billiards.model.Ball;
 import de.schelklingen2008.billiards.model.GameModel;
 
 /**
@@ -19,6 +22,7 @@ import de.schelklingen2008.billiards.model.GameModel;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     /**
@@ -31,6 +35,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -40,6 +45,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -62,7 +68,7 @@ public class BoardView extends JPanel implements GameChangeListener
     public Dimension getPreferredSize()
     {
         // TODO calculate correct dimensions for the board view
-        return new Dimension(0, 0);
+        return new Dimension(800, 400);
     }
 
     @Override
@@ -80,6 +86,18 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBoard(Graphics2D gfx)
     {
+
+        GameModel gameModel = getGameModel();
+
+        for (Ball ball : gameModel.getBallsOnTable())
+        {
+            gfx.setBackground(ball.getColor());
+            gfx.fillOval((int) Math.round(ball.getPosition().getX() - BALL_RADIUS), (int) Math.round(ball.getPosition()
+                                                                                                         .getY()
+                                                                                                     - BALL_RADIUS),
+                         (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
+        }
+
     }
 
     public void gameChanged()

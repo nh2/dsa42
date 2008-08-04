@@ -2,6 +2,7 @@ package de.schelklingen2008.billiards.model;
 
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
+import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -24,8 +25,28 @@ public class GameModel
     private Collection<Ball> balls        = new LinkedList<Ball>();
     private List<Ball>       ballsOnTable = new ArrayList<Ball>();
 
+    public boolean isInMotion()
+    {
+        return inMotion;
+    }
+
+    public Collection<Ball> getBalls()
+    {
+        return balls;
+    }
+
+    public List<Ball> getBallsOnTable()
+    {
+        return ballsOnTable;
+    }
+
     public GameModel()
     {
+
+        for (int i = 0; i < PLAYERS; i++)
+        {
+            players[i] = new Player(i);
+        }
 
         balls.add(new Ball(Ball.BallType.WHITE, Color.WHITE));
         balls.add(new Ball(Ball.BallType.BLACK, Color.BLACK));
