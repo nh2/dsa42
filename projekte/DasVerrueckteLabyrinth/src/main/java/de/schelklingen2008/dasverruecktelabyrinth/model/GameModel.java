@@ -1,6 +1,8 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,40 @@ public class GameModel
 
     Map<PlayerType, Player>         player       = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>    playerTypes  = new HashMap<PlayerType, PlayerCards>();
+
+    public GameModel()
+    {
+        clear();
+        init();
+    }
+
+    private void init()
+    {
+
+    }
+
+    private List<Tile> generateTiles()
+    {
+
+        List<Tile> temp = new ArrayList<Tile>();
+
+        return temp;
+    }
+
+    private void setUnmoveable(Tile[][] pBoard)
+    {
+
+    }
+
+    private void placePlayer()
+    {
+
+    }
+
+    private void clear()
+    {
+
+    }
 
     public boolean isFinished()
     {

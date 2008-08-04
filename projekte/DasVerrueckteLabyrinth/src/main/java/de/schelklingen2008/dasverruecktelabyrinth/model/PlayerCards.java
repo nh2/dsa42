@@ -6,8 +6,16 @@ import java.util.List;
 public class PlayerCards
 {
 
-    private List<TreasureCard> hidden = new ArrayList<TreasureCard>(); // Stapel der verdeckten Bildkarten
-    private List<TreasureCard> open   = new ArrayList<TreasureCard>(); // Stapel der gesammelten/aufgedeckten
+    private List<TreasureCard> hidden; // Stapel der verdeckten Bildkarten
+    private List<TreasureCard> open;  // Stapel der gesammelten/aufgedeckten
+
     // Bildkarten
 
+    public PlayerCards()
+    {
+
+        hidden = new ArrayList<TreasureCard>(); // Stapel der verdeckten Bildkarten
+        open = new ArrayList<TreasureCard>();
+
+    }
 }

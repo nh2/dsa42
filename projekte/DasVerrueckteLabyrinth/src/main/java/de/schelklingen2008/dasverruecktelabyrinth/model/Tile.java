@@ -5,10 +5,14 @@ public class Tile
 
     private boolean      unmoveable = false;
     private boolean      up, down, right, left;
-    private TreasureCard fc         = null;
+    private TreasureCard tc         = null;
 
-    public Tile()
+    public Tile(boolean pUp, boolean pDown, boolean pRight, boolean pLeft, TreasureCard pTc)
     {
-
+        up = pUp;
+        down = pDown;
+        right = pRight;
+        left = pLeft;
+        tc = pTc;
     }
 }
