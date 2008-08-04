@@ -9,10 +9,11 @@ import java.util.LinkedList;
 public class GameModel
 {
 
-    private Player[]         players = new Player[2];
-    private int              turnHolder;
+    private Player[]         players    = new Player[2];
+    private Player           turnHolder = null;
+    private boolean          inMotion   = false;                 // Are there any balls in motion?
 
-    private Collection<Ball> balls   = new LinkedList<Ball>();
+    private Collection<Ball> balls      = new LinkedList<Ball>();
 
     public int getPlayerScore(int player)
     {
@@ -21,9 +22,28 @@ public class GameModel
 
     }
 
+    public boolean isTurnHolder(Player player)
+    {
+        return player.equals(turnHolder);
+    }
+
     public boolean isTurnHolder(int player)
     {
-        return player == turnHolder;
+        return turnHolder.getId() == player;
+    }
+
+    public void processTimeStep(double deltaT)
+    {
+        if (!inMotion)
+        {
+            return;
+        }
+
+        for (Ball ball : balls)
+        {
+            ball.processTimeStep(deltaT);
+        }
+
     }
 
 }

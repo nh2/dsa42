@@ -1,4 +1,5 @@
 package de.schelklingen2008.billiards.util;
+
 import static java.lang.Math.PI;
 import static java.lang.Math.atan;
 import static java.lang.Math.cos;
@@ -18,6 +19,16 @@ public class Vector2d
     {
         this.x = x;
         this.y = y;
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
     }
 
     private Vector2d(double x, double y, double length, double angle)
