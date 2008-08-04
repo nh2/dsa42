@@ -18,7 +18,7 @@ public class GameModel {
     }
 
     public int autoErgaenzen() {
-        result = Wettsumme - amZug.getWettsumme;
+        return Wettsumme - amZug.getWettsumme();
 
     }
 }
