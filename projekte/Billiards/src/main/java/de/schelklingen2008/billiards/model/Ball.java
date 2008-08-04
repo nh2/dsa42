@@ -7,19 +7,31 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class Ball
 {
 
+    public enum BallType
+    {
+        BLACK, WHITE, SOLID, STRIPED
+    }
+
+    private BallType type;
     private Color    color;
     private Vector2d position;
     private Vector2d velocity;
     private boolean  sunk;
 
-    public Color getBallColor()
+    public Ball(BallType type, Color color)
+    {
+        this.type = type;
+        this.color = color;
+    }
+
+    public Color getColor()
     {
         return color;
     }
 
-    public void setBallColor(Color ballColor)
+    public BallType getType()
     {
-        color = ballColor;
+        return type;
     }
 
     public Vector2d getPosition()
@@ -27,7 +39,7 @@ public class Ball
         return position;
     }
 
-    public void setPosition(Vector2d position)
+    void setPosition(Vector2d position)
     {
         position = position;
     }
@@ -37,7 +49,7 @@ public class Ball
         return velocity;
     }
 
-    public void setVelocity(Vector2d velocity)
+    void setVelocity(Vector2d velocity)
     {
         velocity = velocity;
     }
@@ -47,7 +59,7 @@ public class Ball
         return sunk;
     }
 
-    public void setSunk(boolean sunk)
+    void setSunk(boolean sunk)
     {
         this.sunk = sunk;
     }
