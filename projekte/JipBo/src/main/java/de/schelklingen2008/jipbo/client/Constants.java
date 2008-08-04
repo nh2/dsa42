@@ -14,4 +14,7 @@ public final class Constants
     public static final String MSG_TITLE         = "m.title";
     public static final String MSG_WINNER        = "m.winner";
     public static final String MSG_DRAW          = "m.draw";
+
+    /** game's duration - number of cards in stockpile */
+    public static final int    DURATION          = 10;
 }

@@ -1,16 +1,14 @@
 package de.schelklingen2008.jipbo.model;
 
+import java.util.List;
+
 /**
  * Is a simple abstraction for a player entity.
  */
-public enum Player
+public class Player
 {
-    WHITE, BLACK;
 
-    public static Player valueOf(int playerIndex)
-    {
-        if (playerIndex == 0) return WHITE;
-        if (playerIndex == 1) return BLACK;
-        return null;
-    }
+    private List<Card> mStockPile;
+    private Card[]     mDrawPile;
+    private Card[]     mDiscardPile;
 }
