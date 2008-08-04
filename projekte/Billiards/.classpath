@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="var" path="GG_REPO/activation.jar"/>
+	<classpathentry kind="var" path="GG_REPO/ant.jar"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-beanutils.jar"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-collections.jar" sourcepath="GG_REPO/commons/commons-collecions-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-digester.jar"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-fileupload.jar"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-io.jar" sourcepath="GG_REPO/commons/commons-io-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-lang.jar" sourcepath="GG_REPO/commons/commons-lang-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/commons/commons-logging.jar" sourcepath="GG_REPO/commons/commons-logging-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/getdown.jar"/>
+	<classpathentry kind="var" path="GG_REPO/google-collect.jar"/>
+	<classpathentry kind="var" path="GG_REPO/javassist.jar"/>
+	<classpathentry kind="var" path="GG_REPO/junit4.jar"/>
+	<classpathentry kind="var" path="GG_REPO/mail.jar"/>
+	<classpathentry kind="var" path="GG_REPO/mysql-connector-java.jar"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/narya-base.jar" sourcepath="GG_REPO/gamegardens/narya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/narya-distrib.jar" sourcepath="GG_REPO/gamegardens/narya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/narya-tests.jar" sourcepath="GG_REPO/gamegardens/narya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-cast.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-jme.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-media.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-miso.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-openal.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/nenya-rsrc.jar" sourcepath="GG_REPO/gamegardens/nenya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/proguard.jar"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/samskivert.jar" sourcepath="GG_REPO/gamegardens/samskivert-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/servlet-api.jar"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/threerings.jar"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/toybox.jar" sourcepath="GG_REPO/gamegardens/toybox-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/velocity-1.5-dev.jar"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-micasa.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-parlor.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-puzzle.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-stage.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-stats.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-whirled.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
