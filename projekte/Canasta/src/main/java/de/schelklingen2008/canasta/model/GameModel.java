@@ -5,8 +5,15 @@ package de.schelklingen2008.canasta.model;
  */
 public class GameModel
 {
+
     public boolean isFinished()
     {
         return false;
     }
+
+    private Player turnHolder;
+
+    // private enum Gamestate{
+    //        
+    // }
 }
