@@ -2,8 +2,6 @@ package de.schelklingen2008.canasta.model;
 
 import java.util.Collection;
 
-import de.schelklingen2008.canasta.model.Card.Suit;
-
 public class CardStack
 {
 
@@ -12,5 +10,11 @@ public class CardStack
     Suit getSuit()
     {
         return Suit.CLUBS;
+    }
+
+    private void getRank()
+    {
+        // TODO Auto-generated method stub
+
     }
 }
