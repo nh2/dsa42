@@ -1,4 +1,4 @@
-package de.schelklingen2008.jipbo.transport;
+package de.schelklingen2008.template.transport;
 
 import com.threerings.parlor.game.data.GameObject;
 

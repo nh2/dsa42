@@ -1,4 +1,4 @@
-package de.schelklingen2008.jipbo.tools;
+package de.schelklingen2008.template.tools;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package de.schelklingen2008.jipbo.client.view;
+package de.schelklingen2008.template.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,8 +16,8 @@ import com.threerings.crowd.data.PlaceObject;
 import com.threerings.toybox.client.ChatPanel;
 import com.threerings.toybox.client.ToyBoxUI;
 
-import de.schelklingen2008.jipbo.client.Constants;
-import de.schelklingen2008.jipbo.client.controller.Controller;
+import de.schelklingen2008.template.client.Constants;
+import de.schelklingen2008.template.client.controller.Controller;
 
 /**
  * Contains the primary client interface for the game.

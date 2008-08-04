@@ -1,4 +1,4 @@
-package de.schelklingen2008.jipbo.client.controller;
+package de.schelklingen2008.template.client.controller;
 
 public interface GameChangeListener
 {

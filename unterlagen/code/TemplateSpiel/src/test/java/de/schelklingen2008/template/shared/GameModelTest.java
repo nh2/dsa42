@@ -1,7 +1,7 @@
 package de.schelklingen2008.template.shared;
 
 import junit.framework.TestCase;
-import de.schelklingen2008.jipbo.model.GameModel;
+import de.schelklingen2008.template.model.GameModel;
 
 public class GameModelTest extends TestCase
 {

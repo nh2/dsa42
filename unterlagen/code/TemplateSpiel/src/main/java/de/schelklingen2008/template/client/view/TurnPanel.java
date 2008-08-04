@@ -1,14 +1,14 @@
-package de.schelklingen2008.jipbo.client.view;
+package de.schelklingen2008.template.client.view;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.jipbo.client.controller.Controller;
-import de.schelklingen2008.jipbo.client.controller.GameChangeListener;
-import de.schelklingen2008.jipbo.client.model.GameContext;
-import de.schelklingen2008.jipbo.model.GameModel;
-import de.schelklingen2008.jipbo.model.Player;
+import de.schelklingen2008.template.client.controller.Controller;
+import de.schelklingen2008.template.client.controller.GameChangeListener;
+import de.schelklingen2008.template.client.model.GameContext;
+import de.schelklingen2008.template.model.GameModel;
+import de.schelklingen2008.template.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
