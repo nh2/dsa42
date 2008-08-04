@@ -3,26 +3,17 @@ package de.schelklingen2008.canasta.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-public class Talon extends ArrayList<Card>
+public class Talon
 {
 
-    // Top card has index 0
-    public Card pop()
-    {
-        Card card = get(0);
-        this.remove(0);
-        return card;
-    }
-
-    public void shuffle()
-    {
-        Collections.shuffle(this);
-    }
+    private List<Card> cards;
 
     public Talon()
     {
         super();
+        cards = new ArrayList<Card>();
     }
 
     public static Talon getInstance()
@@ -52,8 +43,22 @@ public class Talon extends ArrayList<Card>
             }
         }
 
-        talon.addAll(Arrays.asList(cards));
+        talon.cards.addAll(Arrays.asList(cards));
 
         return talon;
     }
+
+    // Top card has index 0
+    public Card pop()
+    {
+        Card card = cards.get(0);
+        cards.remove(0);
+        return card;
+    }
+
+    public void shuffle()
+    {
+        Collections.shuffle(cards);
+    }
+
 }
