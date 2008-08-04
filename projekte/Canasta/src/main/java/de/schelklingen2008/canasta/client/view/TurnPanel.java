@@ -15,6 +15,7 @@ import de.schelklingen2008.canasta.model.Player;
  */
 public class TurnPanel extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     public TurnPanel(Controller controller)
@@ -29,9 +30,9 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        for (Player player : Player.values())
+        for (Player player : getGameModel().getPlayers())
         {
-            String name = getGameContext().getName(player);
+            String name = player.getName();
             add(new JLabel(name));
         }
 

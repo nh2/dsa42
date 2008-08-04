@@ -6,10 +6,17 @@ package de.schelklingen2008.canasta.model;
 public class GameModel
 {
 
-    private Player   turnHolder;
+    private int      turnHolder;
     private Player[] players;
     private Talon    talon;
     private Discard  discard;
+
+    public GameModel(int playerCnt)
+    {
+        players = new Player[playerCnt];
+        talon = Talon.getInstance();
+        discard = new Discard();
+    }
 
     public void drawCard()
     {
@@ -27,7 +34,7 @@ public class GameModel
     public void discardCard()
     {
         // TODO player discards card
-        if (turnHolder.hasCanasta() && turnHolder.getHand().size() == 0)
+        if (players[turnHolder].hasCanasta() && players[turnHolder].getHand().size() == 0)
         {
             goOut();
         }
@@ -42,6 +49,26 @@ public class GameModel
     public void endTurn()
     {
         // TODO next players turn
+    }
+
+    public int getTurnHolder()
+    {
+        return turnHolder;
+    }
+
+    public Player[] getPlayers()
+    {
+        return players;
+    }
+
+    public Talon getTalon()
+    {
+        return talon;
+    }
+
+    public Discard getDiscard()
+    {
+        return discard;
     }
 
     public boolean isFinished()
