@@ -11,4 +11,10 @@ public class Karte
         farbe = f;
         bild = b;
     }
+
+    @Override
+    public String toString()
+    {
+        return farbe.toString() + " " + bild.toString();
+    }
 }
