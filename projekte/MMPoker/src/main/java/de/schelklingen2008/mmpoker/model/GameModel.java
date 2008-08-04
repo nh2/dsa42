@@ -19,7 +19,7 @@ public class GameModel {
             iterator.next().setWettsumme(5000);
         } // Geld verteilen ende
 
-        // Blinds Setzen(ein zu kurz), kartenwerte setzen
+        // Blinds Setzen(ein zu kurz)
     }
 
     public void RundeWiederholen() {
@@ -29,6 +29,10 @@ public class GameModel {
     public int autoErgaenzen() { // Ergänzt fehlenden Betrag im Wettkästchen des Spielers zur aktuellen
         // Wettsumme.
         return wettsumme - amZug.getWettsumme();
+
+    }
+
+    public void blattErmitteln() { // Kartenwert, Blatt, Höchste Karte
 
     }
 }
