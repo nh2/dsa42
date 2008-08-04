@@ -2,6 +2,8 @@ package de.schelklingen2008.billiards.model;
 
 import java.awt.Color;
 
+import de.schelklingen2008.billiards.util.Vector2d;
+
 public class Ball
 {
 
