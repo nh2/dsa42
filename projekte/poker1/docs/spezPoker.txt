@@ -3,13 +3,14 @@ Spezifikation
 Spieler
  Name
  Kontostand
- Zahl der Pots, die der Spieler noch bekommen kann
+
  Karten
- Einsatz
+
 
 
 Runde
  Potgesamtbetrag
+ momentaner Einsatz
  Karten Mitte
  Aktuelle Spielphase
  Wer ist dran?
