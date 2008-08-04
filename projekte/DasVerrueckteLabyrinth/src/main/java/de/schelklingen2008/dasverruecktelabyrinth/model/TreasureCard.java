@@ -1,6 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
-public enum FrameCard
+public enum TreasureCard
 {
     EULE, KRONE, GEIST, LILIE;
 }

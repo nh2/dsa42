@@ -6,8 +6,8 @@ import java.util.List;
 public class PlayerCards
 {
 
-    private List<FrameCard> fcv = new ArrayList<FrameCard>(); // Stapel der verdeckten Bildkarten
-    private List<FrameCard> fca = new ArrayList<FrameCard>(); // Stapel der gesammelten/aufgedeckten
+    private List<TreasureCard> hidden = new ArrayList<TreasureCard>(); // Stapel der verdeckten Bildkarten
+    private List<TreasureCard> open   = new ArrayList<TreasureCard>(); // Stapel der gesammelten/aufgedeckten
     // Bildkarten
 
 }

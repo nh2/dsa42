@@ -14,8 +14,10 @@ public class GameModel
 
     private Tile[][]                board;                                                // Spielbrett
     private PlayerType              turnHolder;                                           // Wer ist dran
+    private boolean                 walk         = false;                                 // false = Phase 1
+    // true = Phase2
     private Tile                    insert;                                               // einschiebbare
-                                                                                           // Spielfeldkarte
+    // Spielfeldkarte
 
     Map<PlayerType, Player>         player       = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>    playerTypes  = new HashMap<PlayerType, PlayerCards>();
