@@ -3,8 +3,8 @@ package de.schelklingen2008.canasta.model;
 public class Card
 {
 
-    private Suit suit; // Jokers will save NULL
-    private Rank rank;
+    private final Suit suit; // Jokers will save NULL
+    private final Rank rank;
 
     public Card(Rank rank, Suit suit)
     {

@@ -1,15 +1,15 @@
 package de.schelklingen2008.canasta.model;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
-public class CardStack
+public class CardStack extends ArrayList<Card>
 {
 
-    private Collection<Card> cards;
+    // private List<Card> cards;
 
     public Rank getRank()
     {
         // STUB
-        return Rank.JOKER;
+        return null;
     }
 }

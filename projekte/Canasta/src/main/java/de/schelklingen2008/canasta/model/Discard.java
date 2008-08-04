@@ -1,6 +1,12 @@
 package de.schelklingen2008.canasta.model;
 
-public class Discard
+import java.util.ArrayList;
+
+public class Discard extends ArrayList<Card>
 {
 
+    public Discard()
+    {
+        super();
+    }
 }
