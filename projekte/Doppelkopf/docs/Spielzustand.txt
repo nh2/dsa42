@@ -14,7 +14,6 @@ Karte
 Merken:
 Für das aktuelle Spiel:
 *wer ist an der Reihe/Rauskommen
-*Plätze/Reihenfolge der Spieler
 *Anzahl der Stiche
 
 Für die ganze Runde:
@@ -22,3 +21,4 @@ Für die ganze Runde:
 *Punktestand/Ergebnisliste
 *ob ein Spiel läuft
 *ob die Runde vorbei ist (+Gewinner)
+*Plätze/Reihenfolge der Spieler
