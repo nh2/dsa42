@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.schelklingen2008.billiards.util.Vector2d;
-
 /**
  * Maintains the rules and the state of the game.
  */
@@ -97,7 +95,7 @@ public class GameModel
 
             double tCollision = Double.NaN;
             Ball ball1 = null, ball2 = null;
-            boolean isWallCollision;
+            boolean isWallCollision = false;
 
             collisionHappened = false;
 
@@ -108,7 +106,7 @@ public class GameModel
                 if (Double.isNaN(tCollision) || !Double.isNaN(wallCollisionTime) || wallCollisionTime < tCollision)
                 {
                     tCollision = wallCollisionTime;
-
+                    isWallCollision = true;
                 }
 
                 for (int j = i + 1; j < ballsOnTable.size(); j++)
@@ -118,6 +116,9 @@ public class GameModel
                     if (Double.isNaN(tCollision) || !Double.isNaN(ballCollisionTime) || ballCollisionTime < tCollision)
                     {
                         tCollision = ballCollisionTime;
+                        ball1 = ballsOnTable.get(i);
+                        ball2 = ballsOnTable.get(j);
+                        isWallCollision = false;
                     }
                 }
             }
@@ -146,11 +147,7 @@ public class GameModel
         for (Ball ball : ballsOnTable)
         {
             ball.move(deltaT);
-            
-            else
-            {
-                inMotion = true;
-            }
+            inMotion |= ball.isInMotion();
         }
 
     }
