@@ -2,30 +2,34 @@ Spezifikation
 
 Spieler
  Name
- Geld
- Position
- 
-Spiel
- Runde
- Kartenverteilung
- (Blinds) Grundeinsatz
- Dealer
- 
+ Kontostand
+ Zahl der Pots, die der Spieler noch bekommen kann
+ Karten
+ Einsatz
+
+
 Runde
+ Potgesamtbetrag
+ Karten Mitte
+ Aktuelle Spielphase
  Wer ist dran?
- Pot
- 
-Spielphasen
- Blinds (Einsätze)
- Karten verteilen (Spieler)
- 1. Setzphase
- Flop (3 karten -> Mitte)
- 2. Setzphase
- Turn (1 Karte -> Mitte)
- 3. Setzphase
- River (1 Karte -> Mitte)
- 4. Setzphase
- Sieger ermitteln
- Pot Sieger gutschreiben
- 
- 
+ Dealer
+ Höhe des Blinds
+
+
+
+ Spielphasen
+  0  Blinds (Einsätze)
+  1  Karten verteilen (Spieler)
+  2  1. Setzphase
+  3  Flop (3 karten -> Mitte)
+  4  2. Setzphase
+  5  Turn (1 Karte -> Mitte)
+  6  3. Setzphase
+  7  River (1 Karte -> Mitte)
+  8  4. Setzphase
+  9  Sieger ermitteln
+  10 Pot Sieger gutschreiben
+
+Zu beachten
+ All-in -> Mehrere Pots
