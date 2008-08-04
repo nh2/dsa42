@@ -5,7 +5,7 @@ import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
-import de.schelklingen2008.dasverruecktelabyrinth.model.Player;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
 import de.schelklingen2008.dasverruecktelabyrinth.transport.SharedState;
 
 /**
@@ -46,8 +46,8 @@ public class Manager extends GameManager
         // e.g.: sharedState.setTurnHolder(gameModel.getTurnHolder());
     }
 
-    private Player getPlayer(BodyObject client)
+    private PlayerType getPlayerType(BodyObject client)
     {
-        return Player.valueOf(getPlayerIndex(client.username));
+        return PlayerType.valueOf(getPlayerIndex(client.username));
     }
 }

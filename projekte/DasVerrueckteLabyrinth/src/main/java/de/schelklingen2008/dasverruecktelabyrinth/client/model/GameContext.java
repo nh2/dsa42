@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
-import de.schelklingen2008.dasverruecktelabyrinth.model.Player;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
@@ -23,11 +23,11 @@ public class GameContext
     private String myName;
 
     /** Provides a name for each player in the game. */
-    private Map<Player, String> playerNames = new HashMap<Player, String>();
+    private Map<PlayerType, String> playerTypeNames = new HashMap<PlayerType, String>();
 
-    public String getName(Player player)
+    public String getName(PlayerType playerType)
     {
-        return playerNames.get(player);
+        return playerTypeNames.get(playerType);
     }
 
     public String getMyName()
@@ -43,16 +43,16 @@ public class GameContext
 
     public void setPlayers(String[] names)
     {
-        playerNames.clear();
-        playerNames.put(Player.valueOf(0), names[0]);
-        playerNames.put(Player.valueOf(1), names[1]);
+        playerTypeNames.clear();
+        playerTypeNames.put(PlayerType.valueOf(0), names[0]);
+        playerTypeNames.put(PlayerType.valueOf(1), names[1]);
     }
 
-    public Player getMyPlayer()
+    public PlayerType getMyPlayerType()
     {
         if (myName == null) return null;
-        if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
-        if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
+        if (myName.equals(playerTypeNames.get(PlayerType.WHITE))) return PlayerType.WHITE;
+        if (myName.equals(playerTypeNames.get(PlayerType.BLACK))) return PlayerType.BLACK;
         return null;
     }
 

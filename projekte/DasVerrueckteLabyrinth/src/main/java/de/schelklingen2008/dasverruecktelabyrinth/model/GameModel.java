@@ -9,13 +9,16 @@ import java.util.Map;
 public class GameModel
 {
 
-    private static final int    SIZE         = 7;
-    private static final Player PLAYER_START = Player.WHITE;
+    private static final int        SIZE         = 7;
+    private static final PlayerType PLAYER_START = PlayerType.WHITE;
 
-    private Tile[][]            board;
-    private Player              turnHolder;
+    private Tile[][]                board;                                                // Spielbrett
+    private PlayerType              turnHolder;                                           // Wer ist dran
+    private Tile                    insert;                                               // einschiebbare
+                                                                                           // Spielfeldkarte
 
-    Map<Player, PlayerCards>    players      = new HashMap<Player, PlayerCards>();
+    Map<PlayerType, Player>         player       = new HashMap<PlayerType, Player>();
+    Map<PlayerType, PlayerCards>    playerTypes  = new HashMap<PlayerType, PlayerCards>();
 
     public boolean isFinished()
     {

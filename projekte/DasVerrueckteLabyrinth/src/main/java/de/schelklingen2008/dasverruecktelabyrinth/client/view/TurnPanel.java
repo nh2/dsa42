@@ -8,7 +8,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.GameChangeListener;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
-import de.schelklingen2008.dasverruecktelabyrinth.model.Player;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -29,9 +29,9 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        for (Player player : Player.values())
+        for (PlayerType playerType : PlayerType.values())
         {
-            String name = getGameContext().getName(player);
+            String name = getGameContext().getName(playerType);
             add(new JLabel(name));
         }
 
