@@ -1,4 +1,4 @@
-package de.schelklingen2008.template.model;
+package de.schelklingen2008.jipbo.model;
 
 /**
  * Is a simple abstraction for a player entity.

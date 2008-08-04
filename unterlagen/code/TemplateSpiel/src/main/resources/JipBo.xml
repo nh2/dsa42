@@ -1,16 +1,16 @@
 <?xml version="1.0" standalone="yes"?>
 <game>
   <!-- the string identifier for this game -->
-  <ident>TemplateSpiel</ident>
+  <ident>JipBo</ident>
 
   <!-- the controller and manager used for the game -->
-  <controller>de.schelklingen2008.template.client.controller.Controller</controller>
-  <manager>de.schelklingen2008.template.server.Manager</manager>
+  <controller>de.schelklingen2008.jipbo.client.controller.Controller</controller>
+  <manager>de.schelklingen2008.jipbo.server.Manager</manager>
 
   <!-- defines how the game is matchmade and configured -->
   <match type="table">
     <min_seats>2</min_seats>
-    <max_seats>2</max_seats>
+    <max_seats>6</max_seats>
     <start_seats>2</start_seats>
   </match>
 

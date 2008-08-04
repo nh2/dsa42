@@ -1,4 +1,4 @@
-package de.schelklingen2008.template.model;
+package de.schelklingen2008.jipbo.model;
 
 /**
  * Maintains the rules and the state of the game.

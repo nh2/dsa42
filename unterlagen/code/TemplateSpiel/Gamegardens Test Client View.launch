@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/TemplateSpiel"/>
+<listEntry value="/JipBo"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
@@ -10,7 +10,7 @@
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.schelklingen2008.template.client.BoardViewTest"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="TemplateSpiel"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.schelklingen2008.jipbo.client.BoardViewTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JipBo"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.util.logging.config.file=src/main/resources/logging.properties"/>
 </launchConfiguration>

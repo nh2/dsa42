@@ -1,4 +1,4 @@
-package de.schelklingen2008.template.client.view;
+package de.schelklingen2008.jipbo.client.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,10 +9,10 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
-import de.schelklingen2008.template.client.controller.Controller;
-import de.schelklingen2008.template.client.controller.GameChangeListener;
-import de.schelklingen2008.template.client.model.GameContext;
-import de.schelklingen2008.template.model.GameModel;
+import de.schelklingen2008.jipbo.client.controller.Controller;
+import de.schelklingen2008.jipbo.client.controller.GameChangeListener;
+import de.schelklingen2008.jipbo.client.model.GameContext;
+import de.schelklingen2008.jipbo.model.GameModel;
 
 /**
  * Displays the main game interface (the board).

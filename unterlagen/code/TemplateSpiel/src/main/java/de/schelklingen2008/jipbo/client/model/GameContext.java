@@ -1,11 +1,11 @@
-package de.schelklingen2008.template.client.model;
+package de.schelklingen2008.jipbo.client.model;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import de.schelklingen2008.template.model.GameModel;
-import de.schelklingen2008.template.model.Player;
+import de.schelklingen2008.jipbo.model.GameModel;
+import de.schelklingen2008.jipbo.model.Player;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**

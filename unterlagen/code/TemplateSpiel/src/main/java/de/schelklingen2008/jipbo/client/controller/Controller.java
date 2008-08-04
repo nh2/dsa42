@@ -1,4 +1,4 @@
-package de.schelklingen2008.template.client.controller;
+package de.schelklingen2008.jipbo.client.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import com.threerings.presents.dobj.SetListener;
 import com.threerings.toybox.util.ToyBoxContext;
 import com.threerings.util.MessageBundle;
 
-import de.schelklingen2008.template.client.Constants;
-import de.schelklingen2008.template.client.model.GameContext;
-import de.schelklingen2008.template.client.view.GamePanel;
-import de.schelklingen2008.template.transport.SharedState;
+import de.schelklingen2008.jipbo.client.Constants;
+import de.schelklingen2008.jipbo.client.model.GameContext;
+import de.schelklingen2008.jipbo.client.view.GamePanel;
+import de.schelklingen2008.jipbo.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**

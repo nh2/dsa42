@@ -1,12 +1,12 @@
-package de.schelklingen2008.template.server;
+package de.schelklingen2008.jipbo.server;
 
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
-import de.schelklingen2008.template.model.GameModel;
-import de.schelklingen2008.template.model.Player;
-import de.schelklingen2008.template.transport.SharedState;
+import de.schelklingen2008.jipbo.model.GameModel;
+import de.schelklingen2008.jipbo.model.Player;
+import de.schelklingen2008.jipbo.transport.SharedState;
 
 /**
  * Handles the server side of the game.
