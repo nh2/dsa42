@@ -7,14 +7,9 @@ public class CardStack
 
     private Collection<Card> cards;
 
-    Suit getSuit()
+    public Rank getRank()
     {
-        return Suit.CLUBS;
-    }
-
-    private void getRank()
-    {
-        // TODO Auto-generated method stub
-
+        // STUB
+        return Rank.JOKER;
     }
 }
