@@ -7,6 +7,7 @@ import java.util.Collections;
 public class Talon extends ArrayList<Card>
 {
 
+    // Top card has index 0
     public Card pop()
     {
         Card card = get(0);

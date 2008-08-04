@@ -21,4 +21,18 @@ public class Card
     {
         return rank;
     }
+
+    @Override
+    public String toString()
+    {
+        if (rank == Rank.JOKER)
+        {
+            return "JOKER";
+        }
+        else
+        {
+
+            return rank.toString() + " of " + suit.toString();
+        }
+    }
 }
