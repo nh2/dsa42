@@ -63,6 +63,8 @@ public class Ball
 
     public Ball(BallType type, Color color)
     {
+        position = Vector2d.ZERO;
+        velocity = Vector2d.ZERO;
         this.type = type;
         this.color = color;
     }
@@ -94,7 +96,7 @@ public class Ball
 
     private void checkVelocity()
     {
-        final double EPSILON = 0.000001;
+        final double EPSILON = 0.000001d;
 
         if (velocity.getX() < EPSILON && velocity.getY() < EPSILON)
         {
@@ -150,14 +152,27 @@ public class Ball
         double deltaVY = velocity.getY() - other.velocity.getY();
 
         double a = deltaVX * deltaVX + deltaVY * deltaVY;
+        double b = 2 * (deltaX * deltaVX + deltaY * deltaVY);
+        double c = deltaX * deltaX + deltaY * deltaY - 4 * BALL_RADIUS * BALL_RADIUS;
 
         if (a == 0)
         {
-            return Double.NaN;
+            if (b == 0)
+            {
+                if (c == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Double.NaN;
+                }
+            }
+            else
+            {
+                return -c / b;
+            }
         }
-
-        double b = 2 * (deltaX * deltaVX + deltaY * deltaVY);
-        double c = deltaX * deltaX + deltaY * deltaY - 4 * BALL_RADIUS * BALL_RADIUS;
 
         double disc = b * b - 4 * a * c;
 

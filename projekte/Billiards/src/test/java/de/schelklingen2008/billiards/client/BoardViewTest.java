@@ -15,6 +15,11 @@ import de.schelklingen2008.billiards.client.view.BoardView;
 public class BoardViewTest extends GameViewTest
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6078529306721733186L;
+
     public static void main(String[] args)
     {
         BoardViewTest test = new BoardViewTest();

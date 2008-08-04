@@ -7,7 +7,7 @@ import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 import de.schelklingen2008.billiards.util.Vector2d;
@@ -18,12 +18,18 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class GameModel
 {
 
-    private Player[]         players      = new Player[2];
-    private Player           turnHolder   = null;
-    private boolean          inMotion     = false;                 // Are there any balls in motion?
+    private static final Vector2d[] initialBallPositions = {};                   // TODO initial ball
+    // positions
 
-    private Collection<Ball> balls        = new LinkedList<Ball>();
-    private List<Ball>       ballsOnTable = new ArrayList<Ball>();
+    private Player[]                players              = new Player[2];
+    private Player                  turnHolder           = null;
+    private boolean                 inMotion             = false;                // Are there any balls in
+    // motion?
+
+    private List<Ball>              balls                = new ArrayList<Ball>();
+    private List<Ball>              ballsOnTable         = new ArrayList<Ball>();
+
+    private Ball                    whiteBall, blackBall;
 
     public boolean isInMotion()
     {
@@ -48,8 +54,11 @@ public class GameModel
             players[i] = new Player(i);
         }
 
-        balls.add(new Ball(Ball.BallType.WHITE, Color.WHITE));
-        balls.add(new Ball(Ball.BallType.BLACK, Color.BLACK));
+        whiteBall = new Ball(Ball.BallType.WHITE, Color.CYAN);
+        blackBall = new Ball(Ball.BallType.BLACK, Color.BLACK);
+
+        balls.add(whiteBall);
+        balls.add(blackBall);
 
         for (Color color : Ball.BALL_COLORS)
         {
@@ -78,6 +87,28 @@ public class GameModel
 
         ballsOnTable.clear();
         ballsOnTable.addAll(balls);
+
+        resetBalls();
+
+    }
+
+    private void resetBalls()
+    {
+
+        for (Ball ball : balls)
+        {
+            ball.setVelocity(Vector2d.ZERO);
+        }
+
+        Collections.shuffle(balls);
+
+        whiteBall.setPosition(new Vector2d(200, 200));
+        blackBall.setPosition(new Vector2d(600, 200));
+
+        // TODO initial ball positions
+        /*
+         * int i = 0; for (Ball ball : balls) { ball.setPosition(initialBallPositions[i]); i++; }
+         */
 
     }
 
@@ -112,9 +143,8 @@ public class GameModel
         }
 
         double remainingTime = deltaT;
-        boolean collisionHappened;
 
-        final double EPSILON = 0.000001;
+        final double EPSILON = 0.000001d;
 
         do
         {
@@ -122,8 +152,6 @@ public class GameModel
             double tCollision = Double.NaN;
             Ball ball1 = null, ball2 = null;
             boolean isWallCollision = false;
-
-            collisionHappened = false;
 
             for (int i = 0; i < ballsOnTable.size(); i++)
             {
@@ -155,7 +183,6 @@ public class GameModel
                 moveBalls(tCollision);
                 remainingTime -= tCollision;
                 handleCollision(tCollision, ball1, ball2, isWallCollision);
-                collisionHappened = true;
             }
             else
             {
@@ -182,7 +209,7 @@ public class GameModel
     private void handleCollision(double tCollision, Ball ball1, Ball ball2, boolean isWallCollision)
     {
 
-        final double EPSILON = 0.000001;
+        final double EPSILON = 0.000001d;
 
         if (isWallCollision)
         {

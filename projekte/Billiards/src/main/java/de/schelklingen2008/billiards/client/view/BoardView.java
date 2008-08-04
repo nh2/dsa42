@@ -5,6 +5,7 @@ import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -23,7 +24,11 @@ import de.schelklingen2008.billiards.model.GameModel;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Controller controller;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9064861386229239709L;
+    private Controller        controller;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -52,6 +57,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 pressed(e);
             }
         });
+
     }
 
     private void moved(MouseEvent e)
@@ -75,6 +81,7 @@ public class BoardView extends JPanel implements GameChangeListener
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
+        gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
@@ -89,9 +96,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
         GameModel gameModel = getGameModel();
 
+        gfx.clearRect(0, 0, getWidth(), getHeight());
+
         for (Ball ball : gameModel.getBallsOnTable())
         {
-            gfx.setBackground(ball.getColor());
+            gfx.setColor(ball.getColor());
             gfx.fillOval((int) Math.round(ball.getPosition().getX() - BALL_RADIUS), (int) Math.round(ball.getPosition()
                                                                                                          .getY()
                                                                                                      - BALL_RADIUS),

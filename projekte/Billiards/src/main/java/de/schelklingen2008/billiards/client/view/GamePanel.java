@@ -25,6 +25,11 @@ import de.schelklingen2008.billiards.client.controller.Controller;
 public class GamePanel extends JPanel implements PlaceView
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1739531655733929480L;
+
     private class ActionListenerImplementation implements ActionListener
     {
 
