@@ -5,6 +5,7 @@ public class Spieler extends GameModel {
     private Spielkarte[] Handblatt;
     private int          Geld;
     private Blind        wasfuernblind;
+    private int          Wettsumme;
 
     public void betfraise(int wettsumme) {
         // sendet dem Server die Summe/Aktion
@@ -18,7 +19,8 @@ public class Spieler extends GameModel {
         // sendet dem Server die Aktion
     }
 
-    private enum Blind {
-        BIGBLIND, SMALLBLIND, DEALER, NICHTS;
+    public int getWettsumme() {
+        return Wettsumme;
     }
+
 }

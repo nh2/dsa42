@@ -7,6 +7,7 @@ public class GameModel {
 
     private Spielkarte[] Spielfeld;
     private Spieler      amZug;
+    private int          Wettsumme;
 
     public void Rundenstart() {
         // Geld verteilen, Blinds Setzen(ein zu kurz), kartenwerte setzen
@@ -14,5 +15,10 @@ public class GameModel {
 
     public void RundeWiederholen() {
         // blinds verschieben, karten ausgeben, geweinner ermitteln
+    }
+
+    public int autoErgaenzen() {
+        result = Wettsumme - amZug.getWettsumme;
+
     }
 }
