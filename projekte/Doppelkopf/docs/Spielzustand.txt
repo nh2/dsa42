@@ -2,7 +2,7 @@ Dinge:
 Tisch
 -Vier Spieler
 --Karten (nur die eigenen offen)
---Ablagestapel
+--(Ablagestapel)
 -Platz in der Mitte
 --Vier Kartenplätze
 
