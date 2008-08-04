@@ -2,10 +2,10 @@ package de.schelklingen2008.mmpoker.model;
 
 public class Spieler extends GameModel {
 
-    private Spielkarte[] Handblatt;
-    private int          Geld;
-    private Blind        wasfuernblind;
-    private int          Wettsumme;
+    private Spielkarte[] handblatt;
+    private int          geld;
+    private Blind        wasfuernBlind;
+    private int          wettsumme;
 
     public void betfraise(int wettsumme) {
         // sendet dem Server die Summe/Aktion
@@ -20,7 +20,11 @@ public class Spieler extends GameModel {
     }
 
     public int getWettsumme() {
-        return Wettsumme;
+        return wettsumme;
+    }
+
+    public void setWettsumme(int wettbetrag) {
+        wettsumme = wettbetrag;
     }
 
 }
