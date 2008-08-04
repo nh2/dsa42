@@ -6,8 +6,8 @@ public class Ball
 {
 
     private Color    color;
-    private Vector2d Position;
-    private Vector2d Velocity;
+    private Vector2d position;
+    private Vector2d velocity;
     private boolean  sunk;
 
     public Color getBallColor()
@@ -22,22 +22,22 @@ public class Ball
 
     public Vector2d getPosition()
     {
-        return Position;
+        return position;
     }
 
     public void setPosition(Vector2d position)
     {
-        Position = position;
+        position = position;
     }
 
     public Vector2d getVelocity()
     {
-        return Velocity;
+        return velocity;
     }
 
     public void setVelocity(Vector2d velocity)
     {
-        Velocity = velocity;
+        velocity = velocity;
     }
 
     public boolean isSunk()
