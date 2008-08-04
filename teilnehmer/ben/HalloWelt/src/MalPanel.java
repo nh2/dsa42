@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
@@ -50,12 +51,13 @@ public class MalPanel extends JPanel
     @Override
     public void paint(Graphics g)
     {
+        Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.BLACK);
         g.fillOval(50, 50, 10, 10);
 
         for (int i = 1; i < 11; i++)
         {
-            g.drawImage(karte, i * 20, i * 20, null);
+            gfx.drawImage(karte, i * 20, i * 20, 37, 53, null);
         }
     }
 
