@@ -24,4 +24,9 @@ public class GameModel
     {
         return false;
     }
+
+    public void runde()
+    {
+        potList.add(new Pot(playerList));
+    }
 }

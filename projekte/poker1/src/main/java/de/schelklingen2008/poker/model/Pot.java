@@ -7,6 +7,12 @@ public class Pot
 {
 
     private List<Integer> possibleWinners = new ArrayList<Integer>();
+    private long          potContent;
+
+    public Pot(List<Player> playerList)
+    {
+
+    }
 
     public void addPlayer(int playerIndex)
 
