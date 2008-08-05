@@ -10,12 +10,18 @@ public class Tisch
     Spieler      anDerReihe;
     int          stichAnzahl;
 
+    public Tisch(Spieler fängtAn)
+    {
+    	anDerReihe = fängtAn;
+    }
+    
     public void gibKarten()
     {
-        Stack<Karte> stapel = erzeugeStapel();
-        mischeStapel(stapel);
+        Stack<Karte> stapel = erzeugeStapel();		// Ausgabekartenstapel erzeugen
+        mischeStapel(stapel);						// Stapel mischen
         for (Karte k : stapel)
             System.out.println(k.toString());
+        // Karten verteilen
     }
 
     private Stack<Karte> erzeugeStapel()
