@@ -7,7 +7,7 @@ public class TischTest extends TestCase
 
     public void testGibKarten()
     {
-        Tisch tisch = new Tisch();
+        Tisch tisch = new Tisch(new Spieler("Test"));
         tisch.gibKarten();
 
     }
