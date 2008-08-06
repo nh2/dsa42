@@ -61,4 +61,19 @@ public class Country
     {
         return selected;
     }
+
+    public void setUnits(int i)
+    {
+        units = i;
+    }
+
+    public void setOccupier(Player p)
+    {
+        occupier = p;
+    }
+
+    public void setSelected(boolean b)
+    {
+        selected = b;
+    }
 }
