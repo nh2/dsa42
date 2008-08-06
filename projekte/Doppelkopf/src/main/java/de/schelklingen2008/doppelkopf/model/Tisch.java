@@ -6,22 +6,31 @@ import java.util.Stack;
 public class Tisch
 {
 
+    GameModel    spiel;
     Stack<Karte> mitte;
     Spieler      anDerReihe;
     int          stichAnzahl;
 
-    public Tisch(Spieler fängtAn)
+    public Tisch(GameModel spiel, Spieler fängtAn)
     {
-    	anDerReihe = fängtAn;
+        this.spiel = spiel;
+        anDerReihe = fängtAn;
     }
-    
+
     public void gibKarten()
     {
-        Stack<Karte> stapel = erzeugeStapel();		// Ausgabekartenstapel erzeugen
-        mischeStapel(stapel);						// Stapel mischen
+        Stack<Karte> stapel = erzeugeStapel(); // Ausgabekartenstapel erzeugen
+        mischeStapel(stapel); // Stapel mischen
         for (Karte k : stapel)
             System.out.println(k.toString());
+
         // Karten verteilen
+
+        while (!stapel.isEmpty())
+        {
+            anDerReihe.blatt.add(stapel.pop());
+            anDerReihe = spiel.getSpielerListe().Next();
+        }
     }
 
     private Stack<Karte> erzeugeStapel()
