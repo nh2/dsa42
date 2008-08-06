@@ -172,34 +172,13 @@ public class BoardView extends JPanel implements GameChangeListener
             for (int j = 0; j < getGameModel().getBoard().length; j++)
             {
                 Tile[][] temp = getGameModel().getBoard();
-                if (temp[i][j].isCross() == true)
-                {
-                    gfx.drawImage(cross, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isHorizontal() == true)
-                {
-                    gfx.drawImage(horizontal, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isVertikal() == true)
-                {
-                    gfx.drawImage(vertikal, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isCurve1() == true)
-                {
-                    gfx.drawImage(curveOne, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isCurve2() == true)
-                {
-                    gfx.drawImage(curveTwo, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isCurve3() == true)
-                {
-                    gfx.drawImage(curveThree, i * 80, j * 80, null);
-                }
-                if (temp[i][j].isCurve4() == true)
-                {
-                    gfx.drawImage(curveFour, i * 80, j * 80, null);
-                }
+                if (temp[i][j].isCross() == true) gfx.drawImage(cross, i * 80, j * 80, null);
+                if (temp[i][j].isHorizontal() == true) gfx.drawImage(horizontal, i * 80, j * 80, null);
+                if (temp[i][j].isVertikal() == true) gfx.drawImage(vertikal, i * 80, j * 80, null);
+                if (temp[i][j].isCurve1() == true) gfx.drawImage(curveOne, i * 80, j * 80, null);
+                if (temp[i][j].isCurve2() == true) gfx.drawImage(curveTwo, i * 80, j * 80, null);
+                if (temp[i][j].isCurve3() == true) gfx.drawImage(curveThree, i * 80, j * 80, null);
+                if (temp[i][j].isCurve4() == true) gfx.drawImage(curveFour, i * 80, j * 80, null);
             }
         }
 

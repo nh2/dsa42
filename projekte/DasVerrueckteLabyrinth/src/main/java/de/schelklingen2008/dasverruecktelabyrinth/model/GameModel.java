@@ -248,6 +248,11 @@ public class GameModel
         return false;
     }
 
+    public Tile getInsertTile()
+    {
+        return insert;
+    }
+
     public Collection<Player> getPlayers()
     {
         return player.values();
