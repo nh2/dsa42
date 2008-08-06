@@ -7,7 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -31,6 +30,15 @@ public class BoardView extends JPanel implements GameChangeListener
     /** position of cursor piece */
     private int        cx = 0;
     private int        cy = 0;
+
+    // Images
+
+    BufferedImage      curveOne, curveTwo, curveThree, curveFour;
+    BufferedImage      cross, horizontal, vertikal;
+    BufferedImage      eule, krone, flaschengeist, ring, motte, spinne;
+    BufferedImage      fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
+    BufferedImage      troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
+    BufferedImage      schmuckkasten, schlüssel, schwert, gespenst;
 
     // private int cy = 0;
 
@@ -130,15 +138,31 @@ public class BoardView extends JPanel implements GameChangeListener
                 Tile[][] temp = getGameModel().getBoard();
                 if (temp[i][j].isCross() == true)
                 {
-                    try
-                    {
-                        BufferedImage cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
-                    }
-                    catch (Exception e)
-                    {
-                        throw new RuntimeException("Kann Bild nicht laden!");
-                    }
-                    gfx
+                    gfx.drawImage(cross, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isHorizontal() == true)
+                {
+                    gfx.drawImage(horizontal, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isVertikal() == true)
+                {
+                    gfx.drawImage(vertikal, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isCurve1() == true)
+                {
+                    gfx.drawImage(curveOne, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isCurve2() == true)
+                {
+                    gfx.drawImage(curveTwo, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isCurve3() == true)
+                {
+                    gfx.drawImage(curveThree, i * 80, j * 80, null);
+                }
+                if (temp[i][j].isCurve4() == true)
+                {
+                    gfx.drawImage(curveFour, i * 80, j * 80, null);
                 }
             }
         }
