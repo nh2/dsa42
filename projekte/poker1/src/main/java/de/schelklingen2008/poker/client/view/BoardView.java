@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -16,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.poker.client.Constants;
 import de.schelklingen2008.poker.client.controller.Controller;
 import de.schelklingen2008.poker.client.controller.GameChangeListener;
 import de.schelklingen2008.poker.client.model.GameContext;
@@ -33,6 +33,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private BufferedImage[][] imageBuffer = new BufferedImage[4][13];
 
+    private GameModel         model;
+
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
@@ -40,7 +42,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-
+        model = controller.getGameContext().getGameModel();
     }
 
     @Override
@@ -121,9 +123,20 @@ public class BoardView extends JPanel implements GameChangeListener
         add(Box.createHorizontalStrut(5));
 
         playerPanel.add(Box.createVerticalStrut(5));
-        for (int i = 0; i < Constants.PLAYER_COUNT; i++)
+        for (int i = 0; i < model.getPlayerList().size(); i++)
         {
-            playerPanel.add(new JLabel("Spieler" + (i + 1)));
+            String output = i + 1 + ": " + model.getPlayerList().get(i).getName() + "\n";
+            output += model.getPlayerList().get(i).getBalance();
+            if (model.getPlayerList().get(i).isStillIn() == false)
+            {
+                output += "Folded\n";
+            }
+            if (model.getPlayerList().get(i).isStillIn() == true && model.getPlayerList().get(i).getBalance() == 0)
+            {
+                output += "All-in\n";
+            }
+
+            playerPanel.add(new JLabel(output));
             playerPanel.add(Box.createVerticalStrut(5));
         }
 
@@ -135,10 +148,13 @@ public class BoardView extends JPanel implements GameChangeListener
         middlePanel.add(Box.createVerticalStrut(5));
 
         cardPanel.add(Box.createVerticalStrut(5));
-        for (int i = 0; i < 5; i++)
+        for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
         {
-            cardPanel.add(new JLabel("Karte " + (i + 1)));
-            cardPanel.add(Box.createVerticalStrut(5));
+            Card card = (Card) iterator.next();
+            BufferedImage cardImage = imageBuffer[card.getSuitInt()][card.getValueInt()];
+            // JLabel cardLabel = new JLabel("");
+            // cardLabel.setIcon()
+
         }
         potPanel.add(Box.createVerticalStrut(5));
         potPanel.add(new JLabel("pot"));

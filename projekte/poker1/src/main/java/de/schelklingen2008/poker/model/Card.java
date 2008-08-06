@@ -13,6 +13,16 @@ public class Card
         number = n;
     }
 
+    public int getValueInt()
+    {
+        return number;
+    }
+
+    public int getSuitInt()
+    {
+        return suit;
+    }
+
     public String getValue()
     {
         if (number >= 0 && number <= 8) return "" + (number + 2);
