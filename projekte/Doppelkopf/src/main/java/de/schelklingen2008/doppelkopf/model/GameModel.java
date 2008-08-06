@@ -8,8 +8,8 @@ import java.util.List;
 public class GameModel
 {
 
-    SpielerListe    spieler;
-    Tisch           tisch;
+    SpielerListe    spieler;     // TODO static entfernen
+    public Tisch    tisch;
     List<Integer>[] punkte;
     // Spieler mischen; // TODO Nicht mehr benötigt: SpielerListe merkt, wer dran ist
     boolean         rundeBeendet;

@@ -1,20 +1,23 @@
 package de.schelklingen2008.doppelkopf.model;
 
 import java.util.Collections;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Tisch
 {
 
-    GameModel    spiel;
-    Stack<Karte> mitte;
-    Spieler      anDerReihe;
-    int          stichAnzahl;
+    GameModel           spiel;
+    public Queue<Karte> mitte;
+    Spieler             anDerReihe;
+    int                 stichAnzahl;
 
-    public Tisch(GameModel spiel, Spieler fängtAn)
+    public Tisch(GameModel spiel, Spieler faengtAn)
     {
         this.spiel = spiel;
-        anDerReihe = fängtAn;
+        anDerReihe = faengtAn;
+        mitte = new ArrayBlockingQueue<Karte>(4);
     }
 
     public void gibKarten()
