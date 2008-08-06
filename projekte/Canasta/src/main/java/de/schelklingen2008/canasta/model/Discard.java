@@ -33,13 +33,13 @@ public class Discard
     public Card peek()
     {
         if (cards.size() <= 0) return null;
-        return cards.get(cards.size());
+        return cards.get(cards.size() - 1);
     }
 
     public Card pop()
     {
         if (cards.size() <= 0) return null;
-        Card card = cards.get(cards.size());
+        Card card = cards.get(cards.size() - 1);
         cards.remove(card);
         return card;
     }
