@@ -32,6 +32,21 @@ public class GameModel
 
     private void init()
     {
+        for (int i = 0; i < board.length; i++)
+        {
+            for (int j = 0; j < board.length; j++)
+            {
+
+                for (int i1 = 0; i1 < generateTiles().size(); i1++)
+                {
+
+                    int r = (int) (Math.random() * generateTiles().size());
+                    board[i][j] = generateTiles().get(r);
+                    generateTiles().remove(r);
+                }
+            }
+        }
+        setTurnHolder(PLAYER_START);
 
     }
 
@@ -56,6 +71,12 @@ public class GameModel
     private void clear()
     {
 
+    }
+
+    private void setTurnHolder(PlayerType pPlayer)
+    {
+
+        turnHolder = pPlayer;
     }
 
     public boolean isFinished()
