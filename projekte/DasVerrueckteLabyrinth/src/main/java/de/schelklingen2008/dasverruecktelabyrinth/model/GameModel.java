@@ -1,9 +1,12 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Maintains the rules and the state of the game.
@@ -24,6 +27,10 @@ public class GameModel
     Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>   playerTypes  = new HashMap<PlayerType, PlayerCards>();
 
+    private static final int       NO_PLAYERS   = 4;
+
+    private static final Random    RAND         = new Random();
+
     public GameModel()
     {
         clear();
@@ -32,25 +39,29 @@ public class GameModel
 
     private void init()
     {
+        List<Tile> tiles = generateTiles();
+        Collections.shuffle(tiles);
         for (int i = 0; i < board.length; i++)
         {
             for (int j = 0; j < board.length; j++)
             {
-
-                for (int i1 = 0; i1 < generateTiles().size(); i1++)
-                {
-
-                    int r = (int) (Math.random() * generateTiles().size());
-                    board[i][j] = generateTiles().get(r);
-                    generateTiles().remove(r);
-                }
+                board[i][j] = tiles.get(i * board.length + j);
             }
         }
-        setTurnHolder(PLAYER_START);
-        int r = generateTiles().size();
-        insert = generateTiles().get(r);
-        generateTiles().remove(r);
 
+        setTurnHolder(PLAYER_START);
+        insert = tiles.get(board.length * board.length);
+
+        player.put(PlayerType.GREEN, new Player(PlayerType.GREEN,
+                                                RAND.nextInt(board.length),
+                                                RAND.nextInt(board.length)));
+        player.put(PlayerType.WHITE, new Player(PlayerType.WHITE,
+                                                RAND.nextInt(board.length),
+                                                RAND.nextInt(board.length)));
+        player.put(PlayerType.BLACK, new Player(PlayerType.BLACK,
+                                                RAND.nextInt(board.length),
+                                                RAND.nextInt(board.length)));
+        player.put(PlayerType.RED, new Player(PlayerType.RED, RAND.nextInt(board.length), RAND.nextInt(board.length)));
     }
 
     private List<Tile> generateTiles()
@@ -70,7 +81,6 @@ public class GameModel
         temp.add(new Tile(true, true, true, true, null));
         temp.add(new Tile(true, true, true, true, null));
         temp.add(new Tile(true, true, true, true, TreasureCard.MOTTE));
-        temp.add(new Tile(true, true, true, true, null));
 
         // Geraden
 
@@ -91,6 +101,8 @@ public class GameModel
         temp.add(new Tile(false, false, true, true, TreasureCard.FLEDERMAUS));
         temp.add(new Tile(false, false, true, true, null));
         temp.add(new Tile(false, false, true, true, TreasureCard.TROLL));
+        temp.add(new Tile(false, false, true, true, null));
+        temp.add(new Tile(false, false, true, true, null));
 
         // Kurven
 
@@ -117,6 +129,7 @@ public class GameModel
         temp.add(new Tile(true, false, true, false, TreasureCard.SCHWERT));
         temp.add(new Tile(true, false, true, false, null));
         temp.add(new Tile(true, false, true, false, TreasureCard.GESPENST));
+        temp.add(new Tile(true, false, true, false, null));
 
         // TODO List zu ende
         return temp;
@@ -235,4 +248,8 @@ public class GameModel
         return false;
     }
 
+    public Collection<Player> getPlayers()
+    {
+        return player.values();
+    }
 }
