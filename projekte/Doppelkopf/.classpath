@@ -41,5 +41,6 @@
 	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-stage.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
 	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-stats.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
 	<classpathentry kind="var" path="GG_REPO/gamegardens/vilya-whirled.jar" sourcepath="GG_REPO/gamegardens/vilya-src.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

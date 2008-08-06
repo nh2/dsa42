@@ -8,6 +8,8 @@ public class SpielerListe extends ArrayList<Spieler>
     private static final long serialVersionUID = 1L;
     private int               anDerReihe;
 
+    public SpielerListe() {}
+    
     public Spieler getAnDerReihe()
     {
         return get(anDerReihe);
@@ -30,6 +32,14 @@ public class SpielerListe extends ArrayList<Spieler>
         anDerReihe = nextAnDerReihe(anDerReihe);
     }
 
+    public Spieler getSpieler(String spielerName)
+    {
+    	for(Spieler p : this){
+    		if(p.name.equals(spielerName)) return p;
+    	}
+    		
+    	return null;		// TODO Exception
+    }
     private int nextAnDerReihe(int aktuell)
     {
         if (aktuell + 1 < size())
