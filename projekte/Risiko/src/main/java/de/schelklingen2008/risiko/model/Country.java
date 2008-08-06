@@ -17,7 +17,7 @@ public class Country
     private Color         color;
     private boolean       selected;
 
-    public Country(String pName, int pIndex, int pX, int pY, ArrayList<Country> pNeighbours, Color pColor)
+    public Country(String pName, int pIndex, int pX, int pY, Color pColor)
     {
         name = pName;
         units = 0;
@@ -25,7 +25,7 @@ public class Country
         positionNameX = pX;
         positionNameY = pY;
         occupier = null;
-        neighbours = pNeighbours;
+        neighbours = null;
         color = pColor;
         selected = false;
     }
@@ -83,6 +83,11 @@ public class Country
     public void setOccupier(Player p)
     {
         occupier = p;
+    }
+
+    public void setNeighbours(ArrayList<Country> pNeighbours)
+    {
+        neighbours = pNeighbours;
     }
 
     public void setSelected(boolean b)
