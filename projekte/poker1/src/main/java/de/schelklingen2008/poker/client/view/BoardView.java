@@ -5,14 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,11 +26,11 @@ import de.schelklingen2008.poker.model.GameModel;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Controller        controller;
+    private Controller    controller;
 
-    private BufferedImage[][] imageBuffer = new BufferedImage[4][13];
+    private ImageIcon[][] imageBuffer = new ImageIcon[4][13];
 
-    private GameModel         model;
+    private GameModel     model;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -72,14 +69,7 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             for (int j = 0; j < 13; j++)
             {
-                try
-                {
-                    imageBuffer[i][j] = ImageIO.read(new File(getFileName(new Card(i, j))));
-                }
-                catch (IOException e)
-                {
-                    throw new RuntimeException("Kann Bild nicht laden.");
-                }
+                imageBuffer[i][j] = new ImageIcon(getClass().getResource("cards/" + getFileName(new Card(i, j))));
             }
         }
 
@@ -151,11 +141,12 @@ public class BoardView extends JPanel implements GameChangeListener
         for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
         {
             Card card = (Card) iterator.next();
-            BufferedImage cardImage = imageBuffer[card.getSuitInt()][card.getValueInt()];
-            // JLabel cardLabel = new JLabel("");
-            // cardLabel.setIcon()
-
+            JLabel cardLabel = new JLabel("");
+            cardLabel.setIcon(imageBuffer[card.getSuitInt()][card.getValueInt()]);
+            cardPanel.add(cardLabel);
+            cardPanel.add(Box.createVerticalStrut(5));
         }
+
         potPanel.add(Box.createVerticalStrut(5));
         potPanel.add(new JLabel("pot"));
         potPanel.add(Box.createVerticalStrut(5));
