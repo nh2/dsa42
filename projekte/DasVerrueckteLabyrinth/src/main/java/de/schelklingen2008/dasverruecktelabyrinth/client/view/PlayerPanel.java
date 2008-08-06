@@ -38,10 +38,6 @@ public class PlayerPanel extends JPanel
         drehButtons.add(new Button("rechts drehen"));
         drehButtons.add(new Button("links drehen"));
 
-        JPanel insertTile = new JPanel();
-        insertTile.setLayout(new BorderLayout());
-        BufferedImage insert = getInsert();
-
         try
         {
             curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/curveOne.png"));
