@@ -30,4 +30,15 @@ public class Player
 
         return y;
     }
+
+    public void setXKoordinate(int pX)
+    {
+        x = pX;
+    }
+
+    public void setYKoordinate(int pY)
+    {
+
+        y = pY;
+    }
 }

@@ -77,10 +77,11 @@ public class GameModel
 
     private void placePlayer(Player pPlayer)
     {
-        int x = (int) Math.random()* board.length;
-        int y = (int) Math.random()* board.length;
-        
-        pPlayer
+        int x = (int) Math.random() * board.length;
+        int y = (int) Math.random() * board.length;
+
+        pPlayer.setXKoordinate(x);
+        pPlayer.setYKoordinate(y);
     }
 
     private void clear()
