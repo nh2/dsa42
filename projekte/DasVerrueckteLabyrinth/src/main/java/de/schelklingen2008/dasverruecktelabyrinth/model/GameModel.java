@@ -135,6 +135,11 @@ public class GameModel
         return changed;
     }
 
+    public void amountOfPlayers()
+    {
+
+    }
+
     private boolean isInBounds(int x, int y)
     {
         return x >= 0 && y >= 0 && x < SIZE && y < SIZE;

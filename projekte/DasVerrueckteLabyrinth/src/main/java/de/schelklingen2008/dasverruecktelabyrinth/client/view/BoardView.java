@@ -207,6 +207,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     }
 
+    public void paintPlayer()
+    {
+        for (int i = 0; i < playerindex; i++)
+        {
+
+        }
+    }
+
     public void gameChanged()
     {
         repaint();
