@@ -34,7 +34,7 @@ public class GameContext
          * TODO retrieve player names from controller
          */
 
-        gameModel = new GameModel(new String[] { "Lars", "Alexander" });
+        gameModel = new GameModel(new String[] { "Lars", "Alexander", "Mopy", "Schorsch" });
     }
 
     public int getLocalPlayerNumber()

@@ -110,10 +110,12 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         paintTalon(gfx);
         paintDiscard(gfx);
-        paintHands(gfx);
+        paintHand0(gfx);
+        paintHand1(gfx);
+        paintHand2(gfx);
     }
 
-    private void paintHands(Graphics2D gfx)
+    private void paintHand0(Graphics2D gfx)
     {
         Player[] players = controller.getGameContext().getGameModel().getPlayers();
 
@@ -122,10 +124,10 @@ public class BoardView extends JPanel implements GameChangeListener
         Hand hand = player.getHand();
 
         BufferedImage cardImage = getCardImage(null, true);
-        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2; // (70-57)/2 = 6,5
 
         final int cardCount = hand.size();
-        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2; // 800-70-13 = 717
 
         double cardSpace = (double) hand_space / (double) cardCount;
 
@@ -142,6 +144,71 @@ public class BoardView extends JPanel implements GameChangeListener
 
             i++;
         }
+    }
+
+    private void paintHand1(Graphics2D gfx)
+    {
+        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player player = players[1];
+        Hand hand = player.getHand();
+        BufferedImage cardImage = getCardImage(null, true);
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
+
+        final int cardCount = hand.size();
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
+
+        double cardSpace = (double) hand_space / (double) cardCount;
+
+        cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+
+        int i = 0;
+        for (Card card : hand)
+        {
+            cardImage = getCardImage(card, true);
+
+            // int x = 0;
+            // int y = 0;
+            gfx.translate(border, border);
+            gfx.rotate(Math.PI / 2);
+            gfx.drawImage(cardImage, 0, i * 10, null);
+            gfx.rotate(-Math.PI / 2);
+            i++;
+        }
+
+    }
+
+    private void paintHand2(Graphics2D gfx)
+    {
+        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player player = players[2];
+        Hand hand = player.getHand();
+        BufferedImage cardImage = getCardImage(null, true);
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
+
+        final int cardCount = hand.size();
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
+
+        double cardSpace = (double) hand_space / (double) cardCount;
+
+        cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+
+        int i = 0;
+        for (Card card : hand)
+        {
+            cardImage = getCardImage(card, true);
+
+            int x = BOARD_WIDTH - border - (int) (i * cardSpace) - cardImage.getWidth();
+            int y = border;
+            gfx.drawImage(cardImage, x, y, null);
+
+            i++;
+        }
+    }
+
+    private void paintHand3(Graphics2D gfx)
+    {
+        // TODO Auto-generated method stub
+
     }
 
     private void paintTalon(Graphics2D gfx)
