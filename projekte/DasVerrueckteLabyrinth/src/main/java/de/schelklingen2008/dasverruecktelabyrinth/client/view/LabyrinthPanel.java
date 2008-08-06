@@ -12,6 +12,8 @@ public class LabyrinthPanel extends JPanel
 
     public LabyrinthPanel()
     {
+        setLayout(new BorderLayout());
+
         JButton pushButton1 = new JButton("hier");
         JButton pushButton2 = new JButton("hier");
         JButton pushButton3 = new JButton("hier");
@@ -33,9 +35,9 @@ public class LabyrinthPanel extends JPanel
 
         JPanel buttonsOst = new JPanel();
         buttonsOst.setLayout(new BoxLayout(buttonsOst, BoxLayout.PAGE_AXIS));
-        add(pushButton4);
-        add(pushButton5);
-        add(pushButton6);
+        buttonsOst.add(pushButton4);
+        buttonsOst.add(pushButton5);
+        buttonsOst.add(pushButton6);
 
         JPanel buttonsNord = new JPanel();
         buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.PAGE_AXIS));
@@ -45,19 +47,19 @@ public class LabyrinthPanel extends JPanel
 
         JPanel buttonsWest = new JPanel();
         buttonsWest.setLayout(new BoxLayout(buttonsWest, BoxLayout.PAGE_AXIS));
-        add(pushButton10);
-        add(pushButton11);
-        add(pushButton12);
+        buttonsWest.add(pushButton10);
+        buttonsWest.add(pushButton11);
+        buttonsWest.add(pushButton12);
 
-        setLayout(new BorderLayout());
         add(buttonsSued, BorderLayout.SOUTH);
         add(buttonsNord, BorderLayout.NORTH);
         add(buttonsWest, BorderLayout.WEST);
         add(buttonsOst, BorderLayout.EAST);
-//
-//        BoardView b = new BoardView();
-//        add(b, BorderLayout.CENTER);
-//    }
+
+        //
+        // BoardView b = new BoardView();
+        // add(b, BorderLayout.CENTER);
+    }
 
     public static void main(String[] args)
     {
