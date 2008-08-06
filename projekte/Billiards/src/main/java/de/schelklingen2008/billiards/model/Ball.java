@@ -10,6 +10,7 @@ import static java.awt.Color.YELLOW;
 
 import java.awt.Color;
 
+import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.util.Vector2d;
 
 public class Ball
@@ -20,33 +21,32 @@ public class Ball
         BLACK, WHITE, SOLID, STRIPED
     }
 
-    private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 38d, 0.75 * MAX_X - 19d, 0.75 * MAX_X,
-            0.75 * MAX_X + 19d, 0.75 * MAX_X + 38d         };
+    private static final double[] INITIAL_BALL_POSITIONS_X =
+        { 0.75 * MAX_X - 34.8d, 0.75 * MAX_X - 17.4d, 0.75 * MAX_X, 0.75 * MAX_X + 17.4d, 0.75 * MAX_X + 34.8d };
 
-    private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 44d, 0.5 * MAX_Y - 33d,
-            0.5 * MAX_Y - 22d, 0.5 * MAX_Y - 11d, 0.5 * MAX_Y, 0.5 * MAX_Y + 11d, 0.5 * MAX_Y + 22d, 0.5 * MAX_Y + 33d,
-            0.5 * MAX_Y + 44d                              };
+    private static final double[] INITIAL_BALL_POSITIONS_Y =
+        { 0.5 * MAX_Y - 10d, 0.5 * MAX_Y - 30d, 0.5 * MAX_Y - 20d, 0.5 * MAX_Y - 10d, 0.5 * MAX_Y, 0.5 * MAX_Y + 10d,
+         0.5 * MAX_Y + 20d, 0.5 * MAX_Y + 30d, 0.5 * MAX_Y + 40d };
 
-    public static final Vector2d[] INITIAL_BALL_POSITIONS   = {
-            new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[5]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[3]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[6]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[2]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[7]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[5]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[3]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[1]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[8]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[6]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[4]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
+    public static final Vector2d[] INITIAL_BALL_POSITIONS =
+        { new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[5]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[3]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[6]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[2]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[7]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[5]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[3]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[1]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[8]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[6]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[4]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
 
-    public static final Color[]    BALL_COLORS              = { YELLOW, GREEN, new Color(0xFF4000), RED, BLUE,
-            new Color(0x800080), // PURPLE
-            new Color(0x804000)                            // MAROON
-                                                            };
+    public static final Color[] BALL_COLORS = { YELLOW, GREEN, new Color(0xFF4000), RED, BLUE, new Color(0x800080), // PURPLE
+                                               new Color(0x804000) // MAROON
+        };
 
     @Override
     public int hashCode()
@@ -79,10 +79,10 @@ public class Ball
     }
 
     private BallType type;
-    private Color    color;
+    private Color color;
     private Vector2d position;
     private Vector2d velocity;
-    private boolean  sunk;
+    private boolean sunk;
 
     public Ball(BallType type, Color color)
     {
@@ -146,8 +146,6 @@ public class Ball
     double getNextWallCollision()
     {
 
-        double[] collisionTimes = new double[4];
-
         double vx = velocity.getX(), vy = velocity.getY();
         double xCollisionTime, yCollisionTime;
 
@@ -177,13 +175,24 @@ public class Ball
             yCollisionTime = Double.NaN;
         }
 
+        double result;
+
         if (!Double.isNaN(xCollisionTime) && (Double.isNaN(yCollisionTime) || xCollisionTime < yCollisionTime))
         {
-            return xCollisionTime;
+            result = xCollisionTime;
         }
         else
         {
-            return yCollisionTime;
+            result = yCollisionTime;
+        }
+
+        if (Double.isNaN(result))
+        {
+            return Double.NaN;
+        }
+        else
+        {
+            return adjustCollisionTime(result);
         }
 
     }
@@ -207,47 +216,84 @@ public class Ball
         double b = 2 * (deltaX * deltaVX + deltaY * deltaVY);
         double c = deltaX * deltaX + deltaY * deltaY - 4 * BALL_RADIUS * BALL_RADIUS;
 
+        double result = Double.NaN;
+
         if (a == 0)
         {
-            if (b == 0)
-            {
-                if (c == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Double.NaN;
-                }
-            }
-            else
+            if (b != 0)
             {
                 return -c / b;
             }
         }
+        else
+        {
 
-        double disc = b * b - 4 * a * c;
+            double disc = b * b - 4 * a * c;
 
-        if (disc < 0)
+            if (disc >= 0)
+            {
+                result = (-b - Math.sqrt(disc)) / (2 * a);
+            }
+        }
+
+        if (Double.isNaN(result) || result < 0)
         {
             return Double.NaN;
         }
         else
         {
-            double t = (-b - Math.sqrt(disc)) / (2 * a);
-            if (t >= 0)
+            if (isInMotion())
             {
-                return t;
+                return adjustCollisionTime(result);
             }
             else
             {
-                if ((-b + Math.sqrt(disc)) / (2 * a) > 0)
-                {
-                    System.out.println("Aua!");
-                }
+                return other.adjustCollisionTime(result);
+            }
+        }
 
+    }
+
+    public double adjustCollisionTime(double t)
+    {
+
+        double a = -0.5 * Math.cos(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
+        double b = velocity.getX();
+        double c = -velocity.getX() * t;
+        double result1 = Double.NaN, result2 = Double.NaN;
+        double disc = Double.NaN;
+
+        if (a == 0)
+        {
+            if (b != 0)
+            {
+                result1 = -c / b;
+            }
+        }
+        else
+        {
+            disc = b * b - 4 * a * c;
+            if (disc >= 0)
+            {
+                result1 = (-b + Math.sqrt(disc)) / (2 * a);
+                result2 = (-b - Math.sqrt(disc)) / (2 * a);
+            }
+        }
+
+        if (Double.isNaN(result1) || result1 < 0 || !Double.isNaN(result2) && result2 < result1)
+        {
+            if (Double.isNaN(result2) || result2 < 0)
+            {
                 return Double.NaN;
             }
+            else
+            {
+                return result2;
+            }
+        }
+        else
+        {
+            return result1;
         }
 
     }
@@ -259,11 +305,31 @@ public class Ball
 
     void move(double deltaT)
     {
-        // TODO Add friction
+        if (!isInMotion())
+        {
+            return;
+        }
 
-        position = position.add(velocity.scale(deltaT));
+        final double EPSILON = 0.00001d;
+
+        double frictionFactor = GlobalConstants.FRICTION_FACTOR * deltaT / velocity.getLength();
+
+        if (1 - frictionFactor < EPSILON)
+        {
+            velocity = Vector2d.ZERO;
+            position = position.add(velocity.scale(0.5 * deltaT));
+        }
+        else
+        {
+            velocity = velocity.scale(1 - frictionFactor);
+            position =
+                position.add(velocity.scale(deltaT))
+                        .subtract(
+                                  Vector2d.getPolarVector(velocity.getAngle(), 0.5 * GlobalConstants.FRICTION_FACTOR
+                                                                               * deltaT * deltaT));
+
+        }
 
         checkVelocity();
     }
-
 }

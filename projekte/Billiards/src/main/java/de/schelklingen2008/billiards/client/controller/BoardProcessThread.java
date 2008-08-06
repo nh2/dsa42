@@ -1,4 +1,4 @@
-package de.schelklingen2008.billiards.client;
+package de.schelklingen2008.billiards.client.controller;
 
 import de.schelklingen2008.billiards.client.view.BoardView;
 import de.schelklingen2008.billiards.model.GameModel;
@@ -26,7 +26,7 @@ public class BoardProcessThread extends Thread
 
         long lastTick = System.currentTimeMillis();
 
-        while (true)
+        while (gameModel.isInMotion())
         {
             long tick = System.currentTimeMillis();
 
@@ -36,7 +36,7 @@ public class BoardProcessThread extends Thread
 
             try
             {
-                Thread.sleep(1); // TODO Adjust this
+                Thread.sleep(30); // TODO Adjust this
             }
             catch (InterruptedException e)
             {

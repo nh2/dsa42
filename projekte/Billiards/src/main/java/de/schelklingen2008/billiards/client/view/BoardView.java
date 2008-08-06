@@ -21,7 +21,6 @@ import java.util.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.billiards.client.BoardProcessThread;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
@@ -99,7 +98,7 @@ public class BoardView extends JPanel implements GameChangeListener
         ball.setVelocity(new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(ball.getPosition()));
         gameModel.inMotion = true;
 
-        new BoardProcessThread(gameModel, this).start();
+        controller.startBoardProcessThread(this);
 
     }
 

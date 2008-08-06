@@ -19,16 +19,16 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class GameModel
 {
 
-    private Player[]   players      = new Player[2];
-    private Player     turnHolder   = null;
+    private Player[] players = new Player[2];
+    private Player turnHolder = null;
     // TODO Make this private
-    public boolean     inMotion     = false;                // Are there any balls in
+    public boolean inMotion = false; // Are there any balls in
     // motion?
 
-    private List<Ball> balls        = new ArrayList<Ball>();
+    private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
-    private Ball       whiteBall, blackBall;
+    private Ball whiteBall, blackBall;
 
     public boolean isInMotion()
     {
@@ -101,27 +101,29 @@ public class GameModel
             ball.setVelocity(Vector2d.ZERO);
         }
         // TODO remove debugging stuff
-        Collections.shuffle(balls);
+
+        List<Ball> tmpBalls = new ArrayList<Ball>(balls);
+        Collections.shuffle(tmpBalls);
 
         whiteBall.setPosition(new Vector2d(200, 200));
         blackBall.setPosition(new Vector2d(600, 200));
 
-        if (balls.get(balls.size() - 1).getType().equals(balls.get(balls.size() - 5).getType()))
+        if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
         {
-            BallType ball2Type = balls.get(balls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED
-                    : BallType.SOLID;
-            for (int i = 0; i < balls.size(); i++)
+            BallType ball2Type =
+                tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
+            for (int i = 0; i < tmpBalls.size(); i++)
             {
-                if (balls.get(i).getType() == ball2Type)
+                if (tmpBalls.get(i).getType() == ball2Type)
                 {
-                    Collections.swap(balls, i, balls.size() - 1);
+                    Collections.swap(tmpBalls, i, tmpBalls.size() - 1);
                     break;
                 }
             }
         }
 
         int i = 0;
-        for (Ball ball : balls)
+        for (Ball ball : tmpBalls)
         {
             if (ball == whiteBall || ball == blackBall)
             {

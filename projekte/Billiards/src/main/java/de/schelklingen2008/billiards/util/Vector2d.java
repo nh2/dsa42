@@ -23,6 +23,11 @@ public class Vector2d
         this.y = y;
     }
 
+    public static Vector2d getPolarVector(double angle, double length)
+    {
+        return new Vector2d(cos(angle) * length, sin(angle) * length);
+    }
+
     @Override
     public int hashCode()
     {

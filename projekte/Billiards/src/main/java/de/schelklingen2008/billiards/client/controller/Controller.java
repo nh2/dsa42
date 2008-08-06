@@ -22,6 +22,7 @@ import com.threerings.util.MessageBundle;
 
 import de.schelklingen2008.billiards.client.Constants;
 import de.schelklingen2008.billiards.client.model.GameContext;
+import de.schelklingen2008.billiards.client.view.BoardView;
 import de.schelklingen2008.billiards.client.view.GamePanel;
 import de.schelklingen2008.billiards.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
@@ -31,15 +32,18 @@ import de.schelklingen2008.util.LoggerFactory;
  */
 public class Controller extends GameController
 {
-    private static final Logger sLogger = LoggerFactory.create();
 
-    private GameContext gameContext = new GameContext();
+    private static final Logger      sLogger         = LoggerFactory.create();
+
+    private GameContext              gameContext     = new GameContext();
 
     private List<GameChangeListener> changeListeners = new ArrayList<GameChangeListener>();
 
-    private SharedState sharedState;
+    private SharedState              sharedState;
 
-    private ToyBoxContext toyBoxContext;
+    private ToyBoxContext            toyBoxContext;
+
+    private BoardProcessThread       boardProcessThread;
 
     @Override
     public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
@@ -130,8 +134,16 @@ public class Controller extends GameController
         return toyBoxContext;
     }
 
-    private class SharedStateListener implements AttributeChangeListener, SetListener,
-            ElementUpdateListener
+    public void startBoardProcessThread(BoardView boardView)
+    {
+        if (boardProcessThread == null || !boardProcessThread.isAlive())
+        {
+            boardProcessThread = new BoardProcessThread(gameContext.getGameModel(), boardView);
+            boardProcessThread.start();
+        }
+    }
+
+    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener
     {
 
         public void attributeChanged(AttributeChangedEvent event)
