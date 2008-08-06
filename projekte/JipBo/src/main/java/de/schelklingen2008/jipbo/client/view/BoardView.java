@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import de.schelklingen2008.jipbo.client.Constants;
 import de.schelklingen2008.jipbo.client.controller.Controller;
 import de.schelklingen2008.jipbo.client.controller.GameChangeListener;
 import de.schelklingen2008.jipbo.client.model.GameContext;
@@ -32,6 +33,7 @@ public class BoardView extends JPanel implements GameChangeListener
         controller.addChangeListener(this);
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setBackground(Constants.COL_BOARD_BACKGROUND);
         // Other Players Panel
         int[] pA = { 2, 4, 8, 10, 0 };
         int[] pE = { 7, 2, 8, 1, 4 };
@@ -46,7 +48,7 @@ public class BoardView extends JPanel implements GameChangeListener
         JLabel playerBLabel = new JLabel("Spieler B");
         playerBLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(playerBLabel);
-        BoardPanel playerC = new BoardPanel(pE, false, new Color(000000));
+        BoardPanel playerC = new BoardPanel(pE, false, Color.CYAN);
         add(playerC);
 
         // BoardPanel playerD = new BoardPanel(pA);
@@ -54,7 +56,7 @@ public class BoardView extends JPanel implements GameChangeListener
         JLabel playerDLabel = new JLabel("Spieler D");
         playerDLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(playerDLabel);
-        BoardPanel playerD = new BoardPanel(pE, false, Color.YELLOW);
+        BoardPanel playerD = new BoardPanel(pE, false, Color.decode("#00DC143C"));
         add(playerD);
 
         // Public Cards Panel
@@ -72,13 +74,18 @@ public class BoardView extends JPanel implements GameChangeListener
         myLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(myLabel);
         int[] pOwn = { 0, 0, 0, 0, 0 };
-        BoardPanel myBoardPanel = new BoardPanel(pE, false, Color.magenta);
+        BoardPanel myBoardPanel = new BoardPanel(pE, false, Color.decode("#00005500"));
         myBoardPanel.setValue(pOwn);
         add(myBoardPanel);
+        JPanel drawPilePanel = new JPanel();
+        drawPilePanel.setBackground(Color.decode("#00005500"));
+
         JLabel drawPileLabel = new JLabel("Meine Hand");
         drawPileLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(drawPileLabel);
-        BoardPanel drawPile = new BoardPanel(pE, true, getBackground());
+        drawPileLabel.setForeground(Color.WHITE);
+        drawPilePanel.add(drawPileLabel);
+        add(drawPilePanel);
+        BoardPanel drawPile = new BoardPanel(pE, true, Color.decode("#00005500"));
         add(drawPile);
 
         addMouseMotionListener(new MouseMotionAdapter()
@@ -114,6 +121,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
+        getGameModel();
         repaint();
     }
 
