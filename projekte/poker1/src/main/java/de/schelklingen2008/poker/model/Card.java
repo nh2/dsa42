@@ -3,8 +3,15 @@ package de.schelklingen2008.poker.model;
 public class Card
 {
 
-    private int number;
     private int suit;
+    private int number;
+
+    public Card(int s, int n)
+    {
+
+        suit = s;
+        number = n;
+    }
 
     public String getValue()
     {
@@ -20,22 +27,28 @@ public class Card
             case 12:
                 return "a";
         }
-        return "Fehler";
+        return null;
     }
 
-    public String getColor()
+    public String getSuit()
     {
-        // Wandelt die in color in die entsprechende Farbe um
-        return "";
+        switch (suit)
+        {
+            case 0:
+                return "clubs";
+            case 1:
+                return "spades";
+            case 2:
+                return "hearts";
+            case 3:
+                return "diamonds";
+        }
+        return null;
     }
 
     public String getName()
     {
-        return getColor() + " " + getValue();
+        return getSuit() + " " + getValue();
     }
 
-    public String getFileName()
-    {
-        return "";
-    }
 }

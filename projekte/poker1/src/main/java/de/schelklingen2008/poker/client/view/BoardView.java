@@ -5,7 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,6 +20,7 @@ import de.schelklingen2008.poker.client.Constants;
 import de.schelklingen2008.poker.client.controller.Controller;
 import de.schelklingen2008.poker.client.controller.GameChangeListener;
 import de.schelklingen2008.poker.client.model.GameContext;
+import de.schelklingen2008.poker.model.Card;
 import de.schelklingen2008.poker.model.GameModel;
 
 /**
@@ -24,7 +29,9 @@ import de.schelklingen2008.poker.model.GameModel;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Controller controller;
+    private Controller        controller;
+
+    private BufferedImage[][] imageBuffer = new BufferedImage[4][13];
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -34,36 +41,7 @@ public class BoardView extends JPanel implements GameChangeListener
         this.controller = controller;
         controller.addChangeListener(this);
 
-        // addMouseMotionListener(new MouseMotionAdapter()
-        // {
-        //
-        // @Override
-        // public void mouseMoved(MouseEvent e)
-        // {
-        // moved(e);
-        // }
-        // });
-        //
-        // addMouseListener(new MouseAdapter()
-        // {
-        //
-        // @Override
-        // public void mousePressed(MouseEvent e)
-        // {
-        // pressed(e);
-        // }
-        // });
     }
-
-    // private void moved(MouseEvent e)
-    // {
-    // // TODO respond to player´s mouse movements
-    // }
-    //
-    // private void pressed(MouseEvent e)
-    // {
-    // // TODO respond to player´s mouse clicks
-    // }
 
     @Override
     public Dimension getPreferredSize()
@@ -79,6 +57,30 @@ public class BoardView extends JPanel implements GameChangeListener
         // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
+    }
+
+    public static String getFileName(Card card)
+    {
+        return card.getSuit() + "-" + card.getValue() + "-150.png";
+    }
+
+    public void fillImageArray()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 13; j++)
+            {
+                try
+                {
+                    imageBuffer[i][j] = ImageIO.read(new File(getFileName(new Card(i, j))));
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException("Kann Bild nicht laden.");
+                }
+            }
+        }
+
     }
 
     private void paintBackground(Graphics2D gfx)
@@ -240,4 +242,5 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         return controller.getGameContext();
     }
+
 }
