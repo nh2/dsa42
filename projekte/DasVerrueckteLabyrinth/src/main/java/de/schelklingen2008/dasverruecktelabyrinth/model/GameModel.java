@@ -188,6 +188,12 @@ public class GameModel
         return copyBoard(board);
     }
 
+    public Map<PlayerType, PlayerCards> getPlayerCardsMap()
+    {
+
+        return playerTypes;
+    }
+
     private static Tile[][] copyBoard(Tile[][] s)
     {
         Tile[][] copy = new Tile[SIZE][SIZE];

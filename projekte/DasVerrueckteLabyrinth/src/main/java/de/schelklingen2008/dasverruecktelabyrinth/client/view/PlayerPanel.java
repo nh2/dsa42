@@ -5,25 +5,32 @@ import java.awt.Button;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerCards;
+import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
+import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
 public class PlayerPanel extends JPanel
 {
 
-    BufferedImage curveOne, curveTwo, curveThree, curveFour;
-    BufferedImage cross, horizontal, vertikal;
-    BufferedImage eule, krone, flaschengeist, ring, motte, spinne;
-    BufferedImage fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
-    BufferedImage troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
-    BufferedImage schmuckkasten, schluessel, schwert, gespenst;
+    private Controller controller;
 
-    public PlayerPanel()
+    BufferedImage      curveOne, curveTwo, curveThree, curveFour;
+    BufferedImage      cross, horizontal, vertikal;
+    BufferedImage      eule, krone, flaschengeist, ring, motte, spinne;
+    BufferedImage      fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
+    BufferedImage      troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
+    BufferedImage      schmuckkasten, schluessel, schwert, gespenst;
+
+    public PlayerPanel(Controller controller)
+
     {
+        controller = controller;
         setLayout(new BorderLayout());
 
         JPanel drehButtons = new JPanel();
@@ -74,9 +81,31 @@ public class PlayerPanel extends JPanel
         }
 
         JPanel playerCards = new JPanel();
-        List<TreasureCards> openCards = PlayerCards.
+        Map PlayerCards = getGameModel().getPlayerCardsMap();
 
-        insertTile.setLayout(new BorderLayout());
+    }
 
+    private BufferedImage getInsert()
+    {
+        BufferedImage temp = null;
+        if (getGameModel().getInsertTile().isCross() == true) temp = cross;
+        if (getGameModel().getInsertTile().isCurve1() == true) temp = curveOne;
+        if (getGameModel().getInsertTile().isCurve2() == true) temp = curveTwo;
+        if (getGameModel().getInsertTile().isCurve3() == true) temp = curveThree;
+        if (getGameModel().getInsertTile().isCurve4() == true) temp = curveFour;
+        if (getGameModel().getInsertTile().isHorizontal() == true) temp = horizontal;
+        if (getGameModel().getInsertTile().isVertikal() == true) temp = vertikal;
+
+        return temp;
+    }
+
+    private GameModel getGameModel()
+    {
+        return getGameContext().getGameModel();
+    }
+
+    private GameContext getGameContext()
+    {
+        return controller.getGameContext();
     }
 }
