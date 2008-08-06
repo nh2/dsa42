@@ -2,6 +2,7 @@ package de.schelklingen2008.risiko.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,6 +28,8 @@ import de.schelklingen2008.risiko.client.controller.Controller;
 public class GamePanel extends JPanel implements PlaceView
 {
 
+    private JTextArea historyDisplay = new JTextArea();
+
     private class ActionListenerImplementation implements ActionListener
     {
 
@@ -45,6 +48,7 @@ public class GamePanel extends JPanel implements PlaceView
 
     /**
      * Creates a TestGame panel and its associated interface components.
+     * @
      */
     public GamePanel(Controller controller)
     {
@@ -79,12 +83,14 @@ public class GamePanel extends JPanel implements PlaceView
         sidePanel.add(turn, GroupLayout.FIXED);
 
         // add a history panel
-        JTextArea historyDisplay = new JTextArea("Historyausgabe", 4, 1);
+        historyDisplay.setForeground(Color.RED);
         historyDisplay.setOpaque(false);
         historyDisplay.setEditable(false);
-        sidePanel.add(new JScrollPane(historyDisplay), GroupLayout.FIXED);
-        historyDisplay.append("auhfdliw");
-
+        JScrollPane j = new JScrollPane(historyDisplay);
+        j.setPreferredSize(new Dimension(250, 400));
+        sidePanel.add(j, GroupLayout.FIXED);
+        addHistoryLine("Frankreich - Spanien");
+        addHistoryLine("Verluste: 2:1");
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
 
@@ -107,5 +113,11 @@ public class GamePanel extends JPanel implements PlaceView
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */
     public void willEnterPlace(PlaceObject placeObject)
     {
+    }
+
+    public void addHistoryLine(String s)
+    {
+
+        historyDisplay.append(s + "\n");
     }
 }
