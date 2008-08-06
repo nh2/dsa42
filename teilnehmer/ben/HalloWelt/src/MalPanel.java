@@ -53,11 +53,24 @@ public class MalPanel extends JPanel
     {
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.BLACK);
-        g.fillOval(50, 50, 10, 10);
+        g.fillOval(100, 100, 10, 10);
 
-        for (int i = 1; i < 11; i++)
+        gfx.translate(50, 10);
+        drawCards(gfx);
+        gfx.translate(-50, -10);
+
+        gfx.translate(10, 450);
+        gfx.rotate(-Math.PI / 2);
+        drawCards(gfx);
+        gfx.rotate(Math.PI / 2);
+        gfx.translate(-10, -450);
+    }
+
+    private void drawCards(Graphics2D gfx)
+    {
+        for (int i = 0; i < 11; i++)
         {
-            gfx.drawImage(karte, i * 20, i * 20, 37, 53, null);
+            gfx.drawImage(karte, i * 20, 0, null);
         }
     }
 
