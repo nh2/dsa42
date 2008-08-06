@@ -36,7 +36,7 @@ public class BoardProcessThread extends Thread
 
             try
             {
-                Thread.sleep(30);
+                Thread.sleep(1); // TODO Adjust this
             }
             catch (InterruptedException e)
             {

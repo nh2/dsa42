@@ -196,6 +196,13 @@ public class Ball
         double deltaVX = velocity.getX() - other.velocity.getX();
         double deltaVY = velocity.getY() - other.velocity.getY();
 
+        if (deltaX * deltaX + deltaY * deltaY < 4 * BALL_RADIUS * BALL_RADIUS)
+        {
+            double factor = 400 / new Vector2d(deltaX, deltaY).getLength();
+            deltaX *= factor;
+            deltaY *= factor;
+        }
+
         double a = deltaVX * deltaVX + deltaVY * deltaVY;
         double b = 2 * (deltaX * deltaVX + deltaY * deltaVY);
         double c = deltaX * deltaX + deltaY * deltaY - 4 * BALL_RADIUS * BALL_RADIUS;
@@ -234,6 +241,11 @@ public class Ball
             }
             else
             {
+                if ((-b + Math.sqrt(disc)) / (2 * a) > 0)
+                {
+                    System.out.println("Aua!");
+                }
+
                 return Double.NaN;
             }
         }

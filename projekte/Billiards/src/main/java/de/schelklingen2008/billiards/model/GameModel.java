@@ -85,6 +85,8 @@ public class GameModel
         }
 
         ballsOnTable.clear();
+
+        // TODO Change this
         ballsOnTable.addAll(balls);
 
         resetBalls();
@@ -98,7 +100,7 @@ public class GameModel
         {
             ball.setVelocity(Vector2d.ZERO);
         }
-
+        // TODO remove debugging stuff
         Collections.shuffle(balls);
 
         whiteBall.setPosition(new Vector2d(200, 200));
@@ -118,7 +120,6 @@ public class GameModel
             }
         }
 
-        // TODO initial ball positions
         int i = 0;
         for (Ball ball : balls)
         {
@@ -215,7 +216,7 @@ public class GameModel
                 remainingTime = 0;
             }
 
-        } while (remainingTime >= EPSILON);
+        } while (remainingTime > 0);
 
     }
 
@@ -269,9 +270,6 @@ public class GameModel
 
             ball1.setVelocity(v1.rotate(alpha));
             ball2.setVelocity(v2.rotate(alpha));
-
-            ball1.move(0.001d);
-            ball2.move(0.001d);
 
         }
 
