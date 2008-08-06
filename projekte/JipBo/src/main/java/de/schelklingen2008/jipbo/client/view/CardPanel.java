@@ -35,11 +35,11 @@ public class CardPanel extends JPanel
     {
         if (mIsBig)
         {
-            return new Dimension(63 + 8, 100);
+            return new Dimension(63 + 12, 140);
         }
         else
         {
-            return new Dimension(50 + 6, 100);
+            return new Dimension(50 + 12, 140);
         }
     }
 
@@ -51,11 +51,11 @@ public class CardPanel extends JPanel
 
         if (mIsBig)
         {
-            gfx.drawImage(drawCard(mN), 4, 0, 63, 100, null);
+            gfx.drawImage(drawCard(mN), 6, 20, 63, 100, null);
         }
         else
         {
-            gfx.drawImage(drawCard(mN), 3, 10, 50, 80, null);
+            gfx.drawImage(drawCard(mN), 6, 30, 50, 80, null);
         }
 
         if (mRotate) gfx.rotate(Math.PI / 24);

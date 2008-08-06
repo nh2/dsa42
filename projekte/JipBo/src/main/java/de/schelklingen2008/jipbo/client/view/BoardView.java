@@ -5,9 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.jipbo.client.controller.Controller;
@@ -34,34 +34,52 @@ public class BoardView extends JPanel implements GameChangeListener
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         // Other Players Panel
         int[] pA = { 2, 4, 8, 10, 0 };
-        int[] pE = { 7, 2, 8, 1, -1 };
-        BoardPanel playerA = new BoardPanel(pA);
+        int[] pE = { 7, 2, 8, 1, 4 };
+        JLabel playerALabel = new JLabel("Spieler A");
+        add(playerALabel);
+        playerALabel.setAlignmentX(CENTER_ALIGNMENT);
+        BoardPanel playerA = new BoardPanel(pA, false, Color.BLUE);
         add(playerA);
-        BoardPanel playerB = new BoardPanel(pA);
-        add(playerB);
-        BoardPanel playerC = new BoardPanel(pE);
+
+        // BoardPanel playerB = new BoardPanel(pA, false, Color.RED);
+        // add(playerB);
+        JLabel playerBLabel = new JLabel("Spieler B");
+        playerBLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(playerBLabel);
+        BoardPanel playerC = new BoardPanel(pE, false, new Color(000000));
         add(playerC);
-        BoardPanel playerD = new BoardPanel(pA);
+
+        // BoardPanel playerD = new BoardPanel(pA);
+        // add(playerD);
+        JLabel playerDLabel = new JLabel("Spieler D");
+        playerDLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(playerDLabel);
+        BoardPanel playerD = new BoardPanel(pE, false, Color.YELLOW);
         add(playerD);
-        BoardPanel playerE = new BoardPanel(pE);
-        add(playerE);
+
         // Public Cards Panel
-        JPanel publicCards = new JPanel();
-        publicCards.setLayout(new BoxLayout(publicCards, BoxLayout.LINE_AXIS));
-        publicCards.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        publicCards.add(new CardPanel(-1, true, false));
-        publicCards.add(Box.createHorizontalStrut(20));
-        publicCards.add(new CardPanel(4, true, false));
-        publicCards.add(new CardPanel(9, true, false));
-        publicCards.add(new CardPanel(6, true, false));
-        publicCards.add(new CardPanel(0, true, false));
+        JLabel publicLabel = new JLabel("Ablegestapel");
+        publicLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(publicLabel);
+        int[] pPC = { 0, 7, 12, 12, -1 };
+        BoardPanel publicCards = new BoardPanel(pPC, false, getBackground());
         add(publicCards);
 
+        // Spacer
+        add(Box.createVerticalStrut(20));
         // Own Cards Panel
+        JLabel myLabel = new JLabel("Meine Karten");
+        myLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(myLabel);
         int[] pOwn = { 0, 0, 0, 0, 0 };
-        BoardPanel own = new BoardPanel(pE);
-        own.setValue(pOwn);
-        add(own);
+        BoardPanel myBoardPanel = new BoardPanel(pE, false, Color.magenta);
+        myBoardPanel.setValue(pOwn);
+        add(myBoardPanel);
+        JLabel drawPileLabel = new JLabel("Meine Hand");
+        drawPileLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(drawPileLabel);
+        BoardPanel drawPile = new BoardPanel(pE, true, getBackground());
+        add(drawPile);
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
