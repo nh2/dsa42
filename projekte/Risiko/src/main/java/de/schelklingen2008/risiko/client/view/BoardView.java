@@ -102,7 +102,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBoard(Graphics2D gfx)
     {
-        paintCountry(gfx, 1);
+        paintCountrys(gfx);
+        paintUnits(gfx);
     }
 
     public void gameChanged()
@@ -120,7 +121,7 @@ public class BoardView extends JPanel implements GameChangeListener
         return controller.getGameContext();
     }
 
-    private void paintCountry(Graphics2D gfx, int i)
+    private void paintCountrys(Graphics2D gfx)
     {
         for (int j = 0; j < getGameModel().getCountryArray().length; j++)
         {
@@ -137,5 +138,16 @@ public class BoardView extends JPanel implements GameChangeListener
             // gfx.drawString("Großbritanien", 210, 538);
         }
 
+    }
+
+    private void paintUnits(Graphics2D gfx)
+    {
+
+        for (int i = 0; i < getGameModel().getCountryArray().length; i++)
+        {
+            int lUnits = getGameModel().getCountry(i).getUnits();
+            gfx.drawString("" + lUnits, getGameModel().getCountry(i).getPositionNameX(),
+                           getGameModel().getCountry(i).getPositionNameY() + 10);
+        }
     }
 }
