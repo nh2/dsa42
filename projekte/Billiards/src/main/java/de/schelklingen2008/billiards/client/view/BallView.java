@@ -76,7 +76,7 @@ public class BallView extends JPanel
                                                * BALL_RADIUS);
 
                 final int y = (int) (0.5 * STRIPE_HEIGHT);
-                // final int y = (int) Math.round(0.5 * BALL_RADIUS);
+
                 final int angle = (int) Math.round(Math.atan((double) y / (double) x) * 180 / Math.PI);
 
                 if (ball.getType() == BallType.STRIPED)
