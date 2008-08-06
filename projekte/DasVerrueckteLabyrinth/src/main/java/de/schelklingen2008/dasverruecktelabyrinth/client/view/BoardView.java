@@ -14,6 +14,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.GameChangeListener;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
+import de.schelklingen2008.dasverruecktelabyrinth.model.Tile;
 
 /**
  * Displays the main game interface (the board).
@@ -60,14 +61,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        int tx = e.getX() / Constants.SPRITE_SIZE;
-        int ty = e.getY() / Constants.SPRITE_SIZE;
-        if (!isInBounds(tx, ty)) return;
-        if (tx == cx && ty == cy) return;
 
-        cx = tx;
-        cy = ty;
-        repaint();
     }
 
     private void pressed(MouseEvent e)
@@ -75,8 +69,13 @@ public class BoardView extends JPanel implements GameChangeListener
         int tx = e.getX() / Constants.SPRITE_SIZE;
         int ty = e.getY() / Constants.SPRITE_SIZE;
         if (!isInBounds(tx, ty)) return;
-        if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
+        // if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
     }
+
+    // private boolean isLegalMove(int tx, int ty)
+    // {
+    // return getGameModel().isLegalMove(tx, ty, getGameContext().getMyPlayer());
+    // }
 
     private boolean isInBounds(int x, int y)
     {
@@ -103,13 +102,22 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBackground(Graphics2D gfx)
     {
+        gfx.setColor(Constants.COL_BOARD_BACKGROUND);
+        gfx.fillRect(0, 0, getWidth(), getHeight());
     }
 
     private void paintBoard(Graphics2D gfx)
     {
         for (int i = 0; i < getGameModel().getBoard().length; i++)
-
-            ;
+        {
+            for (int j = 0; j < getGameModel().getBoard().length; j++)
+            {
+                Tile[][] temp = getGameModel().getBoard();
+                if(temp[i][j])
+            }
+        }
+        
+       
     }
 
     private void paintTreasureCards()

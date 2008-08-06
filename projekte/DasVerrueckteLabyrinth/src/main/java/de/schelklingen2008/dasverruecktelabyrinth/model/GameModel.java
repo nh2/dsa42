@@ -53,55 +53,6 @@ public class GameModel
 
     }
 
-    private boolean testCurve1(Tile pTile)
-    {
-        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == false) return true;
-
-        return false;
-    }
-
-    private boolean testCurve2(Tile pTile)
-    {
-        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == false) return true;
-
-        return false;
-    }
-
-    private boolean testCurve3(Tile pTile)
-    {
-        if (pTile.getLeft() == false && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == true) return true;
-
-        return false;
-    }
-
-    private boolean testCurve4(Tile pTile)
-    {
-        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == false && pTile.getUp() == true) return true;
-
-        return false;
-    }
-
-    private boolean testHorizontal(Tile pTile)
-    {
-        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == false) return true;
-
-        return false;
-    }
-
-    private boolean testVertikal(Tile pTile)
-    {
-        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == true) return true;
-
-        return false;
-    }
-
-    private boolean testCross(Tile pTile)
-    {
-        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == true) return true;
-
-        return false;
-    }
-
     private List<Tile> generateTiles()
     {
 
@@ -137,20 +88,20 @@ public class GameModel
         pPlayer.setYKoordinate(y);
     }
 
-    public boolean isLegalMove(int x, int y, Player player)
-    {
-        if (isFinished()) return false;
-        if (!isInBounds(x, y)) return false;
-        if (isOccupied(x, y)) return false;
-        if (!isTurnHolder(player)) return false;
-
-        for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
-        {
-            int captureCount = countCapturedPieces(x, y, player, direction);
-            if (captureCount > 0) return true;
-        }
-        return false;
-    }
+    // public boolean isLegalMove(int x, int y, Player player)
+    // {
+    // if (isFinished()) return false;
+    // if (!isInBounds(x, y)) return false;
+    // if (isOccupied(x, y)) return false;
+    // if (!isTurnHolder(player)) return false;
+    //
+    // for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
+    // {
+    // int captureCount = countCapturedPieces(x, y, player, direction);
+    // if (captureCount > 0) return true;
+    // }
+    // return false;
+    // }
 
     private void clear()
     {
