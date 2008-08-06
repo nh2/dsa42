@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);
-        box.add(new BoardView(controller));
+        box.add(new LabyrinthPanel(controller));
         add(box, BorderLayout.CENTER);
 
         // create a side panel to hold our chat and other extra interfaces

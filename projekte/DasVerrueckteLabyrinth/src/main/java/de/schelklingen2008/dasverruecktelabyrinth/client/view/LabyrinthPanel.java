@@ -7,10 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
+import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+
 public class LabyrinthPanel extends JPanel
 {
 
-    public LabyrinthPanel()
+    public LabyrinthPanel(Controller controller)
     {
         setLayout(new BorderLayout());
 
@@ -56,15 +59,19 @@ public class LabyrinthPanel extends JPanel
         add(buttonsWest, BorderLayout.WEST);
         add(buttonsOst, BorderLayout.EAST);
 
-        //
-        // BoardView b = new BoardView();
-        // add(b, BorderLayout.CENTER);
+        BoardView b = new BoardView(controller);
+        add(b, BorderLayout.CENTER);
     }
 
     public static void main(String[] args)
     {
+        Controller controller = new Controller();
+        GameContext ctx = controller.getGameContext();
+        ctx.setPlayers(new String[] { "dick", "doof" });
+        ctx.setMyName("dick");
+
         JFrame frame = new JFrame();
-        frame.getContentPane().add(new LabyrinthPanel());
+        frame.getContentPane().add(new LabyrinthPanel(controller));
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
