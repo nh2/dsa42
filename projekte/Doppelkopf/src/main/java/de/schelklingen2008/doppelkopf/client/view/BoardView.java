@@ -23,7 +23,6 @@ import de.schelklingen2008.doppelkopf.model.GameModel;
 import de.schelklingen2008.doppelkopf.model.Karte;
 import de.schelklingen2008.doppelkopf.model.Spieler;
 import de.schelklingen2008.doppelkopf.model.SpielerListe;
-erListe;
 
 /**
  * Displays the main game interface (the board).
@@ -31,14 +30,14 @@ erListe;
 public class BoardView extends JPanel implements GameChangeListener // TODO Aspekt beim rezise neu berechnen
 {
 
-    private Controller    controller;
+    private Controller        controller;
 
-    private final Color   tischFarbe = Color.decode("#00008800");
-    private Set<ZeichenKarte> karten = new HashSet<ZeichenKarte>();
-    private BufferedImage rückseite;
-    
-    SpielerListe tempListe;
-    Spieler ich;
+    private final Color       tischFarbe = Color.decode("#00008800");
+    private Set<ZeichenKarte> karten     = new HashSet<ZeichenKarte>();
+    private BufferedImage     rueckseite;
+
+    SpielerListe              tempListe;
+    Spieler                   ich;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -70,18 +69,18 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
         try
         {
-            rückseite = ImageIO.read(new File("src/main/resources/bilder/karten/50/back-blue-50-1.png"));
+            rueckseite = ImageIO.read(new File("src/main/resources/bilder/karten/50/back-blue-50-1.png"));
         }
         catch (IOException e1)
         {
             System.err.println("Bild nicht gefunden.");
         }
-        
+
         tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
         ich = tempListe.getSpieler(controller.getGameContext().getMyName());
-//        for (Farbe f : Farbe.values())
-//            for (Bild b : Bild.values())
-//                    karten.add(new ZeichenKarte(new Karte(f, b)));
+        // for (Farbe f : Farbe.values())
+        // for (Bild b : Bild.values())
+        // karten.add(new ZeichenKarte(new Karte(f, b)));
     }
 
     private void moved(MouseEvent e)
@@ -122,46 +121,46 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         gfx.drawRect(120, 420, 560, 150);// Unterer Spielerbereich
 
         // Bis zum aktuellen Spieler vorrücken (mir)
-        while(tempListe.getAnDerReihe() != ich)
-        	tempListe.rotieren();
+        while (tempListe.getAnDerReihe() != ich)
+            tempListe.rotieren();
 
         // Karten zeichnen
-        
+
         // Unten (eigene)
         {
-	        gfx.translate(120, 470);
-	        ZeichenKarte zk;
-	        int i=0;
-	        for (Karte k: tempListe.getAnDerReihe().blatt.getKarten()){
-	        	zk=new ZeichenKarte(k);
-	        	zk.draw(gfx, i*20, 0);
-	        }
-	        gfx.translate(-120, -420);
+            gfx.translate(120, 470);
+            ZeichenKarte zk;
+            int i = 0;
+            for (Karte k : tempListe.getAnDerReihe().blatt.getKarten())
+            {
+                zk = new ZeichenKarte(k);
+                zk.draw(gfx, i * 20, 0);
+            }
+            gfx.translate(-120, -420);
         }
-        
+
         // Links
         gfx.translate(30, 385);
         gfx.rotate(-Math.PI / 2d);
         for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
-        	gfx.drawImage(rückseite, i * 20, 0, null);
+            gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(Math.PI / 2d);
         gfx.translate(-30, -435);
-        
+
         // Oben
         gfx.translate(265, 30);
         for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
-            gfx.drawImage(rückseite, i * 20, 0, null);
+            gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.translate(-265, -30);
 
         // Rechts
         gfx.translate(770, 165);
         gfx.rotate(Math.PI / 2d);
         for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
-            gfx.drawImage(rückseite, i * 20, 0, null);
+            gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(-Math.PI / 2d);
         gfx.translate(-770, -165);
 
-   
         // Karten in der Mitte
         gfx.translate(400, 250);
         gfx.fillRect(0, 0, 30, 70);
