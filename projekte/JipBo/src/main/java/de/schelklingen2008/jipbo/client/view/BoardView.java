@@ -1,12 +1,13 @@
 package de.schelklingen2008.jipbo.client.view;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.jipbo.client.controller.Controller;
@@ -19,6 +20,7 @@ import de.schelklingen2008.jipbo.model.GameModel;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     /**
@@ -29,8 +31,41 @@ public class BoardView extends JPanel implements GameChangeListener
         this.controller = controller;
         controller.addChangeListener(this);
 
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        // Other Players Panel
+        int[] pA = { 2, 4, 8, 10, 0 };
+        int[] pE = { 7, 2, 8, 1, -1 };
+        BoardPanel playerA = new BoardPanel(pA);
+        add(playerA);
+        BoardPanel playerB = new BoardPanel(pA);
+        add(playerB);
+        BoardPanel playerC = new BoardPanel(pE);
+        add(playerC);
+        BoardPanel playerD = new BoardPanel(pA);
+        add(playerD);
+        BoardPanel playerE = new BoardPanel(pE);
+        add(playerE);
+        // Public Cards Panel
+        JPanel publicCards = new JPanel();
+        publicCards.setLayout(new BoxLayout(publicCards, BoxLayout.LINE_AXIS));
+        publicCards.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        publicCards.add(new CardPanel(-1, true, false));
+        publicCards.add(Box.createHorizontalStrut(20));
+        publicCards.add(new CardPanel(4, true, false));
+        publicCards.add(new CardPanel(9, true, false));
+        publicCards.add(new CardPanel(6, true, false));
+        publicCards.add(new CardPanel(0, true, false));
+        add(publicCards);
+
+        // Own Cards Panel
+        int[] pOwn = { 0, 0, 0, 0, 0 };
+        BoardPanel own = new BoardPanel(pE);
+        own.setValue(pOwn);
+        add(own);
+
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -40,6 +75,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -58,30 +94,6 @@ public class BoardView extends JPanel implements GameChangeListener
         // TODO respond to player´s mouse clicks
     }
 
-    @Override
-    public Dimension getPreferredSize()
-    {
-        // TODO calculate correct dimensions for the board view
-        return new Dimension(0, 0);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g)
-    {
-        Graphics2D gfx = (Graphics2D) g;
-        // TODO do proper painting of game state
-        paintBackground(gfx);
-        paintBoard(gfx);
-    }
-
-    private void paintBackground(Graphics2D gfx)
-    {
-    }
-
-    private void paintBoard(Graphics2D gfx)
-    {
-    }
-
     public void gameChanged()
     {
         repaint();
@@ -96,4 +108,5 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         return controller.getGameContext();
     }
+
 }
