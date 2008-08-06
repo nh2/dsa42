@@ -50,7 +50,7 @@ public class GameModel
         }
 
         // discard one card
-        discard.add(talon.pop());
+        discard.push(talon.pop());
     }
 
     public void drawCard()
