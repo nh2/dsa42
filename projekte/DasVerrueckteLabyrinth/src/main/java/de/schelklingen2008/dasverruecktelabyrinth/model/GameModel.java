@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.schelklingen2008.reversi.model.Player;
-
 /**
  * Maintains the rules and the state of the game.
  */
@@ -135,9 +133,9 @@ public class GameModel
 
     public boolean isLegalMove(int pX, int pY, PlayerType pPlayer)
     {
-        boolean temp ;
-        if (isFinished())temp;
-        if (!isInBounds(x, y));
+        boolean temp = false;
+        if (isFinished()) temp = false;
+        if (!isInBounds(pX, pY)) temp = false;
         return temp;
     }
 
