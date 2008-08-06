@@ -114,6 +114,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintTreasureCards()
     {
+        for (int i = 0; i < get)
         ;
     }
 
