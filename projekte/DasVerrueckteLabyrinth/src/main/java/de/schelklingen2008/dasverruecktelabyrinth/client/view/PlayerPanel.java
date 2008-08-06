@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
@@ -39,6 +40,9 @@ public class PlayerPanel extends JPanel
         drehButtons.add(new Button("links drehen"));
 
         JPanel insertTile = new JPanel();
+        insertTile.setLayout(new BorderLayout());
+        BufferedImage insert = getInsert();
+        
 
         try
         {
