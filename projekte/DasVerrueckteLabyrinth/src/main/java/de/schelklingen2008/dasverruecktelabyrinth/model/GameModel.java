@@ -100,6 +100,25 @@ public class GameModel
         temp.add(new Tile(false, true, true, false, TreasureCard.MAUS));
         temp.add(new Tile(false, true, true, false, null));
 
+        temp.add(new Tile(true, false, false, true, TreasureCard.SMARAGD));
+        temp.add(new Tile(true, false, false, true, null));
+        temp.add(new Tile(true, false, false, true, TreasureCard.TOTENKOPF));
+        temp.add(new Tile(true, false, false, true, null));
+        temp.add(new Tile(true, false, false, true, TreasureCard.HELM));
+
+        temp.add(new Tile(false, true, false, true, null));
+        temp.add(new Tile(false, true, false, true, TreasureCard.LEUCHTER));
+        temp.add(new Tile(false, true, false, true, null));
+        temp.add(new Tile(false, true, false, true, TreasureCard.SCHMUCKKASTEN));
+        temp.add(new Tile(false, true, false, true, null));
+
+        temp.add(new Tile(true, false, true, false, TreasureCard.SCHLÜSSEL));
+        temp.add(new Tile(true, false, true, false, null));
+        temp.add(new Tile(true, false, true, false, TreasureCard.SCHWERT));
+        temp.add(new Tile(true, false, true, false, null));
+        temp.add(new Tile(true, false, true, false, TreasureCard.GESPENST));
+
+        // TODO List zu ende
         return temp;
     }
 
