@@ -113,6 +113,7 @@ public class BoardView extends JPanel implements GameChangeListener
         paintHand0(gfx);
         paintHand1(gfx);
         paintHand2(gfx);
+        paintHand3(gfx);
     }
 
     private void paintHand0(Graphics2D gfx)
@@ -212,7 +213,35 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintHand3(Graphics2D gfx)
     {
-        // TODO Auto-generated method stub
+        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player player = players[3];
+        Hand hand = player.getHand();
+        BufferedImage cardImage = getCardImage(null, true);
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
+
+        final int cardCount = hand.size();
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
+
+        double cardSpace = (double) hand_space / (double) cardCount;
+
+        cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+
+        gfx.translate((BOARD_WIDTH - border - cardImage.getHeight()), (BOARD_HEIGHT - border));
+        gfx.rotate(-Math.PI / 2);
+        int i = 0;
+        for (Card card : hand)
+        {
+            cardImage = getCardImage(card, true);
+
+            // int x = 0;
+            // int y = 0;
+
+            gfx.drawImage(cardImage, (int) (i * cardSpace), 0, null);
+
+            i++;
+        }
+        gfx.rotate(Math.PI / 2);
+        gfx.translate(-(BOARD_WIDTH - border - cardImage.getHeight()), -(BOARD_HEIGHT - border));
 
     }
 
