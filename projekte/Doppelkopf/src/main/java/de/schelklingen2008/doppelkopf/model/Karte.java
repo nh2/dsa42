@@ -3,8 +3,8 @@ package de.schelklingen2008.doppelkopf.model;
 public class Karte
 {
 
-    private final Farbe farbe;
-    private final Bild  bild;
+    public final Farbe farbe;
+    public final Bild  bild;
 
     public Karte(Farbe f, Bild b)
     {

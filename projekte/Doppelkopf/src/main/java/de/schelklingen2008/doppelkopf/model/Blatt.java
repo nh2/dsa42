@@ -23,6 +23,11 @@ public class Blatt
         karten.remove(k);
     }
 
+    public int getKartenanzahl()
+    {
+        return karten.size();
+    }
+
     /**
      * Erzeugt eine Kopie des Spielerblattes. Das gewährleistet, dass das Spielerblatt nicht direkt geändert
      * werden kann.
