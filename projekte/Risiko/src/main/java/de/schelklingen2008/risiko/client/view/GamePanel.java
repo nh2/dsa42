@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import com.samskivert.swing.GroupLayout;
 import com.samskivert.swing.MultiLineLabel;
@@ -70,7 +72,18 @@ public class GamePanel extends JPanel implements PlaceView
         turnDisplay.setOpaque(false);
         sidePanel.add(turnDisplay, GroupLayout.FIXED);
 
-        // TODO add a history panel
+        // add a "end turn" button
+        JButton turn = new JButton();
+        turn.addActionListener(new ActionListenerImplementation(controller));
+        turn.setText(controller.getMessage(Constants.MSG_END_OF_TURN));
+        sidePanel.add(turn, GroupLayout.FIXED);
+
+        // add a history panel
+        JTextArea historyDisplay = new JTextArea("Historyausgabe", 4, 1);
+        historyDisplay.setOpaque(false);
+        historyDisplay.setEditable(false);
+        sidePanel.add(new JScrollPane(historyDisplay), GroupLayout.FIXED);
+        historyDisplay.append("auhfdliw");
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
@@ -83,6 +96,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add our side panel to the main display
         add(sidePanel, BorderLayout.EAST);
+
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */

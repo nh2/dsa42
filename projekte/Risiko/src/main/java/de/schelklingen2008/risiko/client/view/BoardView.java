@@ -1,5 +1,6 @@
 package de.schelklingen2008.risiko.client.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -72,7 +73,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
-        // TODO respond to player¥s mouse clicks
+        Color c = new Color(map.getRGB(e.getX(), e.getY()));
+        System.out.println(e.getPoint());
     }
 
     @Override
@@ -90,6 +92,7 @@ public class BoardView extends JPanel implements GameChangeListener
         // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
+
     }
 
     private void paintBackground(Graphics2D gfx)
@@ -99,6 +102,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBoard(Graphics2D gfx)
     {
+        paintCountry(gfx, 1);
     }
 
     public void gameChanged()
@@ -114,5 +118,12 @@ public class BoardView extends JPanel implements GameChangeListener
     private GameContext getGameContext()
     {
         return controller.getGameContext();
+    }
+
+    private void paintCountry(Graphics2D gfx, int i)
+    {
+
+        gfx.drawString("Groﬂbritanien", 210, 538);
+
     }
 }

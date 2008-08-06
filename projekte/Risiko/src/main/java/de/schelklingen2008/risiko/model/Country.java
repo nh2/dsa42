@@ -7,10 +7,10 @@ import java.util.List;
 public class Country
 {
 
-    String        name;
-    int           units;
-    Player        occupier;
-    List<Country> neighbours = new ArrayList<Country>();
-    Color         c;
+    private String        name;
+    private int           units;
+    private Player        occupier;
+    private List<Country> neighbours = new ArrayList<Country>();
+    private Color         c;
 
 }
