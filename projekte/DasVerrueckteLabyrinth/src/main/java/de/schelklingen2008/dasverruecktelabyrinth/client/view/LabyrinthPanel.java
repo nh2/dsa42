@@ -74,8 +74,6 @@ public class LabyrinthPanel extends JPanel
 
         BoardView b = new BoardView(controller);
         add(b, BorderLayout.CENTER);
-        
-        add()
     }
 
     public static void main(String[] args)
