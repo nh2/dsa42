@@ -54,6 +54,9 @@ public class LabyrinthPanel extends JPanel
         add(buttonsNord, BorderLayout.NORTH);
         add(buttonsWest, BorderLayout.WEST);
         add(buttonsOst, BorderLayout.EAST);
+
+        BoardView b = new BoardView(null);
+        add(b, BorderLayout.CENTER);
     }
 
     public static void main(String[] args)
