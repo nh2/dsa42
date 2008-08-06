@@ -58,6 +58,48 @@ public class GameModel
 
         List<Tile> temp = new ArrayList<Tile>();
 
+        // Kreuzungen
+        temp.add(new Tile(true, true, true, true, TreasureCard.EULE));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, TreasureCard.KRONE));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, TreasureCard.FLASCHENGEIST));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, TreasureCard.RING));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, null));
+        temp.add(new Tile(true, true, true, true, TreasureCard.MOTTE));
+        temp.add(new Tile(true, true, true, true, null));
+
+        // Geraden
+
+        temp.add(new Tile(true, true, false, false, TreasureCard.SPINNE));
+        temp.add(new Tile(true, true, false, false, null));
+        temp.add(new Tile(true, true, false, false, TreasureCard.FEE));
+        temp.add(new Tile(true, true, false, false, null));
+        temp.add(new Tile(true, true, false, false, null));
+        temp.add(new Tile(true, true, false, false, TreasureCard.KARTE));
+        temp.add(new Tile(true, true, false, false, null));
+        temp.add(new Tile(true, true, false, false, TreasureCard.DRACHE));
+        temp.add(new Tile(true, true, false, false, TreasureCard.BIBEL));
+
+        temp.add(new Tile(false, false, true, true, null));
+        temp.add(new Tile(false, false, true, true, TreasureCard.EIDECHSE));
+        temp.add(new Tile(false, false, true, true, TreasureCard.GELDBEUTEL));
+        temp.add(new Tile(false, false, true, true, null));
+        temp.add(new Tile(false, false, true, true, TreasureCard.FLEDERMAUS));
+        temp.add(new Tile(false, false, true, true, null));
+        temp.add(new Tile(false, false, true, true, TreasureCard.TROLL));
+
+        // Kurven
+
+        temp.add(new Tile(false, true, true, false, null));
+        temp.add(new Tile(false, true, true, false, TreasureCard.SCARABAEUS));
+        temp.add(new Tile(false, true, true, false, null));
+        temp.add(new Tile(false, true, true, false, TreasureCard.MAUS));
+        temp.add(new Tile(false, true, true, false, null));
+
         return temp;
     }
 
