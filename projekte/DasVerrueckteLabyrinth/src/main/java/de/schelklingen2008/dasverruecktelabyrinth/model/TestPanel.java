@@ -52,7 +52,7 @@ public class TestPanel extends JPanel
 
         for (int i = 1; i < 11; i++)
         {
-            gfx.drawImage(krone, i * 20, i * 20, 37, 53, null);
+            gfx.drawImage(krone, i * 20, i * 20, null);
         }
     }
 

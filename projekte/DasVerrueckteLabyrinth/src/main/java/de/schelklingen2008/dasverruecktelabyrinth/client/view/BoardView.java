@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -41,7 +42,16 @@ public class BoardView extends JPanel implements GameChangeListener
         this.controller = controller;
         controller.addChangeListener(this);
 
-        BufferedImage[] images = new BufferedImage[31];
+        try
+        {
+            curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/curveOne.png"));
+            BufferedImage curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
+
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Kann Bild nicht laden.");
+        }
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
