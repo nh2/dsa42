@@ -3,7 +3,9 @@ package de.schelklingen2008.billiards.client.view;
 import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_HEIGHT;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_WIDTH;
+import static de.schelklingen2008.billiards.GlobalConstants.STRIPE_HEIGHT;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,6 +27,7 @@ import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.model.Ball;
 import de.schelklingen2008.billiards.model.GameModel;
+import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
 /**
@@ -129,10 +132,44 @@ public class BoardView extends JPanel implements GameChangeListener
 
         for (Ball ball : gameModel.getBallsOnTable())
         {
-            gfx.setColor(ball.getColor());
+            if (ball.getType() == BallType.STRIPED)
+            {
+                gfx.setColor(Color.WHITE);
+            }
+            else
+            {
+                gfx.setColor(ball.getColor());
+            }
+
             gfx.fillOval((int) Math.round(ball.getPosition().getX() + BORDER_WIDTH - BALL_RADIUS),
                          (int) Math.round(ball.getPosition().getY() + BORDER_HEIGHT - BALL_RADIUS),
                          (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
+
+            final int x = (int) Math.round(Math.sqrt(1
+                                                     - 0.25
+                                                     * STRIPE_HEIGHT
+                                                     / BALL_RADIUS
+                                                     * STRIPE_HEIGHT
+                                                     / BALL_RADIUS)
+                                           * BALL_RADIUS);
+            final int y = (int) Math.round(0.5 * BALL_RADIUS);
+            final int angle = (int) Math.round(Math.atan((double) y / (double) x) * 180 / Math.PI);
+
+            if (ball.getType() == BallType.STRIPED)
+            {
+                gfx.setColor(ball.getColor());
+                gfx.fillArc((int) Math.round(ball.getPosition().getX() + BORDER_WIDTH - BALL_RADIUS),
+                            (int) Math.round(ball.getPosition().getY() - BALL_RADIUS + BORDER_HEIGHT),
+                            (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS), -angle, 2 * angle);
+
+                gfx.fillArc((int) Math.round(ball.getPosition().getX() + BORDER_WIDTH - BALL_RADIUS),
+                            (int) Math.round(ball.getPosition().getY() - BALL_RADIUS + BORDER_HEIGHT),
+                            (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS), 180 - angle,
+                            2 * angle);
+                gfx.fillRect((int) Math.round(ball.getPosition().getX() - x + BORDER_WIDTH),
+                             (int) Math.round(ball.getPosition().getY() - y + BORDER_HEIGHT), 2 * x, 2 * y);
+
+            }
         }
 
     }
