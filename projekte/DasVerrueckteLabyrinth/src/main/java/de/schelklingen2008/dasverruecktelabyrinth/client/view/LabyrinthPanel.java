@@ -2,6 +2,7 @@ package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,8 +45,11 @@ public class LabyrinthPanel extends JPanel
 
         JPanel buttonsNord = new JPanel();
         buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.LINE_AXIS));
+        buttonsNord.add(Box.createHorizontalStrut(150));
         buttonsNord.add(pushButton7);
+        buttonsNord.add(Box.createHorizontalStrut(103));
         buttonsNord.add(pushButton8);
+        buttonsNord.add(Box.createHorizontalStrut(104));
         buttonsNord.add(pushButton9);
 
         JPanel buttonsWest = new JPanel();
