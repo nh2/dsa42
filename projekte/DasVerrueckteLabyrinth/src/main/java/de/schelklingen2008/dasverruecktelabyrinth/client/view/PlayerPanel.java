@@ -81,8 +81,8 @@ public class PlayerPanel extends JPanel
         }
 
         JPanel playerCards = new JPanel();
-        Map PlayerCards = getGameModel().getPlayerCardsMap();
-
+        Map openCards = getGameModel().getPlayerCardsMap();
+        openCards.
     }
 
     private BufferedImage getInsert()
