@@ -27,15 +27,33 @@ public class LabyrinthPanel extends JPanel
         JPanel buttonsSued = new JPanel();
         buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.PAGE_AXIS));
         add(pushButton1);
+        add(pushButton2);
+        add(pushButton3);
+
         
         JPanel buttonsOst = new JPanel();
         buttonsOst.setLayout(new BoxLayout(buttonsOst, BoxLayout.PAGE_AXIS));
+        add(pushButton4);
+        add(pushButton5);
+        add(pushButton6);
+
+        
         
         JPanel buttonsNord = new JPanel();
         buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.PAGE_AXIS));
+        add(pushButton7);
+        add(pushButton8);
+        add(pushButton9);
+
+        
         
         JPanel buttonsWest = new JPanel();
         buttonsWest.setLayout(new BoxLayout(buttonsWest, BoxLayout.PAGE_AXIS));
+        add(pushButton10);
+        add(pushButton11);
+        add(pushButton12);
+
+        
         
         
         setLayout(new BorderLayout());
