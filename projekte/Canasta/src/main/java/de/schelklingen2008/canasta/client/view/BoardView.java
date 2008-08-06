@@ -268,18 +268,19 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         for (int i = 0; i < cardStack.size(); i++)
         {
-            gfx.drawImage(getCardImage(cardStack.get(i), false), i * 10, 0, null);
+            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 10, 0, null);
         }
-        
-        gfx.setFont(Font.)
+
+        // gfx.setFont(Font.)
         gfx.setPaint(new Color(0xFFFFFF));
         gfx.drawString(((Integer) cardStack.size()).toString(), 10
                                                                 * (cardStack.size() - 1)
                                                                 + 4
-                                                                + getCardImage(cardStack.get(0), false).getWidth(), 20);
+                                                                + getCardImage(cardStack.get(0), 40, false).getWidth(),
+                       20);
         gfx.setPaint(new Color(0xFFFF00));
         gfx.drawString(((Integer) cardStack.getJokerCount()).toString(),
-                       10 * (cardStack.size() - 1) + 4 + getCardImage(cardStack.get(0), false).getWidth(), 40);
+                       10 * (cardStack.size() - 1) + 4 + getCardImage(cardStack.get(0), 40, false).getWidth(), 40);
 
     }
 
