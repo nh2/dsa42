@@ -218,102 +218,33 @@ public class BoardView extends JPanel implements GameChangeListener
                     Tile t = temp[i][j];
                     int x = i * 80 + 20;
                     int y = j * 80 + 20;
-                    if (t.getTC() == TreasureCard.EULE)
-                    {
-                        gfx.drawImage(eule, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.KRONE)
-                    {
-                        gfx.drawImage(krone, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.FLASCHENGEIST)
-                    {
-                        gfx.drawImage(flaschengeist, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.RING)
-                    {
-                        gfx.drawImage(ring, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.MOTTE)
-                    {
-                        gfx.drawImage(motte, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SPINNE)
-                    {
-                        gfx.drawImage(spinne, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.FEE)
-                    {
-                        gfx.drawImage(fee, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.KARTE)
-                    {
-                        gfx.drawImage(karte, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.DRACHE)
-                    {
-                        gfx.drawImage(drache, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.BIBEL)
-                    {
-                        gfx.drawImage(bibel, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.EIDECHSE)
-                    {
-                        gfx.drawImage(eidechse, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.GELDBEUTEL)
-                    {
-                        gfx.drawImage(geldbeutel, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.FLEDERMAUS)
-                    {
-                        gfx.drawImage(fledermaus, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.TROLL)
-                    {
-                        gfx.drawImage(troll, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SCARABAEUS)
-                    {
-                        gfx.drawImage(scarabaeus, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.MAUS)
-                    {
-                        gfx.drawImage(maus, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SMARAGD)
-                    {
-                        gfx.drawImage(smaragd, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.TOTENKOPF)
-                    {
-                        gfx.drawImage(totenkopf, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.HELM)
-                    {
-                        gfx.drawImage(helm, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.LEUCHTER)
-                    {
-                        gfx.drawImage(leuchter, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SCHMUCKKASTEN)
-                    {
-                        gfx.drawImage(schmuckkasten, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SCHLÜSSEL)
-                    {
-                        gfx.drawImage(schluessel, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.SCHWERT)
-                    {
-                        gfx.drawImage(schwert, x, y, null);
-                    }
-                    if (t.getTC() == TreasureCard.GESPENST)
-                    {
-                        gfx.drawImage(gespenst, x, y, null);
-                    }
+                    if (t.getTC() == TreasureCard.EULE) gfx.drawImage(eule, x, y, null);
+
+                    if (t.getTC() == TreasureCard.KRONE) gfx.drawImage(krone, x, y, null);
+
+                    if (t.getTC() == TreasureCard.FLASCHENGEIST) gfx.drawImage(flaschengeist, x, y, null);
+
+                    if (t.getTC() == TreasureCard.RING) gfx.drawImage(ring, x, y, null);
+                    if (t.getTC() == TreasureCard.MOTTE) gfx.drawImage(motte, x, y, null);
+                    if (t.getTC() == TreasureCard.SPINNE) gfx.drawImage(spinne, x, y, null);
+                    if (t.getTC() == TreasureCard.FEE) gfx.drawImage(fee, x, y, null);
+                    if (t.getTC() == TreasureCard.KARTE) gfx.drawImage(karte, x, y, null);
+                    if (t.getTC() == TreasureCard.DRACHE) gfx.drawImage(drache, x, y, null);
+                    if (t.getTC() == TreasureCard.BIBEL) gfx.drawImage(bibel, x, y, null);
+                    if (t.getTC() == TreasureCard.EIDECHSE) gfx.drawImage(eidechse, x, y, null);
+                    if (t.getTC() == TreasureCard.GELDBEUTEL) gfx.drawImage(geldbeutel, x, y, null);
+                    if (t.getTC() == TreasureCard.FLEDERMAUS) gfx.drawImage(fledermaus, x, y, null);
+                    if (t.getTC() == TreasureCard.TROLL) gfx.drawImage(troll, x, y, null);
+                    if (t.getTC() == TreasureCard.SCARABAEUS) gfx.drawImage(scarabaeus, x, y, null);
+                    if (t.getTC() == TreasureCard.MAUS) gfx.drawImage(maus, x, y, null);
+                    if (t.getTC() == TreasureCard.SMARAGD) gfx.drawImage(smaragd, x, y, null);
+                    if (t.getTC() == TreasureCard.TOTENKOPF) gfx.drawImage(totenkopf, x, y, null);
+                    if (t.getTC() == TreasureCard.HELM) gfx.drawImage(helm, x, y, null);
+                    if (t.getTC() == TreasureCard.LEUCHTER) gfx.drawImage(leuchter, x, y, null);
+                    if (t.getTC() == TreasureCard.SCHMUCKKASTEN) gfx.drawImage(schmuckkasten, x, y, null);
+                    if (t.getTC() == TreasureCard.SCHLÜSSEL) gfx.drawImage(schluessel, x, y, null);
+                    if (t.getTC() == TreasureCard.SCHWERT) gfx.drawImage(schwert, x, y, null);
+                    if (t.getTC() == TreasureCard.GESPENST) gfx.drawImage(gespenst, x, y, null);
                 }
             }
         }
@@ -327,10 +258,8 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             int x = player.getXKoordinate() * 80 + 40;
             int y = player.getYKoordinate() * 80 + 40;
-            if (player.getPlayerType() == PlayerType.WHITE)
-            {
-                gfx.setColor(Color.YELLOW);
-            }
+            if (player.getPlayerType() == PlayerType.WHITE) gfx.setColor(Color.YELLOW);
+
             if (player.getPlayerType() == PlayerType.BLACK)
             {
                 gfx.setColor(Color.BLUE);
