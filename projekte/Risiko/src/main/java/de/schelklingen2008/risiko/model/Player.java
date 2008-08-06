@@ -2,8 +2,6 @@ package de.schelklingen2008.risiko.model;
 
 import java.awt.Color;
 
-import com.threerings.crowd.data.BodyObject;
-
 /**
  * Is a simple abstraction for a player entity.
  */
@@ -15,12 +13,15 @@ public class Player
     private int    index;
     private Color  c;
 
-    public Player()
+    public Player(String pName, int pIndex, Color pColor)
     {
-        name = "";
+        name = pName;
+        units = 0;
+        index = pIndex;
+        c = pColor;
     }
 
-    public String getPlayerName(BodyObject bo)
+    public String getPlayerName()
     {
         return name;
     }
@@ -38,6 +39,11 @@ public class Player
     public Color getPlayerColor()
     {
         return c;
+    }
+
+    public void setUnits(int i)
+    {
+        index = i;
     }
 
 }
