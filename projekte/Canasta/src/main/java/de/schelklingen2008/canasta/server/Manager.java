@@ -32,9 +32,9 @@ public class Manager extends GameManager
         super.gameWillStart();
 
         /**
-         * TODO optain player count from controller???
+         * TODO optain player names from controller???
          */
-        gameModel = new GameModel(2);
+        gameModel = new GameModel(new String[] { "Lars", "Alexander" });
         updateSharedState();
     }
 
@@ -51,6 +51,9 @@ public class Manager extends GameManager
 
     private Player getPlayer(BodyObject client)
     {
-        return Player.valueOf(getPlayerIndex(client.username));
+        /**
+         * TODO ????????????
+         */
+        return null;
     }
 }

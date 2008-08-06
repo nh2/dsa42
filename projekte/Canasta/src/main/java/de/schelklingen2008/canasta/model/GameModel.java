@@ -11,9 +11,17 @@ public class GameModel
     private Talon    talon;
     private Discard  discard;
 
-    public GameModel(int playerCnt)
+    public GameModel(String[] playerNames)
     {
-        players = new Player[playerCnt];
+        players = new Player[playerNames.length];
+
+        int i = 0;
+        for (String playerName : playerNames)
+        {
+            players[i] = new Player(playerName);
+            i++;
+        }
+
         talon = Talon.getInstance();
         discard = new Discard();
     }

@@ -6,14 +6,16 @@ package de.schelklingen2008.canasta.model;
 public class Player
 {
 
-    private String name;
-    private int    score;
-    private Hand   hand;
-    private Outlay outlay;
+    private final String name;
+    private int          score;
+    private Hand         hand;
+    private Outlay       outlay;
 
-    public Player()
+    public Player(String name)
     {
         super();
+
+        this.name = name;
 
         hand = new Hand();
         outlay = new Outlay();
@@ -41,6 +43,9 @@ public class Player
 
     public boolean hasCanasta()
     {
+        /**
+         * TODO implement hasCanasta()
+         */
         return true;
     }
 }

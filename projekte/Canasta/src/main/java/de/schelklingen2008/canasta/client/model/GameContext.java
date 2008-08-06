@@ -1,7 +1,5 @@
 package de.schelklingen2008.canasta.client.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import de.schelklingen2008.canasta.model.GameModel;
@@ -15,49 +13,53 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameContext
 {
 
-    private static final Logger sLogger     = LoggerFactory.create();
+    private static final Logger sLogger = LoggerFactory.create();
 
     /**
      * Contains the rules and the state of the game. TODO correct player count (should be optained from
      * controller)
      */
-    private GameModel           gameModel   = new GameModel(2);
+    private GameModel           gameModel;
 
     /** Is the name of the player playing in this client. */
-    private String              myName;
+    private int                 localPlayerNumber;
 
-    /** Provides a name for each player in the game. */
-    private Map<Player, String> playerNames = new HashMap<Player, String>();
+    //
+    // /** Provides a name for each player in the game. */
+    // private Map<Player, String> playerNames = new HashMap<Player, String>();
 
-    public String getName(Player player)
+    public GameContext()
     {
-        return playerNames.get(player);
+        /*
+         * TODO retrieve player names from controller
+         */
+
+        gameModel = new GameModel(new String[] { "Lars", "Alexander" });
     }
 
-    public String getMyName()
+    public int getLocalPlayerNumber()
     {
-        return myName;
+        return localPlayerNumber;
     }
 
-    public void setMyName(String myName)
+    public void setLocalPlayerNumber(int localPlayerNumber)
     {
-        sLogger.fine("setMyName: " + myName);
-        this.myName = myName;
+        sLogger.fine("setMyName: " + localPlayerNumber);
+        this.localPlayerNumber = localPlayerNumber;
     }
 
-    public void setPlayers(String[] names)
-    {
-        playerNames.clear();
-        playerNames.put(Player.valueOf(0), names[0]);
-        playerNames.put(Player.valueOf(1), names[1]);
-    }
-
+    /*
+     * might be solved in constructor
+     */
+    // public void setPlayers(Player[] players)
+    // {
+    // playerNames.clear();
+    // playerNames.put(Player.valueOf(0), names[0]);
+    // playerNames.put(Player.valueOf(1), names[1]);
+    // }
     public Player getMyPlayer()
     {
-        if (myName == null) return null;
-        if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
-        if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
-        return null;
+        return gameModel.getPlayers()[localPlayerNumber];
     }
 
     public GameModel getGameModel()
