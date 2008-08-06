@@ -9,18 +9,19 @@ import de.schelklingen2008.risiko.model.Player;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
- * Provides all necessary game information. On top of the game model it adds information on player
- * names and on which player corresponds to the client the context is used in.
+ * Provides all necessary game information. On top of the game model it adds information on player names and
+ * on which player corresponds to the client the context is used in.
  */
 public class GameContext
 {
-    private static final Logger sLogger = LoggerFactory.create();
+
+    private static final Logger sLogger     = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel gameModel = new GameModel();
+    private GameModel           gameModel   = new GameModel();
 
     /** Is the name of the player playing in this client. */
-    private String myName;
+    private String              myName;
 
     /** Provides a name for each player in the game. */
     private Map<Player, String> playerNames = new HashMap<Player, String>();
@@ -44,15 +45,15 @@ public class GameContext
     public void setPlayers(String[] names)
     {
         playerNames.clear();
-        playerNames.put(Player.valueOf(0), names[0]);
-        playerNames.put(Player.valueOf(1), names[1]);
+        // playerNames.put(Player.valueOf(0), names[0]);
+        // playerNames.put(Player.valueOf(1), names[1]);
     }
 
     public Player getMyPlayer()
     {
         if (myName == null) return null;
-        if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
-        if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
+        // if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
+        // if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
         return null;
     }
 

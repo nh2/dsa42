@@ -46,7 +46,6 @@ public class GamePanel extends JPanel implements PlaceView
      */
     public GamePanel(Controller controller)
     {
-
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
         setBackground(new Color(0x6699CC));
@@ -70,6 +69,8 @@ public class GamePanel extends JPanel implements PlaceView
         TurnPanel turnDisplay = new TurnPanel(controller);
         turnDisplay.setOpaque(false);
         sidePanel.add(turnDisplay, GroupLayout.FIXED);
+
+        // TODO add a history panel
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));

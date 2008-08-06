@@ -5,8 +5,14 @@ package de.schelklingen2008.risiko.model;
  */
 public class GameModel
 {
-    public boolean isFinished()
+
+    Country[]       c;
+    static Player[] p;
+
+    public Player valueOf(int playerIndex)
     {
-        return false;
+        // TODO Auto-generated method stub
+        return null;
     }
+
 }

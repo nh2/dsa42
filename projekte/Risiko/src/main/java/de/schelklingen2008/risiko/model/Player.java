@@ -1,16 +1,43 @@
 package de.schelklingen2008.risiko.model;
 
+import java.awt.Color;
+
+import com.threerings.crowd.data.BodyObject;
+
 /**
  * Is a simple abstraction for a player entity.
  */
-public enum Player
+public class Player
 {
-    WHITE, BLACK;
 
-    public static Player valueOf(int playerIndex)
+    private String name;
+    private int    units;
+    private int    index;
+    private Color  c;
+
+    public Player()
     {
-        if (playerIndex == 0) return WHITE;
-        if (playerIndex == 1) return BLACK;
-        return null;
+        name = "";
     }
+
+    public String getPlayerName(BodyObject bo)
+    {
+        return name;
+    }
+
+    public int getPlayerUnits()
+    {
+        return units;
+    }
+
+    public int getPlayerIndex()
+    {
+        return index;
+    }
+
+    public Color getPlayerColor()
+    {
+        return c;
+    }
+
 }

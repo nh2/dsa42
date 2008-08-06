@@ -6,7 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.risiko.client.controller.Controller;
@@ -19,7 +23,9 @@ import de.schelklingen2008.risiko.model.GameModel;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
-    private Controller controller;
+
+    private Controller    controller;
+    private BufferedImage map;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -29,8 +35,18 @@ public class BoardView extends JPanel implements GameChangeListener
         this.controller = controller;
         controller.addChangeListener(this);
 
+        try
+        {
+            map = ImageIO.read(new File("./src/main/resources/europa_karte_de.png"));
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Kann Bild nicht laden.");
+        }
+
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -40,6 +56,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -62,7 +79,8 @@ public class BoardView extends JPanel implements GameChangeListener
     public Dimension getPreferredSize()
     {
         // TODO calculate correct dimensions for the board view
-        return new Dimension(0, 0);
+        return new Dimension(1200, 1000);
+
     }
 
     @Override
@@ -76,6 +94,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBackground(Graphics2D gfx)
     {
+        gfx.drawImage(map, 1, 1, 1200, 1000, null);
     }
 
     private void paintBoard(Graphics2D gfx)
