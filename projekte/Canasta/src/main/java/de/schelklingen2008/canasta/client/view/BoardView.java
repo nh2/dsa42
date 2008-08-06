@@ -173,7 +173,7 @@ public class BoardView extends JPanel implements GameChangeListener
             // int x = 0;
             // int y = 0;
 
-            gfx.drawImage(cardImage, i * 10, 0, null);
+            gfx.drawImage(cardImage, (int) (i * cardSpace), 0, null);
 
             i++;
         }
