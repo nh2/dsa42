@@ -22,6 +22,7 @@ public class GameContext
 
     /** Is the name of the player playing in this client. */
     private String              myName;
+    private int                 myIndex;
 
     /** Provides a name for each player in the game. */
     private Map<Player, String> playerNames = new HashMap<Player, String>();
@@ -33,13 +34,18 @@ public class GameContext
 
     public String getMyName()
     {
-        return myName;
+        return getGameModel().getPlayerList().get(myIndex).getName();
+    }
+
+    public int getMyIndex()
+    {
+        return myIndex;
     }
 
     public void setMyName(String myName)
     {
         sLogger.fine("setMyName: " + myName);
-        this.myName = myName;
+        this.myName = getMyName();
     }
 
     public void setPlayers(String[] names)
