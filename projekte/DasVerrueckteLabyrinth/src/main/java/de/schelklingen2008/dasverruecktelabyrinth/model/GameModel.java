@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.schelklingen2008.reversi.model.Player;
+
 /**
  * Maintains the rules and the state of the game.
  */
@@ -86,17 +88,67 @@ public class GameModel
 
     private void clear()
     {
-
+        board = new Tile[SIZE][SIZE];
+        turnHolder = null;
     }
 
-    private void setTurnHolder(PlayerType pPlayer)
+    public Tile[][] getBoard()
     {
+        return copyBoard(board);
+    }
 
-        turnHolder = pPlayer;
+    private static Tile[][] copyBoard(Tile[][] s)
+    {
+        Tile[][] copy = new Tile[SIZE][SIZE];
+        for (int x = 0; x < SIZE; x++)
+            for (int y = 0; y < SIZE; y++)
+                copy[x][y] = s[x][y];
+        return copy;
+    }
+
+    public void setBoard(Tile[][] board)
+    {
+        this.board = board;
+    }
+
+    public boolean setTurnHolder(PlayerType turnHolder)
+    {
+        boolean changed = this.turnHolder != turnHolder;
+        this.turnHolder = turnHolder;
+        return changed;
+    }
+
+    private boolean isInBounds(int x, int y)
+    {
+        return x >= 0 && y >= 0 && x < SIZE && y < SIZE;
+    }
+
+    public boolean[][] getLegalMoves(PlayerType player)
+    {
+        boolean[][] result = new boolean[SIZE][SIZE];
+        if (getTurnHolder() != player) return result;
+        for (int x = 0; x < SIZE; x++)
+            for (int y = 0; y < SIZE; y++)
+                result[x][y] = isLegalMove(x, y, player);
+        return result;
+    }
+
+    public boolean isLegalMove(int pX, int pY, PlayerType pPlayer)
+    {
+        boolean temp ;
+        if (isFinished())temp;
+        if (!isInBounds(x, y));
+        return temp;
+    }
+
+    public PlayerType getTurnHolder()
+    {
+        return turnHolder;
     }
 
     public boolean isFinished()
     {
         return false;
     }
+
 }
