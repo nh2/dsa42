@@ -21,6 +21,8 @@ public class PlayerPanel extends JPanel
 
         JPanel insertTile = new JPanel();
 
+        JPanel playerCards = new JPanel();
+
         insertTile.setLayout(new BorderLayout());
 
     }

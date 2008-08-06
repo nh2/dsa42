@@ -18,4 +18,14 @@ public class PlayerCards
         open = new ArrayList<TreasureCard>();
 
     }
+
+    public List<TreasureCard> getHiddenCards()
+    {
+        return hidden;
+    }
+
+    public List<TreasureCard> getOpenCards()
+    {
+        return open;
+    }
 }
