@@ -22,6 +22,7 @@ import de.schelklingen2008.canasta.model.Discard;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Hand;
 import de.schelklingen2008.canasta.model.Player;
+import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.model.Talon;
 
 /**
@@ -165,11 +166,17 @@ public class BoardView extends JPanel implements GameChangeListener
         }
         else
         {
+            if (card.getRank() == Rank.JOKER)
+            {
+                imageName = "joker-b" + "-40.png";
+            }
+            else
+            {
+                String rank = card.getRank().toString().toLowerCase();
+                String suit = card.getSuit().toString().toLowerCase();
 
-            String rank = card.getRank().toString().toLowerCase();
-            String suit = card.getSuit().toString().toLowerCase();
-
-            imageName = suit + "-" + rank + "-40.png";
+                imageName = suit + "-" + rank + "-40.png";
+            }
         }
         try
         {
