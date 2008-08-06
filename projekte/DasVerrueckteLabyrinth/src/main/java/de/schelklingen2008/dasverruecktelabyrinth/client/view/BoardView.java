@@ -39,7 +39,7 @@ public class BoardView extends JPanel implements GameChangeListener
     BufferedImage      eule, krone, flaschengeist, ring, motte, spinne;
     BufferedImage      fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
     BufferedImage      troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
-    BufferedImage      schmuckkasten, schlüssel, schwert, gespenst;
+    BufferedImage      schmuckkasten, schluessel, schwert, gespenst;
 
     // private int cy = 0;
 
@@ -55,35 +55,35 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/curveOne.png"));
             curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            curveThree = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            curveFour = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
+            curveThree = ImageIO.read(new File("src/main/resources/TilesBilder/curveThree.png"));
+            curveFour = ImageIO.read(new File("src/main/resources/TilesBilder/curveFour.png"));
             horizontal = ImageIO.read(new File("src/main/resources/TilesBilder/horizontal.png"));
             vertikal = ImageIO.read(new File("src/main/resources/TilesBilder/vertikal.png"));
             cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
-            eule = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            krone = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            flaschengeist = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            ring = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            motte = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            spinne = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            fee = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            karte = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            drache = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            bibel = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            eidechse = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            geldbeutel = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            fledermaus = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            troll = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            scarabaeus = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            maus = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            smaragd = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            totenkopf = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            helm = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            leuchter = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            schmuckkasten = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            schluessel = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            schwert = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            gespenst = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
+            eule = ImageIO.read(new File("src/main/resources/TilesBilder/eule.png"));
+            krone = ImageIO.read(new File("src/main/resources/TilesBilder/krone.png"));
+            flaschengeist = ImageIO.read(new File("src/main/resources/TilesBilder/flaschengeist.png"));
+            ring = ImageIO.read(new File("src/main/resources/TilesBilder/ring.png"));
+            motte = ImageIO.read(new File("src/main/resources/TilesBilder/motte.png"));
+            spinne = ImageIO.read(new File("src/main/resources/TilesBilder/spinne.png"));
+            fee = ImageIO.read(new File("src/main/resources/TilesBilder/fee.png"));
+            karte = ImageIO.read(new File("src/main/resources/TilesBilder/karte.png"));
+            drache = ImageIO.read(new File("src/main/resources/TilesBilder/Drache.png"));
+            bibel = ImageIO.read(new File("src/main/resources/TilesBilder/bibel.png"));
+            eidechse = ImageIO.read(new File("src/main/resources/TilesBilder/eidechse.png"));
+            geldbeutel = ImageIO.read(new File("src/main/resources/TilesBilder/geldbeutel.png"));
+            fledermaus = ImageIO.read(new File("src/main/resources/TilesBilder/fledermaus.png"));
+            troll = ImageIO.read(new File("src/main/resources/TilesBilder/troll.png"));
+            scarabaeus = ImageIO.read(new File("src/main/resources/TilesBilder/scarabaeus.png"));
+            maus = ImageIO.read(new File("src/main/resources/TilesBilder/maus.png"));
+            smaragd = ImageIO.read(new File("src/main/resources/TilesBilder/smaragd.png"));
+            totenkopf = ImageIO.read(new File("src/main/resources/TilesBilder/totenkopf.png"));
+            helm = ImageIO.read(new File("src/main/resources/TilesBilder/helm.png"));
+            leuchter = ImageIO.read(new File("src/main/resources/TilesBilder/leuchter.png"));
+            schmuckkasten = ImageIO.read(new File("src/main/resources/TilesBilder/schmuckkasten.png"));
+            schluessel = ImageIO.read(new File("src/main/resources/TilesBilder/schluessel.png"));
+            schwert = ImageIO.read(new File("src/main/resources/TilesBilder/schwert.png"));
+            gespenst = ImageIO.read(new File("src/main/resources/TilesBilder/gespenst.png"));
 
         }
         catch (IOException e)
