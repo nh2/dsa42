@@ -4,12 +4,23 @@ public class Card
 {
 
     private int number;
-    private int color;
+    private int suit;
 
     public String getValue()
     {
-        // Wandelt die int number in die Zahl der Spielkarte um (2 bis Ass)
-        return "";
+        if (number >= 0 && number <= 8) return "" + (number + 2);
+        switch (number)
+        {
+            case 9:
+                return "j";
+            case 10:
+                return "q";
+            case 11:
+                return "k";
+            case 12:
+                return "a";
+        }
+        return "Fehler";
     }
 
     public String getColor()
@@ -21,5 +32,10 @@ public class Card
     public String getName()
     {
         return getColor() + " " + getValue();
+    }
+
+    public String getFileName()
+    {
+        return "";
     }
 }

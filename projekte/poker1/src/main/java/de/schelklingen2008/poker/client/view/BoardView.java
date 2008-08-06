@@ -3,9 +3,12 @@ package de.schelklingen2008.poker.client.view;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -92,6 +95,7 @@ public class BoardView extends JPanel implements GameChangeListener
         JPanel myCardPanel = new JPanel();
         JPanel myInfoPanel = new JPanel();
         JPanel myButtonPanel = new JPanel();
+        JPanel twoCardsPanel = new JPanel();
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -103,6 +107,8 @@ public class BoardView extends JPanel implements GameChangeListener
         myCardPanel.setLayout(new BoxLayout(myCardPanel, BoxLayout.PAGE_AXIS));
         myInfoPanel.setLayout(new BoxLayout(myInfoPanel, BoxLayout.PAGE_AXIS));
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.LINE_AXIS));
+        twoCardsPanel.setLayout(new BoxLayout(twoCardsPanel, BoxLayout.LINE_AXIS));
+        myButtonPanel.setLayout(new BoxLayout(myButtonPanel, BoxLayout.LINE_AXIS));
 
         add(Box.createHorizontalStrut(5));
         add(playerPanel);
@@ -143,16 +149,80 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(new JLabel("Karte1"));
+        myCardPanel.add(new JLabel("Ich: Ihre Karten:"));
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(new JLabel("Karte2"));
+        myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
 
+        twoCardsPanel.add(Box.createVerticalStrut(5));
+        twoCardsPanel.add(new JLabel("karte1"));
+        twoCardsPanel.add(Box.createVerticalStrut(5));
+        twoCardsPanel.add(new JLabel("karte2"));
+        twoCardsPanel.add(Box.createVerticalStrut(5));
+
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        myInfoPanel.add(new JLabel("Info"));
+        myInfoPanel.add(new JLabel("Ihr Kontostand:"));
+        myInfoPanel.add(Box.createHorizontalStrut(5));
+        myInfoPanel.add(new JLabel("137Euro"));
+        myInfoPanel.add(Box.createHorizontalStrut(5));
+        myInfoPanel.add(new JLabel("Sie müssen 200 Euro setzen"));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(myButtonPanel);
         myInfoPanel.add(Box.createHorizontalStrut(5));
+
+        JButton callButton = new JButton("Call");
+        JButton raiseButton = new JButton("Raise");
+        JButton foldButton = new JButton("Fold");
+        JButton checkButton = new JButton("Check");
+
+        ActionListener callListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Gecallt");
+            }
+
+        };
+
+        ActionListener raiseListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Geraist");
+            }
+
+        };
+
+        ActionListener foldListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Gefoldet");
+            }
+
+        };
+        ActionListener checkListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Gecheckt");
+            }
+
+        };
+
+        callButton.addActionListener(callListener);
+        foldButton.addActionListener(foldListener);
+        raiseButton.addActionListener(raiseListener);
+        checkButton.addActionListener(checkListener);
+
+        myButtonPanel.add(callButton);
+        myButtonPanel.add(foldButton);
+        myButtonPanel.add(raiseButton);
+        myButtonPanel.add(checkButton);
 
     }
 
