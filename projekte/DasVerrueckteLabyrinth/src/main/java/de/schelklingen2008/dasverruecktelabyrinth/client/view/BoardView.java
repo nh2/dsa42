@@ -122,8 +122,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintTreasureCards()
     {
-        for (int i = 0; i < get)
-        ;
+        for (int i = 0; i < getGameModel().getBoard().length; i++)
+            ;
     }
 
     public void gameChanged()
