@@ -6,7 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.Constants;
@@ -37,6 +40,8 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
+
+        BufferedImage[] images = new BufferedImage[31];
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
@@ -113,17 +118,29 @@ public class BoardView extends JPanel implements GameChangeListener
             for (int j = 0; j < getGameModel().getBoard().length; j++)
             {
                 Tile[][] temp = getGameModel().getBoard();
-                if(temp[i][j])
+                if (temp[i][j].isCross() == true)
+                {
+                    try
+                    {
+                        BufferedImage cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
+                    }
+                    catch (Exception e)
+                    {
+                        throw new RuntimeException("Kann Bild nicht laden!");
+                    }
+                    gfx
+                }
             }
         }
-        
-       
+
     }
 
     private void paintTreasureCards()
     {
+
         for (int i = 0; i < getGameModel().getBoard().length; i++)
             ;
+
     }
 
     public void gameChanged()

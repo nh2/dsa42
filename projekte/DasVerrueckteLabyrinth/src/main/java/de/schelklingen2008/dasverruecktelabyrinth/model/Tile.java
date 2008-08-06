@@ -54,51 +54,51 @@ public class Tile
         unmoveable = pboolean;
     }
 
-    private boolean testCurve1(Tile pTile)
+    public boolean isCurve1()
     {
-        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == false) return true;
+        if (getLeft() == true && getDown() == true && getRight() == false && getUp() == false) return true;
 
         return false;
     }
 
-    private boolean testCurve2(Tile pTile)
+    public boolean isCurve2()
     {
-        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == false) return true;
+        if (getLeft() == false && getDown() == true && getRight() == true && getUp() == false) return true;
 
         return false;
     }
 
-    private boolean testCurve3(Tile pTile)
+    public boolean isCurve3()
     {
-        if (pTile.getLeft() == false && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == true) return true;
+        if (getLeft() == false && getDown() == false && getRight() == true && getUp() == true) return true;
 
         return false;
     }
 
-    private boolean testCurve4(Tile pTile)
+    public boolean isCurve4()
     {
-        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == false && pTile.getUp() == true) return true;
+        if (getLeft() == true && getDown() == false && getRight() == false && getUp() == true) return true;
 
         return false;
     }
 
-    private boolean testHorizontal(Tile pTile)
+    public boolean isHorizontal()
     {
-        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == false) return true;
+        if (getLeft() == true && getDown() == false && getRight() == true && getUp() == false) return true;
 
         return false;
     }
 
-    private boolean testVertikal(Tile pTile)
+    public boolean isVertikal()
     {
-        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == true) return true;
+        if (getLeft() == false && getDown() == true && getRight() == false && getUp() == true) return true;
 
         return false;
     }
 
-    private boolean testCross(Tile pTile)
+    public boolean isCross()
     {
-        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == true) return true;
+        if (getLeft() == true && getDown() == true && getRight() == true && getUp() == true) return true;
 
         return false;
     }
