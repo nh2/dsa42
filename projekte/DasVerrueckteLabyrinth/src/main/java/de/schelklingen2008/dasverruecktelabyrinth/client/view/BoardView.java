@@ -260,18 +260,9 @@ public class BoardView extends JPanel implements GameChangeListener
             int y = player.getYKoordinate() * 80 + 40;
             if (player.getPlayerType() == PlayerType.WHITE) gfx.setColor(Color.YELLOW);
 
-            if (player.getPlayerType() == PlayerType.BLACK)
-            {
-                gfx.setColor(Color.BLUE);
-            }
-            if (player.getPlayerType() == PlayerType.GREEN)
-            {
-                gfx.setColor(Color.GREEN);
-            }
-            if (player.getPlayerType() == PlayerType.RED)
-            {
-                gfx.setColor(Color.RED);
-            }
+            if (player.getPlayerType() == PlayerType.BLACK) gfx.setColor(Color.BLUE);
+            if (player.getPlayerType() == PlayerType.GREEN) gfx.setColor(Color.GREEN);
+            if (player.getPlayerType() == PlayerType.RED) gfx.setColor(Color.RED);
             gfx.fillOval(x, y, 15, 15);
             gfx.setColor(Color.BLACK);
             gfx.drawOval(x, y, 15, 15);
