@@ -124,11 +124,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
         Hand hand = player.getHand();
 
-        BufferedImage cardImage = getCardImage(null, true);
-        final int border = (HAND_BORDER - cardImage.getHeight()) / 2; // (70-57)/2 = 6,5
+        BufferedImage cardImage = getCardImage(null, 50, true);
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
 
         final int cardCount = hand.size();
-        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2; // 800-70-13 = 717
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
 
         double cardSpace = (double) hand_space / (double) cardCount;
 
@@ -138,7 +138,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         for (Card card : hand)
         {
-            cardImage = getCardImage(card, false);
+            cardImage = getCardImage(card, 50, false);
 
             int x = border + (int) (i * cardSpace);
             int y = BOARD_HEIGHT - HAND_BORDER + border;
@@ -154,7 +154,7 @@ public class BoardView extends JPanel implements GameChangeListener
         Player[] players = controller.getGameContext().getGameModel().getPlayers();
         Player player = players[1];
         Hand hand = player.getHand();
-        BufferedImage cardImage = getCardImage(null, true);
+        BufferedImage cardImage = getCardImage(null, 40, true);
         final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
 
         final int cardCount = hand.size();
@@ -169,10 +169,7 @@ public class BoardView extends JPanel implements GameChangeListener
         int i = 0;
         for (Card card : hand)
         {
-            cardImage = getCardImage(card, true);
-
-            // int x = 0;
-            // int y = 0;
+            cardImage = getCardImage(card, 40, true);
 
             gfx.drawImage(cardImage, (int) (i * cardSpace), 0, null);
 
@@ -188,7 +185,7 @@ public class BoardView extends JPanel implements GameChangeListener
         Player[] players = controller.getGameContext().getGameModel().getPlayers();
         Player player = players[2];
         Hand hand = player.getHand();
-        BufferedImage cardImage = getCardImage(null, true);
+        BufferedImage cardImage = getCardImage(null, 40, true);
         final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
 
         final int cardCount = hand.size();
@@ -201,7 +198,7 @@ public class BoardView extends JPanel implements GameChangeListener
         int i = 0;
         for (Card card : hand)
         {
-            cardImage = getCardImage(card, true);
+            cardImage = getCardImage(card, 40, true);
 
             int x = BOARD_WIDTH - border - (int) (i * cardSpace) - cardImage.getWidth();
             int y = border;
@@ -216,7 +213,7 @@ public class BoardView extends JPanel implements GameChangeListener
         Player[] players = controller.getGameContext().getGameModel().getPlayers();
         Player player = players[3];
         Hand hand = player.getHand();
-        BufferedImage cardImage = getCardImage(null, true);
+        BufferedImage cardImage = getCardImage(null, 40, true);
         final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
 
         final int cardCount = hand.size();
@@ -231,10 +228,7 @@ public class BoardView extends JPanel implements GameChangeListener
         int i = 0;
         for (Card card : hand)
         {
-            cardImage = getCardImage(card, true);
-
-            // int x = 0;
-            // int y = 0;
+            cardImage = getCardImage(card, 40, true);
 
             gfx.drawImage(cardImage, (int) (i * cardSpace), 0, null);
 
@@ -248,35 +242,60 @@ public class BoardView extends JPanel implements GameChangeListener
     private void paintTalon(Graphics2D gfx)
     {
         Talon talon = controller.getGameContext().getGameModel().getTalon();
-        gfx.drawImage(getCardImage(talon.peek(), true), 410, 380, null);
+        gfx.drawImage(getCardImage(talon.peek(), 50, true), 410, 380, null);
     }
 
     private void paintDiscard(Graphics2D gfx)
     {
         Discard discard = controller.getGameContext().getGameModel().getDiscard();
-        gfx.drawImage(getCardImage(discard.peek(), false), 350, 380, null);
+        gfx.drawImage(getCardImage(discard.peek(), 50, false), 350, 380, null);
     }
 
-    private BufferedImage getCardImage(Card card, boolean faceDown)
+    private BufferedImage getCardImage(Card card, int version, boolean faceDown)
     {
-        String imagePath = "./src/main/resources/cards/";
+        String imagePath = "./src/main/resources/cards/" + version + "/";
         String imageName;
-        if (faceDown)
+        if (faceDown && version == 40)
         {
             imageName = "back-red-40-2.png";
         }
+        if (faceDown && version == 50)
+        {
+
+            imageName = "back-red-50-2.png";
+        }
         else
         {
-            if (card.getRank() == Rank.JOKER)
+            if (version == 40)
             {
-                imageName = "joker-b" + "-40.png";
-            }
-            else
-            {
-                String rank = card.getRank().toString().toLowerCase();
-                String suit = card.getSuit().toString().toLowerCase();
 
-                imageName = suit + "-" + rank + "-40.png";
+                if (card.getRank() == Rank.JOKER)
+                {
+                    imageName = "joker-b" + "-40.png";
+                }
+                else
+                {
+                    String rank = card.getRank().toString().toLowerCase();
+                    String suit = card.getSuit().toString().toLowerCase();
+
+                    imageName = suit + "-" + rank + "-40.png";
+                }
+
+            }
+            if (version == 50)
+            {
+                if (card.getRank() == Rank.JOKER)
+                {
+                    imageName = "joker-b" + "-40.png";
+                }
+                else
+                {
+                    String rank = card.getRank().toString().toLowerCase();
+                    String suit = card.getSuit().toString().toLowerCase();
+
+                    imageName = suit + "-" + rank + "-40.png";
+                }
+
             }
         }
         try
