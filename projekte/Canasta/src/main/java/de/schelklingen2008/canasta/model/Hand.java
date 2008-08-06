@@ -14,6 +14,30 @@ public class Hand implements Iterable<Card>
         super();
 
         cards = new LinkedList<Card>();
+
+        add(new Card(Rank.QUEEN, Suit.DIAMONDS));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.ACE, Suit.CLUBS));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+        add(new Card(Rank.KING, Suit.HEARTS));
+        add(new Card(Rank.EIGHT, Suit.SPADES));
+
     }
 
     public boolean add(Card e)

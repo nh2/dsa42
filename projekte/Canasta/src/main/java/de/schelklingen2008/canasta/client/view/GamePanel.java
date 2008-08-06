@@ -1,7 +1,6 @@
 package de.schelklingen2008.canasta.client.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -49,7 +48,8 @@ public class GamePanel extends JPanel implements PlaceView
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
-        setBackground(new Color(0x6699CC));
+        // TODO set bg color
+        // setBackground(new Color(0x003300));
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);
@@ -63,6 +63,7 @@ public class GamePanel extends JPanel implements PlaceView
         // add a big fat label
         MultiLineLabel vlabel = new MultiLineLabel(controller.getMessage(Constants.MSG_TITLE));
         vlabel.setAntiAliased(true);
+        // TODO change font for big fat label
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 

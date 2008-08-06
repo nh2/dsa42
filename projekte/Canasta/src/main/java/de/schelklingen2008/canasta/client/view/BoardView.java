@@ -1,24 +1,39 @@
 package de.schelklingen2008.canasta.client.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.canasta.client.controller.Controller;
 import de.schelklingen2008.canasta.client.controller.GameChangeListener;
 import de.schelklingen2008.canasta.client.model.GameContext;
+import de.schelklingen2008.canasta.model.Card;
+import de.schelklingen2008.canasta.model.Discard;
 import de.schelklingen2008.canasta.model.GameModel;
+import de.schelklingen2008.canasta.model.Hand;
+import de.schelklingen2008.canasta.model.Player;
+import de.schelklingen2008.canasta.model.Talon;
 
 /**
  * Displays the main game interface (the board).
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
+
+    private final int  HAND_BORDER  = 70;
+    private final int  BOARD_WIDTH  = 800;
+    private final int  BOARD_HEIGHT = 800;
+
     private Controller controller;
 
     /**
@@ -31,6 +46,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -40,6 +56,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -62,7 +79,7 @@ public class BoardView extends JPanel implements GameChangeListener
     public Dimension getPreferredSize()
     {
         // TODO calculate correct dimensions for the board view
-        return new Dimension(0, 0);
+        return new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     @Override
@@ -72,14 +89,98 @@ public class BoardView extends JPanel implements GameChangeListener
         // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
+        paintCards(gfx);
     }
 
     private void paintBackground(Graphics2D gfx)
     {
+        gfx.setColor(new Color(0x003300));
+        gfx.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     private void paintBoard(Graphics2D gfx)
     {
+
+        gfx.setColor(new Color(0x336600));
+        gfx.fillRect(HAND_BORDER, HAND_BORDER, BOARD_WIDTH - 2 * HAND_BORDER, BOARD_HEIGHT - 2 * HAND_BORDER);
+    }
+
+    private void paintCards(Graphics2D gfx)
+    {
+        paintTalon(gfx);
+        paintDiscard(gfx);
+        paintHands(gfx);
+    }
+
+    private void paintHands(Graphics2D gfx)
+    {
+        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+
+        Player player = players[0];
+
+        Hand hand = player.getHand();
+
+        BufferedImage cardImage = getCardImage(null, true);
+        final int border = (HAND_BORDER - cardImage.getHeight()) / 2;
+
+        final int cardCount = hand.size();
+        final int hand_space = BOARD_WIDTH - HAND_BORDER - border * 2;
+
+        double cardSpace = (double) hand_space / (double) cardCount;
+
+        cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+
+        int i = 0;
+        for (Card card : hand)
+        {
+            cardImage = getCardImage(card, false);
+
+            int x = border + (int) (i * cardSpace);
+            int y = BOARD_HEIGHT - HAND_BORDER + border;
+            gfx.drawImage(cardImage, x, y, null);
+
+            i++;
+        }
+    }
+
+    private void paintTalon(Graphics2D gfx)
+    {
+        Talon talon = controller.getGameContext().getGameModel().getTalon();
+        gfx.drawImage(getCardImage(talon.peek(), true), 410, 380, null);
+    }
+
+    private void paintDiscard(Graphics2D gfx)
+    {
+        Discard discard = controller.getGameContext().getGameModel().getDiscard();
+        gfx.drawImage(getCardImage(discard.peek(), false), 350, 380, null);
+    }
+
+    private BufferedImage getCardImage(Card card, boolean faceDown)
+    {
+        String imagePath = "./src/main/resources/cards/";
+        String imageName;
+        if (faceDown)
+        {
+            imageName = "back-red-40-2.png";
+        }
+        else
+        {
+
+            String rank = card.getRank().toString().toLowerCase();
+            String suit = card.getSuit().toString().toLowerCase();
+
+            imageName = suit + "-" + rank + "-40.png";
+        }
+        try
+        {
+            return ImageIO.read(new File(imagePath + imageName));
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void gameChanged()

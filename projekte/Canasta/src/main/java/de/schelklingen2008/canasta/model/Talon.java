@@ -56,6 +56,12 @@ public class Talon
         return card;
     }
 
+    public Card peek()
+    {
+        Card card = cards.get(0);
+        return card;
+    }
+
     public void shuffle()
     {
         Collections.shuffle(cards);
