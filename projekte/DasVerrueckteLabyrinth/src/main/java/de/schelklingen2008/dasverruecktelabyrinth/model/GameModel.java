@@ -47,6 +47,9 @@ public class GameModel
             }
         }
         setTurnHolder(PLAYER_START);
+        int r = generateTiles().size();
+        insert = generateTiles().get(r);
+        generateTiles().remove(r);
 
     }
 
@@ -60,12 +63,24 @@ public class GameModel
 
     private void setUnmoveable(Tile[][] pBoard)
     {
-
+        for (int i = 0; i < pBoard.length; i++)
+        {
+            for (int j = 0; j < pBoard.length; j++)
+            {
+                if (i % 2 == 0 && j % 2 == 0)
+                {
+                    pBoard[i][j].setUnmoveable(true);
+                }
+            }
+        }
     }
 
-    private void placePlayer()
+    private void placePlayer(Player pPlayer)
     {
-
+        int x = (int) Math.random()* board.length;
+        int y = (int) Math.random()* board.length;
+        
+        pPlayer
     }
 
     private void clear()

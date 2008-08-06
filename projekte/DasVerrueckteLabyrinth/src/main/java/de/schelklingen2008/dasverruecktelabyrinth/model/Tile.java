@@ -15,4 +15,42 @@ public class Tile
         left = pLeft;
         tc = pTc;
     }
+
+    public boolean getUnmoveable()
+    {
+        return unmoveable;
+    }
+
+    public boolean getUp()
+    {
+        return up;
+    }
+
+    public boolean getDown()
+    {
+
+        return down;
+    }
+
+    public boolean getRight()
+    {
+
+        return right;
+    }
+
+    public boolean getLeft()
+    {
+
+        return left;
+    }
+
+    public TreasureCard getTC()
+    {
+        return tc;
+    }
+
+    public void setUnmoveable(boolean pboolean)
+    {
+        unmoveable = pboolean;
+    }
 }
