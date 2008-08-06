@@ -14,4 +14,7 @@ public final class Constants
     public static final String MSG_TITLE         = "m.title";
     public static final String MSG_WINNER        = "m.winner";
     public static final String MSG_DRAW          = "m.draw";
+
+    /** is the pixel dimension of the pieces */
+    public static final int    SPRITE_SIZE       = 64;
 }

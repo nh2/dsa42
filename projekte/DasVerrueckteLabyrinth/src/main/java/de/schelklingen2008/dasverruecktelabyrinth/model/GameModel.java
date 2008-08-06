@@ -11,18 +11,18 @@ import java.util.Map;
 public class GameModel
 {
 
-    private static final int        SIZE         = 7;
-    private static final PlayerType PLAYER_START = PlayerType.WHITE;
+    public static final int        SIZE         = 7;
+    public static final PlayerType PLAYER_START = PlayerType.WHITE;
 
-    private Tile[][]                board;                                                // Spielbrett
-    private PlayerType              turnHolder;                                           // Wer ist dran
-    private boolean                 walk         = false;                                 // false = Phase 1
+    private Tile[][]               board;                                                // Spielbrett
+    private PlayerType             turnHolder;                                           // Wer ist dran
+    private boolean                walk         = false;                                 // false = Phase 1
     // true = Phase2
-    private Tile                    insert;                                               // einschiebbare
+    private Tile                   insert;                                               // einschiebbare
     // Spielfeldkarte
 
-    Map<PlayerType, Player>         player       = new HashMap<PlayerType, Player>();
-    Map<PlayerType, PlayerCards>    playerTypes  = new HashMap<PlayerType, PlayerCards>();
+    Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
+    Map<PlayerType, PlayerCards>   playerTypes  = new HashMap<PlayerType, PlayerCards>();
 
     public GameModel()
     {
@@ -50,6 +50,28 @@ public class GameModel
         int r = generateTiles().size();
         insert = generateTiles().get(r);
         generateTiles().remove(r);
+
+    }
+
+    private boolean testCurve1(Tile pTile)
+    {
+        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == false) return true;
+
+        return false;
+    }
+
+    private boolean testCurve2(Tile pTile)
+    {
+        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == false) return true;
+
+        return false;
+    }
+
+    private boolean testCurve3(Tile pTile)
+    {
+        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == false) return true;
+
+        return false;
 
     }
 
@@ -86,6 +108,21 @@ public class GameModel
 
         pPlayer.setXKoordinate(x);
         pPlayer.setYKoordinate(y);
+    }
+
+    public boolean isLegalMove(int x, int y, Player player)
+    {
+        if (isFinished()) return false;
+        if (!isInBounds(x, y)) return false;
+        if (isOccupied(x, y)) return false;
+        if (!isTurnHolder(player)) return false;
+
+        for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
+        {
+            int captureCount = countCapturedPieces(x, y, player, direction);
+            if (captureCount > 0) return true;
+        }
+        return false;
     }
 
     private void clear()
