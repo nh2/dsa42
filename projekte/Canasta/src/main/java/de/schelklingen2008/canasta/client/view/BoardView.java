@@ -18,11 +18,13 @@ import de.schelklingen2008.canasta.client.controller.Controller;
 import de.schelklingen2008.canasta.client.controller.GameChangeListener;
 import de.schelklingen2008.canasta.client.model.GameContext;
 import de.schelklingen2008.canasta.model.Card;
+import de.schelklingen2008.canasta.model.CardStack;
 import de.schelklingen2008.canasta.model.Discard;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Hand;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.model.Rank;
+import de.schelklingen2008.canasta.model.Suit;
 import de.schelklingen2008.canasta.model.Talon;
 
 /**
@@ -31,9 +33,10 @@ import de.schelklingen2008.canasta.model.Talon;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private final int  HAND_BORDER  = 70;
-    private final int  BOARD_WIDTH  = 800;
-    private final int  BOARD_HEIGHT = 800;
+    private final int  HAND_BORDER        = 70;
+    private final int  BOARD_WIDTH        = 800;
+    private final int  BOARD_HEIGHT       = 800;
+    private final int  SHARED_CARDS_SPACE = 100;
 
     private Controller controller;
 
@@ -114,6 +117,8 @@ public class BoardView extends JPanel implements GameChangeListener
         paintHand1(gfx);
         paintHand2(gfx);
         paintHand3(gfx);
+
+        paintOutlays(gfx);
     }
 
     private void paintHand0(Graphics2D gfx)
@@ -236,6 +241,45 @@ public class BoardView extends JPanel implements GameChangeListener
         }
         gfx.rotate(Math.PI / 2);
         gfx.translate(-(BOARD_WIDTH - border - cardImage.getHeight()), -(BOARD_HEIGHT - border));
+
+    }
+
+    private void paintOutlays(Graphics2D gfx)
+    {
+        // TODO Auto-generated method stub
+
+        CardStack cardStack = new CardStack();
+        cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
+        cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
+        cardStack.add(new Card(Rank.ACE, Suit.CLUBS));
+        cardStack.add(new Card(Rank.ACE, Suit.HEARTS));
+        cardStack.add(new Card(Rank.JOKER, null));
+        cardStack.add(new Card(Rank.TWO, Suit.DIAMONDS));
+        cardStack.add(new Card(Rank.TWO, Suit.SPADES));
+
+        gfx.translate(100, 400);
+
+        paintCardStack(gfx, cardStack);
+        gfx.translate(-100, -400);
+
+    }
+
+    private void paintCardStack(Graphics2D gfx, CardStack cardStack)
+    {
+        for (int i = 0; i < cardStack.size(); i++)
+        {
+            gfx.drawImage(getCardImage(cardStack.get(i), false), i * 10, 0, null);
+        }
+        
+        gfx.setFont(Font.)
+        gfx.setPaint(new Color(0xFFFFFF));
+        gfx.drawString(((Integer) cardStack.size()).toString(), 10
+                                                                * (cardStack.size() - 1)
+                                                                + 4
+                                                                + getCardImage(cardStack.get(0), false).getWidth(), 20);
+        gfx.setPaint(new Color(0xFFFF00));
+        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(),
+                       10 * (cardStack.size() - 1) + 4 + getCardImage(cardStack.get(0), false).getWidth(), 40);
 
     }
 
