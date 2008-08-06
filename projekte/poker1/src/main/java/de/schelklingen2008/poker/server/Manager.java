@@ -5,7 +5,6 @@ import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
 import de.schelklingen2008.poker.model.GameModel;
-import de.schelklingen2008.poker.model.Player;
 import de.schelklingen2008.poker.transport.SharedState;
 
 /**
@@ -18,7 +17,7 @@ public class Manager extends GameManager
     private SharedState sharedState;
 
     /** Implements the game logic with an own internal model. */
-    private GameModel gameModel;
+    private GameModel   gameModel;
 
     @Override
     protected PlaceObject createPlaceObject()
@@ -46,8 +45,8 @@ public class Manager extends GameManager
         // e.g.: sharedState.setTurnHolder(gameModel.getTurnHolder());
     }
 
-    private Player getPlayer(BodyObject client)
+    private void getPlayer(BodyObject client)
     {
-        return Player.valueOf(getPlayerIndex(client.username));
+        // return Player.valueOf(getPlayerIndex(client.username));
     }
 }
