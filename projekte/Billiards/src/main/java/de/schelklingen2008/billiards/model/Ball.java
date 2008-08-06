@@ -21,12 +21,33 @@ public class Ball
         BLACK, WHITE, SOLID, STRIPED
     }
 
-    public static final Vector2d[] initialBallPositions = {}; // TODO initial ball positions
+    private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 34.64d, 0.75 * MAX_X - 17.32d,
+            0.75 * MAX_X, 0.75 * MAX_X + 17.32d, 0.75 * MAX_X + 34.64d };
 
-    public static final Color[]    BALL_COLORS          = { YELLOW, GREEN, ORANGE, RED, BLUE,
+    private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 40d, 0.5 * MAX_Y - 30d,
+            0.5 * MAX_Y - 20d, 0.5 * MAX_Y - 10d, 0.5 * MAX_Y, 0.5 * MAX_Y + 10d, 0.5 * MAX_Y + 20d, 0.5 * MAX_Y + 30d,
+            0.5 * MAX_Y + 40d                              };
+
+    public static final Vector2d[] INITIAL_BALL_POSITIONS   = {
+            new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[5]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[3]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[6]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[2]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[7]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[5]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[3]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[1]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[8]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[6]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[4]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
+            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
+
+    public static final Color[]    BALL_COLORS              = { YELLOW, GREEN, ORANGE, RED, BLUE,
             Color.getHSBColor(200, 240, 60), // PURPLE
-            Color.getHSBColor(0, 240, 60)              // MAROON
-                                                        };
+            Color.getHSBColor(0, 240, 60)                  // MAROON
+                                                            };
 
     @Override
     public int hashCode()
