@@ -1,9 +1,11 @@
 package de.schelklingen2008.reversi.model;
 
+import com.threerings.io.Streamable;
+
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Streamable
 {
 
     public static final int       SIZE             = 8;

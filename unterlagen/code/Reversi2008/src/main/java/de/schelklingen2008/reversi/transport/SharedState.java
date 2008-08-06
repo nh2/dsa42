@@ -12,14 +12,15 @@ import de.schelklingen2008.reversi.model.Player;
 public class SharedState extends GameObject
 {
 
-    public Player[][] board;
-
-    public Player     turnHolder;
+    public GameModel model;
 
     public Player[][] getBoard()
     {
         int size = GameModel.SIZE;
         Player[][] copy = new Player[size][size];
+
+        if (model == null) return copy;
+        Player[][] board = model.getBoard();
         if (board == null) return copy;
         for (int x = 0; x < size; x++)
             for (int y = 0; y < size; y++)
@@ -29,7 +30,8 @@ public class SharedState extends GameObject
 
     public Player getTurnHolder()
     {
-        return turnHolder;
+        if (model == null) return null;
+        return model.getTurnHolder();
     }
 
     public String[] getPlayerNames()
@@ -41,52 +43,23 @@ public class SharedState extends GameObject
     }
 
     // AUTO-GENERATED: FIELDS START
-    /** The field name of the <code>board</code> field. */
-    public static final String BOARD       = "board";
-
-    /** The field name of the <code>turnHolder</code> field. */
-    public static final String TURN_HOLDER = "turnHolder";
+    /** The field name of the <code>model</code> field. */
+    public static final String MODEL = "model";
 
     // AUTO-GENERATED: FIELDS END
 
     // AUTO-GENERATED: METHODS START
     /**
-     * Requests that the <code>board</code> field be set to the specified value. The local value will be
+     * Requests that the <code>model</code> field be set to the specified value. The local value will be
      * updated immediately and an event will be propagated through the system to notify all listeners that the
      * attribute did change. Proxied copies of this object (on clients) will apply the value change when they
      * received the attribute changed notification.
      */
-    public void setBoard(Player[][] value)
+    public void setModel(GameModel value)
     {
-        Player[][] ovalue = this.board;
-        requestAttributeChange(BOARD, value, ovalue);
-        this.board = (value == null) ? null : value.clone();
-    }
-
-    /**
-     * Requests that the <code>index</code>th element of <code>board</code> field be set to the specified
-     * value. The local value will be updated immediately and an event will be propagated through the system
-     * to notify all listeners that the attribute did change. Proxied copies of this object (on clients) will
-     * apply the value change when they received the attribute changed notification.
-     */
-    public void setBoardAt(Player[] value, int index)
-    {
-        Player[] ovalue = this.board[index];
-        requestElementUpdate(BOARD, index, value, ovalue);
-        this.board[index] = value;
-    }
-
-    /**
-     * Requests that the <code>turnHolder</code> field be set to the specified value. The local value will be
-     * updated immediately and an event will be propagated through the system to notify all listeners that the
-     * attribute did change. Proxied copies of this object (on clients) will apply the value change when they
-     * received the attribute changed notification.
-     */
-    public void setTurnHolder(Player value)
-    {
-        Player ovalue = this.turnHolder;
-        requestAttributeChange(TURN_HOLDER, value, ovalue);
-        this.turnHolder = value;
+        GameModel ovalue = model;
+        requestAttributeChange(MODEL, value, ovalue);
+        model = value;
     }
     // AUTO-GENERATED: METHODS END
 }
