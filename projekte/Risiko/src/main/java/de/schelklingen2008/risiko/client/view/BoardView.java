@@ -122,8 +122,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintCountry(Graphics2D gfx, int i)
     {
-        // controller.getGameContext().getGameModel().
+        for (int j = 0; j < .length; j++)
+        {
+        gfx.drawString(getGameModel().getCountry(i).getName(), getGameModel().getCountry(i).getPositionNameX(), getGameModel().getCountry(i).getPositionNameY())
         gfx.drawString("Großbritanien", 210, 538);
+        }
 
     }
 }
