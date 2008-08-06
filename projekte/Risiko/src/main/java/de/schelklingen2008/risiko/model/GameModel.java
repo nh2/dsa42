@@ -9,10 +9,20 @@ public class GameModel
     Country[]       c;
     static Player[] p;
 
+    public GameModel()
+    {
+
+    }
+
     public Player valueOf(int playerIndex)
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public Country getCountry(int i)
+    {
+        return c[i];
     }
 
 }
