@@ -1,10 +1,12 @@
 package de.schelklingen2008.doppelkopf.model;
 
-public class Spieler
+import java.io.Serializable;
+
+public class Spieler implements Serializable
 {
 
-    public String name;
-    public Blatt  blatt;
+    private String name;
+    private Blatt  blatt;
 
     public Spieler(String name)
     {
@@ -16,5 +18,15 @@ public class Spieler
     public String toString()
     {
         return name;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Blatt getBlatt()
+    {
+        return blatt;
     }
 }

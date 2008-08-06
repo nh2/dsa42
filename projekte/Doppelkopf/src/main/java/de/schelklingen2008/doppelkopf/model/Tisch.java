@@ -1,23 +1,27 @@
 package de.schelklingen2008.doppelkopf.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Queue;
+import java.util.List;
 import java.util.Stack;
-import java.util.concurrent.ArrayBlockingQueue;
 
-public class Tisch
+public class Tisch implements Serializable
 {
 
-    GameModel           spiel;
-    public Queue<Karte> mitte;
-    Spieler             anDerReihe;
-    int                 stichAnzahl;
+    private List<Karte>  mitte;
+    private Spieler      anDerReihe;
+    private int          stichAnzahl;
+    private SpielerListe spieler;
 
-    public Tisch(GameModel spiel, Spieler faengtAn)
+    public Tisch()
     {
-        this.spiel = spiel;
-        anDerReihe = faengtAn;
-        mitte = new ArrayBlockingQueue<Karte>(4);
+        mitte = new ArrayList<Karte>(4);
+
+        spieler = new SpielerListe();
+        for (int i = 1; i <= 4; i++)
+            spieler.add(new Spieler("Spieler " + i));
+        anDerReihe = spieler.getAnDerReihe();
     }
 
     public void gibKarten()
@@ -31,8 +35,8 @@ public class Tisch
 
         while (!stapel.isEmpty())
         {
-            anDerReihe.blatt.add(stapel.pop());
-            anDerReihe = spiel.getSpielerListe().Next();
+            anDerReihe.getBlatt().add(stapel.pop());
+            anDerReihe = spieler.next();
         }
     }
 
@@ -50,5 +54,20 @@ public class Tisch
     private void mischeStapel(Stack<Karte> stapel)
     {
         Collections.shuffle(stapel);
+    }
+
+    public List<Karte> getMitte()
+    {
+        return mitte;
+    }
+
+    public int getStichAnzahl()
+    {
+        return stichAnzahl;
+    }
+
+    public SpielerListe getSpieler()
+    {
+        return spieler;
     }
 }

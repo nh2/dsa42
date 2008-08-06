@@ -89,20 +89,22 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         tempListe = new SpielerListe();
         // tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
         GameModel spiel = new GameModel();
-        tempListe.addAll(spiel.getSpielerListe());
+        tempListe.addAll(spiel.getTisch().getSpieler());
         // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
         ich = tempListe.getSpieler("Spieler 1");
 
-        List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().blatt.getKarten());
-        spiel.tisch.mitte.add(l.get(0));
-        spiel.tisch.mitte.add(l.get(1));
-        spiel.tisch.mitte.add(l.get(2));
-        spiel.tisch.mitte.add(l.get(3));
-        tempListe.getAnDerReihe().blatt.getKarten().remove(l.get(0));
-        mpUnten.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
-        mpLinks.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
-        mpOben.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
-        mpRechts.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
+        List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
+        List<Karte> mitte = spiel.getTisch().getMitte();
+        mitte.add(l.get(0));
+        mitte.add(l.get(1));
+        mitte.add(l.get(2));
+        mitte.add(l.get(3));
+        tempListe.getAnDerReihe().getBlatt().getKarten().remove(l.get(0));
+        mpUnten.inhalt = new ZeichenKarte(mitte.get(3));
+        mpLinks.inhalt = new ZeichenKarte(mitte.get(2));
+        mpOben.inhalt = new ZeichenKarte(mitte.get(1));
+        mpRechts.inhalt = new ZeichenKarte(mitte.get(0));
+        mitte.clear();
 
         // for (Farbe f : Farbe.values())
         // for (Bild b : Bild.values())
@@ -154,10 +156,10 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
             tempListe.rotieren();
 
         gfx.setColor(Color.white);
-        gfx.drawString(tempListe.getAnDerReihe().name, 135, 451);
-        gfx.drawString(tempListe.Next().name, 30, 103);
-        gfx.drawString(tempListe.Next().name, 265, 18);
-        gfx.drawString(tempListe.Next().name, 700, 103);
+        gfx.drawString(tempListe.getAnDerReihe().getName(), 135, 451);
+        gfx.drawString(tempListe.next().getName(), 30, 103);
+        gfx.drawString(tempListe.next().getName(), 265, 18);
+        gfx.drawString(tempListe.next().getName(), 700, 103);
     }
 
     private class Mittenplatz
@@ -192,7 +194,7 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
             gfx.translate(140, 463);
             ZeichenKarte zk;
             int i = 0;
-            for (Karte k : tempListe.getAnDerReihe().blatt.getKarten())
+            for (Karte k : tempListe.getAnDerReihe().getBlatt().getKarten())
             {
                 zk = new ZeichenKarte(k);
                 zk.draw(gfx, i * 40, 0);
@@ -204,21 +206,21 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         // Links
         gfx.translate(30, 385);
         gfx.rotate(-Math.PI / 2d);
-        for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(Math.PI / 2d);
         gfx.translate(-30, -385);
 
         // Oben
         gfx.translate(265, 30);
-        for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.translate(-265, -30);
 
         // Rechts
         gfx.translate(770, 115);
         gfx.rotate(Math.PI / 2d);
-        for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(-Math.PI / 2d);
         gfx.translate(-770, -115);

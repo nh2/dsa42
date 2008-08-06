@@ -1,6 +1,8 @@
 package de.schelklingen2008.doppelkopf.model;
 
-public class Karte
+import java.io.Serializable;
+
+public class Karte implements Serializable
 {
 
     public final Farbe farbe;

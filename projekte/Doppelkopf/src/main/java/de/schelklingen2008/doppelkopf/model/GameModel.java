@@ -1,25 +1,20 @@
 package de.schelklingen2008.doppelkopf.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
-    SpielerListe    spieler;     // TODO static entfernen
-    public Tisch    tisch;
-    List<Integer>[] punkte;
-    // Spieler mischen; // TODO Nicht mehr benötigt: SpielerListe merkt, wer dran ist
-    boolean         rundeBeendet;
+    private Tisch           tisch;
+    private List<Integer>[] punkte;
+    private boolean         rundeBeendet;
 
     public GameModel()
     {
-        spieler = new SpielerListe();
-        // Vier Spieler hinzufügen
-        for (int i = 1; i <= 4; i++)
-            spieler.add(new Spieler("Spieler " + i));
 
         // Spiel starten
         neuesSpiel();
@@ -27,20 +22,22 @@ public class GameModel
 
     private void neuesSpiel()
     {
-        // Tisch erzeugen
-        tisch = new Tisch(this, spieler.getAnDerReihe());
-
-        // Karten geben
+        tisch = new Tisch();
         tisch.gibKarten();
-    }
-
-    public SpielerListe getSpielerListe()
-    {
-        return spieler;
     }
 
     public boolean isFinished()
     {
         return false;
+    }
+
+    public Tisch getTisch()
+    {
+        return tisch;
+    }
+
+    public boolean isRundeBeendet()
+    {
+        return rundeBeendet;
     }
 }

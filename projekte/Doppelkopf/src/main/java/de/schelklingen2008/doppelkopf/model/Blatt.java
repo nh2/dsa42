@@ -1,9 +1,10 @@
 package de.schelklingen2008.doppelkopf.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Blatt
+public class Blatt implements Serializable
 {
 
     private Set<Karte> karten;
