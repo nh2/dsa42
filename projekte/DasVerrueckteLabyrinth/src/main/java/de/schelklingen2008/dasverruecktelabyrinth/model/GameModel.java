@@ -69,10 +69,37 @@ public class GameModel
 
     private boolean testCurve3(Tile pTile)
     {
-        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == false) return true;
+        if (pTile.getLeft() == false && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == true) return true;
 
         return false;
+    }
 
+    private boolean testCurve4(Tile pTile)
+    {
+        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == false && pTile.getUp() == true) return true;
+
+        return false;
+    }
+
+    private boolean testHorizontal(Tile pTile)
+    {
+        if (pTile.getLeft() == true && pTile.getDown() == false && pTile.getRight() == true && pTile.getUp() == false) return true;
+
+        return false;
+    }
+
+    private boolean testVertikal(Tile pTile)
+    {
+        if (pTile.getLeft() == false && pTile.getDown() == true && pTile.getRight() == false && pTile.getUp() == true) return true;
+
+        return false;
+    }
+
+    private boolean testCross(Tile pTile)
+    {
+        if (pTile.getLeft() == true && pTile.getDown() == true && pTile.getRight() == true && pTile.getUp() == true) return true;
+
+        return false;
     }
 
     private List<Tile> generateTiles()
