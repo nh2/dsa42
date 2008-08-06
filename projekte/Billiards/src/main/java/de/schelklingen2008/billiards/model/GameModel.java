@@ -1,5 +1,6 @@
 package de.schelklingen2008.billiards.model;
 
+import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
@@ -18,18 +19,16 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class GameModel
 {
 
-    private static final Vector2d[] initialBallPositions = {};                   // TODO initial ball
-    // positions
-
-    private Player[]                players              = new Player[2];
-    private Player                  turnHolder           = null;
-    private boolean                 inMotion             = false;                // Are there any balls in
+    private Player[]   players      = new Player[2];
+    private Player     turnHolder   = null;
+    // TODO Make this private
+    public boolean     inMotion     = false;                // Are there any balls in
     // motion?
 
-    private List<Ball>              balls                = new ArrayList<Ball>();
-    private List<Ball>              ballsOnTable         = new ArrayList<Ball>();
+    private List<Ball> balls        = new ArrayList<Ball>();
+    private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
-    private Ball                    whiteBall, blackBall;
+    private Ball       whiteBall, blackBall;
 
     public boolean isInMotion()
     {
@@ -54,7 +53,7 @@ public class GameModel
             players[i] = new Player(i);
         }
 
-        whiteBall = new Ball(Ball.BallType.WHITE, Color.CYAN);
+        whiteBall = new Ball(Ball.BallType.WHITE, Color.WHITE);
         blackBall = new Ball(Ball.BallType.BLACK, Color.BLACK);
 
         balls.add(whiteBall);
@@ -106,9 +105,23 @@ public class GameModel
         blackBall.setPosition(new Vector2d(600, 200));
 
         // TODO initial ball positions
-        /*
-         * int i = 0; for (Ball ball : balls) { ball.setPosition(initialBallPositions[i]); i++; }
-         */
+        int i = 0;
+        int x = 300, y = 130;
+        for (Ball ball : balls)
+        {
+            if (ball == whiteBall || ball == blackBall)
+            {
+                continue;
+            }
+            ball.setPosition(new Vector2d(x, y));
+            y += 30;
+            if (y > 270)
+            {
+                y = 160;
+                x += 30;
+            }
+            i++;
+        }
 
     }
 
@@ -137,14 +150,14 @@ public class GameModel
 
     public void processTimeStep(double deltaT)
     {
-        if (!inMotion)
+        final double EPSILON = 0.000001d;
+
+        if (!inMotion || deltaT < EPSILON)
         {
             return;
         }
 
         double remainingTime = deltaT;
-
-        final double EPSILON = 0.000001d;
 
         do
         {
@@ -157,7 +170,7 @@ public class GameModel
             {
 
                 double wallCollisionTime = ballsOnTable.get(i).getNextWallCollision();
-                if (Double.isNaN(tCollision) || !Double.isNaN(wallCollisionTime) || wallCollisionTime < tCollision)
+                if (!Double.isNaN(wallCollisionTime) && (Double.isNaN(tCollision) || wallCollisionTime < tCollision))
                 {
                     tCollision = wallCollisionTime;
                     ball1 = ballsOnTable.get(i);
@@ -166,9 +179,15 @@ public class GameModel
 
                 for (int j = i + 1; j < ballsOnTable.size(); j++)
                 {
+                    if (!ballsOnTable.get(i).isInMotion() && !ballsOnTable.get(j).isInMotion())
+                    {
+                        continue;
+                    }
+
                     double ballCollisionTime = ballsOnTable.get(i).getNextBallCollision(ballsOnTable.get(j));
 
-                    if (Double.isNaN(tCollision) || !Double.isNaN(ballCollisionTime) || ballCollisionTime < tCollision)
+                    if (!Double.isNaN(ballCollisionTime)
+                        && (Double.isNaN(tCollision) || ballCollisionTime < tCollision))
                     {
                         tCollision = ballCollisionTime;
                         ball1 = ballsOnTable.get(i);
@@ -187,6 +206,7 @@ public class GameModel
             else
             {
                 moveBalls(remainingTime);
+                remainingTime = 0;
             }
 
         } while (remainingTime >= EPSILON);
@@ -196,12 +216,17 @@ public class GameModel
     private void moveBalls(double deltaT)
     {
 
-        inMotion = false;
+        boolean tmpInMotion = false;
 
         for (Ball ball : ballsOnTable)
         {
             ball.move(deltaT);
-            inMotion |= ball.isInMotion();
+            tmpInMotion |= ball.isInMotion();
+        }
+
+        if (!tmpInMotion)
+        {
+            inMotion = false;
         }
 
     }
@@ -213,11 +238,13 @@ public class GameModel
 
         if (isWallCollision)
         {
-            if (ball1.getPosition().getX() < EPSILON || ball1.getPosition().getX() >= MAX_X - EPSILON)
+            if (ball1.getPosition().getX() - BALL_RADIUS < EPSILON
+                || ball1.getPosition().getX() + BALL_RADIUS >= MAX_X - EPSILON)
             {
                 ball1.setVelocity(new Vector2d(-ball1.getVelocity().getX(), ball1.getVelocity().getY()));
             }
-            else if (ball1.getPosition().getX() < EPSILON || ball1.getPosition().getY() >= MAX_Y - EPSILON)
+            else if (ball1.getPosition().getY() - BALL_RADIUS < EPSILON
+                     || ball1.getPosition().getY() + BALL_RADIUS >= MAX_Y - EPSILON)
             {
                 ball1.setVelocity(new Vector2d(ball1.getVelocity().getX(), -ball1.getVelocity().getY()));
             }
@@ -227,18 +254,26 @@ public class GameModel
 
             double alpha = ball1.getPosition().subtract(ball2.getPosition()).getAngle();
 
-            Vector2d v1 = ball1.getVelocity().rotate(alpha);
-            Vector2d v2 = ball2.getVelocity().rotate(alpha);
+            Vector2d v1 = ball1.getVelocity().rotate(-alpha);
+            Vector2d v2 = ball2.getVelocity().rotate(-alpha);
 
             double tmp = v1.getX();
             v1 = new Vector2d(v2.getX(), v1.getY());
             v2 = new Vector2d(tmp, v2.getY());
 
-            ball1.setVelocity(v2.rotate(-alpha));
-            ball2.setVelocity(v2.rotate(-alpha));
+            ball1.setVelocity(v1.rotate(alpha));
+            ball2.setVelocity(v2.rotate(alpha));
+
+            ball1.move(0.001d);
+            ball2.move(0.001d);
 
         }
 
+    }
+
+    public Ball getWhiteBall()
+    {
+        return whiteBall;
     }
 
 }

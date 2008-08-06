@@ -96,9 +96,9 @@ public class Vector2d
         else
         {
             double result = atan(y / x);
-            if (y < 0)
+            if (x < 0)
             {
-                result += PI; // atan() always returns
+                result += PI;
             }
             return result;
         }
@@ -140,6 +140,12 @@ public class Vector2d
     public Vector2d subtract(Vector2d v)
     {
         return new Vector2d(x - v.x, y - v.y);
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("(%.2f; %.2f)", x, y);
     }
 
 }

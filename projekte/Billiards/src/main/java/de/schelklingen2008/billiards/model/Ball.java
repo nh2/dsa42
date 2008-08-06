@@ -21,9 +21,12 @@ public class Ball
         BLACK, WHITE, SOLID, STRIPED
     }
 
-    public static final Color[] BALL_COLORS = { YELLOW, GREEN, ORANGE, RED, BLUE, Color.getHSBColor(200, 240, 60), // PURPLE
-            Color.getHSBColor(0, 240, 60)  // MAROON
-                                            };
+    public static final Vector2d[] initialBallPositions = {}; // TODO initial ball positions
+
+    public static final Color[]    BALL_COLORS          = { YELLOW, GREEN, ORANGE, RED, BLUE,
+            Color.getHSBColor(200, 240, 60), // PURPLE
+            Color.getHSBColor(0, 240, 60)              // MAROON
+                                                        };
 
     @Override
     public int hashCode()
@@ -98,13 +101,14 @@ public class Ball
     {
         final double EPSILON = 0.000001d;
 
-        if (velocity.getX() < EPSILON && velocity.getY() < EPSILON)
+        if (Math.abs(velocity.getX()) < EPSILON && Math.abs(velocity.getY()) < EPSILON)
         {
             velocity = Vector2d.ZERO;
         }
     }
 
-    void setVelocity(Vector2d velocity)
+    // TODO Make this default visibility
+    public void setVelocity(Vector2d velocity)
     {
         this.velocity = velocity;
     }
@@ -124,22 +128,43 @@ public class Ball
 
         double[] collisionTimes = new double[4];
 
-        collisionTimes[0] = (BALL_RADIUS - position.getX()) / velocity.getX();
-        collisionTimes[1] = (BALL_RADIUS - position.getY()) / velocity.getY();
-        collisionTimes[2] = (MAX_X - position.getX() - BALL_RADIUS) / velocity.getX();
-        collisionTimes[3] = (MAX_Y - position.getY() - BALL_RADIUS) / velocity.getY();
+        double vx = velocity.getX(), vy = velocity.getY();
+        double xCollisionTime, yCollisionTime;
 
-        double minTime = Double.NaN;
-
-        for (int i = 0; i < collisionTimes.length; i++)
+        if (vx < 0)
         {
-            if (collisionTimes[i] >= 0 && (Double.isNaN(minTime) || collisionTimes[i] < minTime))
-            {
-                minTime = collisionTimes[i];
-            }
+            xCollisionTime = (BALL_RADIUS - position.getX()) / velocity.getX();
+        }
+        else if (vx > 0)
+        {
+            xCollisionTime = (MAX_X - position.getX() - BALL_RADIUS) / velocity.getX();
+        }
+        else
+        {
+            xCollisionTime = Double.NaN;
         }
 
-        return minTime;
+        if (vy < 0)
+        {
+            yCollisionTime = (BALL_RADIUS - position.getY()) / velocity.getY();
+        }
+        else if (vy > 0)
+        {
+            yCollisionTime = (MAX_Y - position.getY() - BALL_RADIUS) / velocity.getY();
+        }
+        else
+        {
+            yCollisionTime = Double.NaN;
+        }
+
+        if (!Double.isNaN(xCollisionTime) && (Double.isNaN(yCollisionTime) || xCollisionTime < yCollisionTime))
+        {
+            return xCollisionTime;
+        }
+        else
+        {
+            return yCollisionTime;
+        }
 
     }
 
@@ -197,14 +222,14 @@ public class Ball
 
     public boolean isInMotion()
     {
-        return velocity.equals(Vector2d.ZERO);
+        return !velocity.equals(Vector2d.ZERO);
     }
 
     void move(double deltaT)
     {
         // TODO Add friction
 
-        position.add(velocity.scale(deltaT));
+        position = position.add(velocity.scale(deltaT));
 
         checkVelocity();
     }
