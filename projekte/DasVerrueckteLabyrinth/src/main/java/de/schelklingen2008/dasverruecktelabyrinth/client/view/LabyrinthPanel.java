@@ -28,7 +28,7 @@ public class LabyrinthPanel extends JPanel
         JButton pushButton12 = new JButton("hier");
 
         JPanel buttonsSued = new JPanel();
-        buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.PAGE_AXIS));
+        buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.LINE_AXIS));
         buttonsSued.add(pushButton1);
         buttonsSued.add(pushButton2);
         buttonsSued.add(pushButton3);
@@ -40,7 +40,7 @@ public class LabyrinthPanel extends JPanel
         buttonsOst.add(pushButton6);
 
         JPanel buttonsNord = new JPanel();
-        buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.PAGE_AXIS));
+        buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.LINE_AXIS));
         buttonsNord.add(pushButton7);
         buttonsNord.add(pushButton8);
         buttonsNord.add(pushButton9);
