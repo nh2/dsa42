@@ -17,6 +17,19 @@ public class Country
     private Color         color;
     private boolean       selected;
 
+    public Country(String pName, int pIndex, int pX, int pY, ArrayList<Country> pNeighbours, Color pColor)
+    {
+        name = pName;
+        units = 0;
+        index = pIndex;
+        positionNameX = pX;
+        positionNameY = pY;
+        occupier = null;
+        neighbours = pNeighbours;
+        color = pColor;
+        selected = false;
+    }
+
     public String getName()
     {
         return name;
