@@ -11,10 +11,21 @@ public class GameModel
     private Talon    talon;
     private Discard  discard;
 
+    public final int initialCardNumber = 15;
+
     public GameModel(String[] playerNames)
     {
-        players = new Player[playerNames.length];
+        // only 2 or 4 players allowed for now
+        if (playerNames.length != 2 && playerNames.length != 4)
+        {
+            throw new IllegalArgumentException("Only 2 or 4 players allowed for now!");
+        }
 
+        /**
+         * TODO Feature: any player order allowed
+         */
+        // create the player objects
+        players = new Player[playerNames.length];
         int i = 0;
         for (String playerName : playerNames)
         {
@@ -22,8 +33,24 @@ public class GameModel
             i++;
         }
 
+        // create a full 110 card talon
         talon = Talon.getInstance();
+        talon.shuffle();
+
+        // create discard pile
         discard = new Discard();
+
+        // draw 15 cards for every player
+        for (Player player : players)
+        {
+            for (int j = 0; j < initialCardNumber; j++)
+            {
+                player.getHand().add(talon.pop());
+            }
+        }
+
+        // discard one card
+        discard.add(talon.pop());
     }
 
     public void drawCard()

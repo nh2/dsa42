@@ -5,7 +5,8 @@ import de.schelklingen2008.canasta.model.GameModel;
 
 public class GameModelTest extends TestCase
 {
-    private GameModel gameModel = new GameModel();
+
+    private GameModel gameModel = new GameModel(new String[] { "Lars", "Alexander" });
 
     public void testSomething() throws Exception
     {

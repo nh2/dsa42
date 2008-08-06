@@ -51,6 +51,8 @@ public class Talon
     // Top card has index 0
     public Card pop()
     {
+        if (cards.size() <= 0) return null;
+
         Card card = cards.get(0);
         cards.remove(0);
         return card;
@@ -58,6 +60,8 @@ public class Talon
 
     public Card peek()
     {
+        if (cards.size() <= 0) return null;
+
         Card card = cards.get(0);
         return card;
     }
