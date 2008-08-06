@@ -80,9 +80,12 @@ public class PlayerPanel extends JPanel
             throw new RuntimeException("Kann Bild nicht laden.", e);
         }
 
+<<<<<<< .mine
+=======
         JPanel playerCards = new JPanel();
         Map openCards = getGameModel().getPlayerCardsMap();
         openCards.
+>>>>>>> .r291
     }
 
     private BufferedImage getInsert()
