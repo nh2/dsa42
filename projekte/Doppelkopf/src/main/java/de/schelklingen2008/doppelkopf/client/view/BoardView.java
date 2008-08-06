@@ -10,7 +10,9 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -35,6 +37,14 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
     private final Color       tischFarbe = Color.decode("#00008800");
     private Set<ZeichenKarte> karten     = new HashSet<ZeichenKarte>();
     private BufferedImage     rueckseite;
+
+    private final int         mx         = 400;
+    private final int         my         = 300;
+
+    Mittenplatz               mpUnten    = new Mittenplatz(mx - 37, my - 10);
+    Mittenplatz               mpLinks    = new Mittenplatz(mx - 65, my - 40);
+    Mittenplatz               mpOben     = new Mittenplatz(mx - 37, my - 97);
+    Mittenplatz               mpRechts   = new Mittenplatz(mx - 10, my - 60);
 
     SpielerListe              tempListe;
     Spieler                   ich;
@@ -76,8 +86,24 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
             System.err.println("Bild nicht gefunden.");
         }
 
-        tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
-        ich = tempListe.getSpieler(controller.getGameContext().getMyName());
+        tempListe = new SpielerListe();
+        // tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
+        GameModel spiel = new GameModel();
+        tempListe.addAll(spiel.getSpielerListe());
+        // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
+        ich = tempListe.getSpieler("Spieler 1");
+
+        List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().blatt.getKarten());
+        spiel.tisch.mitte.add(l.get(0));
+        spiel.tisch.mitte.add(l.get(1));
+        spiel.tisch.mitte.add(l.get(2));
+        spiel.tisch.mitte.add(l.get(3));
+        tempListe.getAnDerReihe().blatt.getKarten().remove(l.get(0));
+        mpUnten.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
+        mpLinks.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
+        mpOben.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
+        mpRechts.inhalt = new ZeichenKarte(spiel.tisch.mitte.poll());
+
         // for (Farbe f : Farbe.values())
         // for (Bild b : Bild.values())
         // karten.add(new ZeichenKarte(new Karte(f, b)));
@@ -115,12 +141,47 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         gfx.clearRect(0, 0, getWidth(), getHeight());
 
         // Spielerbereiche zeichnen
-        gfx.drawRect(250, 30, 300, 70); // Oberer Spielerbereich
-        gfx.drawRect(30, 100, 70, 300); // Linker Spielerbereich
-        gfx.drawRect(700, 100, 70, 300);// Rechter Spielerbereich
-        gfx.drawRect(120, 420, 560, 150);// Unterer Spielerbereich
+        gfx.setColor(Color.decode("#00007700"));
+        gfx.drawRect(130, 458, 535, 117);// Unterer Spielerbereich
+        gfx.drawRect(25, 110, 80, 280); // Linker Spielerbereich
+        gfx.drawRect(260, 25, 280, 80); // Oberer Spielerbereich
+        gfx.drawRect(695, 110, 80, 280);// Rechter Spielerbereich
+        gfx.setColor(Color.black);
 
+        // Spielernamen zeichnen
         // Bis zum aktuellen Spieler vorrücken (mir)
+        while (tempListe.getAnDerReihe() != ich)
+            tempListe.rotieren();
+
+        gfx.setColor(Color.white);
+        gfx.drawString(tempListe.getAnDerReihe().name, 135, 451);
+        gfx.drawString(tempListe.Next().name, 30, 103);
+        gfx.drawString(tempListe.Next().name, 265, 18);
+        gfx.drawString(tempListe.Next().name, 700, 103);
+    }
+
+    private class Mittenplatz
+    {
+
+        private int         x;
+        private int         y;
+        public ZeichenKarte inhalt;
+
+        public Mittenplatz(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void draw(Graphics g)
+        {
+            g.drawImage(inhalt.image, x, y, null);
+        }
+    }
+
+    private void paintBoard(Graphics2D gfx)
+    {
+        // Bis zum aktuellen Spieler vorruecken (mir)
         while (tempListe.getAnDerReihe() != ich)
             tempListe.rotieren();
 
@@ -128,15 +189,16 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
         // Unten (eigene)
         {
-            gfx.translate(120, 470);
+            gfx.translate(140, 463);
             ZeichenKarte zk;
             int i = 0;
             for (Karte k : tempListe.getAnDerReihe().blatt.getKarten())
             {
                 zk = new ZeichenKarte(k);
-                zk.draw(gfx, i * 20, 0);
+                zk.draw(gfx, i * 40, 0);
+                i++;
             }
-            gfx.translate(-120, -420);
+            gfx.translate(-140, -463);
         }
 
         // Links
@@ -145,7 +207,7 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(Math.PI / 2d);
-        gfx.translate(-30, -435);
+        gfx.translate(-30, -385);
 
         // Oben
         gfx.translate(265, 30);
@@ -154,23 +216,26 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         gfx.translate(-265, -30);
 
         // Rechts
-        gfx.translate(770, 165);
+        gfx.translate(770, 115);
         gfx.rotate(Math.PI / 2d);
         for (int i = 0; i < tempListe.Next().blatt.getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
         gfx.rotate(-Math.PI / 2d);
-        gfx.translate(-770, -165);
+        gfx.translate(-770, -115);
 
         // Karten in der Mitte
-        gfx.translate(400, 250);
-        gfx.fillRect(0, 0, 30, 70);
-        gfx.rotate(Math.PI / 2d);
-        gfx.fillRect(0, 0, 30, 70);
-        gfx.translate(400, 250);
-    }
 
-    private void paintBoard(Graphics2D gfx)
-    {
+        mpUnten.draw(gfx);
+        mpLinks.draw(gfx);
+        mpOben.draw(gfx);
+        mpRechts.draw(gfx);
+
+        // gfx.translate(400, 250);
+        // gfx.fillRect(0, 0, 30, 70);
+        // gfx.rotate(Math.PI / 2d);
+        // gfx.fillRect(0, 0, 30, 70);
+        // gfx.translate(400, 250);
+        // gfx.fillOval(395, 295, 10, 10);
     }
 
     public void gameChanged()
