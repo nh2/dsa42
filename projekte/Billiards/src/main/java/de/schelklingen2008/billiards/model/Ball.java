@@ -5,7 +5,6 @@ import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static java.awt.Color.BLUE;
 import static java.awt.Color.GREEN;
-import static java.awt.Color.ORANGE;
 import static java.awt.Color.RED;
 import static java.awt.Color.YELLOW;
 
@@ -21,12 +20,12 @@ public class Ball
         BLACK, WHITE, SOLID, STRIPED
     }
 
-    private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 34.64d, 0.75 * MAX_X - 17.32d,
-            0.75 * MAX_X, 0.75 * MAX_X + 17.32d, 0.75 * MAX_X + 34.64d };
+    private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 38d, 0.75 * MAX_X - 19d, 0.75 * MAX_X,
+            0.75 * MAX_X + 19d, 0.75 * MAX_X + 38d         };
 
-    private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 40d, 0.5 * MAX_Y - 30d,
-            0.5 * MAX_Y - 20d, 0.5 * MAX_Y - 10d, 0.5 * MAX_Y, 0.5 * MAX_Y + 10d, 0.5 * MAX_Y + 20d, 0.5 * MAX_Y + 30d,
-            0.5 * MAX_Y + 40d                              };
+    private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 44d, 0.5 * MAX_Y - 33d,
+            0.5 * MAX_Y - 22d, 0.5 * MAX_Y - 11d, 0.5 * MAX_Y, 0.5 * MAX_Y + 11d, 0.5 * MAX_Y + 22d, 0.5 * MAX_Y + 33d,
+            0.5 * MAX_Y + 44d                              };
 
     public static final Vector2d[] INITIAL_BALL_POSITIONS   = {
             new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
@@ -44,9 +43,9 @@ public class Ball
             new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
             new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
 
-    public static final Color[]    BALL_COLORS              = { YELLOW, GREEN, ORANGE, RED, BLUE,
-            Color.getHSBColor(200, 240, 60), // PURPLE
-            Color.getHSBColor(0, 240, 60)                  // MAROON
+    public static final Color[]    BALL_COLORS              = { YELLOW, GREEN, new Color(0xFF4000), RED, BLUE,
+            new Color(0x800080), // PURPLE
+            new Color(0x804000)                            // MAROON
                                                             };
 
     @Override
