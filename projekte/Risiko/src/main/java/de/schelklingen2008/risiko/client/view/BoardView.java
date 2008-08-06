@@ -122,10 +122,19 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintCountry(Graphics2D gfx, int i)
     {
-        for (int j = 0; j < .length; j++)
+        for (int j = 0; j < getGameModel().getCountryArray().length; j++)
         {
-        gfx.drawString(getGameModel().getCountry(i).getName(), getGameModel().getCountry(i).getPositionNameX(), getGameModel().getCountry(i).getPositionNameY())
-        gfx.drawString("Großbritanien", 210, 538);
+            if (getGameModel().getCountry(j).isSelected())
+            {
+                gfx.setColor(Color.WHITE);
+            }
+            else
+            {
+                gfx.setColor(Color.BLACK);
+            }
+            gfx.drawString(getGameModel().getCountry(j).getName(), getGameModel().getCountry(j).getPositionNameX(),
+                           getGameModel().getCountry(j).getPositionNameY());
+            // gfx.drawString("Großbritanien", 210, 538);
         }
 
     }
