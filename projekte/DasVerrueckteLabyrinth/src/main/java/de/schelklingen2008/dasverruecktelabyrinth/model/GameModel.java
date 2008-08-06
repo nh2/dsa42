@@ -75,6 +75,10 @@ public class GameModel
         }
     }
 
+    // TODO getWinner()
+    // TODO isFinished()
+    // TODO hasLegalMoved()
+
     private void placePlayer(Player pPlayer)
     {
         int x = (int) Math.random() * board.length;
@@ -136,6 +140,7 @@ public class GameModel
         boolean temp = false;
         if (isFinished()) temp = false;
         if (!isInBounds(pX, pY)) temp = false;
+        // TODO legalMove
         return temp;
     }
 

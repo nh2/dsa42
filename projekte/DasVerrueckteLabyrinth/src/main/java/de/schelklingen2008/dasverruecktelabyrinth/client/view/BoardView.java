@@ -19,6 +19,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     /**
@@ -31,6 +32,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
+
             @Override
             public void mouseMoved(MouseEvent e)
             {
@@ -40,6 +42,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -50,7 +53,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        // TODO respond to player´s mouse movements
+        int tx = e.getX() / Constants.SPRITE_SIZE;
+        int ty = e.getY() / Constants.SPRITE_SIZE;
+        if (!isInBounds(tx, ty)) return;
+        if (tx == cx && ty == cy) return;
+
+        cx = tx;
+        cy = ty;
+        repaint();
     }
 
     private void pressed(MouseEvent e)
