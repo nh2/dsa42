@@ -26,6 +26,7 @@ public class GameModel
 
     Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>   playerTypes  = new HashMap<PlayerType, PlayerCards>();
+    // TODO PlayerCards instanzieren
 
     private static final int       NO_PLAYERS   = 4;
 
