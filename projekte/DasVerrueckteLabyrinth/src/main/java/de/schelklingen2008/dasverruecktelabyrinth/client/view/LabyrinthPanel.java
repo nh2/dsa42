@@ -27,9 +27,9 @@ public class LabyrinthPanel extends JPanel
 
         JPanel buttonsSued = new JPanel();
         buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.PAGE_AXIS));
-        add(pushButton1);
-        add(pushButton2);
-        add(pushButton3);
+        buttonsSued.add(pushButton1);
+        buttonsSued.add(pushButton2);
+        buttonsSued.add(pushButton3);
 
         JPanel buttonsOst = new JPanel();
         buttonsOst.setLayout(new BoxLayout(buttonsOst, BoxLayout.PAGE_AXIS));
@@ -39,9 +39,9 @@ public class LabyrinthPanel extends JPanel
 
         JPanel buttonsNord = new JPanel();
         buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.PAGE_AXIS));
-        add(pushButton7);
-        add(pushButton8);
-        add(pushButton9);
+        buttonsNord.add(pushButton7);
+        buttonsNord.add(pushButton8);
+        buttonsNord.add(pushButton9);
 
         JPanel buttonsWest = new JPanel();
         buttonsWest.setLayout(new BoxLayout(buttonsWest, BoxLayout.PAGE_AXIS));
@@ -54,10 +54,10 @@ public class LabyrinthPanel extends JPanel
         add(buttonsNord, BorderLayout.NORTH);
         add(buttonsWest, BorderLayout.WEST);
         add(buttonsOst, BorderLayout.EAST);
-
-        BoardView b = new BoardView(null);
-        add(b, BorderLayout.CENTER);
-    }
+//
+//        BoardView b = new BoardView();
+//        add(b, BorderLayout.CENTER);
+//    }
 
     public static void main(String[] args)
     {
