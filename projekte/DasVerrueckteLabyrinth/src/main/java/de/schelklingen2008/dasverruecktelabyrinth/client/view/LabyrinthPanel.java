@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 public class LabyrinthPanel extends JPanel
 {
 
-    public LabyrinthPanel(){
+    public LabyrinthPanel()
+    {
         JButton pushButton1 = new JButton("hier");
         JButton pushButton2 = new JButton("hier");
         JButton pushButton3 = new JButton("hier");
@@ -23,21 +24,20 @@ public class LabyrinthPanel extends JPanel
         JButton pushButton11 = new JButton("hier");
         JButton pushButton12 = new JButton("hier");
 
-        
         JPanel buttonsSued = new JPanel();
         buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.PAGE_AXIS));
         add(pushButton1);
         add(pushButton2);
         add(pushButton3);
 
-        
+
         JPanel buttonsOst = new JPanel();
         buttonsOst.setLayout(new BoxLayout(buttonsOst, BoxLayout.PAGE_AXIS));
         add(pushButton4);
         add(pushButton5);
         add(pushButton6);
 
-        
+
         
         JPanel buttonsNord = new JPanel();
         buttonsNord.setLayout(new BoxLayout(buttonsNord, BoxLayout.PAGE_AXIS));
@@ -45,7 +45,7 @@ public class LabyrinthPanel extends JPanel
         add(pushButton8);
         add(pushButton9);
 
-        
+
         
         JPanel buttonsWest = new JPanel();
         buttonsWest.setLayout(new BoxLayout(buttonsWest, BoxLayout.PAGE_AXIS));
@@ -53,10 +53,12 @@ public class LabyrinthPanel extends JPanel
         add(pushButton11);
         add(pushButton12);
 
-        
-        
+
         
         setLayout(new BorderLayout());
-        add()
+        add(buttonsSued, BorderLayout.SOUTH);
+        add(buttonsNord, BorderLayout.NORTH);
+        add(buttonsWest, BorderLayout.WEST);
+        add(buttonsOst, BorderLayout.EAST);
     }
 }
