@@ -17,7 +17,7 @@ public class Country
     private Color         color;
     private boolean       selected;
 
-    public Country(String pName, int pIndex, int pX, int pY, Color pColor)
+    public Country(String pName, int pIndex, int pX, int pY, int r, int g, int b)
     {
         name = pName;
         units = 0;
@@ -26,7 +26,7 @@ public class Country
         positionNameY = pY;
         occupier = null;
         neighbours = null;
-        color = pColor;
+        color = new Color(r, g, b);
         selected = false;
     }
 
