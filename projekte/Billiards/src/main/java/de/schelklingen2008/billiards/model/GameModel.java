@@ -7,10 +7,10 @@ import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
 /**
@@ -35,7 +35,7 @@ public class GameModel
         return inMotion;
     }
 
-    public Collection<Ball> getBalls()
+    public List<Ball> getBalls()
     {
         return balls;
     }
@@ -104,23 +104,29 @@ public class GameModel
         whiteBall.setPosition(new Vector2d(200, 200));
         blackBall.setPosition(new Vector2d(600, 200));
 
+        if (balls.get(balls.size() - 1).getType().equals(balls.get(balls.size() - 5).getType()))
+        {
+            BallType ball2Type = balls.get(balls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED
+                    : BallType.SOLID;
+            for (int i = 0; i < balls.size(); i++)
+            {
+                if (balls.get(i).getType() == ball2Type)
+                {
+                    Collections.swap(balls, i, balls.size() - 1);
+                    break;
+                }
+            }
+        }
+
         // TODO initial ball positions
         int i = 0;
-        int x = 300, y = 130;
         for (Ball ball : balls)
         {
             if (ball == whiteBall || ball == blackBall)
             {
                 continue;
             }
-            ball.setPosition(new Vector2d(x, y));
-            y += 30;
-            if (y > 270)
-            {
-                y = 160;
-                x += 30;
-            }
-            i++;
+            ball.setPosition(Ball.INITIAL_BALL_POSITIONS[i++]);
         }
 
     }
