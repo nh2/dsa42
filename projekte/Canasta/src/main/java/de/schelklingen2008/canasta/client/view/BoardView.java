@@ -269,12 +269,12 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.translate(-outlayX, -outlayY);
 
         // Player 1
-        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                      / 2
-                      + Constants.SHARED_CARDS_SPACE;
+        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
         outlayX = Constants.HAND_BORDER;
-        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                       / 2
+                       + Constants.SHARED_CARDS_SPACE;
+        outlayY = Constants.HAND_BORDER;
 
         gfx.translate(outlayX, outlayY);
         paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
@@ -284,20 +284,25 @@ public class BoardView extends JPanel implements GameChangeListener
         outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
                       / 2
                       + Constants.SHARED_CARDS_SPACE;
-        outlayX = Constants.HAND_BORDER;
+        outlayX = Constants.HAND_BORDER
+                  + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                  / 2;
         outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+        outlayY = Constants.HAND_BORDER;
 
         gfx.translate(outlayX, outlayY);
         paintOutlay(gfx, players[2], outlayWidth, outlayHeight);
         gfx.translate(-outlayX, -outlayY);
 
         // Player 3
-        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                      / 2
-                      + Constants.SHARED_CARDS_SPACE;
-        outlayX = Constants.HAND_BORDER;
-        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        outlayX = Constants.HAND_BORDER
+                  + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                  / 2
+                  + Constants.SHARED_CARDS_SPACE;
+        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                       / 2
+                       + Constants.SHARED_CARDS_SPACE;
         outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
         gfx.translate(outlayX, outlayY);
@@ -315,8 +320,8 @@ public class BoardView extends JPanel implements GameChangeListener
         BufferedImage cardImage = getCardImage(null, 40, true);
 
         // some pixel calculation
-        int stackCountX = height / cardImage.getHeight();
-        int stackCountY = width / (int) (3.0 * cardImage.getWidth());
+        int stackCountX = width / (int) (3.0 * cardImage.getWidth());
+        int stackCountY = height / cardImage.getHeight();
 
         int stackSpaceX = (int) ((width - 3.0 * cardImage.getWidth() * stackCountX) / stackCountX + 1);
         int stackSpaceY = (height - cardImage.getHeight() * stackCountY) / stackCountY + 1;
@@ -347,19 +352,20 @@ public class BoardView extends JPanel implements GameChangeListener
                 return;
             }
         }
+
         // some debugging
         gfx.setPaint(new Color(0xFF0000));
         gfx.drawRect(0, 0, width, height);
-        gfx.drawString(((Integer) stackCountY).toString(), width / 2 - 10, height / 2);
-        gfx.drawString(((Integer) stackCountX).toString(), width / 2 + 10, height / 2);
-        gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
-        gfx.drawString(((Integer) height).toString(), width / 2 + 30, height / 2 + 20);
+        // gfx.drawString(((Integer) stackCountX).toString(), width / 2 - 10, height / 2);
+        // gfx.drawString(((Integer) stackCountY).toString(), width / 2 + 10, height / 2);
+        // gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
+        // gfx.drawString(((Integer) height).toString(), width / 2 + 30, height / 2 + 20);
     }
 
     private void paintCardStack(Graphics2D gfx, CardStack cardStack)
     {
-        gfx.setPaint(new Color(0xFF00FF));
-        gfx.drawRect(0, 0, 4, 4);
+        // gfx.setPaint(new Color(0xFF00FF));
+        // gfx.drawRect(0, 0, 4, 4);
 
         for (int i = 0; i < cardStack.size(); i++)
         {
