@@ -36,7 +36,7 @@ public class BoardView extends JPanel implements GameChangeListener
     private final int  HAND_BORDER        = 90;
     private final int  BOARD_WIDTH        = 800;
     private final int  BOARD_HEIGHT       = 800;
-    private final int  SHARED_CARDS_SPACE = 100;
+    private final int  SHARED_CARDS_SPACE = 135;
 
     private Controller controller;
 
@@ -257,11 +257,37 @@ public class BoardView extends JPanel implements GameChangeListener
         cardStack.add(new Card(Rank.TWO, Suit.DIAMONDS));
         cardStack.add(new Card(Rank.TWO, Suit.SPADES));
 
-        gfx.translate(100, 400);
+        gfx.translate(HAND_BORDER, BOARD_HEIGHT
+                                   - HAND_BORDER
+                                   - (BOARD_HEIGHT - 2 * HAND_BORDER - SHARED_CARDS_SPACE)
+                                   / 2);
+
+        gfx.translate(30, 30);
 
         paintCardStack(gfx, cardStack);
-        gfx.translate(-100, -400);
+        gfx.translate(-30, -30);
 
+        paintOutlay(gfx, getGameModel().getPlayers()[0], (BOARD_WIDTH - 2 * HAND_BORDER - SHARED_CARDS_SPACE)
+                                                         / 2
+                                                         + SHARED_CARDS_SPACE,
+                    (BOARD_HEIGHT - 2 * HAND_BORDER - SHARED_CARDS_SPACE) / 2);
+
+    }
+
+    private void paintOutlay(Graphics2D gfx, Player player, int width, int height)
+    {
+        if (width <= 0 || height <= 0) throw new IllegalArgumentException("outlay space too small");
+
+        BufferedImage cardImage = getCardImage(null, 40, true);
+
+        int cardsYCount = height / cardImage.getHeight();
+        int cardsXCount = width / (int) (3.0 * cardImage.getWidth());
+
+        gfx.setPaint(new Color(0xFF0000));
+        gfx.drawRect(0, 0, width, height);
+
+        gfx.drawString(((Integer) cardsXCount).toString(), width / 2 - 10, height / 2);
+        gfx.drawString(((Integer) cardsYCount).toString(), width / 2 + 10, height / 2);
     }
 
     private void paintCardStack(Graphics2D gfx, CardStack cardStack)
