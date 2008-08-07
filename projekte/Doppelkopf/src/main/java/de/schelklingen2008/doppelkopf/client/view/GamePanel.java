@@ -52,13 +52,9 @@ public class GamePanel extends JPanel implements PlaceView
         setLayout(new BorderLayout());
         setBackground(new Color(0x6699CC));
 
-        JPanel box = GroupLayout.makeHBox();
-        box.setOpaque(false);
-        box.add(new BoardView(controller));
-
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
-        centerPanel.add(box);
+        centerPanel.add(new BoardView(controller));
 
         JPanel buttonPanel = new JPanel();
         centerPanel.add(buttonPanel);
