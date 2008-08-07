@@ -36,9 +36,28 @@ public class Manager extends GameManager
 
     // TODO add methods to make a move, etc. that can be called by clients
 
-    public void passe(BodyObject client)
+    public void call(BodyObject client)
     {
         // TODO ans Model weitergeben
+        updateSharedState();
+    }
+
+    public void check(BodyObject client)
+    {
+        // TODO ans Model weitergeben
+        updateSharedState();
+    }
+
+    public void fold(BodyObject client)
+    {
+        // TODO ans Model weitergeben
+        updateSharedState();
+    }
+
+    public void raise(BodyObject client, int bet)
+    {
+
+        // TODO and model weitergeben
         updateSharedState();
     }
 
