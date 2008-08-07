@@ -34,7 +34,7 @@ public class SharedState extends GameObject
         }
     }
 
-    public GameModel getModel()
+    public GameModel getGameModel()
     {
         try
         {
