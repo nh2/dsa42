@@ -45,8 +45,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JLabel linsert = new JLabel(new ImageIcon(getInsert()));
 
-        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
-        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
+        JLabel obersteCard = new JLabel(new ImageIcon(getObersteCard(hiddenCards())));
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
@@ -54,8 +53,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         add(drehButtons);
 
         add(linsert);
-        add(searchThisCard);
-        add(foundCard);
+        add(obersteCard);
 
         try
         {
@@ -99,24 +97,17 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     }
 
-    private TreasureCard openCards()
+    private List openCards()
     {
-
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
-        TreasureCard foundThisCard = null;
 
-        PlayerCards openCards = MapWtf.get(getGameContext().getMyPlayerType());
+        PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
         List<TreasureCard> open = openCards.getOpenCards();
-        if (open != null)
-        {
-
-            foundThisCard = open.get(0);
-        }
-        return foundThisCard;
+        return open;
 
     }
 
-    private BufferedImage getImageOfTC(TreasureCard tC)
+    private BufferedImage getObersteCard(TreasureCard tC)
     {
         BufferedImage temp = null;
         if (tC == TreasureCard.EULE) temp = eule;
@@ -152,16 +143,9 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     private TreasureCard hiddenCards()
     {
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
-        PlayerCards hiddenCards = MapWtf.get(getGameContext().getMyPlayerType());
-        TreasureCard searchThisCard = null;
-
+        PlayerCards hiddenCards = MapWtf.get(PlayerType.WHITE);
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
-        if (hidden != null)
-        {
-
-            searchThisCard = hidden.get(0);
-        }
-
+        TreasureCard searchThisCard = hidden.get(0);
         return searchThisCard;
     }
 

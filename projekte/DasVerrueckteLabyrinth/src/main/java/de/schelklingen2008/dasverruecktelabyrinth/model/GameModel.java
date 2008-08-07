@@ -165,20 +165,20 @@ public class GameModel implements Serializable
         pPlayer.setYKoordinate(y);
     }
 
-    // public boolean isLegalMove(int x, int y, Player player)
-    // {
-    // if (isFinished()) return false;
-    // if (!isInBounds(x, y)) return false;
-    // if (isOccupied(x, y)) return false;
-    // if (!isTurnHolder(player)) return false;
-    //
-    // for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
-    // {
-    // int captureCount = countCapturedPieces(x, y, player, direction);
-    // if (captureCount > 0) return true;
-    // }
-    // return false;
-    // }
+    public boolean isLegalMove(int x, int y, Player player)
+    {
+        // if (isFinished()) return false;
+        // if (!isInBounds(x, y)) return false;
+        // if (isOccupied(x, y)) return false;
+        // if (!isTurnHolder(player)) return false;
+        //    
+        // for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
+        // {
+        // int captureCount = countCapturedPieces(x, y, player, direction);
+        // if (captureCount > 0) return true;
+        // }
+        return false;
+    }
 
     private void clear()
     {

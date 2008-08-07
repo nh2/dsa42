@@ -141,6 +141,11 @@ public class BoardView extends JPanel implements GameChangeListener
         return true;
     }
 
+    public boolean isLegalMove(int x, int y)
+    {
+        return getGameModel().isLegalMove(tx, ty, getGameContext().getMyPlayer());
+    }
+
     @Override
     public Dimension getPreferredSize()
     {
