@@ -100,12 +100,17 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     private TreasureCard openCards()
     {
+
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
+        TreasureCard foundThisCard = null;
 
-        PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
+        PlayerCards openCards = MapWtf.get(getGameContext().getMyPlayerType());
         List<TreasureCard> open = openCards.getOpenCards();
-        TreasureCard foundThisCard = open.get(0);
+        if (open != null)
+        {
 
+            foundThisCard = open.get(0);
+        }
         return foundThisCard;
 
     }
@@ -146,7 +151,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     private TreasureCard hiddenCards()
     {
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
-        PlayerCards hiddenCards = MapWtf.get(PlayerType.WHITE);
+        PlayerCards hiddenCards = MapWtf.get(getGameContext().getMyPlayerType());
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
         TreasureCard searchThisCard = hidden.get(0);
         return searchThisCard;
