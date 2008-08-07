@@ -23,6 +23,7 @@ import com.threerings.util.MessageBundle;
 import de.schelklingen2008.risiko.client.Constants;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.client.view.GamePanel;
+import de.schelklingen2008.risiko.model.Country;
 import de.schelklingen2008.risiko.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -50,6 +51,11 @@ public class Controller extends GameController
         toyBoxContext = (ToyBoxContext) crowdContext;
         gameContext.setMyName(toyBoxContext.getUsername().toString());
         super.init(crowdContext, placeConfig);
+    }
+
+    public void setSelected(Country c)
+    {
+        sharedState.manager.invoke("setSelected", c.getIndex());
     }
 
     @Override
@@ -90,6 +96,7 @@ public class Controller extends GameController
         if (sharedState.getGameModel() == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
+
         gameContext.setGameModel(sharedState.getGameModel());
 
         fireGameChange();

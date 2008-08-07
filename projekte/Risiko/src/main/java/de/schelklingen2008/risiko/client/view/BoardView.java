@@ -77,7 +77,7 @@ public class BoardView extends JPanel implements GameChangeListener
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
 
         getGameModel().getCountrybyColor(c).setSelected(true);
-
+        controller.setSelected(getGameModel().getCountrybyColor(c));
         repaint();
     }
 
@@ -112,6 +112,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
+        // System.out.println(getGameModel().getCountry(0).isSelected());
         repaint();
     }
 

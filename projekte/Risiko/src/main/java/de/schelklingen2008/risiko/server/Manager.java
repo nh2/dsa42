@@ -49,4 +49,11 @@ public class Manager extends GameManager
     {
         return gameModel.valueOf(getPlayerIndex(client.username));
     }
+
+    public void setSelected(BodyObject client, int index)
+    {
+        gameModel = new GameModel();
+        gameModel.getCountry(index).setSelected(true);
+        updateSharedState();
+    }
 }
