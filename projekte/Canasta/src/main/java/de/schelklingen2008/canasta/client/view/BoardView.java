@@ -93,14 +93,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBackground(Graphics2D gfx)
     {
-        gfx.setColor(new Color(0x003300));
+        gfx.setColor(new Color(Constants.darkGreen));
         gfx.fillRect(0, 0, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
     }
 
     private void paintBoard(Graphics2D gfx)
     {
 
-        gfx.setColor(new Color(0x336600));
+        gfx.setColor(new Color(Constants.mediumGreen));
         gfx.fillRect(Constants.HAND_BORDER, Constants.HAND_BORDER, Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER,
                      Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER);
     }

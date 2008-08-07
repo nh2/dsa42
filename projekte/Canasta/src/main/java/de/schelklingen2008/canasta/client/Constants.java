@@ -21,4 +21,7 @@ public final class Constants
     public static final int    BOARD_HEIGHT       = 800;
     public static final int    SHARED_CARDS_SPACE = 135;
 
+    public static final int    darkGreen          = 0x003300;
+    public static final int    mediumGreen        = 0x336600;
+
 }
