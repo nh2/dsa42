@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Card implements Serializable
 {
 
-    private final Suit suit; // Jokers will save NULL
+    private final Suit suit;
     private final Rank rank;
 
     public Card(Rank rank, Suit suit)
