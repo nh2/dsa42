@@ -17,6 +17,7 @@ import de.schelklingen2008.poker.client.controller.GameChangeListener;
 import de.schelklingen2008.poker.client.model.GameContext;
 import de.schelklingen2008.poker.model.Card;
 import de.schelklingen2008.poker.model.GameModel;
+import de.schelklingen2008.poker.model.Player;
 
 /**
  * Displays the main game interface (the board).
@@ -152,28 +153,15 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(new JLabel(model.getPlayerList().get(controller.getGameContext().getMyIndex()).getName()
-                                   + ": Ihre Karten:"));
+        myCardPanel.add(new JLabel(getMyPlayer().getName() + ": Ihre Karten:"));
         myCardPanel.add(Box.createVerticalStrut(5));
         myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
 
         JLabel myCard1 = new JLabel("");
-        myCard1.setIcon(iconBuffer[model.getPlayerList()
-                                        .get(controller.getGameContext().getMyIndex())
-                                        .getCard1()
-                                        .getSuitInt()][model.getPlayerList()
-                                                            .get(controller.getGameContext().getMyIndex())
-                                                            .getCard1()
-                                                            .getValueInt()]);
+        myCard1.setIcon(iconBuffer[getMyPlayer().getCard1().getSuitInt()][getMyPlayer().getCard1().getValueInt()]);
         JLabel myCard2 = new JLabel("");
-        myCard2.setIcon(iconBuffer[model.getPlayerList()
-                                        .get(controller.getGameContext().getMyIndex())
-                                        .getCard2()
-                                        .getSuitInt()][model.getPlayerList()
-                                                            .get(controller.getGameContext().getMyIndex())
-                                                            .getCard2()
-                                                            .getValueInt()]);
+        myCard2.setIcon(iconBuffer[getMyPlayer().getCard2().getSuitInt()][getMyPlayer().getCard2().getValueInt()]);
 
         twoCardsPanel.add(Box.createVerticalStrut(5));
         twoCardsPanel.add(myCard1);
@@ -184,7 +172,7 @@ public class BoardView extends JPanel implements GameChangeListener
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(new JLabel("Ihr Kontostand:"));
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        long myBal = model.getPlayerList().get(controller.getGameContext().getMyIndex()).getBalance();
+        long myBal = getMyPlayer().getBalance();
         myInfoPanel.add(new JLabel("" + myBal));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(new JLabel("Sie müssen " + model.getHighestBet() + " Euro setzen"));
@@ -222,6 +210,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
+                controller.foldButtonClicked();
                 System.out.println("Gefoldet");
             }
 
@@ -241,6 +230,29 @@ public class BoardView extends JPanel implements GameChangeListener
         raiseButton.addActionListener(raiseListener);
         checkButton.addActionListener(checkListener);
 
+        callButton.setEnabled(false);
+        foldButton.setEnabled(false);
+        raiseButton.setEnabled(false);
+        checkButton.setEnabled(false);
+
+        if (getActIndex() == getMyIndex())
+        {
+            if (getMyPlayer().getOwnBet() < getGameModel().getHighestBet())
+            {
+                callButton.setEnabled(true);
+                raiseButton.setText("Re-Raise");
+                foldButton.setEnabled(true);
+            }
+
+            if (getMyPlayer().getOwnBet() == getGameModel().getHighestBet())
+            {
+                checkButton.setEnabled(true);
+                foldButton.setEnabled(true);
+                raiseButton.setEnabled(true);
+            }
+
+        }
+
         myButtonPanel.add(callButton);
         myButtonPanel.add(foldButton);
         myButtonPanel.add(raiseButton);
@@ -248,14 +260,24 @@ public class BoardView extends JPanel implements GameChangeListener
 
     }
 
-    public void gameChanged()
+    private int getMyIndex()
     {
-        repaint();
+        return getGameContext().getMyIndex();
     }
 
-    private GameModel getGameModel()
+    private int getActIndex()
     {
-        return getGameContext().getGameModel();
+        return getGameModel().getActPlayerIndex();
+    }
+
+    private Player getActPlayer()
+    {
+        return getGameModel().getPlayerList().get(getGameModel().getActPlayerIndex());
+    }
+
+    private Player getMyPlayer()
+    {
+        return getGameModel().getPlayerList().get(getGameContext().getMyIndex());
     }
 
     private GameContext getGameContext()
@@ -263,4 +285,13 @@ public class BoardView extends JPanel implements GameChangeListener
         return controller.getGameContext();
     }
 
+    public void gameChanged()
+    {
+        paintBoard();
+    }
+
+    private GameModel getGameModel()
+    {
+        return getGameContext().getGameModel();
+    }
 }

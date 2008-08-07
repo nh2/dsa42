@@ -22,6 +22,8 @@ public class GameModel
     }
 
     private long       highestBet;
+    private int        highestBetIndex;
+
     private List<Card> stack    = new ArrayList<Card>(); // Liste aller 52 Karten, werden mit
     // der
     // Zeit an cardList und auf die Spieler
@@ -56,6 +58,16 @@ public class GameModel
     public List<Card> getStack()
     {
         return stack;
+    }
+
+    public int getHighestBetIndex()
+    {
+        return highestBetIndex;
+    }
+
+    public void setHighestBetIndex(int highestBetIndex)
+    {
+        this.highestBetIndex = highestBetIndex;
     }
 
     public void setHighestBet(long highestBet)
