@@ -18,11 +18,11 @@ public class GameModel implements Serializable
     public static final int        SIZE         = 7;
     public static final PlayerType PLAYER_START = PlayerType.WHITE;
 
-    private Tile[][]               board;                                                // Spielbrett
-    private PlayerType             turnHolder;                                           // Wer ist dran
-    private boolean                walk         = false;                                 // false = Phase 1
+    private Tile[][]               board;                                                  // Spielbrett
+    private PlayerType             turnHolder;                                             // Wer ist dran
+    private boolean                walk         = false;                                   // false = Phase 1
     // true = Phase2
-    private Tile                   insert       = null;                                  // einschiebbare
+    private Tile                   insert       = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
 
     Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
@@ -167,16 +167,22 @@ public class GameModel implements Serializable
 
     public boolean isLegalMove(int x, int y, Player player)
     {
-        // if (isFinished()) return false;
-        // if (!isInBounds(x, y)) return false;
-        // if (isOccupied(x, y)) return false;
-        // if (!isTurnHolder(player)) return false;
+        if (isFinished()) return false;
+        if (!isInBounds(x, y)) return false;
+
+        if (!isTurnHolder(player)) return false;
         //    
         // for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
         // {
         // int captureCount = countCapturedPieces(x, y, player, direction);
         // if (captureCount > 0) return true;
         // }
+        return false;
+    }
+
+    private boolean isTurnHolder(Player player2)
+    {
+        // TODO Auto-generated method stub
         return false;
     }
 
