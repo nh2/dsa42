@@ -123,10 +123,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
-        int tx = e.getX() / Constants.SPRITE_SIZE;
-        int ty = e.getY() / Constants.SPRITE_SIZE;
-        if (!isInBounds(tx, ty)) return;
-        if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
+        // int tx = e.getX() / Constants.SPRITE_SIZE;
+        // int ty = e.getY() / Constants.SPRITE_SIZE;
+        // if (!isInBounds(tx, ty)) return;
+        // if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
     }
 
     // private boolean isLegalMove(int tx, int ty)
@@ -141,10 +141,10 @@ public class BoardView extends JPanel implements GameChangeListener
         return true;
     }
 
-    public boolean isLegalMove(int x, int y)
-    {
-        return getGameModel().isLegalMove(tx, ty, getGameContext().getMyPlayer());
-    }
+    // public boolean isLegalMove(int x, int y)
+    // {
+    // return getGameModel().isLegalMove(tx, ty, getGameContext().getMyPlayer());
+    // }
 
     @Override
     public Dimension getPreferredSize()
