@@ -165,6 +165,19 @@ public class GameModel implements Serializable
     // TODO getWinner()
     // TODO isFinished()
     // TODO hasLegalMoved()
+    // TODO getWinner()
+
+    public Player getWinner()
+    {
+        if (!isFinished()) return null;
+
+        return null;
+    }
+
+    public boolean isWinner(Player player)
+    {
+        return getWinner() == player;
+    }
 
     private void placePlayer(Player pPlayer)
     {
