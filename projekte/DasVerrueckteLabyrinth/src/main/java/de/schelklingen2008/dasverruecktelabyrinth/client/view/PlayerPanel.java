@@ -93,14 +93,26 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
+        JPanel Zeug = new JPanel();
+
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
         drehButtons.add(new Button("links drehen"));
-        add(drehButtons);
+        add(drehButtons, BorderLayout.WEST);
 
-        add(linsert);
-        add(searchThisCard);
-        add(foundCard);
+        Zeug.add(linsert);
+        add(Zeug, BorderLayout.NORTH);
+
+        JPanel Zeug2 = new JPanel();
+        JPanel Zeug3 = new JPanel();
+
+        Zeug2.add(searchThisCard);
+        Zeug3.add(foundCard);
+
+        add(Zeug2, BorderLayout.SOUTH);
+        add(Zeug3, BorderLayout.EAST);
+        BoardView b = new BoardView(controller);
+        add(b, BorderLayout.CENTER);
 
     }
 
