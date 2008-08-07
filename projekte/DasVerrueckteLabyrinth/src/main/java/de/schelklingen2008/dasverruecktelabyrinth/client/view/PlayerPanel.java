@@ -13,10 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
+import de.schelklingen2008.dasverruecktelabyrinth.client.controller.GameChangeListener;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
-public class PlayerPanel extends JPanel
+public class PlayerPanel extends JPanel implements GameChangeListener
 {
 
     private Controller controller;
@@ -106,5 +107,11 @@ public class PlayerPanel extends JPanel
     private GameContext getGameContext()
     {
         return controller.getGameContext();
+    }
+
+    public void gameChanged()
+    {
+        repaint();
+
     }
 }
