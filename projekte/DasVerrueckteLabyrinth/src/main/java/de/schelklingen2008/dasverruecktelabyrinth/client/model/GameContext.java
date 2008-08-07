@@ -47,6 +47,14 @@ public class GameContext
         playerTypeNames.clear();
         playerTypeNames.put(PlayerType.valueOf(0), names[0]);
         playerTypeNames.put(PlayerType.valueOf(1), names[1]);
+        playerTypeNames.put(PlayerType.valueOf(2), names[2]);
+        playerTypeNames.put(PlayerType.valueOf(3), names[3]);
+
+    }
+
+    public int getNoOfPlayers()
+    {
+        return playerTypeNames.size();
     }
 
     public PlayerType getMyPlayerType()
@@ -54,6 +62,8 @@ public class GameContext
         if (myName == null) return null;
         if (myName.equals(playerTypeNames.get(PlayerType.WHITE))) return PlayerType.WHITE;
         if (myName.equals(playerTypeNames.get(PlayerType.BLACK))) return PlayerType.BLACK;
+        if (myName.equals(playerTypeNames.get(PlayerType.RED))) return PlayerType.RED;
+        if (myName.equals(playerTypeNames.get(PlayerType.GREEN))) return PlayerType.GREEN;
         return null;
     }
 
