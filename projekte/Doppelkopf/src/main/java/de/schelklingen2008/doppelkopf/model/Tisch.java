@@ -12,16 +12,16 @@ public class Tisch implements Serializable
     private List<Karte>  mitte;
     private Spieler      anDerReihe;
     private int          stichAnzahl;
-    private SpielerListe spieler;
+    private SpielerListe spielerliste;
 
-    public Tisch()
+    public Tisch(SpielerListe spielerliste)
     {
         mitte = new ArrayList<Karte>(4);
 
-        spieler = new SpielerListe();
-        for (int i = 1; i <= 4; i++)
-            spieler.add(new Spieler("Spieler " + i));
-        anDerReihe = spieler.getAnDerReihe();
+        this.spielerliste = spielerliste;
+        // for (int i = 1; i <= 4; i++)
+        // spielerliste.add(new Spieler("Spieler " + i));
+        anDerReihe = spielerliste.getAnDerReihe();
     }
 
     public void gibKarten()
@@ -36,7 +36,7 @@ public class Tisch implements Serializable
         while (!stapel.isEmpty())
         {
             anDerReihe.getBlatt().add(stapel.pop());
-            anDerReihe = spieler.next();
+            anDerReihe = spielerliste.next();
         }
     }
 
@@ -68,6 +68,6 @@ public class Tisch implements Serializable
 
     public SpielerListe getSpieler()
     {
-        return spieler;
+        return spielerliste;
     }
 }

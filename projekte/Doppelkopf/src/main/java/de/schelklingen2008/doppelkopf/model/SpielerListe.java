@@ -52,4 +52,16 @@ public class SpielerListe extends ArrayList<Spieler> implements Serializable
         else
             return 0;
     }
+
+    @Override
+    public String toString()
+    {
+        if (size() == 0) return "[keine Spieler]";
+        String ausgabe = "";
+        for (Spieler p : this)
+        {
+            ausgabe += p.getName() + " ";
+        }
+        return ausgabe;
+    }
 }

@@ -89,7 +89,9 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
         tempListe = new SpielerListe();
         // tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
-        GameModel spiel = new GameModel();
+        GameModel spiel = getGameContext().getGameModel();
+        if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom Server geladen
+        // sind
         tempListe.addAll(spiel.getTisch().getSpieler());
         // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
         ich = tempListe.getSpieler("Spieler 1");
@@ -143,6 +145,11 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         // Von der letzten Karte ist mehr sicht- und klickbar
         if (karteVonLinks >= ich.getBlatt().getKartenanzahl()) karteVonLinks = ich.getBlatt().getKartenanzahl() - 1;
         Karte klickKarte = ich.getBlatt().getKartenSortiert().get(karteVonLinks);
+        boolean gueltig = true;
+        // controller.karteClicked(klickKarte);
+        String gueltigMeldung = "Zug ist ";
+        if (!gueltig) gueltigMeldung += "nicht ";
+        gueltigMeldung += "g�ltig.";
         JOptionPane.showMessageDialog(this, "Karte "
                                             + klickKarte
                                             + ": "
@@ -151,7 +158,8 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
                                             + clickx
                                             + " | "
                                             + clicky
-                                            + " )");
+                                            + " ) "
+                                            + gueltigMeldung);
     }
 
     @Override
@@ -183,16 +191,6 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         gfx.drawRect(695, 110, 80, 280);// Rechter Spielerbereich
         gfx.setColor(Color.black);
 
-        // Spielernamen zeichnen
-        // Bis zum aktuellen Spieler vorrücken (mir)
-        while (tempListe.getAnDerReihe() != ich)
-            tempListe.rotieren();
-
-        gfx.setColor(Color.white);
-        gfx.drawString(tempListe.getAnDerReihe().getName(), 135, 451);
-        gfx.drawString(tempListe.next().getName(), 30, 103);
-        gfx.drawString(tempListe.next().getName(), 265, 18);
-        gfx.drawString(tempListe.next().getName(), 700, 103);
     }
 
     private class Mittenplatz
@@ -216,6 +214,20 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
     private void paintBoard(Graphics2D gfx)
     {
+        if (getGameContext().getGameModel().getTisch() == null) return; // Wenn die Spieler noch nicht vom
+                                                                        // Server geladen
+
+        // Spielernamen zeichnen
+        // Bis zum aktuellen Spieler vorrücken (mir)
+        while (tempListe.getAnDerReihe() != ich)
+            tempListe.rotieren();
+
+        gfx.setColor(Color.white);
+        gfx.drawString(tempListe.getAnDerReihe().getName(), 135, 451);
+        gfx.drawString(tempListe.next().getName(), 30, 103);
+        gfx.drawString(tempListe.next().getName(), 265, 18);
+        gfx.drawString(tempListe.next().getName(), 700, 103);
+
         // Bis zum aktuellen Spieler vorruecken (mir)
         while (tempListe.getAnDerReihe() != ich)
             tempListe.rotieren();

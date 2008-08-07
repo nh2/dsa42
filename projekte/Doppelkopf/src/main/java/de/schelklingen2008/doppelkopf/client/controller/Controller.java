@@ -23,6 +23,7 @@ import com.threerings.util.MessageBundle;
 import de.schelklingen2008.doppelkopf.client.Constants;
 import de.schelklingen2008.doppelkopf.client.model.GameContext;
 import de.schelklingen2008.doppelkopf.client.view.GamePanel;
+import de.schelklingen2008.doppelkopf.model.Karte;
 import de.schelklingen2008.doppelkopf.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -76,6 +77,7 @@ public class Controller extends GameController
         sharedState = (SharedState) placeObject;
         sharedState.addListener(new SharedStateListener());
         updateGameContext();
+
         super.willEnterPlace(placeObject);
     }
 
@@ -158,5 +160,10 @@ public class Controller extends GameController
         {
             updateGameContext();
         }
+    }
+
+    public void karteClicked(Karte klickKarte)
+    {
+        sharedState.manager.invoke("karteAusspielen", klickKarte);
     }
 }
