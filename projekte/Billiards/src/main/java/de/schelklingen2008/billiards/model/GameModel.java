@@ -1,6 +1,5 @@
 package de.schelklingen2008.billiards.model;
 
-import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
@@ -29,7 +29,13 @@ public class GameModel implements Serializable
     private List<Ball> balls        = new ArrayList<Ball>();
     private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
+<<<<<<< .mine
+    private List<Wall> walls = new ArrayList<Wall>();
+
+    private Ball whiteBall, blackBall;
+=======
     private Ball       whiteBall, blackBall;
+>>>>>>> .r367
 
     public boolean isInMotion()
     {
@@ -46,14 +52,16 @@ public class GameModel implements Serializable
         return ballsOnTable;
     }
 
-    public GameModel()
+    private void addPlayers()
     {
-
         for (int i = 0; i < PLAYERS; i++)
         {
             players[i] = new Player(i);
         }
+    }
 
+    private void addBalls()
+    {
         whiteBall = new Ball(Ball.BallType.WHITE, Color.WHITE);
         blackBall = new Ball(Ball.BallType.BLACK, Color.BLACK);
 
@@ -65,6 +73,24 @@ public class GameModel implements Serializable
             balls.add(new Ball(Ball.BallType.SOLID, color));
             balls.add(new Ball(Ball.BallType.STRIPED, color));
         }
+    }
+
+    private void addWalls()
+    {
+        walls.add(new Wall(new Vector2d(0, 0), new Vector2d(GlobalConstants.MAX_X, 0)));
+        walls.add(new Wall(new Vector2d(0, GlobalConstants.MAX_Y), new Vector2d(GlobalConstants.MAX_X,
+                                                                                GlobalConstants.MAX_Y)));
+        walls.add(new Wall(new Vector2d(0, 0), new Vector2d(0, GlobalConstants.MAX_Y)));
+        walls.add(new Wall(new Vector2d(GlobalConstants.MAX_X, 0), new Vector2d(GlobalConstants.MAX_X,
+                                                                                GlobalConstants.MAX_Y)));
+    }
+
+    public GameModel()
+    {
+
+        addPlayers();
+        addBalls();
+        addWalls();
 
         setUpGame();
 
@@ -106,8 +132,8 @@ public class GameModel implements Serializable
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
         Collections.shuffle(tmpBalls);
 
-        whiteBall.setPosition(new Vector2d(200, 200));
-        blackBall.setPosition(new Vector2d(600, 200));
+        whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
+        blackBall.setPosition(new Vector2d(0.75d * MAX_X, 0.5d * MAX_Y));
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
         {
@@ -174,17 +200,26 @@ public class GameModel implements Serializable
 
             double tCollision = Double.NaN;
             Ball ball1 = null, ball2 = null;
-            boolean isWallCollision = false;
+            Wall wall = null;
 
             for (int i = 0; i < ballsOnTable.size(); i++)
             {
 
-                double wallCollisionTime = ballsOnTable.get(i).getNextWallCollision();
-                if (!Double.isNaN(wallCollisionTime) && (Double.isNaN(tCollision) || wallCollisionTime < tCollision))
+                if (ballsOnTable.get(i).isInMotion())
                 {
-                    tCollision = wallCollisionTime;
-                    ball1 = ballsOnTable.get(i);
-                    isWallCollision = true;
+
+                    for (Wall tmpWall : walls)
+                    {
+                        double wallCollisionTime = tmpWall.getCollisionTime(ballsOnTable.get(i));
+                        if (!Double.isNaN(wallCollisionTime)
+                            && (Double.isNaN(tCollision) || wallCollisionTime < tCollision))
+                        {
+                            tCollision = wallCollisionTime;
+                            ball1 = ballsOnTable.get(i);
+                            wall = tmpWall;
+                        }
+                    }
+
                 }
 
                 for (int j = i + 1; j < ballsOnTable.size(); j++)
@@ -202,7 +237,7 @@ public class GameModel implements Serializable
                         tCollision = ballCollisionTime;
                         ball1 = ballsOnTable.get(i);
                         ball2 = ballsOnTable.get(j);
-                        isWallCollision = false;
+                        wall = null;
                     }
                 }
             }
@@ -211,7 +246,7 @@ public class GameModel implements Serializable
             {
                 moveBalls(tCollision);
                 remainingTime -= tCollision;
-                handleCollision(tCollision, ball1, ball2, isWallCollision);
+                handleCollision(tCollision, ball1, ball2, wall);
             }
             else
             {
@@ -241,23 +276,12 @@ public class GameModel implements Serializable
 
     }
 
-    private void handleCollision(double tCollision, Ball ball1, Ball ball2, boolean isWallCollision)
+    private void handleCollision(double tCollision, Ball ball1, Ball ball2, Wall wall)
     {
 
-        final double EPSILON = 0.000001d;
-
-        if (isWallCollision)
+        if (wall != null)
         {
-            if (ball1.getPosition().getX() - BALL_RADIUS < EPSILON
-                || ball1.getPosition().getX() + BALL_RADIUS >= MAX_X - EPSILON)
-            {
-                ball1.setVelocity(new Vector2d(-ball1.getVelocity().getX(), ball1.getVelocity().getY()));
-            }
-            else if (ball1.getPosition().getY() - BALL_RADIUS < EPSILON
-                     || ball1.getPosition().getY() + BALL_RADIUS >= MAX_Y - EPSILON)
-            {
-                ball1.setVelocity(new Vector2d(ball1.getVelocity().getX(), -ball1.getVelocity().getY()));
-            }
+            wall.handleWallCollision(ball1);
         }
         else
         {
@@ -268,8 +292,8 @@ public class GameModel implements Serializable
             Vector2d v2 = ball2.getVelocity().rotate(-alpha);
 
             double tmp = v1.getX();
-            v1 = new Vector2d(v2.getX(), v1.getY());
-            v2 = new Vector2d(tmp, v2.getY());
+            v1 = new Vector2d(v2.getX(), v1.getY()).scale(1 - GlobalConstants.COLLISION_IMPULSE_LOSS);
+            v2 = new Vector2d(tmp, v2.getY()).scale(1 - GlobalConstants.COLLISION_IMPULSE_LOSS);
 
             ball1.setVelocity(v1.rotate(alpha));
             ball2.setVelocity(v2.rotate(alpha));
