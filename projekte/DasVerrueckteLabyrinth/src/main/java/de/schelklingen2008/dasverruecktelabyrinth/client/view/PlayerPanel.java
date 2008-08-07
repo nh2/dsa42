@@ -37,7 +37,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     public PlayerPanel(Controller controller)
 
     {
-        controller = controller;
+        this.controller = controller;
         controller.addChangeListener(this);
         setLayout(new BorderLayout());
 
