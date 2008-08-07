@@ -46,6 +46,8 @@ public class GamePanel extends JPanel implements PlaceView
      */
     public GamePanel(Controller controller)
     {
+        LabyrinthPanel labyrinth = new LabyrinthPanel(controller);
+        PlayerPanel playerPanel = new PlayerPanel(controller);
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());

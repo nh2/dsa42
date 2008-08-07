@@ -137,11 +137,6 @@ public class GameModel
         return temp;
     }
 
-    private void fillMap()
-    {
-
-    }
-
     private void setUnmoveable(Tile[][] pBoard)
     {
         for (int i = 0; i < pBoard.length; i++)
@@ -258,6 +253,7 @@ public class GameModel
 
     public boolean isFinished()
     {
+        if 
         return false;
     }
 

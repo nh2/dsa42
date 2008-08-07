@@ -17,6 +17,15 @@ public class PlayerCards
         hidden = new ArrayList<TreasureCard>(); // Stapel der verdeckten Bildkarten
         open = new ArrayList<TreasureCard>();
 
+        hidden.add(TreasureCard.EULE);
+        hidden.add(TreasureCard.EULE);
+        hidden.add(TreasureCard.EULE);
+        hidden.add(TreasureCard.KRONE);
+        hidden.add(TreasureCard.EULE);
+        hidden.add(TreasureCard.EULE);
+
+        open.add(null);
+
     }
 
     public List<TreasureCard> getHiddenCards()
