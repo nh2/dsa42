@@ -44,7 +44,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JLabel linsert = new JLabel(new ImageIcon(getInsert()));
 
-        JLabel obersteCard = new JLabel(new ImageIcon(getObersteCard(hiddenCards())));
+        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
+        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
@@ -52,7 +53,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         add(drehButtons);
 
         add(linsert);
-        add(obersteCard);
+        add(searchThisCard);
+        add(foundCard);
 
         try
         {
@@ -96,17 +98,19 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     }
 
-    private List openCards()
+    private TreasureCard openCards()
     {
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
 
         PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
         List<TreasureCard> open = openCards.getOpenCards();
-        return open;
+        TreasureCard foundThisCard = open.get(0);
+
+        return foundThisCard;
 
     }
 
-    private BufferedImage getObersteCard(TreasureCard tC)
+    private BufferedImage getImageOfTC(TreasureCard tC)
     {
         BufferedImage temp = null;
         if (tC == TreasureCard.EULE) temp = eule;
