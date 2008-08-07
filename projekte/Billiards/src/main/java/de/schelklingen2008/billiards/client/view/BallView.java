@@ -84,7 +84,6 @@ public class BallView extends JPanel
                                 (int) Math.round(2 * BALL_RADIUS), 180 - angle, 2 * angle);
                     gfx.fillRect((int) (i * 50 + 10 - x + BALL_RADIUS), (int) (j * 50 + 10 + BALL_RADIUS - y), 2 * x,
                                  2 * y);
-
                 }
             }
         }

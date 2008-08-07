@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -56,10 +58,19 @@ public class GamePanel extends JPanel implements PlaceView
         setLayout(new BorderLayout());
         setBackground(new Color(0x6699CC));
 
+        JPanel box2 = GroupLayout.makeHBox();
+        box2.setLayout(new BoxLayout(box2, BoxLayout.LINE_AXIS));
+        box2.setOpaque(false);
+        add(box2, BorderLayout.WEST);
+
         JPanel box = GroupLayout.makeHBox();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         box.setOpaque(false);
         box.add(new BoardView(controller));
-        add(box, BorderLayout.CENTER);
+        box.add(new BallView(controller));
+        box2.add(box);
+        box2.add(Box.createHorizontalStrut(5));
+        box2.add(new BallGauge(controller));
 
         // create a side panel to hold our chat and other extra interfaces
         JPanel sidePanel = GroupLayout.makeVStretchBox(5);
