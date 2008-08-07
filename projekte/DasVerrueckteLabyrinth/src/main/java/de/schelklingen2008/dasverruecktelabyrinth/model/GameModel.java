@@ -19,12 +19,19 @@ public class GameModel implements Serializable
     public static final PlayerType PLAYER_START   = PlayerType.WHITE;
 
     private Tile[][]               board;                                                    // Spielbrett
-    private PlayerType             turnHolder;                                               // Wer ist dran
-    private boolean                walk           = false;                                   // false = Phase
-                                                                                              // 1
+    private PlayerType             turnHolder;                                               // Wer ist
+    // dran
+    private boolean                walk           = false;                                   // false =
+    // Phase
+    // 1
+
     // true = Phase2
     private Tile                   insert         = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
+
+    // DummyList
+
+    private PlayerCards            dummie         = new PlayerCards();
 
     Map<PlayerType, Player>        player         = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>   playerCardsMap = new HashMap<PlayerType, PlayerCards>();
@@ -183,7 +190,28 @@ public class GameModel implements Serializable
 
     private boolean isTurnHolder(Player player2)
     {
-        // TODO Auto-generated method stub
+
+        return false;
+    }
+
+    public GameModel(GameModel other)
+    {
+        board = copyBoard(other.board);
+        turnHolder = other.turnHolder;
+    }
+
+    private void advanceTurnHolder()
+    {
+        // setTurnHolder(getTurnHolder().other());
+        // if (!hasLegalMoves()) setTurnHolder(getTurnHolder().other());
+        // if (!hasLegalMoves()) setTurnHolder(null); // finishes the game
+    }
+
+    public boolean hasLegalMoves()
+    {
+        for (int y = 0; y < SIZE; y++)
+            for (int x = 0; x < SIZE; x++)
+                if (isLegalMove(x, y, getTurnHolder())) return true;
         return false;
     }
 
@@ -250,7 +278,6 @@ public class GameModel implements Serializable
         boolean temp = false;
         if (isFinished()) temp = false;
         if (!isInBounds(pX, pY)) temp = false;
-        // TODO legalMove
         return temp;
     }
 
