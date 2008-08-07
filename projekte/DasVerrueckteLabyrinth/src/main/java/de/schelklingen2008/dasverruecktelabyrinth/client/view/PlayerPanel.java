@@ -38,6 +38,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     {
         controller = controller;
+        controller.addChangeListener(this);
         setLayout(new BorderLayout());
 
         JPanel drehButtons = new JPanel();

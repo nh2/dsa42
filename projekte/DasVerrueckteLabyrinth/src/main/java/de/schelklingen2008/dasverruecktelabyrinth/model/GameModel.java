@@ -22,7 +22,7 @@ public class GameModel implements Serializable
     private PlayerType             turnHolder;                                           // Wer ist dran
     private boolean                walk         = false;                                 // false = Phase 1
     // true = Phase2
-    private Tile                   insert;                                               // einschiebbare
+    private Tile                   insert       = null;                                  // einschiebbare
     // Spielfeldkarte
 
     Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
@@ -267,4 +267,5 @@ public class GameModel implements Serializable
     {
         return player.values();
     }
+
 }

@@ -126,7 +126,7 @@ public class BoardView extends JPanel implements GameChangeListener
         int tx = e.getX() / Constants.SPRITE_SIZE;
         int ty = e.getY() / Constants.SPRITE_SIZE;
         if (!isInBounds(tx, ty)) return;
-        // if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
+        if (isLegalMove(tx, ty)) controller.boardClicked(tx, ty);
     }
 
     // private boolean isLegalMove(int tx, int ty)

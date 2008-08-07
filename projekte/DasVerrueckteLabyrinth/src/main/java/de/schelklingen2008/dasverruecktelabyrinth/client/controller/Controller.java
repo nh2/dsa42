@@ -31,15 +31,16 @@ import de.schelklingen2008.util.LoggerFactory;
  */
 public class Controller extends GameController
 {
-    private static final Logger sLogger = LoggerFactory.create();
 
-    private GameContext gameContext = new GameContext();
+    private static final Logger      sLogger         = LoggerFactory.create();
+
+    private GameContext              gameContext     = new GameContext();
 
     private List<GameChangeListener> changeListeners = new ArrayList<GameChangeListener>();
 
-    private SharedState sharedState;
+    private SharedState              sharedState;
 
-    private ToyBoxContext toyBoxContext;
+    private ToyBoxContext            toyBoxContext;
 
     @Override
     public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
@@ -125,13 +126,17 @@ public class Controller extends GameController
         return gameContext;
     }
 
+    public void boardClicked(int x, int y)
+    {
+        sharedState.manager.invoke("placePiece", x, y);
+    }
+
     public ToyBoxContext getToyBoxContext()
     {
         return toyBoxContext;
     }
 
-    private class SharedStateListener implements AttributeChangeListener, SetListener,
-            ElementUpdateListener
+    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener
     {
 
         public void attributeChanged(AttributeChangedEvent event)
