@@ -40,8 +40,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
             playerLabel.setAlignmentX(CENTER_ALIGNMENT);
+            playerLabel.setForeground(Color.WHITE);
             add(playerLabel);
-            BoardPanel player = new BoardPanel(getGameModel().getPlayerIndexOf(i).getBoardCards(),
+            BoardPanel player = new BoardPanel(null,
+                                               getGameModel().getPlayerIndexOf(i).getBoardCards(),
                                                false,
                                                Color.decode("#000054" + i * 15));
             add(player);
@@ -50,17 +52,24 @@ public class BoardView extends JPanel implements GameChangeListener
         // Public Cards Panel
         JLabel publicLabel = new JLabel("Ablegestapel");
         publicLabel.setAlignmentX(CENTER_ALIGNMENT);
+        publicLabel.setForeground(Color.WHITE);
         add(publicLabel);
-        BoardPanel publicCards = new BoardPanel(getGameModel().getBuildPile(), false, getBackground());
+        BoardPanel publicCards = new BoardPanel(controller, getGameModel().getBuildPile(), false, getBackground());
         add(publicCards);
 
         // Spacer
         add(Box.createVerticalStrut(20));
         // Own Cards Panel
-        JLabel myLabel = new JLabel("Meine Karten " + getGameModel().getPlayerNameIndexOf(0));
+        JLabel myNameLabel = new JLabel(getGameModel().getPlayerNameIndexOf(0));
+        myNameLabel.setAlignmentX(CENTER_ALIGNMENT);
+        myNameLabel.setForeground(Color.WHITE);
+        add(myNameLabel);
+        JLabel myLabel = new JLabel("Meine Karten");
         myLabel.setAlignmentX(CENTER_ALIGNMENT);
+        myLabel.setForeground(Color.WHITE);
         add(myLabel);
-        BoardPanel myBoardPanel = new BoardPanel(getGameModel().getPlayerIndexOf(0).getBoardCards(),
+        BoardPanel myBoardPanel = new BoardPanel(controller,
+                                                 getGameModel().getPlayerIndexOf(0).getBoardCards(),
                                                  false,
                                                  Color.decode("#00005500"));
         add(myBoardPanel);
@@ -72,7 +81,8 @@ public class BoardView extends JPanel implements GameChangeListener
         drawPileLabel.setForeground(Color.WHITE);
         drawPilePanel.add(drawPileLabel);
         add(drawPilePanel);
-        BoardPanel drawPile = new BoardPanel(getGameModel().getPlayerIndexOf(0).getDrawPile(),
+        BoardPanel drawPile = new BoardPanel(controller,
+                                             getGameModel().getPlayerIndexOf(0).getDrawPile(),
                                              true,
                                              Color.decode("#00005500"));
         add(drawPile);

@@ -42,6 +42,9 @@ public class Controller extends GameController
 
     private ToyBoxContext            toyBoxContext;
 
+    private int                      selectedCardIndex;
+    private boolean                  selectedCardIsInHand;
+
     @Override
     public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
     {
@@ -159,4 +162,21 @@ public class Controller extends GameController
             updateGameContext();
         }
     }
+
+    public void setSelectedCard(boolean pSelectedCardIsInHand, int pSelectedCardIndex)
+    {
+        selectedCardIndex = pSelectedCardIndex;
+        selectedCardIsInHand = pSelectedCardIsInHand;
+    }
+
+    public int getSelectedCardIndex()
+    {
+        return selectedCardIndex;
+    }
+
+    public boolean isSelectedCardIsInHand()
+    {
+        return selectedCardIsInHand;
+    }
+
 }

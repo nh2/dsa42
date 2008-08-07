@@ -25,7 +25,18 @@ public class Player implements Serializable
 
     public Card getLastStockCard()
     {
-        return mStockPile.get(mStockPile.size());
+        return mStockPile.get(mStockPile.size() - 1);
+    }
+
+    public Card[] getBoardCards()
+    {
+        Card[] rCards = new Card[5];
+        for (int i = 0; i < rCards.length - 1; i++)
+        {
+            rCards[i] = getDiscardPile()[i];
+        }
+        rCards[4] = getLastStockCard();
+        return rCards;
     }
 
     public String getName()

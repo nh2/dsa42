@@ -16,17 +16,40 @@ public class CardPanel extends JPanel
     private int     mN;
     private boolean mIsBig;
     private boolean mRotate;
+    private boolean mBorder;
 
     public CardPanel(int pN, boolean pIsBig, boolean pRotate)
     {
         mN = pN;
         mIsBig = pIsBig;
         mRotate = pRotate;
+        mBorder = false;
     }
 
     public void setValue(int pN)
     {
         mN = pN;
+        repaint();
+    }
+
+    public int getValue()
+    {
+        return mN;
+    }
+
+    public boolean isMIsBig()
+    {
+        return mIsBig;
+    }
+
+    public boolean isMRotate()
+    {
+        return mRotate;
+    }
+
+    public void setBorder()
+    {
+        mBorder = true;
         repaint();
     }
 
@@ -47,6 +70,10 @@ public class CardPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
+        if (mBorder)
+        {
+            // setBorder();
+        }
         if (mRotate) gfx.rotate(-Math.PI / 24);
 
         if (mIsBig)
