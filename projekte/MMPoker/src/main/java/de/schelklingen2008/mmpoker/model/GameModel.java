@@ -123,22 +123,7 @@ public class GameModel implements Serializable
 
     public void betraise(int wettsumme, Spieler client)
     {
-        // if (wettsumme > spielerliste.get(spielernummer).getGeld())
-        // {
-        //
-        // }
-        // else
-        // {
-        // if (condition)
-        // {
-        //
-        // }
-        // else
-        // {
-        //
-        // }
-        // }
-        // sendet dem Server die Summe/Aktion
+        System.out.println("Es funzt!!!");
     }
 
     public void check()

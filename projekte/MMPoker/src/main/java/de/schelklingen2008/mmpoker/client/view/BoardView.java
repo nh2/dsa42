@@ -120,6 +120,7 @@ public class BoardView extends JPanel implements GameChangeListener
     public void handKarten(Graphics g, Spielkarte karte)
     {
         Graphics2D gfx = (Graphics2D) g;
+        g.setColor(Color.black);
         gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 420, 700, null);
         gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 350, 700, null);
 

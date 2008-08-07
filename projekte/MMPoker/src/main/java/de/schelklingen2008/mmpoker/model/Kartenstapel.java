@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Kartenstapel extends GameModel implements Serializable
+public class Kartenstapel implements Serializable
 {
 
     List<Spielkarte> kartenstapel = new ArrayList<Spielkarte>();
@@ -21,7 +21,7 @@ public class Kartenstapel extends GameModel implements Serializable
 
     public Kartenstapel()
     {
-
+        ArrayList<Spielkarte> kartenstapel = new ArrayList<Spielkarte>();
         int i = 1;
         for (Kartenwert kartenwert : Kartenwert.values())
         {
