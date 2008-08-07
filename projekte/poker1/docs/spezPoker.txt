@@ -20,7 +20,7 @@ Runde
 
 
  Spielphasen
-  0  Blinds (Einsätze), Karten verteilen (Spieler), 1. Setzphase
+  0  Blinds (Einsätze), Karten verteilen (Spieler), 1. Setzphase:
   1  Flop (3 karten -> Mitte), 2. Setzphase
   2  Turn (1 Karte -> Mitte), 3. Setzphase
   3  River (1 Karte -> Mitte), 4. Setzphase
