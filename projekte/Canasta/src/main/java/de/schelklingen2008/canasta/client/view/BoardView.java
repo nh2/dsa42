@@ -33,7 +33,7 @@ import de.schelklingen2008.canasta.model.Talon;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private final int  HAND_BORDER        = 70;
+    private final int  HAND_BORDER        = 90;
     private final int  BOARD_WIDTH        = 800;
     private final int  BOARD_HEIGHT       = 800;
     private final int  SHARED_CARDS_SPACE = 100;
@@ -300,47 +300,22 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         String imagePath = "./src/main/resources/cards/" + version + "/";
         String imageName;
-        if (faceDown && version == 40)
+        if (faceDown)
         {
-            imageName = "back-red-40-2.png";
-        }
-        if (faceDown && version == 50)
-        {
-
-            imageName = "back-red-50-2.png";
+            imageName = "back-red-" + version + "-2.png";
         }
         else
         {
-            if (version == 40)
+            if (card.getRank() == Rank.JOKER)
             {
-
-                if (card.getRank() == Rank.JOKER)
-                {
-                    imageName = "joker-b" + "-40.png";
-                }
-                else
-                {
-                    String rank = card.getRank().toString().toLowerCase();
-                    String suit = card.getSuit().toString().toLowerCase();
-
-                    imageName = suit + "-" + rank + "-40.png";
-                }
-
+                imageName = "joker-b" + "-" + version + ".png";
             }
-            if (version == 50)
+            else
             {
-                if (card.getRank() == Rank.JOKER)
-                {
-                    imageName = "joker-b" + "-40.png";
-                }
-                else
-                {
-                    String rank = card.getRank().toString().toLowerCase();
-                    String suit = card.getSuit().toString().toLowerCase();
+                String rank = card.getRank().toString().toLowerCase();
+                String suit = card.getSuit().toString().toLowerCase();
 
-                    imageName = suit + "-" + rank + "-40.png";
-                }
-
+                imageName = suit + "-" + rank + "-" + version + ".png";
             }
         }
         try
