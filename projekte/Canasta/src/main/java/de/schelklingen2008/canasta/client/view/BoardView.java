@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -33,7 +36,9 @@ import de.schelklingen2008.canasta.model.Talon;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Controller controller;
+    private Controller          controller;
+
+    private List<SensitiveArea> areas = new ArrayList<SensitiveArea>();
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -71,7 +76,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
-        // TODO respond to player´s mouse clicks
+        for (SensitiveArea area : areas)
+        {
+            if (area.contains(e.getX(), e.getY()))
+            {
+                if (area.getName().equals(""))
+                ;
+            }
+        }
     }
 
     @Override
@@ -384,6 +396,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         Talon talon = controller.getGameContext().getGameModel().getTalon();
         gfx.drawImage(getCardImage(talon.peek(), 50, true), 410, 380, null);
+        areas.add(new SensitiveArea("Talon", 410, 380, 50, 71));
     }
 
     private void paintDiscard(Graphics2D gfx)
@@ -440,4 +453,28 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         return controller.getGameContext();
     }
+
+    private class SensitiveArea
+    {
+
+        Rectangle r;
+        String    name;
+
+        public SensitiveArea(String name, int x, int y, int w, int h)
+        {
+            r = new Rectangle(x, y, w, h);
+            this.name = name;
+        }
+
+        public boolean contains(int x, int y)
+        {
+            return r.contains(x, y);
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+    }
+
 }

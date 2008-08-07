@@ -1,6 +1,7 @@
 package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +20,9 @@ public class Hand implements Iterable<Card>, Serializable
 
     public boolean add(Card e)
     {
-        return cards.add(e);
+        boolean result = cards.add(e);
+        sort();
+        return result;
     }
 
     public Card get(int index)
@@ -46,5 +49,10 @@ public class Hand implements Iterable<Card>, Serializable
     public Iterator<Card> iterator()
     {
         return cards.iterator();
+    }
+
+    private void sort()
+    {
+        Collections.sort(cards);
     }
 }

@@ -2,7 +2,7 @@ package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
 
-public class Card implements Serializable
+public class Card implements Serializable, Comparable<Card>
 {
 
     private final Suit suit;
@@ -36,5 +36,10 @@ public class Card implements Serializable
 
             return rank.toString() + " of " + suit.toString();
         }
+    }
+
+    public int compareTo(Card o)
+    {
+        return getRank().compareTo(o.getRank());
     }
 }
