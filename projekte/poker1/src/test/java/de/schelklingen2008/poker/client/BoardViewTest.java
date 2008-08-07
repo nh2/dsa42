@@ -29,6 +29,10 @@ public class BoardViewTest extends GameViewTest
 
         GameModel model = controller.getGameContext().getGameModel();
 
+        GameContext ctx = controller.getGameContext();
+        ctx.setPlayers(new String[] { "Tobias", "Matthias", "Georg", "Ben" });
+        ctx.setMyName("Matthias");
+
         model.fillStack();
         model.fillCardList(3);
         model.fillCardList(1);
@@ -40,11 +44,6 @@ public class BoardViewTest extends GameViewTest
         // }
         // System.out.println(model.getStack().size());
         // System.out.println(model.getCardList().size());
-
-        model.addPlayer("Tobias");
-        model.addPlayer("Matthias");
-        model.addPlayer("Georg");
-        model.addPlayer("Ben");
 
         model.giveCardsToPlayers();
 
@@ -64,9 +63,6 @@ public class BoardViewTest extends GameViewTest
         model.setDealerIndex(0);
         model.setSmallBlind(20);
 
-        GameContext ctx = controller.getGameContext();
-        ctx.setPlayers(new String[] { "dick", "doof" });
-        ctx.setMyName("dick");
         return new BoardView(controller);
 
     }

@@ -45,14 +45,25 @@ public class GameContext
     public void setMyName(String myName)
     {
         sLogger.fine("setMyName: " + myName);
-        this.myName = getMyName();
+        for (int i = 0; i < gameModel.getPlayerList().size(); i++)
+        {
+            if (gameModel.getPlayerList().get(i).getName().equals(myName) == true)
+            {
+                this.myName = myName;
+                myIndex = i;
+            }
+        }
+
     }
 
     public void setPlayers(String[] names)
     {
-        // playerNames.clear();
-        // playerNames.put(Player.valueOf(0), names[0]);
-        // playerNames.put(Player.valueOf(1), names[1]);
+        for (int i = 0; i < names.length; i++)
+        {
+            String string = names[i];
+            gameModel.getPlayerList().add(new Player(names[i]));
+        }
+
     }
 
     public Player getMyPlayer()

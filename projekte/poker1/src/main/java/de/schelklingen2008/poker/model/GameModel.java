@@ -184,5 +184,14 @@ public class GameModel implements Serializable
     {
         pot = content;
     }
+    
+    if (getActIndex() == getMyIndex()) // wenn ich gerade dran bin
+    {
+        if (getMyPlayer().getOwnBet() < getGameModel().getHighestBet())
+        {
+            
+            if (getMyPlayer().getOwnBet() == getGameModel().getHighestBet())
+            {
+        }
 
 }

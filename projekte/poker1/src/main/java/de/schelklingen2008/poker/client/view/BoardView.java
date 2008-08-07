@@ -184,6 +184,7 @@ public class BoardView extends JPanel implements GameChangeListener
         JButton raiseButton = new JButton("Raise");
         JButton foldButton = new JButton("Fold");
         JButton checkButton = new JButton("Check");
+        JButton reRaiseButton = new JButton("Re-Raise");
 
         ActionListener callListener = new ActionListener()
         {
@@ -231,33 +232,37 @@ public class BoardView extends JPanel implements GameChangeListener
 
         };
 
+        ActionListener reRaiseListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                controller.reRaiseButtonClicked();
+                System.out.println("ReRaised");
+            }
+
+        };
+
         callButton.addActionListener(callListener);
         foldButton.addActionListener(foldListener);
         raiseButton.addActionListener(raiseListener);
         checkButton.addActionListener(checkListener);
+        reRaiseButton.addActionListener(reRaiseListener);
 
         callButton.setEnabled(false);
         foldButton.setEnabled(false);
         raiseButton.setEnabled(false);
         checkButton.setEnabled(false);
+        reRaiseButton.setEnabled(false);
 
-        if (getActIndex() == getMyIndex())
-        {
-            if (getMyPlayer().getOwnBet() < getGameModel().getHighestBet())
-            {
-                callButton.setEnabled(true);
-                raiseButton.setText("Re-Raise");
-                foldButton.setEnabled(true);
-            }
+        if (model.isAllowedToCall == true) callButton.setEnabled(true);
+        if (model.isAllowedToReRaise == true) reRaiseButton.setText("Re-Raise");
+        if (model.isAllowedToRaise == true) raiseButton.setEnabled(true);
+        if (model.isAllowedToFold == true) foldButton.setEnabled(true);
 
-            if (getMyPlayer().getOwnBet() == getGameModel().getHighestBet())
-            {
-                checkButton.setEnabled(true);
-                foldButton.setEnabled(true);
-                raiseButton.setEnabled(true);
-            }
-
-        }
+        checkButton.setEnabled(true);
+        foldButton.setEnabled(true);
+        raiseButton.setEnabled(true);
 
         myButtonPanel.add(Box.createVerticalStrut(5));
         myButtonPanel.add(callButton);
