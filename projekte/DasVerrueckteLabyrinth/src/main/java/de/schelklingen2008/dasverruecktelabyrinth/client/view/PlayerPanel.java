@@ -88,17 +88,16 @@ public class PlayerPanel extends JPanel implements GameChangeListener
             throw new RuntimeException("Kann Bild nicht laden.", e);
 
         }
-
-        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
-        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
-        JLabel linsert = new JLabel(new ImageIcon(vertikal));
-
         JPanel Zeug = new JPanel();
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
         drehButtons.add(new Button("links drehen"));
         add(drehButtons, BorderLayout.WEST);
+
+        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
+        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
+        JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
         Zeug.add(linsert);
         add(Zeug, BorderLayout.NORTH);
