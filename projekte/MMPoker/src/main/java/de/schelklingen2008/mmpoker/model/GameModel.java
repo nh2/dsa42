@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel implements Serializable {
+public class GameModel implements Serializable
+{
 
     private Spielkarte[]  spielfeld;
     private Spieler       amZug;
@@ -15,7 +16,8 @@ public class GameModel implements Serializable {
     private List<Spieler> spielerliste = new ArrayList<Spieler>();
     private Spielstadien  spielstadium;
 
-    public GameModel() {
+    public GameModel()
+    {
         pot = 0;
 
         spielstadium = Spielstadien.FLOP;
@@ -23,7 +25,8 @@ public class GameModel implements Serializable {
 
     }
 
-    public void Rundenstart() { // Initiiert das Spiel.
+    public void Rundenstart()
+    { // Initiiert das Spiel.
         // Geld verteilen
         // for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
         // {
@@ -35,19 +38,22 @@ public class GameModel implements Serializable {
         amZug = spieler1;
         Kartenstapel spielKarten = new Kartenstapel();
         // Karten aufs Spielfeld legen
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++)
+        {
             getSpielfeld()[i] = spielKarten.zufallsKarte();
         }
         // Karten aufs Spielfeld legen ende
         // Blinds Setzen(ein zu kurz)
     }
 
-    public void RundeWiederholen() {
+    public void RundeWiederholen()
+    {
         // blinds verschieben, karten ausgeben, gewinner ermitteln
 
     }
 
-    public String autoErgaenzen() { // Ergänzt fehlenden Betrag im Wettkästchen des Spielers zur aktuellen
+    public String autoErgaenzen()
+    { // Ergänzt fehlenden Betrag im Wettkästchen des Spielers zur aktuellen
 
         // Wettsumme.
         return "" + (getPot() - amZug.getWettsumme());
@@ -75,39 +81,48 @@ public class GameModel implements Serializable {
     // }
     // }
 
-    public Spielkarte[] getSpielfeld() {
+    public Spielkarte[] getSpielfeld()
+    {
         return spielfeld;
     }
 
-    public void setPot(int wettsumme) {
+    public void setPot(int wettsumme)
+    {
         pot = wettsumme;
     }
 
-    public int getPot() {
+    public int getPot()
+    {
         return pot;
     }
 
-    public Spielkarte getKarte() {
+    public Spielkarte getKarte()
+    {
         return null;
     }
 
-    public void setSpielerliste(List<Spieler> spielerliste) {
+    public void setSpielerliste(List<Spieler> spielerliste)
+    {
         this.spielerliste = spielerliste;
     }
 
-    public List<Spieler> getSpielerliste() {
+    public List<Spieler> getSpielerliste()
+    {
         return spielerliste;
     }
 
-    public void setSpielstadium(Spielstadien spielstadium) {
+    public void setSpielstadium(Spielstadien spielstadium)
+    {
         this.spielstadium = spielstadium;
     }
 
-    public Spielstadien getSpielstadium() {
+    public Spielstadien getSpielstadium()
+    {
         return spielstadium;
     }
 
-    public void betraise(int wettsumme, int spielernummer) {
+    public void betraise(int wettsumme, Spieler client)
+    {
         // if (wettsumme > spielerliste.get(spielernummer).getGeld())
         // {
         //
@@ -126,11 +141,13 @@ public class GameModel implements Serializable {
         // sendet dem Server die Summe/Aktion
     }
 
-    public void check() {
+    public void check()
+    {
         // sendet dem Server die Aktion
     }
 
-    public void fold() {
+    public void fold()
+    {
         // sendet dem Server die Aktion
     }
 
