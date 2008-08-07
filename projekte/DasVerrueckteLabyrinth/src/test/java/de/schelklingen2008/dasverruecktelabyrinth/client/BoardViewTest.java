@@ -26,7 +26,7 @@ public class BoardViewTest extends GameViewTest
     {
         Controller controller = new Controller();
         GameContext ctx = controller.getGameContext();
-        ctx.setPlayers(new String[] { "dick", "doof" });
+        ctx.setPlayers(new String[] { "dick", "doof", "Hassel", "Hoff" });
         ctx.setMyName("dick");
         return new PlayerPanel(controller);
     }

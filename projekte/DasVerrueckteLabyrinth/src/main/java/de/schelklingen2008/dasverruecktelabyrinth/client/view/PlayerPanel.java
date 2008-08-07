@@ -152,8 +152,15 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     {
         Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
         PlayerCards hiddenCards = MapWtf.get(getGameContext().getMyPlayerType());
+        TreasureCard searchThisCard = null;
+
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
-        TreasureCard searchThisCard = hidden.get(0);
+        if (hidden != null)
+        {
+
+            searchThisCard = hidden.get(0);
+        }
+
         return searchThisCard;
     }
 
