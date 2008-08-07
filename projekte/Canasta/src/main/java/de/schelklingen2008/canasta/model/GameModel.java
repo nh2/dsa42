@@ -53,6 +53,23 @@ public class GameModel implements Serializable
 
         // discard one card
         discard.push(talon.pop());
+
+        // create outlays
+
+        for (Player player : players)
+        {
+            Outlay outlay = player.getOutlay();
+            for (int j = 0; j < 10; j++)
+            {
+                CardStack cardStack = new CardStack();
+                for (int k = 0; k < 10; k++)
+                {
+                    cardStack.add(new Card(Rank.QUEEN, Suit.HEARTS));
+                }
+                outlay.add(cardStack);
+            }
+
+        }
     }
 
     public void drawCard()
