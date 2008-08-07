@@ -58,8 +58,8 @@ public class ReversiAI extends Observable
         if (sharedState == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
-        boolean changed = getGameModel().setTurnHolder(sharedState.getTurnHolder());
-        getGameModel().setBoard(sharedState.getBoard());
+        boolean changed = getGameModel().setTurnHolder(sharedState.getModel().getTurnHolder());
+        getGameModel().setBoard(sharedState.getModel().getBoard());
         if (changed && gameContext.isMyTurn()) makeAMove();
         if (isFinished()) gameDidEnd();
     }

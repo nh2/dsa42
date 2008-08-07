@@ -94,8 +94,7 @@ public class Controller extends GameController
         if (sharedState == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
-        gameContext.getGameModel().setTurnHolder(sharedState.getTurnHolder());
-        gameContext.getGameModel().setBoard(sharedState.getBoard());
+        gameContext.setGameModel(sharedState.getModel());
 
         fireGameChange();
     }

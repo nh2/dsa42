@@ -66,4 +66,9 @@ public class GameContext
     {
         return gameModel;
     }
+
+    public void setGameModel(GameModel model)
+    {
+        gameModel = model;
+    }
 }

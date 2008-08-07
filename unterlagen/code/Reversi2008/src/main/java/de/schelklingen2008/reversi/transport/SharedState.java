@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import com.threerings.parlor.game.data.GameObject;
 
 import de.schelklingen2008.reversi.model.GameModel;
-import de.schelklingen2008.reversi.model.Player;
 
 /**
  * Keeps the shared state of the game for client-server communication and updates. Note, that all fields must
@@ -48,28 +47,6 @@ public class SharedState extends GameObject
         {
             throw new RuntimeException(e);
         }
-    }
-
-    public Player[][] getBoard()
-    {
-        int size = GameModel.SIZE;
-        Player[][] copy = new Player[size][size];
-
-        GameModel model = getModel();
-        if (model == null) return copy;
-        Player[][] board = model.getBoard();
-        if (board == null) return copy;
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                copy[x][y] = board[x][y];
-        return copy;
-    }
-
-    public Player getTurnHolder()
-    {
-        GameModel model = getModel();
-        if (model == null) return null;
-        return model.getTurnHolder();
     }
 
     public String[] getPlayerNames()
