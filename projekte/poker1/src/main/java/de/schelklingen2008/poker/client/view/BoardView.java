@@ -1,8 +1,6 @@
 package de.schelklingen2008.poker.client.view;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -41,6 +39,7 @@ public class BoardView extends JPanel implements GameChangeListener
         controller.addChangeListener(this);
         model = getGameModel();
         fillImageArray();
+        paintBoard();
     }
 
     @Override
@@ -48,14 +47,6 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         // TODO calculate correct dimensions for the board view
         return new Dimension(1000, 700);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g)
-    {
-        Graphics2D gfx = (Graphics2D) g;
-        paintBackground(gfx);
-        paintBoard(gfx);
     }
 
     public static String getFileName(Card card)
@@ -75,12 +66,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
     }
 
-    private void paintBackground(Graphics2D gfx)
+    private void paintBoard()
     {
-    }
+        removeAll();
 
-    private void paintBoard(Graphics2D gfx)
-    {
         JPanel playerPanel = new JPanel();
         JPanel middlePanel = new JPanel();
         JPanel cardPanel = new JPanel();
@@ -121,11 +110,11 @@ public class BoardView extends JPanel implements GameChangeListener
             actPlayerPanel.add(new JLabel("Kontostand: " + model.getPlayerList().get(i).getBalance()));
             if (model.getPlayerList().get(i).isStillIn() == false)
             {
-                actPlayerPanel.add(new JLabel("Folded\n"));
+                actPlayerPanel.add(new JLabel("Folded"));
             }
             if (model.getPlayerList().get(i).isStillIn() == true && model.getPlayerList().get(i).getBalance() == 0)
             {
-                actPlayerPanel.add(new JLabel("All-in\n"));
+                actPlayerPanel.add(new JLabel("All-in"));
             }
             if (model.getPlayerList().get(i).hasLost() == true)
             {
@@ -152,9 +141,9 @@ public class BoardView extends JPanel implements GameChangeListener
             cardPanel.add(Box.createVerticalStrut(5));
         }
 
-        potPanel.add(Box.createVerticalStrut(15));
+        potPanel.add(Box.createVerticalStrut(30));
         potPanel.add(new JLabel("Es sind " + model.getPot() + " Euro im Pot"));
-        potPanel.add(Box.createVerticalStrut(5));
+        potPanel.add(Box.createVerticalStrut(30));
 
         myPanel.add(Box.createVerticalStrut(5));
         myPanel.add(myCardPanel);
@@ -163,7 +152,8 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(new JLabel("Ich: Ihre Karten:"));
+        myCardPanel.add(new JLabel(model.getPlayerList().get(controller.getGameContext().getMyIndex()).getName()
+                                   + ": Ihre Karten:"));
         myCardPanel.add(Box.createVerticalStrut(5));
         myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
