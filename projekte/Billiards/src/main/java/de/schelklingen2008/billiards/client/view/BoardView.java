@@ -16,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -39,10 +38,8 @@ public class BoardView extends JPanel implements GameChangeListener
      * 
      */
     private static final long serialVersionUID = -9064861386229239709L;
-    private Controller        controller;
-    private Image             bg;
-
-    private Timer             timer            = new Timer();          // TODO remove this
+    private Controller controller;
+    private Image bg;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -95,7 +92,8 @@ public class BoardView extends JPanel implements GameChangeListener
         Ball ball = gameModel.getWhiteBall();
 
         // TODO remove this
-        ball.setVelocity(new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(ball.getPosition()));
+        ball.setVelocity(new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(ball.getPosition())
+                                                                                        .scale(2));
         gameModel.inMotion = true;
 
         controller.startBoardProcessThread(this);
@@ -144,13 +142,9 @@ public class BoardView extends JPanel implements GameChangeListener
                          (int) Math.round(ball.getPosition().getY() + BORDER_HEIGHT - BALL_RADIUS),
                          (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
 
-            final int x = (int) Math.round(Math.sqrt(1
-                                                     - 0.25
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS)
-                                           * BALL_RADIUS);
+            final int x =
+                (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
+                                 * BALL_RADIUS);
             final int y = (int) Math.round(0.5 * BALL_RADIUS);
             final int angle = (int) Math.round(Math.atan((double) y / (double) x) * 180 / Math.PI);
 

@@ -16,12 +16,11 @@ import de.schelklingen2008.billiards.model.Ball.BallType;
 public class BallView extends JPanel
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8866337375992404949L;
     Controller controller = null;
-
-    private BallView()
-    {
-
-    }
 
     public BallView(Controller controller)
     {
@@ -67,13 +66,9 @@ public class BallView extends JPanel
 
                 gfx.fillOval(i * 50 + 10, j * 50 + 10, 40, 40);
 
-                final int x = (int) Math.round(Math.sqrt(1
-                                                         - 0.25
-                                                         * STRIPE_HEIGHT
-                                                         / BALL_RADIUS
-                                                         * STRIPE_HEIGHT
-                                                         / BALL_RADIUS)
-                                               * BALL_RADIUS);
+                final int x =
+                    (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
+                                     * BALL_RADIUS);
 
                 final int y = (int) (0.5 * STRIPE_HEIGHT);
 

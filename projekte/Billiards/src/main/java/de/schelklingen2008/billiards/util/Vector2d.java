@@ -10,12 +10,7 @@ public class Vector2d
 
     public static final Vector2d ZERO = new Vector2d(0, 0);
 
-    private double               x, y, length = Double.NaN, angle = Double.NaN;
-
-    private Vector2d()
-    {
-
-    }
+    private double x = 0d, y = 0d, length = Double.NaN, angle = Double.NaN;
 
     public Vector2d(double x, double y)
     {
@@ -25,7 +20,7 @@ public class Vector2d
 
     public static Vector2d getPolarVector(double angle, double length)
     {
-        return new Vector2d(cos(angle) * length, sin(angle) * length);
+        return new Vector2d(cos(angle) * length, sin(angle) * length, length, angle);
     }
 
     @Override

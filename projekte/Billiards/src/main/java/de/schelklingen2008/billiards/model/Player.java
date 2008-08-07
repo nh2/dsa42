@@ -11,11 +11,6 @@ public class Player
     private int score = 0;
     private int id;
 
-    private Player()
-    {
-
-    }
-
     @Override
     public int hashCode()
     {

@@ -9,11 +9,6 @@ public class BoardProcessThread extends Thread
     private GameModel gameModel;
     private BoardView boardView;
 
-    private BoardProcessThread()
-    {
-
-    }
-
     public BoardProcessThread(GameModel gameModel, BoardView boardView)
     {
         this.gameModel = gameModel;
@@ -31,12 +26,16 @@ public class BoardProcessThread extends Thread
             long tick = System.currentTimeMillis();
 
             boardView.repaint();
-            gameModel.processTimeStep((tick - lastTick) / 1000d);
+            // gameModel.processTimeStep((tick - lastTick) / 1000d);
+            for (int i = 0; i < tick - lastTick; i++)
+            {
+                gameModel.processTimeStep(0.001d);
+            }
             lastTick = tick;
 
             try
             {
-                Thread.sleep(30); // TODO Adjust this
+                Thread.sleep(50); // TODO Adjust this
             }
             catch (InterruptedException e)
             {

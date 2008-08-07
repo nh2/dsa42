@@ -4,7 +4,7 @@
   <ident>Billiards</ident>
 
   <!-- the controller and manager used for the game -->
-  <controller>de.schelklingen2008.billiards.controller.Controller</controller>
+  <controller>de.schelklingen2008.billiards.client.controller.Controller</controller>
   <manager>de.schelklingen2008.billiards.server.Manager</manager>
 
   <!-- defines how the game is matchmade and configured -->

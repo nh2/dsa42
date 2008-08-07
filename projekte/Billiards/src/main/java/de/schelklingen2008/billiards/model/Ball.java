@@ -9,12 +9,11 @@ import static java.awt.Color.RED;
 import static java.awt.Color.YELLOW;
 
 import java.awt.Color;
-import java.io.Serializable;
 
 import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.util.Vector2d;
 
-public class Ball implements Serializable
+public class Ball
 {
 
     public enum BallType
@@ -22,44 +21,32 @@ public class Ball implements Serializable
         BLACK, WHITE, SOLID, STRIPED
     }
 
-<<<<<<< .mine
     private static final double[] INITIAL_BALL_POSITIONS_X =
         { 0.75d * MAX_X - 31.18d, 0.75d * MAX_X - 15.59d, 0.75d * MAX_X, 0.75d * MAX_X + 15.59d, 0.75d * MAX_X + 31.18d };
-=======
-    private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 34.8d, 0.75 * MAX_X - 17.4d,
-            0.75 * MAX_X, 0.75 * MAX_X + 17.4d, 0.75 * MAX_X + 34.8d };
->>>>>>> .r367
 
-<<<<<<< .mine
     private static final double[] INITIAL_BALL_POSITIONS_Y =
         { 0.5d * MAX_Y - 38d, 0.5d * MAX_Y - 28.5d, 0.5d * MAX_Y - 19d, 0.5d * MAX_Y - 9.5d, 0.5d * MAX_Y,
          0.5d * MAX_Y + 9.5d, 0.5d * MAX_Y + 19d, 0.5d * MAX_Y + 28.5d, 0.5d * MAX_Y + 38d };
-=======
-    private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 10d, 0.5 * MAX_Y - 30d,
-            0.5 * MAX_Y - 20d, 0.5 * MAX_Y - 10d, 0.5 * MAX_Y, 0.5 * MAX_Y + 10d, 0.5 * MAX_Y + 20d, 0.5 * MAX_Y + 30d,
-            0.5 * MAX_Y + 40d                              };
->>>>>>> .r367
 
-    public static final Vector2d[] INITIAL_BALL_POSITIONS   = {
-            new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[5]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[3]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[6]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[2]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[7]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[5]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[3]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[1]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[8]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[6]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[4]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
-            new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
+    public static final Vector2d[] INITIAL_BALL_POSITIONS =
+        { new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[5]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[1], INITIAL_BALL_POSITIONS_Y[3]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[6]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[2], INITIAL_BALL_POSITIONS_Y[2]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[7]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[5]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[3]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[3], INITIAL_BALL_POSITIONS_Y[1]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[8]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[6]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[4]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[2]),
+         new Vector2d(INITIAL_BALL_POSITIONS_X[4], INITIAL_BALL_POSITIONS_Y[0]) };
 
-    public static final Color[]    BALL_COLORS              = { YELLOW, GREEN, new Color(0xFF4000), RED, BLUE,
-            new Color(0x800080), // PURPLE
-            new Color(0x804000)                            // MAROON
-                                                            };
+    public static final Color[] BALL_COLORS = { YELLOW, GREEN, new Color(0xFF4000), RED, BLUE, new Color(0x800080), // PURPLE
+                                               new Color(0x804000) // MAROON
+        };
 
     @Override
     public int hashCode()
@@ -92,10 +79,10 @@ public class Ball implements Serializable
     }
 
     private BallType type;
-    private Color    color;
+    private Color color;
     private Vector2d position;
     private Vector2d velocity;
-    private boolean  sunk;
+    private boolean sunk;
 
     public Ball(BallType type, Color color)
     {
@@ -282,20 +269,11 @@ public class Ball implements Serializable
         else
         {
             velocity = velocity.scale(1 - frictionFactor);
-<<<<<<< .mine
             position =
                 position.add(velocity.scale(deltaT))
                         .subtract(
                                   Vector2d.getPolarVector(velocity.getAngle(), 0.5d * GlobalConstants.FRICTION_FACTOR
                                                                                * deltaT * deltaT));
-=======
-            position = position.add(velocity.scale(deltaT))
-                               .subtract(
-                                         Vector2d.getPolarVector(velocity.getAngle(), 0.5
-                                                                                      * GlobalConstants.FRICTION_FACTOR
-                                                                                      * deltaT
-                                                                                      * deltaT));
->>>>>>> .r367
 
         }
 

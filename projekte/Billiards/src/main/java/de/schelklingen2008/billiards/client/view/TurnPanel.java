@@ -17,6 +17,10 @@ import de.schelklingen2008.billiards.model.GameModel;
 public class TurnPanel extends JPanel implements GameChangeListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2000217486866087547L;
     private Controller controller;
 
     public TurnPanel(Controller controller)
