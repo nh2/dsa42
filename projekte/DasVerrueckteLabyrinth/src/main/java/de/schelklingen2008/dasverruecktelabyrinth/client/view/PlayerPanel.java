@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -21,18 +22,21 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerCards;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
 import de.schelklingen2008.dasverruecktelabyrinth.model.TreasureCard;
+import de.schelklingen2008.util.LoggerFactory;
 
 public class PlayerPanel extends JPanel implements GameChangeListener
 {
 
-    private Controller controller;
+    private static final Logger sLogger = LoggerFactory.create();
 
-    BufferedImage      curveOne, curveTwo, curveThree, curveFour;
-    BufferedImage      cross, horizontal, vertikal;
-    BufferedImage      eule, krone, flaschengeist, ring, motte, spinne;
-    BufferedImage      fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
-    BufferedImage      troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
-    BufferedImage      schmuckkasten, schluessel, schwert, gespenst;
+    private Controller          controller;
+
+    BufferedImage               curveOne, curveTwo, curveThree, curveFour;
+    BufferedImage               cross, horizontal, vertikal;
+    BufferedImage               eule, krone, flaschengeist, ring, motte, spinne;
+    BufferedImage               fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
+    BufferedImage               troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
+    BufferedImage               schmuckkasten, schluessel, schwert, gespenst;
 
     public PlayerPanel(Controller controller)
 
@@ -41,9 +45,6 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         controller.addChangeListener(this);
 
         JPanel drehButtons = new JPanel();
-
-        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
-        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
 
         setLayout(new BorderLayout());
 
@@ -87,6 +88,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         }
 
+        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
+        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
@@ -142,6 +145,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         if (tC == TreasureCard.SCHLÜSSEL) temp = schluessel;
         if (tC == TreasureCard.SCHWERT) temp = schwert;
         if (tC == TreasureCard.GESPENST) temp = gespenst;
+
+        if (temp == null) sLogger.info("card not found for: " + tC);
         return temp;
     }
 
