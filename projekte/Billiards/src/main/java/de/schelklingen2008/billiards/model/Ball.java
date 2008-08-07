@@ -22,12 +22,23 @@ public class Ball implements Serializable
         BLACK, WHITE, SOLID, STRIPED
     }
 
+<<<<<<< .mine
+    private static final double[] INITIAL_BALL_POSITIONS_X =
+        { 0.75d * MAX_X - 31.18d, 0.75d * MAX_X - 15.59d, 0.75d * MAX_X, 0.75d * MAX_X + 15.59d, 0.75d * MAX_X + 31.18d };
+=======
     private static final double[]  INITIAL_BALL_POSITIONS_X = { 0.75 * MAX_X - 34.8d, 0.75 * MAX_X - 17.4d,
             0.75 * MAX_X, 0.75 * MAX_X + 17.4d, 0.75 * MAX_X + 34.8d };
+>>>>>>> .r367
 
+<<<<<<< .mine
+    private static final double[] INITIAL_BALL_POSITIONS_Y =
+        { 0.5d * MAX_Y - 38d, 0.5d * MAX_Y - 28.5d, 0.5d * MAX_Y - 19d, 0.5d * MAX_Y - 9.5d, 0.5d * MAX_Y,
+         0.5d * MAX_Y + 9.5d, 0.5d * MAX_Y + 19d, 0.5d * MAX_Y + 28.5d, 0.5d * MAX_Y + 38d };
+=======
     private static final double[]  INITIAL_BALL_POSITIONS_Y = { 0.5 * MAX_Y - 10d, 0.5 * MAX_Y - 30d,
             0.5 * MAX_Y - 20d, 0.5 * MAX_Y - 10d, 0.5 * MAX_Y, 0.5 * MAX_Y + 10d, 0.5 * MAX_Y + 20d, 0.5 * MAX_Y + 30d,
             0.5 * MAX_Y + 40d                              };
+>>>>>>> .r367
 
     public static final Vector2d[] INITIAL_BALL_POSITIONS   = {
             new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),
@@ -145,60 +156,6 @@ public class Ball implements Serializable
         this.sunk = sunk;
     }
 
-    double getNextWallCollision()
-    {
-
-        double vx = velocity.getX(), vy = velocity.getY();
-        double xCollisionTime, yCollisionTime;
-
-        if (vx < 0)
-        {
-            xCollisionTime = (BALL_RADIUS - position.getX()) / velocity.getX();
-        }
-        else if (vx > 0)
-        {
-            xCollisionTime = (MAX_X - position.getX() - BALL_RADIUS) / velocity.getX();
-        }
-        else
-        {
-            xCollisionTime = Double.NaN;
-        }
-
-        if (vy < 0)
-        {
-            yCollisionTime = (BALL_RADIUS - position.getY()) / velocity.getY();
-        }
-        else if (vy > 0)
-        {
-            yCollisionTime = (MAX_Y - position.getY() - BALL_RADIUS) / velocity.getY();
-        }
-        else
-        {
-            yCollisionTime = Double.NaN;
-        }
-
-        double result;
-
-        if (!Double.isNaN(xCollisionTime) && (Double.isNaN(yCollisionTime) || xCollisionTime < yCollisionTime))
-        {
-            result = xCollisionTime;
-        }
-        else
-        {
-            result = yCollisionTime;
-        }
-
-        if (Double.isNaN(result))
-        {
-            return Double.NaN;
-        }
-        else
-        {
-            return adjustCollisionTime(result);
-        }
-
-    }
-
     double getNextBallCollision(Ball other)
     {
 
@@ -259,7 +216,7 @@ public class Ball implements Serializable
     public double adjustCollisionTime(double t)
     {
 
-        double a = -0.5 * Math.cos(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
+        double a = -0.5d * Math.cos(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
         double b = velocity.getX();
         double c = -velocity.getX() * t;
         double result1 = Double.NaN, result2 = Double.NaN;
@@ -307,6 +264,7 @@ public class Ball implements Serializable
 
     void move(double deltaT)
     {
+
         if (!isInMotion())
         {
             return;
@@ -319,17 +277,25 @@ public class Ball implements Serializable
         if (1 - frictionFactor < EPSILON)
         {
             velocity = Vector2d.ZERO;
-            position = position.add(velocity.scale(0.5 * deltaT));
+            position = position.add(velocity.scale(0.5d * deltaT));
         }
         else
         {
             velocity = velocity.scale(1 - frictionFactor);
+<<<<<<< .mine
+            position =
+                position.add(velocity.scale(deltaT))
+                        .subtract(
+                                  Vector2d.getPolarVector(velocity.getAngle(), 0.5d * GlobalConstants.FRICTION_FACTOR
+                                                                               * deltaT * deltaT));
+=======
             position = position.add(velocity.scale(deltaT))
                                .subtract(
                                          Vector2d.getPolarVector(velocity.getAngle(), 0.5
                                                                                       * GlobalConstants.FRICTION_FACTOR
                                                                                       * deltaT
                                                                                       * deltaT));
+>>>>>>> .r367
 
         }
 
