@@ -84,6 +84,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         }
         catch (IOException e)
         {
+
             throw new RuntimeException("Kann Bild nicht laden.", e);
 
         }
@@ -122,6 +123,9 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     private BufferedImage getImageOfTC(TreasureCard tC)
     {
+
+        sLogger.info("mal sehn");
+
         BufferedImage temp = null;
         if (tC == TreasureCard.EULE) temp = eule;
 
