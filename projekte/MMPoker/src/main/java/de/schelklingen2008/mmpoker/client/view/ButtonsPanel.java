@@ -11,18 +11,44 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.schelklingen2008.mmpoker.client.controller.Controller;
+import de.schelklingen2008.mmpoker.client.controller.GameChangeListener;
 
-public class ButtonsPanel extends JPanel implements ActionListener {
+public class ButtonsPanel extends JPanel implements ActionListener, GameChangeListener {
 
     private Controller controller;
 
-    public ButtonsPanel(Controller controller) {
-        controller = controller;
+    public ButtonsPanel(Controller pController) {
+        controller = pController;
+        controller.addChangeListener(this);
+        gameChanged();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        controller.betButtonClicked();
+        controller.raiseButtonClicked();
+    }
+
+    public void gameChanged() {
+        removeAll();
 
         JButton betButton = new JButton("bet");
+        betButton.addActionListener(this);
         JButton raiseButton = new JButton("raise");
+        raiseButton.addActionListener(this);
         JButton foldButton = new JButton("fold");
+        foldButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                controller.foldButtonClicked();
+            }
+        });
         JButton checkButton = new JButton("check");
+        checkButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                controller.checkButtonClicked();
+            }
+        });
         JTextField betField = new JTextField(controller.getGameContext().getGameModel().autoErgaenzen());
         betField.setMaximumSize(new Dimension(100, 25));
         betField.setPreferredSize(new Dimension(100, 25));
@@ -39,10 +65,5 @@ public class ButtonsPanel extends JPanel implements ActionListener {
         add(Box.createHorizontalStrut(5));
         add(betField);
         add(Box.createHorizontalStrut(5));
-
-    }
-
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
