@@ -6,6 +6,7 @@ import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,19 +17,19 @@ import de.schelklingen2008.billiards.util.Vector2d;
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
-    private Player[] players = new Player[2];
-    private Player turnHolder = null;
+    private Player[]   players      = new Player[2];
+    private Player     turnHolder   = null;
     // TODO Make this private
-    public boolean inMotion = false; // Are there any balls in
+    public boolean     inMotion     = false;                // Are there any balls in
     // motion?
 
-    private List<Ball> balls = new ArrayList<Ball>();
+    private List<Ball> balls        = new ArrayList<Ball>();
     private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
-    private Ball whiteBall, blackBall;
+    private Ball       whiteBall, blackBall;
 
     public boolean isInMotion()
     {
@@ -110,8 +111,8 @@ public class GameModel
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
         {
-            BallType ball2Type =
-                tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
+            BallType ball2Type = tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED
+                    : BallType.SOLID;
             for (int i = 0; i < tmpBalls.size(); i++)
             {
                 if (tmpBalls.get(i).getType() == ball2Type)

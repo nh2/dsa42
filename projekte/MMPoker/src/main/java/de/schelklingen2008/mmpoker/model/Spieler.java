@@ -1,6 +1,8 @@
 package de.schelklingen2008.mmpoker.model;
 
-public class Spieler
+import java.io.Serializable;
+
+public class Spieler implements Serializable
 {
 
     private Spielkarte[] handblatt;

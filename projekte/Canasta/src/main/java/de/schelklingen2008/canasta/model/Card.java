@@ -1,6 +1,8 @@
 package de.schelklingen2008.canasta.model;
 
-public class Card
+import java.io.Serializable;
+
+public class Card implements Serializable
 {
 
     private final Suit suit; // Jokers will save NULL

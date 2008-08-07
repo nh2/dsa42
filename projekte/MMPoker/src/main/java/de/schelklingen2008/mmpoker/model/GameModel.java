@@ -1,5 +1,6 @@
 package de.schelklingen2008.mmpoker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
     private Spielkarte[]  spielfeld;

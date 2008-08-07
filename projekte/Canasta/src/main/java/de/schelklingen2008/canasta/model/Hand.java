@@ -1,10 +1,11 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Hand implements Iterable<Card>
+public class Hand implements Iterable<Card>, Serializable
 {
 
     private List<Card> cards;

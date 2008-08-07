@@ -1,9 +1,10 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerCards
+public class PlayerCards implements Serializable
 {
 
     private List<TreasureCard> hidden; // Stapel der verdeckten Bildkarten

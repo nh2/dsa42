@@ -1,4 +1,4 @@
-package de.schelklingen2008.dasverruecktelabyrinth.model;
+package de.schelklingen2008.dasverruecktelabyrinth.client;
 
 import java.awt.Color;
 import java.awt.Dimension;

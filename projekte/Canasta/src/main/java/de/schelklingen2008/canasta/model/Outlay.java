@@ -1,10 +1,11 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Outlay implements Iterable<CardStack>
+public class Outlay implements Iterable<CardStack>, Serializable
 {
 
     private List<CardStack> cardStacks;

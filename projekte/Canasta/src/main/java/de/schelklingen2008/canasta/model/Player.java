@@ -1,9 +1,11 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
+
 /**
  * Is a simple abstraction for a player entity. To be merged with PlayerState
  */
-public class Player
+public class Player implements Serializable
 {
 
     private final String name;

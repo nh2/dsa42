@@ -1,5 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +12,7 @@ import java.util.Random;
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
     public static final int        SIZE         = 7;

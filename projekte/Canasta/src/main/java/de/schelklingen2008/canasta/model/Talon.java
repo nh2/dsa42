@@ -1,11 +1,12 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Talon
+public class Talon implements Serializable
 {
 
     private List<Card> cards;

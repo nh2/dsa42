@@ -1,6 +1,8 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
-public class Player
+import java.io.Serializable;
+
+public class Player implements Serializable
 {
 
     private PlayerType playertype;

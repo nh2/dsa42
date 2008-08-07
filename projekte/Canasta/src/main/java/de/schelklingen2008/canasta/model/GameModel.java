@@ -1,9 +1,11 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
+
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
     private int      turnHolder;

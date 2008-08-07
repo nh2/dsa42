@@ -1,6 +1,8 @@
 package de.schelklingen2008.dasverruecktelabyrinth.model;
 
-public class Tile
+import java.io.Serializable;
+
+public class Tile implements Serializable
 {
 
     private boolean      unmoveable = false;

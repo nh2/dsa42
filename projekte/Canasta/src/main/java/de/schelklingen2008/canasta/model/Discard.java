@@ -1,9 +1,10 @@
 package de.schelklingen2008.canasta.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Discard
+public class Discard implements Serializable
 {
 
     private List<Card> cards;
