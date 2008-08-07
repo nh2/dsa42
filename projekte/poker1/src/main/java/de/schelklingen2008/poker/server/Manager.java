@@ -1,10 +1,13 @@
 package de.schelklingen2008.poker.server;
 
+import java.util.Iterator;
+
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
 import de.schelklingen2008.poker.model.GameModel;
+import de.schelklingen2008.poker.model.Player;
 import de.schelklingen2008.poker.transport.SharedState;
 
 /**
@@ -70,8 +73,13 @@ public class Manager extends GameManager
         // e.g.: sharedState.setTurnHolder(gameModel.getTurnHolder());
     }
 
-    private void getPlayer(BodyObject client)
+    private Player getPlayer(BodyObject client)
     {
-        // return Player.valueOf(getPlayerIndex(client.username));
+        for (Iterator iterator = gameModel.getPlayerList().iterator(); iterator.hasNext();)
+        {
+            Player player = (Player) iterator.next();
+            if (player.getName().equals(client.username)) return player;
+        }
+        return null;
     }
 }
