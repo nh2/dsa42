@@ -13,7 +13,7 @@ public class Spieler implements Serializable
 
     public Spieler()
     {
-        geld = 0;
+        setGeld(0);
         wasfuernBlind = Blind.NICHTS;
         Spielkarte[] handblatt = new Spielkarte[2];
         wettsumme = 0;
@@ -43,6 +43,16 @@ public class Spieler implements Serializable
     public Blatt blattErmitteln()
     { // Kartenwert, Blatt, Höchste Karte
         return null;
+    }
+
+    public void setGeld(int geld)
+    {
+        this.geld = geld;
+    }
+
+    public int getGeld()
+    {
+        return geld;
     }
 
 }

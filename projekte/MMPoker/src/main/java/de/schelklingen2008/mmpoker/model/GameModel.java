@@ -2,7 +2,6 @@ package de.schelklingen2008.mmpoker.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,23 +18,31 @@ public class GameModel implements Serializable
 
     public GameModel()
     {
-        pot = 500;
-        Spieler spieler1 = new Spieler();
-        getSpielerliste().add(0, spieler1);
-        amZug = spieler1;
+        pot = 0;
+
         spielstadium = Spielstadien.FLOP;
+        Rundenstart();
 
     }
 
     public void Rundenstart()
     { // Initiiert das Spiel.
         // Geld verteilen
-        for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
-        {
-            iterator.next().setWettsumme(5000);
-        }
+        // for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
+        // {
+        // iterator.next().setWettsumme(5000);
+        // }
         // Geld verteilen ende
-
+        Spieler spieler1 = new Spieler();
+        getSpielerliste().add(0, spieler1);
+        amZug = spieler1;
+        Kartenstapel spielKarten = new Kartenstapel();
+        // Karten aufs Spielfeld legen
+        for (int i = 1; i < 5; i++)
+        {
+            getSpielfeld()[i] = spielKarten.zufallsKarte();
+        }
+        // Karten aufs Spielfeld legen ende
         // Blinds Setzen(ein zu kurz)
     }
 
@@ -114,9 +121,23 @@ public class GameModel implements Serializable
         return spielstadium;
     }
 
-    public void betfraise(int wettsumme)
+    public void betraise(int wettsumme, int spielernummer)
     {
-
+        // if (wettsumme > spielerliste.get(spielernummer).getGeld())
+        // {
+        //
+        // }
+        // else
+        // {
+        // if (condition)
+        // {
+        //
+        // }
+        // else
+        // {
+        //
+        // }
+        // }
         // sendet dem Server die Summe/Aktion
     }
 

@@ -15,17 +15,20 @@ public class Kartenstapel extends GameModel implements Serializable
     {
         random = new Random();
 
-        return kartenstapel.get(random.nextInt(55));
+        return kartenstapel.get(random.nextInt(52));
 
     }
 
-    public void kartenSetzen()
+    public Kartenstapel()
     {
+
+        int i = 1;
         for (Kartenwert kartenwert : Kartenwert.values())
         {
             for (Kartentyp kartentyp : Kartentyp.values())
             {
-                new Spielkarte(kartentyp, kartenwert);
+                kartenstapel.add(i, new Spielkarte(kartentyp, kartenwert));
+                i++;
             }
         }
 
