@@ -25,7 +25,6 @@ import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Hand;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.model.Rank;
-import de.schelklingen2008.canasta.model.Suit;
 import de.schelklingen2008.canasta.model.Talon;
 
 /**
@@ -243,32 +242,67 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintOutlays(Graphics2D gfx)
     {
-        // TODO Auto-generated method stub
-
-        CardStack cardStack = new CardStack();
-        cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
-        cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
-        cardStack.add(new Card(Rank.ACE, Suit.CLUBS));
-        cardStack.add(new Card(Rank.ACE, Suit.HEARTS));
-        cardStack.add(new Card(Rank.JOKER, null));
-        cardStack.add(new Card(Rank.TWO, Suit.DIAMONDS));
-        cardStack.add(new Card(Rank.TWO, Suit.SPADES));
-
-        gfx.translate(Constants.HAND_BORDER,
-                      Constants.BOARD_HEIGHT
-                              - Constants.HAND_BORDER
-                              - (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                              / 2);
-
+        // CardStack cardStack = new CardStack();
+        // cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
+        // cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
+        // cardStack.add(new Card(Rank.ACE, Suit.CLUBS));
+        // cardStack.add(new Card(Rank.ACE, Suit.HEARTS));
+        // cardStack.add(new Card(Rank.JOKER, null));
+        // cardStack.add(new Card(Rank.TWO, Suit.DIAMONDS));
+        // cardStack.add(new Card(Rank.TWO, Suit.SPADES));
         // gfx.translate(30, 30);
         // paintCardStack(gfx, cardStack);
         // gfx.translate(-30, -30);
 
-        paintOutlay(gfx, getGameModel().getPlayers()[0],
-                    (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                            / 2
-                            + Constants.SHARED_CARDS_SPACE,
-                    (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2);
+        Player[] players = getGameModel().getPlayers();
+
+        // Player 0
+        int outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                          / 2
+                          + Constants.SHARED_CARDS_SPACE;
+        int outlayX = Constants.HAND_BORDER;
+        int outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        int outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+        gfx.translate(outlayX, outlayY);
+        paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
+        gfx.translate(-outlayX, -outlayY);
+
+        // Player 1
+        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                      / 2
+                      + Constants.SHARED_CARDS_SPACE;
+        outlayX = Constants.HAND_BORDER;
+        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+        gfx.translate(outlayX, outlayY);
+        paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
+        gfx.translate(-outlayX, -outlayY);
+
+        // Player 2
+        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                      / 2
+                      + Constants.SHARED_CARDS_SPACE;
+        outlayX = Constants.HAND_BORDER;
+        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+        gfx.translate(outlayX, outlayY);
+        paintOutlay(gfx, players[2], outlayWidth, outlayHeight);
+        gfx.translate(-outlayX, -outlayY);
+
+        // Player 3
+        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                      / 2
+                      + Constants.SHARED_CARDS_SPACE;
+        outlayX = Constants.HAND_BORDER;
+        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+        gfx.translate(outlayX, outlayY);
+        paintOutlay(gfx, players[3], outlayWidth, outlayHeight);
+        gfx.translate(-outlayX, -outlayY);
 
     }
 
@@ -287,6 +321,8 @@ public class BoardView extends JPanel implements GameChangeListener
         int stackSpaceX = (int) ((width - 3.0 * cardImage.getWidth() * stackCountX) / stackCountX + 1);
         int stackSpaceY = (height - cardImage.getHeight() * stackCountY) / stackCountY + 1;
 
+        // paintCardStack(gfx, player.getOutlay().get(0));
+
         // draw the stacks
         int i = 0;
         for (CardStack cardStack : player.getOutlay())
@@ -304,7 +340,7 @@ public class BoardView extends JPanel implements GameChangeListener
             i++;
 
             /**
-             * TODO if the outlay space is too small, additional card stacks should be painted somehow
+             * TODO if the outlay space is too small, missing card stacks should be painted somehow
              */
             if (i > stackCountX * stackCountY)
             {
@@ -322,6 +358,9 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintCardStack(Graphics2D gfx, CardStack cardStack)
     {
+        gfx.setPaint(new Color(0xFF00FF));
+        gfx.drawRect(0, 0, 4, 4);
+
         for (int i = 0; i < cardStack.size(); i++)
         {
             gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 2 + 20, 0, null);
