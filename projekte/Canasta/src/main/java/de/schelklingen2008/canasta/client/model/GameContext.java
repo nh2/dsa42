@@ -48,15 +48,13 @@ public class GameContext
         this.localPlayerNumber = localPlayerNumber;
     }
 
-    /*
-     * might be solved in constructor
-     */
-    // public void setPlayers(Player[] players)
-    // {
-    // playerNames.clear();
-    // playerNames.put(Player.valueOf(0), names[0]);
-    // playerNames.put(Player.valueOf(1), names[1]);
-    // }
+    public void setPlayers(String[] players)
+    {
+        // playerNames.clear();
+        // playerNames.put(Player.valueOf(0), names[0]);
+        // playerNames.put(Player.valueOf(1), names[1]);
+    }
+
     public Player getMyPlayer()
     {
         return gameModel.getPlayers()[localPlayerNumber];
@@ -66,4 +64,10 @@ public class GameContext
     {
         return gameModel;
     }
+
+    public void setGameModel(GameModel model)
+    {
+        gameModel = model;
+    }
+
 }

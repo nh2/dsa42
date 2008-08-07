@@ -18,7 +18,7 @@ public class Manager extends GameManager
     private SharedState sharedState;
 
     /** Implements the game logic with an own internal model. */
-    private GameModel gameModel;
+    private GameModel   gameModel;
 
     @Override
     protected PlaceObject createPlaceObject()
@@ -42,8 +42,7 @@ public class Manager extends GameManager
      */
     private void updateSharedState()
     {
-        // TODO update the shared state
-        // e.g.: sharedState.setTurnHolder(gameModel.getTurnHolder());
+        sharedState.setModel(gameModel);
     }
 
     private Player getPlayer(BodyObject client)

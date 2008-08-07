@@ -45,8 +45,7 @@ public class Manager extends GameManager
      */
     private void updateSharedState()
     {
-        // TODO update the shared state
-        // e.g.: sharedState.setTurnHolder(gameModel.getTurnHolder());
+        sharedState.setModel(gameModel);
     }
 
     private Player getPlayer(BodyObject client)
