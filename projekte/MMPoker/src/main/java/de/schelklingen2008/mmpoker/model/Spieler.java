@@ -35,7 +35,7 @@ public class Spieler extends GameModel
 
     public Blatt blattErmitteln()
     { // Kartenwert, Blatt, Höchste Karte
-
+        return null;
     }
 
 }

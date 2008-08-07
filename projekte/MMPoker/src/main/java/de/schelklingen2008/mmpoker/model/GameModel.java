@@ -39,24 +39,24 @@ public class GameModel
 
     }
 
-    public void blaetterVergleichen()
-    {
-        Blatt aktBlatt;
-        Blatt hoechstesBlatt;
-        hoechstesBlatt.blattWert
-        for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
-        {
-           
-           
-           aktBlatt = iterator.next().blattErmitteln();
-           if (aktBlatt >= hoechstesBlatt)
-        {
-         aktBlatt   
-        }
-        else
-        {
-
-        }
-        }
-    }
+    // public void blaetterVergleichen()
+    // {
+    // Blatt aktBlatt;
+    // Blatt hoechstesBlatt;
+    // hoechstesBlatt.blattWert
+    // for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
+    // {
+    //           
+    //           
+    // aktBlatt = iterator.next().blattErmitteln();
+    // if (aktBlatt >= hoechstesBlatt)
+    // {
+    // hoechstesBlatt = aktBlatt;
+    // }
+    // else
+    // {
+    //
+    // }
+    // }
+    // }
 }
