@@ -262,10 +262,9 @@ public class BoardView extends JPanel implements GameChangeListener
                                    - (BOARD_HEIGHT - 2 * HAND_BORDER - SHARED_CARDS_SPACE)
                                    / 2);
 
-        gfx.translate(30, 30);
-
-        paintCardStack(gfx, cardStack);
-        gfx.translate(-30, -30);
+        // gfx.translate(30, 30);
+        // paintCardStack(gfx, cardStack);
+        // gfx.translate(-30, -30);
 
         paintOutlay(gfx, getGameModel().getPlayers()[0], (BOARD_WIDTH - 2 * HAND_BORDER - SHARED_CARDS_SPACE)
                                                          / 2
@@ -276,38 +275,65 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintOutlay(Graphics2D gfx, Player player, int width, int height)
     {
+        // negative values will throw exeptions, redicular small outlay spaces will produce errors!
         if (width <= 0 || height <= 0) throw new IllegalArgumentException("outlay space too small");
 
+        // dummy image, we get the card dimensions from this
         BufferedImage cardImage = getCardImage(null, 40, true);
 
-        int cardsYCount = height / cardImage.getHeight();
-        int cardsXCount = width / (int) (3.0 * cardImage.getWidth());
+        // some pixel calculation
+        int stackCountX = height / cardImage.getHeight();
+        int stackCountY = width / (int) (3.0 * cardImage.getWidth());
 
+        int stackSpaceX = (int) ((width - 3.0 * cardImage.getWidth() * stackCountX) / stackCountX + 1);
+        int stackSpaceY = (height - cardImage.getHeight() * stackCountY) / stackCountY + 1;
+
+        // draw the stacks
+        int i = 0;
+        for (CardStack cardStack : player.getOutlay())
+        {
+            int whichStackX = i % stackCountX;
+            int whichStackY = i / stackCountX;
+
+            int translateX = (int) ((whichStackX + 1) * stackSpaceX + whichStackX * 3.0 * cardImage.getWidth());
+            int translateY = (whichStackY + 1) * stackSpaceY + whichStackY * cardImage.getHeight();
+
+            gfx.translate(translateX, translateY);
+            paintCardStack(gfx, cardStack);
+            gfx.translate(-translateX, -translateY);
+
+            i++;
+
+            /**
+             * TODO if the outlay space is too small, additional card stacks should be painted somehow
+             */
+            if (i > stackCountX * stackCountY)
+            {
+                return;
+            }
+        }
+        // some debugging
         gfx.setPaint(new Color(0xFF0000));
         gfx.drawRect(0, 0, width, height);
-
-        gfx.drawString(((Integer) cardsXCount).toString(), width / 2 - 10, height / 2);
-        gfx.drawString(((Integer) cardsYCount).toString(), width / 2 + 10, height / 2);
+        gfx.drawString(((Integer) stackCountY).toString(), width / 2 - 10, height / 2);
+        gfx.drawString(((Integer) stackCountX).toString(), width / 2 + 10, height / 2);
+        gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
+        gfx.drawString(((Integer) height).toString(), width / 2 + 30, height / 2 + 20);
     }
 
     private void paintCardStack(Graphics2D gfx, CardStack cardStack)
     {
         for (int i = 0; i < cardStack.size(); i++)
         {
-            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 10, 0, null);
+            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 2 + 20, 0, null);
         }
 
         // gfx.setFont(Font.)
-        gfx.setPaint(new Color(0xFFFFFF));
-        gfx.drawString(((Integer) cardStack.size()).toString(), 10
-                                                                * (cardStack.size() - 1)
-                                                                + 4
-                                                                + getCardImage(cardStack.get(0), 40, false).getWidth(),
-                       20);
         gfx.setPaint(new Color(0xFFFF00));
-        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(),
-                       10 * (cardStack.size() - 1) + 4 + getCardImage(cardStack.get(0), 40, false).getWidth(), 40);
+        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), 0, 40);
 
+        gfx.setPaint(new Color(0xFFFFFF));
+        gfx.drawString(((Integer) cardStack.size()).toString(), 0, 20);
     }
 
     private void paintTalon(Graphics2D gfx)
