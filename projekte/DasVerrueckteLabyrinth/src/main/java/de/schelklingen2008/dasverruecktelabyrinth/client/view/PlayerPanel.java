@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
@@ -33,6 +35,8 @@ public class PlayerPanel extends JPanel
         setLayout(new BorderLayout());
 
         JPanel drehButtons = new JPanel();
+
+        JLabel linsert = new JLabel(new ImageIcon(getInsert()));
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
