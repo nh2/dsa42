@@ -25,7 +25,7 @@ public class PlayerCards implements Serializable
         hidden.add(TreasureCard.EULE);
         hidden.add(TreasureCard.EULE);
 
-        open.add(null);
+        open.add(TreasureCard.BIBEL);
 
     }
 
