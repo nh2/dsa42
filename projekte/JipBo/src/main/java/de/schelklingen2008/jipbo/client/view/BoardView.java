@@ -35,47 +35,34 @@ public class BoardView extends JPanel implements GameChangeListener
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(Constants.COL_BOARD_BACKGROUND);
         // Other Players Panel
-        int[] pA = { 2, 4, 8, 10, 0 };
-        int[] pE = { 7, 2, 8, 1, 4 };
-        JLabel playerALabel = new JLabel("Spieler A");
-        add(playerALabel);
-        playerALabel.setAlignmentX(CENTER_ALIGNMENT);
-        BoardPanel playerA = new BoardPanel(pA, false, Color.BLUE);
-        add(playerA);
+        for (int i = 1; i < getGameModel().getPlayerSize(); i++)
+        {
 
-        // BoardPanel playerB = new BoardPanel(pA, false, Color.RED);
-        // add(playerB);
-        JLabel playerBLabel = new JLabel("Spieler B");
-        playerBLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(playerBLabel);
-        BoardPanel playerC = new BoardPanel(pE, false, Color.CYAN);
-        add(playerC);
-
-        // BoardPanel playerD = new BoardPanel(pA);
-        // add(playerD);
-        JLabel playerDLabel = new JLabel("Spieler D");
-        playerDLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(playerDLabel);
-        BoardPanel playerD = new BoardPanel(pE, false, Color.decode("#00DC143C"));
-        add(playerD);
+            JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
+            playerLabel.setAlignmentX(CENTER_ALIGNMENT);
+            add(playerLabel);
+            BoardPanel player = new BoardPanel(getGameModel().getPlayerIndexOf(i).getBoardCards(),
+                                               false,
+                                               Color.decode("#000054" + i * 15));
+            add(player);
+        }
 
         // Public Cards Panel
         JLabel publicLabel = new JLabel("Ablegestapel");
         publicLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(publicLabel);
-        int[] pPC = { 0, 7, 12, 12, -1 };
-        BoardPanel publicCards = new BoardPanel(pPC, false, getBackground());
+        BoardPanel publicCards = new BoardPanel(getGameModel().getBuildPile(), false, getBackground());
         add(publicCards);
 
         // Spacer
         add(Box.createVerticalStrut(20));
         // Own Cards Panel
-        JLabel myLabel = new JLabel("Meine Karten");
+        JLabel myLabel = new JLabel("Meine Karten " + getGameModel().getPlayerNameIndexOf(0));
         myLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(myLabel);
-        int[] pOwn = { 0, 0, 0, 0, 0 };
-        BoardPanel myBoardPanel = new BoardPanel(pE, false, Color.decode("#00005500"));
-        myBoardPanel.setValue(pOwn);
+        BoardPanel myBoardPanel = new BoardPanel(getGameModel().getPlayerIndexOf(0).getBoardCards(),
+                                                 false,
+                                                 Color.decode("#00005500"));
         add(myBoardPanel);
         JPanel drawPilePanel = new JPanel();
         drawPilePanel.setBackground(Color.decode("#00005500"));
@@ -85,7 +72,9 @@ public class BoardView extends JPanel implements GameChangeListener
         drawPileLabel.setForeground(Color.WHITE);
         drawPilePanel.add(drawPileLabel);
         add(drawPilePanel);
-        BoardPanel drawPile = new BoardPanel(pE, true, Color.decode("#00005500"));
+        BoardPanel drawPile = new BoardPanel(getGameModel().getPlayerIndexOf(0).getDrawPile(),
+                                             true,
+                                             Color.decode("#00005500"));
         add(drawPile);
 
         addMouseMotionListener(new MouseMotionAdapter()
