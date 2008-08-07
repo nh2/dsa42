@@ -86,7 +86,22 @@ public class Controller extends GameController
 
     public void foldButtonClicked()
     {
-        sharedState.manager.invoke("passe");
+        sharedState.manager.invoke("fold");
+    }
+
+    public void callButtonClicked()
+    {
+        sharedState.manager.invoke("call");
+    }
+
+    public void raiseButtonClicked()
+    {
+        sharedState.manager.invoke("raise");
+    }
+
+    public void checkButtonClicked()
+    {
+        sharedState.manager.invoke("check");
     }
 
     private void updateGameContext()

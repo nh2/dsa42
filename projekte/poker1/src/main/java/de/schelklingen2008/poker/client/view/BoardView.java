@@ -190,6 +190,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
+                controller.callButtonClicked();
                 System.out.println("Gecallt");
             }
 
@@ -200,6 +201,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
+                controller.raiseButtonClicked();
                 System.out.println("Geraist");
             }
 
@@ -220,6 +222,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
+                controller.checkButtonClicked();
                 System.out.println("Gecheckt");
             }
 
