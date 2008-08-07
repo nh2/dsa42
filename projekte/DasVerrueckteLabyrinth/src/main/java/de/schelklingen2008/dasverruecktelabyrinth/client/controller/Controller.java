@@ -87,10 +87,10 @@ public class Controller extends GameController
     private void updateGameContext()
     {
         if (sharedState == null) return;
+        if (sharedState.getModel() == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
-        // TODO update game model with information from shared state
-        // e.g.: gameContext.getGameModel().setTurnHolder(sharedState.getTurnHolder());
+        gameContext.setGameModel(sharedState.getModel());
 
         fireGameChange();
     }
