@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.doppelkopf.client.controller.Controller;
@@ -109,6 +110,9 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
         // for (Farbe f : Farbe.values())
         // for (Bild b : Bild.values())
         // karten.add(new ZeichenKarte(new Karte(f, b)));
+
+        // int result = JOptionPane.showConfirmDialog(this, "Hallo Wellt");
+        // if (result == JOptionPane.YES_OPTION) System.out.println("Jo");
     }
 
     private void moved(MouseEvent e)
@@ -119,6 +123,35 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
     private void pressed(MouseEvent e)
     {
         // TODO respond to player�s mouse clicks
+        int startx = 140;
+        int starty = 463;
+        int kartenhoehe = 107;
+        int alleKartenBreite = (ich.getBlatt().getKartenanzahl() - 1) * 40 + 75;
+
+        int clickx = e.getX();
+        int clicky = e.getY();
+
+        // Nur fortfahren, wenn im Bereich der Karten
+        if (clicky < starty || clicky > starty + kartenhoehe) return;
+        if (clickx < startx || clickx > startx + alleKartenBreite) return;
+
+        // Klickpunkt relativ zum Anfang der Karten setzen
+        clickx -= startx;
+        clicky -= starty;
+
+        int karteVonLinks = clickx / 40;
+        // Von der letzten Karte ist mehr sicht- und klickbar
+        if (karteVonLinks >= ich.getBlatt().getKartenanzahl()) karteVonLinks = ich.getBlatt().getKartenanzahl() - 1;
+        Karte klickKarte = ich.getBlatt().getKartenSortiert().get(karteVonLinks);
+        JOptionPane.showMessageDialog(this, "Karte "
+                                            + klickKarte
+                                            + ": "
+                                            + karteVonLinks
+                                            + ": ( "
+                                            + clickx
+                                            + " | "
+                                            + clicky
+                                            + " )");
     }
 
     @Override
@@ -194,7 +227,7 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
             gfx.translate(140, 463);
             ZeichenKarte zk;
             int i = 0;
-            for (Karte k : tempListe.getAnDerReihe().getBlatt().getKarten())
+            for (Karte k : tempListe.getAnDerReihe().getBlatt().getKartenSortiert())
             {
                 zk = new ZeichenKarte(k);
                 zk.draw(gfx, i * 40, 0);
