@@ -1,10 +1,11 @@
 package de.schelklingen2008.poker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Pot
+public class Pot implements Serializable
 {
 
     private List<Integer> possibleWinners = new ArrayList<Integer>();

@@ -1,6 +1,8 @@
 package de.schelklingen2008.jipbo.model;
 
-public class Card
+import java.io.Serializable;
+
+public class Card implements Serializable
 {
 
     private int mN;

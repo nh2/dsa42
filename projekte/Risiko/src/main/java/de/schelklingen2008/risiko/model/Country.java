@@ -1,10 +1,11 @@
 package de.schelklingen2008.risiko.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Country
+public class Country implements Serializable
 {
 
     private String        name;

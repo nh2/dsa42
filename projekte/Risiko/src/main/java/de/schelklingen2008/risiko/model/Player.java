@@ -1,11 +1,12 @@
 package de.schelklingen2008.risiko.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * Is a simple abstraction for a player entity.
  */
-public class Player
+public class Player implements Serializable
 {
 
     private String name;

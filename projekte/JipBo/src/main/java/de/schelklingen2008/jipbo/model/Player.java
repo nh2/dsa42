@@ -1,11 +1,12 @@
 package de.schelklingen2008.jipbo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Is a simple abstraction for a player entity.
  */
-public class Player
+public class Player implements Serializable
 {
 
     private String     mName;

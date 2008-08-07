@@ -1,11 +1,12 @@
 package de.schelklingen2008.risiko.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
 
     private Country[]       c = new Country[30];
