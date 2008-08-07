@@ -201,6 +201,9 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
+                String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:");
+                int betrag = Integer.parseInt(s);
+                long longBetrag = betrag;
                 controller.raiseButtonClicked();
                 System.out.println("Geraist");
             }
