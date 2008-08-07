@@ -23,7 +23,8 @@ import de.schelklingen2008.mmpoker.model.Spielstadien;
 /**
  * Displays the main game interface (the board).
  */
-public class BoardView extends JPanel implements GameChangeListener {
+public class BoardView extends JPanel implements GameChangeListener
+{
 
     private Controller controller;
 
@@ -32,9 +33,12 @@ public class BoardView extends JPanel implements GameChangeListener {
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
-    public BoardView(Controller controller) {
-        for (Kartentyp typ : Kartentyp.values()) {
-            for (Kartenwert wert : Kartenwert.values()) {
+    public BoardView(Controller controller)
+    {
+        for (Kartentyp typ : Kartentyp.values())
+        {
+            for (Kartenwert wert : Kartenwert.values())
+            {
                 loadImage(typ, wert);
             }
         }
@@ -71,25 +75,50 @@ public class BoardView extends JPanel implements GameChangeListener {
     // // TODO respond to player´s mouse clicks
     // }
 
-    private void loadImage(Kartentyp typ, Kartenwert wert) {
+    private void loadImage(Kartentyp typ, Kartenwert wert)
+    {
         String filename = "75/" + typ.getImageName() + "-" + wert.getImageName() + "-75.png";
 
-        try {
+        try
+        {
             BufferedImage image = ImageIO.read(new File(filename));
             cardImages[typ.ordinal()][wert.ordinal()] = image;
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             throw new RuntimeException("Kann Bild " + filename + " nicht laden.");
         }
     }
 
-    public void gemeinschaftsKarten(Graphics g, Spielkarte karte, Spielstadien spielstadium) {
+    public void gemeinschaftsKarten(Graphics g, Spielkarte karte, Spielstadien spielstadium)
+    {
         Graphics2D gfx = (Graphics2D) g;
-        gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()],
-                      (spielstadium.ordinal() + 1) * 80 + 145, 350, null);
+        if (getGameModel().getSpielstadium() == Spielstadien.FLOP)
+        {
+            gfx.drawImage(
+                          cardImages[getGameModel().getSpielfeld()[1].getKartentyp().ordinal()][getGameModel().getSpielfeld()[1].getKartenwert()
+                                                                                                                                .ordinal()],
+                          225, 350, null);
+            gfx.drawImage(
+                          cardImages[getGameModel().getSpielfeld()[2].getKartentyp().ordinal()][getGameModel().getSpielfeld()[2].getKartenwert()
+                                                                                                                                .ordinal()],
+                          305, 350, null);
+            gfx.drawImage(
+                          cardImages[getGameModel().getSpielfeld()[3].getKartentyp().ordinal()][getGameModel().getSpielfeld()[3].getKartenwert()
+                                                                                                                                .ordinal()],
+                          385, 350, null);
+        }
+        else
+        {
+
+        }
+
+        // gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()],
+        // (spielstadium.ordinal() + 1) * 80 + 145, 350, null);
     }
 
-    public void handKarten(Graphics g, Spielkarte karte) {
+    public void handKarten(Graphics g, Spielkarte karte)
+    {
         Graphics2D gfx = (Graphics2D) g;
         gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 420, 700, null);
         gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 350, 700, null);
@@ -97,7 +126,8 @@ public class BoardView extends JPanel implements GameChangeListener {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g)
+    {
 
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.GREEN);
@@ -132,19 +162,23 @@ public class BoardView extends JPanel implements GameChangeListener {
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize()
+    {
         return new Dimension(800, 800);
     }
 
-    public void gameChanged() {
+    public void gameChanged()
+    {
         repaint();
     }
 
-    private GameModel getGameModel() {
+    private GameModel getGameModel()
+    {
         return getGameContext().getGameModel();
     }
 
-    private GameContext getGameContext() {
+    private GameContext getGameContext()
+    {
         return controller.getGameContext();
     }
 }
