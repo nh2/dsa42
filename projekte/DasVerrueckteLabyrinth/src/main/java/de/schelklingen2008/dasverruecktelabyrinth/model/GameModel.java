@@ -253,7 +253,7 @@ public class GameModel
 
     public boolean isFinished()
     {
-        if 
+
         return false;
     }
 

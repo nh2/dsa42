@@ -84,6 +84,8 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add our side panel to the main display
         add(sidePanel, BorderLayout.EAST);
+        add(labyrinth);
+        add(playerPanel);
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */

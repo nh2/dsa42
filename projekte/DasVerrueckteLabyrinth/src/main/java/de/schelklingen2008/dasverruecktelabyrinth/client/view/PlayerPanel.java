@@ -49,6 +49,10 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
         drehButtons.add(new Button("links drehen"));
+        add(drehButtons);
+
+        add(linsert);
+        add(obersteCard);
 
         try
         {
