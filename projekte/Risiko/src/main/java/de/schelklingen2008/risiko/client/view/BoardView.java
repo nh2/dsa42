@@ -73,8 +73,12 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
+        getGameModel().setAllCountriesUnselected();
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
-        System.out.println(e.getPoint());
+
+        getGameModel().getCountrybyColor(c).setSelected(true);
+
+        repaint();
     }
 
     @Override
@@ -123,6 +127,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintCountrys(Graphics2D gfx)
     {
+
         for (int j = 0; j < getGameModel().getCountryArray().length; j++)
         {
             if (getGameModel().getCountry(j).isSelected())
