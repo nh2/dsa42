@@ -39,21 +39,12 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-        setLayout(new BorderLayout());
 
         JPanel drehButtons = new JPanel();
 
-        JLabel linsert = new JLabel(new ImageIcon(getInsert()));
-
         JLabel obersteCard = new JLabel(new ImageIcon(getObersteCard(hiddenCards())));
 
-        drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
-        drehButtons.add(new Button("rechts drehen"));
-        drehButtons.add(new Button("links drehen"));
-        add(drehButtons);
-
-        add(linsert);
-        add(obersteCard);
+        setLayout(new BorderLayout());
 
         try
         {
@@ -94,6 +85,16 @@ public class PlayerPanel extends JPanel implements GameChangeListener
             throw new RuntimeException("Kann Bild nicht laden.", e);
 
         }
+
+        JLabel linsert = new JLabel(new ImageIcon(vertikal));
+
+        drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
+        drehButtons.add(new Button("rechts drehen"));
+        drehButtons.add(new Button("links drehen"));
+        add(drehButtons);
+
+        add(linsert);
+        add(obersteCard);
 
     }
 

@@ -15,24 +15,25 @@ import java.util.Random;
 public class GameModel implements Serializable
 {
 
-    public static final int        SIZE         = 7;
-    public static final PlayerType PLAYER_START = PlayerType.WHITE;
+    public static final int        SIZE           = 7;
+    public static final PlayerType PLAYER_START   = PlayerType.WHITE;
 
-    private Tile[][]               board;                                                  // Spielbrett
-    private PlayerType             turnHolder;                                             // Wer ist dran
-    private boolean                walk         = false;                                   // false = Phase 1
+    private Tile[][]               board;                                                    // Spielbrett
+    private PlayerType             turnHolder;                                               // Wer ist dran
+    private boolean                walk           = false;                                   // false = Phase
+                                                                                              // 1
     // true = Phase2
-    private Tile                   insert       = new Tile(true, true, false, false, null); // einschiebbare
+    private Tile                   insert         = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
 
-    Map<PlayerType, Player>        player       = new HashMap<PlayerType, Player>();
-    Map<PlayerType, PlayerCards>   playerTypes  = new HashMap<PlayerType, PlayerCards>();
+    Map<PlayerType, Player>        player         = new HashMap<PlayerType, Player>();
+    Map<PlayerType, PlayerCards>   playerCardsMap = new HashMap<PlayerType, PlayerCards>();
 
     // TODO PlayerCards instanzieren
 
-    private static final int       NO_PLAYERS   = 4;
+    private static final int       NO_PLAYERS     = 4;
 
-    private static final Random    RAND         = new Random();
+    private static final Random    RAND           = new Random();
 
     public GameModel()
     {
@@ -200,7 +201,7 @@ public class GameModel implements Serializable
     public Map<PlayerType, PlayerCards> getPlayerCardsMap()
     {
 
-        return playerTypes;
+        return playerCardsMap;
     }
 
     private static Tile[][] copyBoard(Tile[][] s)
