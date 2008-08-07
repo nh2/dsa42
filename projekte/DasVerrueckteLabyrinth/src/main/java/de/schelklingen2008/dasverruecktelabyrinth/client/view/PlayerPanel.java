@@ -5,6 +5,8 @@ import java.awt.Button;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -16,6 +18,9 @@ import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.GameChangeListener;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerCards;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
+import de.schelklingen2008.dasverruecktelabyrinth.model.TreasureCard;
 
 public class PlayerPanel extends JPanel implements GameChangeListener
 {
@@ -83,6 +88,25 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         }
 
+    }
+
+    private List openCards()
+    {
+        Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
+
+        PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
+        List<TreasureCard> open = openCards.getOpenCards();
+        return open;
+
+    }
+
+    private TreasureCard hiddenCards()
+    {
+        Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
+        PlayerCards hiddenCards = MapWtf.get(PlayerType.WHITE);
+        List<TreasureCard> hidden = hiddenCards.getHiddenCards();
+        TreasureCard searchThisCard = hidden.get(0);
+        return searchThisCard;
     }
 
     private BufferedImage getInsert()

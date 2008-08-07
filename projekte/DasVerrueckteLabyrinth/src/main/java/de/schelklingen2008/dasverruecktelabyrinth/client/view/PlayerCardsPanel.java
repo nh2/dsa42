@@ -26,6 +26,7 @@ public class PlayerCardsPanel extends JPanel
         PlayerCards karten = MapWtf.get(PlayerType.WHITE);
         List<TreasureCard> open = karten.getOpenCards();
         List<TreasureCard> hidden = karten.getHiddenCards();
+        TreasureCard searchThisCard = hidden.get(0);
 
         // TODO auf listen zugreifen
 
