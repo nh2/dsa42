@@ -44,6 +44,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JLabel linsert = new JLabel(new ImageIcon(getInsert()));
 
+        JLabel obersteCard = new JLabel(new ImageIcon(getObersteCard(hiddenCards())));
+
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
         drehButtons.add(new Button("links drehen"));
@@ -98,6 +100,39 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         List<TreasureCard> open = openCards.getOpenCards();
         return open;
 
+    }
+
+    private BufferedImage getObersteCard(TreasureCard tC)
+    {
+        BufferedImage temp = null;
+        if (tC == TreasureCard.EULE) temp = eule;
+
+        if (tC == TreasureCard.KRONE) temp = krone;
+
+        if (tC == TreasureCard.FLASCHENGEIST) temp = flaschengeist;
+
+        if (tC == TreasureCard.RING) temp = ring;
+        if (tC == TreasureCard.MOTTE) temp = motte;
+        if (tC == TreasureCard.SPINNE) temp = spinne;
+        if (tC == TreasureCard.FEE) temp = fee;
+        if (tC == TreasureCard.KARTE) temp = karte;
+        if (tC == TreasureCard.DRACHE) temp = drache;
+        if (tC == TreasureCard.BIBEL) temp = bibel;
+        if (tC == TreasureCard.EIDECHSE) temp = eidechse;
+        if (tC == TreasureCard.GELDBEUTEL) temp = geldbeutel;
+        if (tC == TreasureCard.FLEDERMAUS) temp = fledermaus;
+        if (tC == TreasureCard.TROLL) temp = troll;
+        if (tC == TreasureCard.SCARABAEUS) temp = scarabaeus;
+        if (tC == TreasureCard.MAUS) temp = maus;
+        if (tC == TreasureCard.SMARAGD) temp = smaragd;
+        if (tC == TreasureCard.TOTENKOPF) temp = totenkopf;
+        if (tC == TreasureCard.HELM) temp = helm;
+        if (tC == TreasureCard.LEUCHTER) temp = leuchter;
+        if (tC == TreasureCard.SCHMUCKKASTEN) temp = schmuckkasten;
+        if (tC == TreasureCard.SCHLÜSSEL) temp = schluessel;
+        if (tC == TreasureCard.SCHWERT) temp = schwert;
+        if (tC == TreasureCard.GESPENST) temp = gespenst;
+        return temp;
     }
 
     private TreasureCard hiddenCards()
