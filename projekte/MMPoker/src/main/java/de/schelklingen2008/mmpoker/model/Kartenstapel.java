@@ -1,17 +1,20 @@
 package de.schelklingen2008.mmpoker.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Kartenstapel extends GameModel {
 
-    Set<Spielkarte> kartenstapel = new HashSet<Spielkarte>();
+    List<Spielkarte> kartenstapel = new ArrayList<Spielkarte>();
+    private Random   random;
 
-    // private Spielkarte zufallsKarte() {
-    // // randomize;
-    // // result = Karten(randomzahl)
-    // return;
-    // }
+    public Spielkarte zufallsKarte() {
+        random = new Random();
+
+        return kartenstapel.get(random.nextInt(55));
+
+    }
 
     public void kartenSetzen() {
         for (Kartenwert kartenwert : Kartenwert.values()) {

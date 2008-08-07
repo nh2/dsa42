@@ -13,4 +13,9 @@ public enum Player
         if (playerIndex == 1) return BLACK;
         return null;
     }
+
+    public Player other()
+    {
+        return this == BLACK ? WHITE : BLACK;
+    }
 }

@@ -22,21 +22,17 @@ import de.schelklingen2008.mmpoker.client.controller.Controller;
 /**
  * Contains the primary client interface for the game.
  */
-public class GamePanel extends JPanel implements PlaceView
-{
+public class GamePanel extends JPanel implements PlaceView {
 
-    private class ActionListenerImplementation implements ActionListener
-    {
+    private class ActionListenerImplementation implements ActionListener {
 
         private Controller controller;
 
-        private ActionListenerImplementation(Controller controller)
-        {
+        private ActionListenerImplementation(Controller controller) {
             this.controller = controller;
         }
 
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             controller.leaveButtonClicked();
         }
     }
@@ -44,8 +40,7 @@ public class GamePanel extends JPanel implements PlaceView
     /**
      * Creates a TestGame panel and its associated interface components.
      */
-    public GamePanel(Controller controller)
-    {
+    public GamePanel(Controller controller) {
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
@@ -53,8 +48,10 @@ public class GamePanel extends JPanel implements PlaceView
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);
-        box.add(new BoardView(controller));
+        box.add(new PokerPanel(controller));
         add(box, BorderLayout.CENTER);
+
+        JPanel pokerPanel = GroupLayout.makeHBox();
 
         // create a side panel to hold our chat and other extra interfaces
         JPanel sidePanel = GroupLayout.makeVStretchBox(5);
@@ -66,13 +63,13 @@ public class GamePanel extends JPanel implements PlaceView
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
+        // add a chat box
+        sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
+
         // add a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
         turnDisplay.setOpaque(false);
         sidePanel.add(turnDisplay, GroupLayout.FIXED);
-
-        // add a chat box
-        sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
 
         // add a "back to lobby" button
         JButton back = new JButton();
@@ -85,12 +82,10 @@ public class GamePanel extends JPanel implements PlaceView
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */
-    public void didLeavePlace(PlaceObject placeObject)
-    {
+    public void didLeavePlace(PlaceObject placeObject) {
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */
-    public void willEnterPlace(PlaceObject placeObject)
-    {
+    public void willEnterPlace(PlaceObject placeObject) {
     }
 }
