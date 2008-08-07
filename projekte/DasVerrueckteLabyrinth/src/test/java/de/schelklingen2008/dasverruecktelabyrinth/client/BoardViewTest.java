@@ -7,7 +7,7 @@ import com.threerings.toybox.util.ToyBoxContext;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
-import de.schelklingen2008.dasverruecktelabyrinth.client.view.GamePanel;
+import de.schelklingen2008.dasverruecktelabyrinth.client.view.PlayerPanel;
 
 /**
  * A test harness for our board view.
@@ -28,6 +28,6 @@ public class BoardViewTest extends GameViewTest
         GameContext ctx = controller.getGameContext();
         ctx.setPlayers(new String[] { "dick", "doof", "Hassel", "Hoff" });
         ctx.setMyName("dick");
-        return new GamePanel(controller);
+        return new PlayerPanel(controller);
     }
 }

@@ -59,7 +59,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
             cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
             eule = ImageIO.read(new File("src/main/resources/Bilder/80/eule.png"));
             krone = ImageIO.read(new File("src/main/resources/Bilder/80/krone.png"));
-            flaschengeist = ImageIO.read(new File("src/main/resources/80/Bilder/flaschengeist.png"));
+            flaschengeist = ImageIO.read(new File("src/main/resources/Bilder/80/flaschengeist.png"));
             ring = ImageIO.read(new File("src/main/resources/Bilder/80/ring.png"));
             spinne = ImageIO.read(new File("src/main/resources/Bilder/80/spinne.png"));
             fee = ImageIO.read(new File("src/main/resources/Bilder/80/fee.png"));
