@@ -1,12 +1,22 @@
 package de.schelklingen2008.risiko.client.view;
 
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Polygon;
+import java.awt.geom.Ellipse2D;
+
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.samskivert.swing.ShapeIcon;
 
 import de.schelklingen2008.risiko.client.controller.Controller;
 import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.model.GameModel;
+import de.schelklingen2008.risiko.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -14,7 +24,11 @@ import de.schelklingen2008.risiko.model.GameModel;
 public class TurnPanel extends JPanel implements GameChangeListener
 {
 
-    private Controller controller;
+    private Controller             controller;
+
+    private static final Polygon   TRIANGLE  = new Polygon(new int[] { 0, 12, 0 }, new int[] { 0, 6, 12 }, 3);
+    private static final Ellipse2D CIRCLE    = new Ellipse2D.Float(0, 0, 12, 12);
+    private static final ShapeIcon ICON_TURN = new ShapeIcon(TRIANGLE, Color.YELLOW, null);
 
     public TurnPanel(Controller controller)
     {
@@ -27,11 +41,34 @@ public class TurnPanel extends JPanel implements GameChangeListener
         removeAll();
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        GridBagLayout gridbag = new GridBagLayout();
+        setLayout(gridbag);
 
-        /*
-         * TODO for (Player player : Player.values()) { String name = getGameContext().getName(player);
-         * add(new JLabel(name)); }
-         */
+        GridBagConstraints turnHolderConstraints = new GridBagConstraints();
+        turnHolderConstraints.fill = GridBagConstraints.BOTH;
+
+        GridBagConstraints nameAndCountConstraints = new GridBagConstraints();
+        nameAndCountConstraints.fill = GridBagConstraints.BOTH;
+        nameAndCountConstraints.weightx = 1.0;
+        nameAndCountConstraints.insets.left = 10;
+        nameAndCountConstraints.gridwidth = GridBagConstraints.REMAINDER;
+
+        for (int i = 0; i < getGameModel().getPlayerArray().length; i++)
+        {
+            Player player = getGameModel().valueOf(i);
+            JLabel turnHolderLabel = new JLabel();
+            if (getGameModel().isWinner(player)) turnHolderLabel.setText(de.schelklingen2008.risiko.client.Constants.MSG_WINNER);
+            if (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
+            add(turnHolderLabel, turnHolderConstraints);
+
+            String name = getGameContext().getName(player);
+            // count = units player has in all countrys
+            int count = player.getPlayerUnits();
+            Color color = player.getPlayerColor();
+            JLabel nameAndCountLabel = new JLabel(name + ": " + count);
+            nameAndCountLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
+            add(nameAndCountLabel, nameAndCountConstraints);
+        }
         revalidate();
         repaint();
     }

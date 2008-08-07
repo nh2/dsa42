@@ -76,8 +76,8 @@ public class BoardView extends JPanel implements GameChangeListener
         getGameModel().setAllCountriesUnselected();
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
 
-        getGameModel().getCountrybyColor(c).setSelected(true);
-        controller.setSelected(getGameModel().getCountrybyColor(c));
+        getGameModel().getCountryByColor(c).setSelected(true);
+        controller.setSelected(getGameModel().getCountryByColor(c));
         repaint();
     }
 
@@ -93,7 +93,6 @@ public class BoardView extends JPanel implements GameChangeListener
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
-        // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
 

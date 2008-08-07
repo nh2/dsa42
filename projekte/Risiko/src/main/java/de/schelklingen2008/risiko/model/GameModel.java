@@ -23,8 +23,7 @@ public class GameModel implements Serializable
 
     public Player valueOf(int playerIndex)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return p[playerIndex];
     }
 
     public Country[] getCountryArray()
@@ -95,7 +94,6 @@ public class GameModel implements Serializable
         c[27] = new Country("Slowakei", 27, 557, 633, 0, 0, 0);
         c[28] = new Country("Österreich", 28, 465, 675, 0, 0, 0);
         c[29] = new Country("Ungarn", 29, 550, 673, 0, 0, 0);
-
     }
 
     public void setTurnholder()
@@ -103,7 +101,7 @@ public class GameModel implements Serializable
         turnholder = p[player++];
     }
 
-    public Country getCountrybyColor(Color pc)
+    public Country getCountryByColor(Color pc)
     {
         for (int i = 0; i < 30; i++)
         {
@@ -118,6 +116,17 @@ public class GameModel implements Serializable
         {
             c[i].setSelected(false);
         }
+    }
+
+    public boolean isWinner(Player player2)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public Player[] getPlayerArray()
+    {
+        return p;
     }
 
 }
