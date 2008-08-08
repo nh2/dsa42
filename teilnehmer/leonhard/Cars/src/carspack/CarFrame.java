@@ -15,12 +15,17 @@ public class CarFrame extends JFrame
 
     BufferedImage auto;
 
+    public CarFrame()
+    {
+
+    }
+
     public static void main(String[] args)
     {
 
         CarFrame f = new CarFrame();
-        f.setVisible(true);
 
+        f.setVisible(true);
         f.pack();
 
         try
@@ -31,7 +36,6 @@ public class CarFrame extends JFrame
         {
             throw new RuntimeException("Kann Bild nicht laden.");
         }
-        f.repaint();
     }
 
     @Override
