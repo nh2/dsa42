@@ -1,7 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,9 +72,6 @@ public class GamePanel extends JPanel implements PlaceView
         TurnPanel turnDisplay = new TurnPanel(controller);
         turnDisplay.setOpaque(false);
         sidePanel.add(turnDisplay, GroupLayout.FIXED);
-
-        // add a "end turn" button
-        sidePanel.add(new Button("Spielzug beenden"));
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
