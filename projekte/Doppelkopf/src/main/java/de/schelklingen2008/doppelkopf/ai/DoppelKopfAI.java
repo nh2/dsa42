@@ -52,7 +52,7 @@ public class DoppelKopfAI extends Observable
     {
         if (sharedState == null) return;
 
-        gameContext.setPlayers(sharedState.getPlayerNames());
+        // gameContext.setPlayers(sharedState.getPlayerNames());
         // boolean changed = getGameModel().setTurnHolder(sharedState.getModel().getTurnHolder());
         // getGameModel().setBoard(sharedState.getModel().getBoard());
         // if (changed && gameContext.isMyTurn()) makeAMove();

@@ -25,6 +25,16 @@ public class Blatt implements Serializable
         karten.remove(k);
     }
 
+    public Karte getKarte(Farbe f, Bild b)
+    {
+        Karte gesuchteKarte = null;
+        for (Karte karte : karten)
+        {
+            if (karte.farbe == f && karte.bild == b) gesuchteKarte = karte;
+        }
+        return gesuchteKarte;
+    }
+
     public int getKartenanzahl()
     {
         return karten.size();

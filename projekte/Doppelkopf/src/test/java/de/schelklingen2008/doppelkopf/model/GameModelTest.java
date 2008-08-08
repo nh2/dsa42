@@ -9,7 +9,7 @@ public class GameModelTest extends TestCase
     {
         GameModel g = new GameModel();
 
-        System.out.println(g.getTisch().getSpieler().getAnDerReihe().getBlatt().toString());
+        System.out.println(g.getSpieler().getAnDerReihe().getBlatt().toString());
     }
 
 }

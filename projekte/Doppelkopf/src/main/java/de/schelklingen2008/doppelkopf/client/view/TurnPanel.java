@@ -8,13 +8,14 @@ import de.schelklingen2008.doppelkopf.client.controller.Controller;
 import de.schelklingen2008.doppelkopf.client.controller.GameChangeListener;
 import de.schelklingen2008.doppelkopf.client.model.GameContext;
 import de.schelklingen2008.doppelkopf.model.GameModel;
-import de.schelklingen2008.doppelkopf.model.Player;
+import de.schelklingen2008.doppelkopf.model.Spieler;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
  */
 public class TurnPanel extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     public TurnPanel(Controller controller)
@@ -29,9 +30,9 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        for (Player player : Player.values())
+        for (Spieler p : getGameModel().getSpieler())
         {
-            String name = getGameContext().getName(player);
+            String name = p.getName();
             add(new JLabel(name));
         }
 

@@ -145,7 +145,7 @@ public class AIDirector implements GameEventListener
         sharedState.initManagerCaller(mClient.getDObjectManager());
         GameContext gameContext = new GameContext();
         gameContext.setMyName(mClient.getCredentials().getUsername().toString());
-        gameContext.setPlayers(sharedState.getPlayerNames());
+        // gameContext.setPlayers(sharedState.getPlayerNames());
         new DoppelKopfAI(gameContext, sharedState, this);
     }
 

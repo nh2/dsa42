@@ -5,8 +5,12 @@ import java.io.Serializable;
 public class Karte implements Serializable
 {
 
-    public final Farbe farbe;
-    public final Bild  bild;
+    public Farbe farbe;
+    public Bild  bild;
+
+    public Karte()
+    {
+    }
 
     public Karte(Farbe f, Bild b)
     {
@@ -19,4 +23,5 @@ public class Karte implements Serializable
     {
         return farbe.toString() + " " + bild.toString();
     }
+
 }

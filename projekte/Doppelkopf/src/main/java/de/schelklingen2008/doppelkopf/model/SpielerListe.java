@@ -25,9 +25,10 @@ public class SpielerListe extends ArrayList<Spieler> implements Serializable
 
     public Spieler next()
     {
-        Spieler naechster = get(nextAnDerReihe(anDerReihe));
         rotieren();
-        return naechster;
+        // Spieler naechster = get(nextAnDerReihe(anDerReihe));
+
+        return getAnDerReihe();
     }
 
     public void rotieren()

@@ -91,7 +91,6 @@ public class Controller extends GameController
         if (sharedState == null) return;
         if (sharedState.getGameModel() == null) return;
 
-        gameContext.setPlayers(sharedState.getPlayerNames());
         gameContext.setGameModel(sharedState.getGameModel());
 
         fireGameChange();
@@ -164,6 +163,6 @@ public class Controller extends GameController
 
     public void karteClicked(Karte klickKarte)
     {
-        sharedState.manager.invoke("karteAusspielen", klickKarte);
+        sharedState.manager.invoke("karteAusspielen", klickKarte.farbe, klickKarte.bild);
     }
 }

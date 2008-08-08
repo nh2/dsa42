@@ -65,9 +65,4 @@ public class Tisch implements Serializable
     {
         return stichAnzahl;
     }
-
-    public SpielerListe getSpieler()
-    {
-        return spielerliste;
-    }
 }

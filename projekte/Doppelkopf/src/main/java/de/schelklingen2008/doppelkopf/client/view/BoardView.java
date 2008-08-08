@@ -35,17 +35,15 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private Controller        controller;
 
-    private final Color       tischFarbe = Color.decode("#00008800");
-    private Set<ZeichenKarte> karten     = new HashSet<ZeichenKarte>();
+    private final Color       tischFarbe   = Color.decode("#00008800");
+    private Set<ZeichenKarte> karten       = new HashSet<ZeichenKarte>();
     private BufferedImage     rueckseite;
 
-    private final int         mx         = 400;
-    private final int         my         = 300;
+    private final int         mx           = 400;
+    private final int         my           = 300;
 
-    Mittenplatz               mpUnten    = new Mittenplatz(mx - 37, my - 10);
-    Mittenplatz               mpLinks    = new Mittenplatz(mx - 65, my - 40);
-    Mittenplatz               mpOben     = new Mittenplatz(mx - 37, my - 97);
-    Mittenplatz               mpRechts   = new Mittenplatz(mx - 10, my - 60);
+    Mittenplatz[]             mittenKarten = { new Mittenplatz(mx - 37, my - 10), new Mittenplatz(mx - 65, my - 40),
+            new Mittenplatz(mx - 37, my - 97), new Mittenplatz(mx - 10, my - 60), };
 
     GameModel                 spiel;
     SpielerListe              tempListe;
@@ -129,8 +127,10 @@ public class BoardView extends JPanel implements GameChangeListener
         // Von der letzten Karte ist mehr sicht- und klickbar
         if (karteVonLinks >= ich.getBlatt().getKartenanzahl()) karteVonLinks = ich.getBlatt().getKartenanzahl() - 1;
         Karte klickKarte = ich.getBlatt().getKartenSortiert().get(karteVonLinks);
+
         boolean gueltig = true;
-        // controller.karteClicked(klickKarte);
+        controller.karteClicked(klickKarte);
+
         String gueltigMeldung = "Zug ist ";
         if (!gueltig) gueltigMeldung += "nicht ";
         gueltigMeldung += "gültig.";
@@ -190,14 +190,16 @@ public class BoardView extends JPanel implements GameChangeListener
 
         public void draw(Graphics g)
         {
+            if (inhalt == null) return;
             g.drawImage(inhalt.image, x, y, null);
         }
     }
 
     private void paintBoard(Graphics2D gfx)
     {
+        if (spiel == null) return;
         if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom
-        if (spiel.getTisch().getSpieler().size() == 0) return; // Server geladen
+        if (spiel.getSpieler().size() == 0) return; // Server geladen
 
         // Spielernamen zeichnen
         // Bis zum aktuellen Spieler vorrÃ¼cken (mir)
@@ -254,10 +256,12 @@ public class BoardView extends JPanel implements GameChangeListener
 
         // Karten in der Mitte
 
-        mpUnten.draw(gfx);
-        mpLinks.draw(gfx);
-        mpOben.draw(gfx);
-        mpRechts.draw(gfx);
+        for (Mittenplatz mp : mittenKarten)
+            mp.draw(gfx);
+        // mpUnten.draw(gfx);
+        // mpLinks.draw(gfx);
+        // mpOben.draw(gfx);
+        // mpRechts.draw(gfx);
 
         // gfx.translate(400, 250);
         // gfx.fillRect(0, 0, 30, 70);
@@ -271,23 +275,27 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         spiel = getGameContext().getGameModel();
 
-        tempListe.addAll(spiel.getTisch().getSpieler());
+        tempListe.clear();
+        tempListe.addAll(spiel.getSpieler());
         // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
         ich = tempListe.getSpieler(getGameContext().getMyName());
 
         List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
         List<Karte> mitte = spiel.getTisch().getMitte();
-        mitte.add(l.get(0));
-        mitte.add(l.get(1));
-        mitte.add(l.get(2));
-        mitte.add(l.get(3));
+        // mitte.add(l.get(0));
+        // mitte.add(l.get(1));
+        // mitte.add(l.get(2));
+        // mitte.add(l.get(3));
         // tempListe.getAnDerReihe().getBlatt().getKarten().remove(l.get(0)); // TODO entfernen: Karte löschen
-        // mpUnten.inhalt = new ZeichenKarte(mitte.get(3));
-        // mpLinks.inhalt = new ZeichenKarte(mitte.get(2));
-        // mpOben.inhalt = new ZeichenKarte(mitte.get(1));
-        // mpRechts.inhalt = new ZeichenKarte(mitte.get(0));
-        // mitte.clear();
 
+        {
+            int i = 0;
+            for (; i < mitte.size(); i++)
+                mittenKarten[i].inhalt = new ZeichenKarte(mitte.get(i));
+            for (; i < mittenKarten.length; i++)
+                mittenKarten[i].inhalt = null;
+            mitte.clear();
+        }
         repaint();
     }
 

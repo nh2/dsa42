@@ -7,9 +7,10 @@ import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
+import de.schelklingen2008.doppelkopf.model.Bild;
+import de.schelklingen2008.doppelkopf.model.Farbe;
 import de.schelklingen2008.doppelkopf.model.GameModel;
-import de.schelklingen2008.doppelkopf.model.Karte;
-import de.schelklingen2008.doppelkopf.model.Player;
+import de.schelklingen2008.doppelkopf.model.Spieler;
 import de.schelklingen2008.doppelkopf.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -53,9 +54,12 @@ public class Manager extends GameManager
 
     // TODO add methods to make a move, etc. that can be called by clients
 
-    public void karteAusspielen(BodyObject client, Karte karte)
+    public void karteAusspielen(BodyObject client, Farbe farbe, Bild bild)
     {
-        gameModel.karteAusspielen(getPlayer(client).name(), karte);
+        Spieler spieler = getPlayer(client);
+        // String name2 = player.name();
+        // String name = getPlayer(client).name().toString();
+        gameModel.karteAusspielen(spieler, spieler.getBlatt().getKarte(farbe, bild));
         updateSharedState();
     }
 
@@ -67,8 +71,8 @@ public class Manager extends GameManager
         sharedState.setModel(gameModel);
     }
 
-    private Player getPlayer(BodyObject client)
+    private Spieler getPlayer(BodyObject client)
     {
-        return Player.valueOf(getPlayerIndex(client.username));
+        return gameModel.getSpieler().getSpieler(client.username.toString());
     }
 }

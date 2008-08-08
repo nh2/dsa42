@@ -50,6 +50,11 @@ public class GameModel implements Serializable
         return false;
     }
 
+    public SpielerListe getSpieler()
+    {
+        return spielerliste;
+    }
+
     public Tisch getTisch()
     {
         return tisch;
@@ -60,9 +65,23 @@ public class GameModel implements Serializable
         return rundeBeendet;
     }
 
-    public void karteAusspielen(String spielerName, Karte karte)
+    public void karteAusspielen(Spieler spieler, Karte karte)
     {
-        Spieler spieler = spielerliste.getSpieler(spielerName);
+        logger.log(Level.INFO, spieler.toString() + " will Karte spielen: " + karte.toString());
+        // Spieler spieler = spielerliste.getSpieler(spielerName);
+        Blatt blatt = spieler.getBlatt();
+        List<Karte> mitte = tisch.getMitte();
+        // TODO berechnen, ob der Zug gültig ist
+        boolean zugGueltig = true;
 
+        if (zugGueltig)
+        {
+            logger.log(Level.INFO, "Gültiger Zug.");
+            blatt.remove(karte);
+            mitte.add(karte);
+            getSpieler().next();
+            return;
+        }
+        logger.log(Level.INFO, "Unültiger Zug.");
     }
 }
