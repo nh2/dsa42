@@ -192,7 +192,8 @@ public class BoardView extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 controller.callButtonClicked();
-                System.out.println("Gecallt");
+                System.out.print(getActPlayer().getName());
+                System.out.println(" hat geraist.");
             }
 
         };
@@ -255,13 +256,19 @@ public class BoardView extends JPanel implements GameChangeListener
         checkButton.setEnabled(false);
         reRaiseButton.setEnabled(false);
 
-        if (model.isAllowedToCall == true) callButton.setEnabled(true);
-        if (model.isAllowedToReRaise == true) reRaiseButton.setText("Re-Raise");
+        if (model.mustCallOrReRaise(getMyIndex()) == true)
+        {
+            callButton.setEnabled(true);
+            reRaiseButton.Enabled(true);
+            foldButton.setEnabled(true);
+        }
 
-        if (model.isAllowedToRaise == true) raiseButton.setEnabled(true);
-        if (model.isAllowedToCheck == true) checkButton.setEnabled(true);
-
-        if (model.isAllowedToFold == true) foldButton.setEnabled(true);
+        if (model.mustCheckOrRaise(getMyIndex()) == true)
+        {
+            raiseButton.setEnabled(true);
+            checkButton.setEnabled(true);
+            foldButton.setEnabled(true);
+        }
 
         checkButton.setEnabled(true);
         foldButton.setEnabled(true);
