@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Kartenstapel implements Serializable
-{
+public class Kartenstapel implements Serializable {
 
     List<Spielkarte> kartenstapel = new ArrayList<Spielkarte>();
     private Random   random;
 
-    public Spielkarte zufallsKarte()
-    {
+    public Spielkarte zufallsKarte() {
         random = new Random();
         int zufall = random.nextInt(49);
         Spielkarte zufallk = kartenstapel.get(zufall);
@@ -21,14 +19,12 @@ public class Kartenstapel implements Serializable
 
     }
 
-    public Kartenstapel()
-    {
+    public Kartenstapel() {
 
         int i = 0;
-        for (Kartenwert kartenwert : Kartenwert.values())
-        {
-            for (Kartentyp kartentyp : Kartentyp.values())
-            {
+        for (Kartenwert kartenwert : Kartenwert.values()) {
+            for (Kartentyp kartentyp : Kartentyp.values()) {
+
                 kartenstapel.add(i, new Spielkarte(kartentyp, kartenwert));
                 i++;
             }

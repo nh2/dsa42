@@ -149,10 +149,10 @@ public class Controller extends GameController {
     }
 
     public void betButtonClicked() {
-        sharedState.manager.invoke("check");
+        sharedState.manager.invoke("bet", 10);
     }
 
     public void raiseButtonClicked() {
-        sharedState.manager.invoke("raise");
+        sharedState.manager.invoke("raise", 10);
     }
 }
