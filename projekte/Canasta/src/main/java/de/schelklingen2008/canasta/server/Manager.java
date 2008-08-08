@@ -34,6 +34,8 @@ public class Manager extends GameManager
         /**
          * TODO optain player names from controller???
          */
+        getPlayerCount();
+        getPlayer(0).username.toString();
         gameModel = new GameModel(new String[] { "Lars", "Alexander" });
         updateSharedState();
     }
@@ -48,11 +50,16 @@ public class Manager extends GameManager
         sharedState.setModel(gameModel);
     }
 
+    public void drawCard(BodyObject client)
+    {
+        Player player = getPlayer(client);
+
+        gameModel.drawCard(player);
+    }
+
     private Player getPlayer(BodyObject client)
     {
-        /**
-         * TODO ????????????
-         */
-        return null;
+        gameModel.getPlayer(client.username.toString());
+        return gameModel.getPlayers()[0];
     }
 }

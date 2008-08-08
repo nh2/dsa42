@@ -13,6 +13,9 @@ public class GameModel implements Serializable
     private Talon    talon;
     private Discard  discard;
 
+    /**
+     * TODO export constant to Constants.java
+     */
     public final int initialCardNumber = 15;
 
     public GameModel(String[] playerNames)
@@ -68,14 +71,14 @@ public class GameModel implements Serializable
                 }
                 outlay.add(cardStack);
             }
-
         }
     }
 
-    public void drawCard()
+    public void drawCard(Player player)
     {
-        // TODO player draws from the talon or takes the discard pile
+        Card card = talon.pop();
 
+        player.getHand().add(card);
     }
 
     public void meldCard()
@@ -130,4 +133,15 @@ public class GameModel implements Serializable
         return false;
     }
 
+    public Player getPlayer(String string)
+    {
+        for (int i = 0; i < players.length; i++)
+        {
+            if (players[i].getName().equals(string))
+            {
+                return players[i];
+            }
+        }
+        throw new RuntimeException(new IllegalArgumentException("Playername " + string + " not found in game model"));
+    }
 }

@@ -80,8 +80,10 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             if (area.contains(e.getX(), e.getY()))
             {
-                if (area.getName().equals(""))
-                ;
+                if (area.getName().equals("Talon"))
+                {
+                    controller.talonClicked();
+                }
             }
         }
     }
@@ -269,58 +271,101 @@ public class BoardView extends JPanel implements GameChangeListener
 
         Player[] players = getGameModel().getPlayers();
 
-        // Player 0
-        int outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+        int outlayWidth;
+        int outlayX;
+        int outlayHeight;
+        int outlayY;
+
+        switch (players.length)
+        {
+            case 2:
+                // Player 0
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                              / 2
+                              + Constants.SHARED_CARDS_SPACE;
+                outlayX = Constants.HAND_BORDER;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
+
+                // Player 1
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                              / 2
+                              + Constants.SHARED_CARDS_SPACE;
+                outlayX = Constants.HAND_BORDER
+                          + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                          / 2;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayY = Constants.HAND_BORDER;
+
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
+
+                break;
+            case 4:
+                // Player 0
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                              / 2
+                              + Constants.SHARED_CARDS_SPACE;
+                outlayX = Constants.HAND_BORDER;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
+
+                // Player 1
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayX = Constants.HAND_BORDER;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                               / 2
+                               + Constants.SHARED_CARDS_SPACE;
+                outlayY = Constants.HAND_BORDER;
+
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
+
+                // Player 2
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                              / 2
+                              + Constants.SHARED_CARDS_SPACE;
+                outlayX = Constants.HAND_BORDER
+                          + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                          / 2;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayY = Constants.HAND_BORDER;
+
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[2], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
+
+                // Player 3
+                outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
+                outlayX = Constants.HAND_BORDER
+                          + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
                           / 2
                           + Constants.SHARED_CARDS_SPACE;
-        int outlayX = Constants.HAND_BORDER;
-        int outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        int outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
+                outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
+                               / 2
+                               + Constants.SHARED_CARDS_SPACE;
+                outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-        gfx.translate(outlayX, outlayY);
-        paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
-        gfx.translate(-outlayX, -outlayY);
+                gfx.translate(outlayX, outlayY);
+                paintOutlay(gfx, players[3], outlayWidth, outlayHeight);
+                gfx.translate(-outlayX, -outlayY);
 
-        // Player 1
-        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        outlayX = Constants.HAND_BORDER;
-        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                       / 2
-                       + Constants.SHARED_CARDS_SPACE;
-        outlayY = Constants.HAND_BORDER;
-
-        gfx.translate(outlayX, outlayY);
-        paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
-        gfx.translate(-outlayX, -outlayY);
-
-        // Player 2
-        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                      / 2
-                      + Constants.SHARED_CARDS_SPACE;
-        outlayX = Constants.HAND_BORDER
-                  + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                  / 2;
-        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        outlayY = Constants.HAND_BORDER;
-
-        gfx.translate(outlayX, outlayY);
-        paintOutlay(gfx, players[2], outlayWidth, outlayHeight);
-        gfx.translate(-outlayX, -outlayY);
-
-        // Player 3
-        outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
-        outlayX = Constants.HAND_BORDER
-                  + (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                  / 2
-                  + Constants.SHARED_CARDS_SPACE;
-        outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
-                       / 2
-                       + Constants.SHARED_CARDS_SPACE;
-        outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
-
-        gfx.translate(outlayX, outlayY);
-        paintOutlay(gfx, players[3], outlayWidth, outlayHeight);
-        gfx.translate(-outlayX, -outlayY);
+                break;
+            default:
+                throw new RuntimeException(new IllegalStateException(""
+                                                                     + players.length
+                                                                     + " players not allowed at the moment."));
+        }
 
     }
 

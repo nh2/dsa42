@@ -1,5 +1,7 @@
 package de.schelklingen2008.canasta.client.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import de.schelklingen2008.canasta.model.GameModel;
@@ -24,6 +26,8 @@ public class GameContext
     /** Is the name of the player playing in this client. */
     private int                 localPlayerNumber;
 
+    private Map<String, Player> playerMap;
+
     //
     // /** Provides a name for each player in the game. */
     // private Map<Player, String> playerNames = new HashMap<Player, String>();
@@ -34,7 +38,8 @@ public class GameContext
          * TODO retrieve player names from controller
          */
 
-        gameModel = new GameModel(new String[] { "Lars", "Alexander", "Mopy", "Schorsch" });
+        gameModel = new GameModel(new String[] { "Lars", "Alexander" });
+        playerMap = new HashMap<String, Player>();
     }
 
     public int getLocalPlayerNumber()
@@ -48,12 +53,12 @@ public class GameContext
         this.localPlayerNumber = localPlayerNumber;
     }
 
-    public void setPlayers(String[] players)
-    {
-        // playerNames.clear();
-        // playerNames.put(Player.valueOf(0), names[0]);
-        // playerNames.put(Player.valueOf(1), names[1]);
-    }
+    // public void setPlayers(String[] players)
+    // {
+    // // playerNames.clear();
+    // // playerNames.put(Player.valueOf(0), names[0]);
+    // // playerNames.put(Player.valueOf(1), names[1]);
+    // }
 
     public Player getMyPlayer()
     {

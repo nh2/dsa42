@@ -87,12 +87,17 @@ public class Controller extends GameController
         toyBoxContext.getLocationDirector().moveBack();
     }
 
+    public void talonClicked()
+    {
+        sharedState.manager.invoke("drawCard");
+    }
+
     private void updateGameContext()
     {
         if (sharedState == null) return;
         if (sharedState.getModel() == null) return;
 
-        gameContext.setPlayers(sharedState.getPlayerNames());
+        // gameContext.setPlayers(sharedState.getPlayerNames());
         gameContext.setGameModel(sharedState.getModel());
 
         fireGameChange();
