@@ -53,7 +53,6 @@ public class GameContext
                 myIndex = i;
             }
         }
-
     }
 
     public void setPlayers(String[] names)
@@ -69,9 +68,7 @@ public class GameContext
     public Player getMyPlayer()
     {
         if (myName == null) return null;
-        // if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
-        // if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
-        return null;
+        return gameModel.getPlayerList().get(myIndex);
     }
 
     public GameModel getGameModel()

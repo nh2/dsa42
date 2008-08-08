@@ -16,29 +16,28 @@ public class GameModel implements Serializable
     private List<Player>     playerList    = new ArrayList<Player>();
     // private List<Pot> potList = new ArrayList<Pot>();
     private long             pot;
+    private long             highestBet;
+    private int              highestBetIndex;
 
-    public long getPot()
-    {
-        return pot;
-    }
-
-    private long       highestBet;
-    private int        highestBetIndex;
-
-    private List<Card> stack    = new ArrayList<Card>(); // Liste aller 52 Karten, werden mit
+    private List<Card>       stack         = new ArrayList<Card>();  // Liste aller 52 Karten, werden mit
     // der
     // Zeit an cardList und auf die Spieler
     // verteilt, d.h. die Liste wird kleiner
     // = Kartenstapel
-    private List<Card> cardList = new ArrayList<Card>(); // Karten in der Mitte
-    private int        phase;
-    private int        actPlayerIndex;
-    private int        dealerIndex;
-    private long       smallBlind;
+    private List<Card>       cardList      = new ArrayList<Card>();  // Karten in der Mitte
+    private int              phase;
+    private int              actPlayerIndex;
+    private int              dealerIndex;
+    private long             smallBlind;
 
     public boolean isFinished()
     {
         return false;
+    }
+
+    public long getPot()
+    {
+        return pot;
     }
 
     public List<Player> getPlayerList()
@@ -185,16 +184,28 @@ public class GameModel implements Serializable
         pot = content;
     }
 
-    // public void bloedsinn()
-    // {
-    // if (BoardView.getActIndex() == BoardView.getMyIndex()) // wenn ich gerade dran bin
-    // {
-    // if (getMyPlayer().getOwnBet() < getGameModel().getHighestBet())
-    // {
-    //            
-    // if (getMyPlayer().getOwnBet() == getGameModel().getHighestBet())
-    // {
-    // }
-    // }
+    public boolean mustCallOrReRaise(int playerIndex)
+    {
+        if (actPlayerIndex == playerIndex)
+        {
+            if (playerList.get(playerIndex).getOwnBet() < highestBet)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean mustCheckOrRaise(int playerIndex)
+
+    {
+        if (actPlayerIndex == playerIndex)
+        {
+            if (playerList.get(playerIndex).getOwnBet() == highestBet)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
