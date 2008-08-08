@@ -11,6 +11,7 @@ public class Wall
 
     public Wall(Vector2d p1, Vector2d p2)
     {
+
         Vector2d v = p1.subtract(p2);
         angle = v.getAngle();
         if (angle > Math.PI)
@@ -66,24 +67,27 @@ public class Wall
 
             double deltaY = yIntercept + slope * x0 - y0;
 
-            double deltaAngle = ball.getVelocity().getAngle() - angle;
+            double xCollision, yCollision;
 
-            if (deltaY < 0)
+            if (ball.getVelocity().getX() == 0)
             {
-                if (deltaAngle <= 0 || deltaAngle >= Math.PI)
+                xCollision = x0;
+                yCollision = deltaY + y0;
+                if (Math.signum(deltaY) != Math.signum(ball.getVelocity().getY()))
                 {
                     return Double.NaN;
                 }
             }
             else
             {
-                if (deltaAngle >= 0 && deltaAngle <= Math.PI)
+                double vSlope = ball.getVelocity().getY() / ball.getVelocity().getX();
+                xCollision = (x0 * vSlope - y0 + yIntercept) / (vSlope - slope);
+                yCollision = xCollision * slope + yIntercept;
+                if (Math.signum(xCollision - x0) != Math.signum(ball.getVelocity().getX()))
                 {
                     return Double.NaN;
                 }
             }
-
-            deltaY = Math.abs(deltaY);
 
             double perpendicularAngle = angle + Math.PI / 2;
             if (perpendicularAngle > Math.PI)
@@ -93,7 +97,7 @@ public class Wall
 
             double alpha = Math.abs(perpendicularAngle - ball.getVelocity().getAngle());
 
-            double perpendicularDist = Math.abs(Math.cos(perpendicularAngle - Math.PI / 2) * deltaY);
+            double perpendicularDist = Math.abs(Math.cos(perpendicularAngle - Math.PI / 2) * Math.abs(deltaY));
             double dist = Math.abs((perpendicularDist - BALL_RADIUS) / Math.cos(alpha));
 
             double t = dist / ball.getVelocity().getLength();
@@ -105,7 +109,16 @@ public class Wall
                 return Double.NaN;
             }
 
-            collisionPos = collisionPos.add(Vector2d.getPolarVector(angle + Math.PI / 2, GlobalConstants.BALL_RADIUS));
+            if (deltaY > 0)
+            {
+                collisionPos =
+                    collisionPos.add(Vector2d.getPolarVector(perpendicularAngle + Math.PI, GlobalConstants.BALL_RADIUS));
+            }
+            else
+            {
+                collisionPos =
+                    collisionPos.add(Vector2d.getPolarVector(perpendicularAngle, GlobalConstants.BALL_RADIUS));
+            }
 
             if (collisionPos.getX() < minX || collisionPos.getX() > maxX || collisionPos.getY() < minY
                 || collisionPos.getY() > maxY)
@@ -139,7 +152,7 @@ public class Wall
 
         if (!Double.isNaN(t))
         {
-            double y = ball.getPosition().getY() - ball.getVelocity().getY() * t;
+            double y = ball.getPosition().getY() + ball.getVelocity().getY() * t;
             if (y < minY || y > maxY)
             {
                 t = Double.NaN;
@@ -173,7 +186,7 @@ public class Wall
 
         if (!Double.isNaN(t))
         {
-            double x = ball.getPosition().getX() - ball.getVelocity().getX() * t;
+            double x = ball.getPosition().getX() + ball.getVelocity().getX() * t;
             if (x < minX || x > maxX)
             {
                 t = Double.NaN;

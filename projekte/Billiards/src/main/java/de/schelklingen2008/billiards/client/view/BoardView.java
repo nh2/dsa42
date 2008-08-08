@@ -110,7 +110,7 @@ public class BoardView extends JPanel implements GameChangeListener
     public Dimension getPreferredSize()
     {
         // TODO calculate correct dimensions for the board view
-        return new Dimension(860, 460);
+        return new Dimension(860, 497);
     }
 
     @Override
@@ -130,9 +130,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBoard(Graphics2D gfx)
     {
-
-        gfx.setColor(Color.BLACK);
-        gfx.drawLine(30, 230, 230, 30);
 
         GameModel gameModel = getGameModel();
 

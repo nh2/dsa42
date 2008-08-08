@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
@@ -73,12 +72,35 @@ public class GameModel
 
     private void addWalls()
     {
-        walls.add(new Wall(new Vector2d(0, 0), new Vector2d(GlobalConstants.MAX_X, 0)));
-        walls.add(new Wall(new Vector2d(0, GlobalConstants.MAX_Y), new Vector2d(GlobalConstants.MAX_X,
-                                                                                GlobalConstants.MAX_Y)));
-        walls.add(new Wall(new Vector2d(0, 0), new Vector2d(0, GlobalConstants.MAX_Y)));
-        walls.add(new Wall(new Vector2d(GlobalConstants.MAX_X, 0), new Vector2d(GlobalConstants.MAX_X,
-                                                                                GlobalConstants.MAX_Y)));
+
+        walls.add(new Wall(new Vector2d(0, 28), new Vector2d(21, 48)));
+        walls.add(new Wall(new Vector2d(21, 48), new Vector2d(21, 382)));
+        walls.add(new Wall(new Vector2d(21, 382), new Vector2d(0, 402)));
+
+        walls.add(new Wall(new Vector2d(MAX_X, 28), new Vector2d(MAX_X - 21, 48)));
+        walls.add(new Wall(new Vector2d(MAX_X - 21, 48), new Vector2d(MAX_X - 21, 382)));
+        walls.add(new Wall(new Vector2d(MAX_X - 21, 382), new Vector2d(MAX_X, 402)));
+
+        walls.add(new Wall(new Vector2d(25, 0), new Vector2d(43, 21)));
+        walls.add(new Wall(new Vector2d(43, 21), new Vector2d(354, 21)));
+        walls.add(new Wall(new Vector2d(354, 21), new Vector2d(373, 0)));
+
+        walls.add(new Wall(new Vector2d(25, MAX_Y), new Vector2d(43, MAX_Y - 21)));
+        walls.add(new Wall(new Vector2d(43, MAX_Y - 21), new Vector2d(354, MAX_Y - 21)));
+        walls.add(new Wall(new Vector2d(354, MAX_Y - 21), new Vector2d(373, MAX_Y)));
+
+        walls.add(new Wall(new Vector2d(416, 0), new Vector2d(434, 21)));
+        walls.add(new Wall(new Vector2d(434, 21), new Vector2d(745, 21)));
+        walls.add(new Wall(new Vector2d(745, 21), new Vector2d(765, 0)));
+
+        walls.add(new Wall(new Vector2d(416, MAX_Y), new Vector2d(434, MAX_Y - 21)));
+        walls.add(new Wall(new Vector2d(434, MAX_Y - 21), new Vector2d(745, MAX_Y - 21)));
+        walls.add(new Wall(new Vector2d(745, MAX_Y - 21), new Vector2d(765, MAX_Y)));
+    }
+
+    public List<Wall> getWalls()
+    {
+        return walls;
     }
 
     public GameModel()
@@ -87,8 +109,6 @@ public class GameModel
         addPlayers();
         addBalls();
         addWalls();
-
-        walls.add(new Wall(new Vector2d(0, 200), new Vector2d(200, 0)));
 
         setUpGame();
 
