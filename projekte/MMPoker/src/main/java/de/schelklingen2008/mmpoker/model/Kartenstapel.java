@@ -14,15 +14,17 @@ public class Kartenstapel implements Serializable
     public Spielkarte zufallsKarte()
     {
         random = new Random();
-
-        return kartenstapel.get(random.nextInt(52));
+        int zufall = random.nextInt(52);
+        Spielkarte zufallk = kartenstapel.get(zufall);
+        kartenstapel.remove(zufall);
+        return zufallk;
 
     }
 
     public Kartenstapel()
     {
-        ArrayList<Spielkarte> kartenstapel = new ArrayList<Spielkarte>();
-        int i = 1;
+
+        int i = 0;
         for (Kartenwert kartenwert : Kartenwert.values())
         {
             for (Kartentyp kartentyp : Kartentyp.values())

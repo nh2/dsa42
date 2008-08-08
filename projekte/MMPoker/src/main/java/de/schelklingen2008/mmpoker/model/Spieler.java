@@ -14,7 +14,7 @@ public class Spieler implements Serializable
     public Spieler()
     {
         setGeld(0);
-        wasfuernBlind = Blind.NICHTS;
+        setWasfuernBlind(Blind.NICHTS);
         Spielkarte[] handblatt = new Spielkarte[2];
         wettsumme = 0;
         name = "DefaultSpieler";
@@ -54,6 +54,16 @@ public class Spieler implements Serializable
     public int getGeld()
     {
         return geld;
+    }
+
+    public void setWasfuernBlind(Blind wasfuernBlind)
+    {
+        this.wasfuernBlind = wasfuernBlind;
+    }
+
+    public Blind getWasfuernBlind()
+    {
+        return wasfuernBlind;
     }
 
 }

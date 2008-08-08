@@ -19,7 +19,7 @@ public class GameModel implements Serializable
     public GameModel()
     {
         pot = 0;
-
+        spielfeld = new Spielkarte[5];
         spielstadium = Spielstadien.FLOP;
         Rundenstart();
 
@@ -28,7 +28,7 @@ public class GameModel implements Serializable
     public void Rundenstart()
     { // Initiiert das Spiel.
         // Geld verteilen
-        // for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
+        // for (Iterator<> iterator = spielerliste.iterator(); iterator.hasNext();)
         // {
         // iterator.next().setWettsumme(5000);
         // }
@@ -37,13 +37,23 @@ public class GameModel implements Serializable
         getSpielerliste().add(0, spieler1);
         amZug = spieler1;
         Kartenstapel spielKarten = new Kartenstapel();
+
         // Karten aufs Spielfeld legen
-        for (int i = 1; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             getSpielfeld()[i] = spielKarten.zufallsKarte();
         }
         // Karten aufs Spielfeld legen ende
         // Blinds Setzen(ein zu kurz)
+        for (int i = 0; i < spielerliste.size(); i++)
+        {
+            spielerliste.get(i).setWasfuernBlind(Blind.NICHTS);
+        }
+        spielerliste.get(spielerliste.size()).setWasfuernBlind(Blind.DEALER);
+        spielerliste.get(0).setWasfuernBlind(Blind.SMALLBLIND);
+        spielerliste.get(1).setWasfuernBlind(Blind.BIGBLIND);
+        // Blinds Setzen ende
+
     }
 
     public void RundeWiederholen()
