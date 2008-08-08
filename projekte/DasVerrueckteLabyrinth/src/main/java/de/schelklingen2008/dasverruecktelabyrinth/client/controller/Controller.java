@@ -128,7 +128,7 @@ public class Controller extends GameController
 
     public void boardClicked(int x, int y)
     {
-        sharedState.manager.invoke("placePiece", x, y);
+        sharedState.manager.invoke("placePlayer", x, y);
     }
 
     public ToyBoxContext getToyBoxContext()

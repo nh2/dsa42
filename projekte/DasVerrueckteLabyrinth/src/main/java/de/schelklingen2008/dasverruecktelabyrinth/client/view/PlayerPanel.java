@@ -113,8 +113,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         JButton right = new JButton("rechts");
         JButton left = new JButton("links");
-        right.addActionListener(controller);
-        left.addActionListener(controller);
+        right.addActionListener(new ActionListenerImplementation(controller));
+        left.addActionListener(new ActionListenerImplementation(controller));
         drehButtons.add(right);
         drehButtons.add(left);
 
