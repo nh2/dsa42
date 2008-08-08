@@ -1,6 +1,5 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -66,7 +65,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JPanel drehButtons = new JPanel();
 
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(PlayerPanel, BoxLayout.LINE_AXIS));
 
         try
         {
@@ -116,14 +115,11 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         left.addActionListener(controller);
         drehButtons.add(right);
         drehButtons.add(left);
-        add(drehButtons, BorderLayout.WEST);
 
         JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
         JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
-        JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
-        PlayerPanel.add(linsert);
-        add(PlayerPanel, BorderLayout.NORTH);
+        JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
         JPanel Cards = new JPanel();
         Cards.setLayout(new BoxLayout(Cards, BoxLayout.PAGE_AXIS));
@@ -131,10 +127,17 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JPanel SearchThisCard = new JPanel();
         JPanel FoundCard = new JPanel();
 
-        Cards.SearchThisCard.add(searchThisCard);
+        SearchThisCard.add(searchThisCard);
         FoundCard.add(foundCard);
 
-        add(Cards, BorderLayout.EAST);
+        Cards.add(SearchThisCard);
+        Cards.add(FoundCard);
+
+        add(drehButtons);
+
+        add(linsert);
+
+        add(Cards);
 
     }
 
