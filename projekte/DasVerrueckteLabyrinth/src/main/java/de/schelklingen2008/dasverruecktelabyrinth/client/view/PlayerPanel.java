@@ -1,5 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -65,7 +66,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JPanel drehButtons = new JPanel();
 
-        setLayout(new BoxLayout(PlayerPanel, BoxLayout.LINE_AXIS));
+        setLayout(new BorderLayout());
 
         try
         {
