@@ -43,7 +43,20 @@ public class Manager extends GameManager
     {
         Player player = getPlayer(client);
 
+        if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
+
         gameModel.drawCard(player);
+
+        updateSharedState();
+    }
+
+    public void discardCard(BodyObject client)
+    {
+        Player player = getPlayer(client);
+
+        if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
+
+        gameModel.discardCard(player);
 
         updateSharedState();
     }

@@ -53,4 +53,9 @@ public class GameContext
     {
         myName = string;
     }
+
+    public boolean isMyTurn()
+    {
+        return getLocalPlayerNumber() == gameModel.getTurnHolder();
+    }
 }

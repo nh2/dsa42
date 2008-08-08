@@ -86,7 +86,22 @@ public class Controller extends GameController
 
     public void talonClicked()
     {
+        if (!gameContext.isMyTurn())
+        {
+            sLogger.info("Ich bin nicht dran!");
+            return;
+        }
         sharedState.manager.invoke("drawCard");
+    }
+
+    public void discardClicked()
+    {
+        if (!gameContext.isMyTurn())
+        {
+            sLogger.info("Ich bin nicht dran!");
+            return;
+        }
+        sharedState.manager.invoke("discardCard");
     }
 
     private void updateGameContext()
@@ -164,4 +179,5 @@ public class Controller extends GameController
             updateGameContext();
         }
     }
+
 }

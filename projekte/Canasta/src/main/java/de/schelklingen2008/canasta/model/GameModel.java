@@ -88,13 +88,14 @@ public class GameModel implements Serializable
         goOut();
     }
 
-    public void discardCard()
+    public void discardCard(Player player)
     {
         // TODO player discards card
-        if (players[turnHolder].hasCanasta() && players[turnHolder].getHand().size() == 0)
-        {
-            goOut();
-        }
+        // if (players[getPlayerIndex(player.getName())].hasCanasta() &&
+        // players[getPlayerIndex(player.getName())].getHand().size() == 0)
+        // {
+        // goOut();
+        // }
         endTurn();
     }
 
@@ -105,7 +106,8 @@ public class GameModel implements Serializable
 
     public void endTurn()
     {
-        // TODO next players turn
+        turnHolder++;
+        turnHolder %= players.length;
     }
 
     public int getTurnHolder()

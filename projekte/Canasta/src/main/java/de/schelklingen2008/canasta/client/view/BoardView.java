@@ -86,8 +86,13 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 if (area.getName().equals("Talon"))
                 {
-                    sLogger.info("pressed");
+                    sLogger.info("pressed Talon");
                     controller.talonClicked();
+                }
+                if (area.getName().equals("Discard"))
+                {
+                    sLogger.info("pressed Discard");
+                    controller.discardClicked();
                 }
             }
         }
