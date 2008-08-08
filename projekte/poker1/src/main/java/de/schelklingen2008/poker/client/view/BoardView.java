@@ -193,7 +193,7 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 controller.callButtonClicked();
                 System.out.print(getActPlayer().getName());
-                System.out.println(" hat geraist.");
+                System.out.println(" hat gecallt.");
             }
 
         };
@@ -206,8 +206,9 @@ public class BoardView extends JPanel implements GameChangeListener
                 String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
-                controller.raiseButtonClicked();
-                System.out.println("Geraist");
+                System.out.print(getActPlayer().getName());
+                System.out.println(" hat geraist.");
+                controller.raiseButtonClicked(longBetrag);
             }
 
         };
@@ -218,7 +219,8 @@ public class BoardView extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 controller.foldButtonClicked();
-                System.out.println("Gefoldet");
+                System.out.print(getActPlayer().getName());
+                System.out.println(" hat gefoldet.");
             }
 
         };
@@ -228,7 +230,8 @@ public class BoardView extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 controller.checkButtonClicked();
-                System.out.println("Gecheckt");
+                System.out.print(getActPlayer().getName());
+                System.out.println("hat gecheckt.");
             }
 
         };
@@ -238,8 +241,12 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                controller.reRaiseButtonClicked();
-                System.out.println("ReRaised");
+                String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:");
+                int betrag = Integer.parseInt(s);
+                long longBetrag = betrag;
+                controller.reRaiseButtonClicked(longBetrag);
+                System.out.print(getActPlayer().getName());
+                System.out.println("hat geReRaised.");
             }
 
         };
