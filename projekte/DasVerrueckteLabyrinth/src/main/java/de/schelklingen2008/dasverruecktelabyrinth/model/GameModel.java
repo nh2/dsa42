@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.text.Position;
+
 /**
  * Maintains the rules and the state of the game.
  */
@@ -188,11 +190,29 @@ public class GameModel implements Serializable
         pPlayer.setYKoordinate(y);
     }
 
-    private void placePlayer(int x, int y, Player pPlayer)
-    {   
-        if ( findWay(board, ))
-        pPlayer.setXKoordinate(x);
-        pPlayer.setYKoordinate(y);
+    private void placePlayer(int x, int y, PlayerType pPlayerType)
+    {
+        if (isLegal(pPlayerType))
+        {
+            Player pPlayer = player.get(pPlayerType);
+            pPlayer.setXKoordinate(x);
+            pPlayer.setYKoordinate(y);
+        }
+    }
+
+    private boolean isLegal(PlayerType pPlayerType)
+    {
+        // Player pPlayer = player.get(pPlayerType);
+        // Position ende = getMouseKoordinates();
+        // if (findWay(board, pPlayer.getXKoordinate(), pPlayer.getYKoordinate(), , pPlayer.getXKoordinate(),
+        // pPlayer.getYKoordinate()) != null) return true;
+        return false;
+    }
+
+    public List<Position> findWay(Tile[][] pBoard, int sx, int sy, int ex, int ey, int lx, int ly)
+    {
+
+        return null;
     }
 
     public boolean isLegalMove(int x, int y, Player player)
@@ -289,11 +309,6 @@ public class GameModel implements Serializable
         boolean changed = this.turnHolder != turnHolder;
         this.turnHolder = turnHolder;
         return changed;
-    }
-
-    public void amountOfPlayers()
-    {
-
     }
 
     private boolean isInBounds(int x, int y)
