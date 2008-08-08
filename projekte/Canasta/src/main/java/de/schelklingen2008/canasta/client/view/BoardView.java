@@ -105,14 +105,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBackground(Graphics2D gfx)
     {
-        gfx.setColor(new Color(Constants.darkGreen));
+        gfx.setColor(new Color(Constants.HandspaceColor));
         gfx.fillRect(0, 0, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
     }
 
     private void paintBoard(Graphics2D gfx)
     {
 
-        gfx.setColor(new Color(Constants.mediumGreen));
+        gfx.setColor(new Color(Constants.OutlayColor));
         gfx.fillRect(Constants.HAND_BORDER, Constants.HAND_BORDER, Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER,
                      Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER);
     }
@@ -156,6 +156,7 @@ public class BoardView extends JPanel implements GameChangeListener
             int x = border + (int) (i * cardSpace);
             int y = Constants.BOARD_HEIGHT - Constants.HAND_BORDER + border;
             gfx.drawImage(cardImage, x, y, null);
+            areas.add(new SensitiveArea("HandCard", x, y, 50, 71));
 
             i++;
         }
@@ -382,9 +383,13 @@ public class BoardView extends JPanel implements GameChangeListener
         for (int i = 0; i < cardStack.size(); i++)
         {
             gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 2 + 20, 0, null);
+
         }
 
+        areas.add(new SensitiveArea("CardStack", (cardStack.size() - 1) * 2, 0, cardStack.size() * 2 + 40, 57));
+
         // gfx.setFont(Font.)
+
         gfx.setPaint(new Color(0xFFFF00));
         gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), 0, 40);
 
@@ -403,6 +408,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         Discard discard = controller.getGameContext().getGameModel().getDiscard();
         gfx.drawImage(getCardImage(discard.peek(), 50, false), 350, 380, null);
+        areas.add(new SensitiveArea("Discard", 350, 380, 50, 71));
     }
 
     private BufferedImage getCardImage(Card card, int version, boolean faceDown)
