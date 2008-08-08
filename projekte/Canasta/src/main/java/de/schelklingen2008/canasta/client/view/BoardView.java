@@ -89,10 +89,24 @@ public class BoardView extends JPanel implements GameChangeListener
                     sLogger.info("pressed Talon");
                     controller.talonClicked();
                 }
-                if (area.getName().equals("Discard"))
+                else if (area.getName().equals("HandCard"))
+                {
+                    sLogger.info("pressed HandCard");
+                    // controller.discardClicked();
+                }
+                else if (area.getName().equals("CardStack"))
+                {
+                    sLogger.info("pressed CardStack");
+                    // controller.discardClicked();
+                }
+                else if (area.getName().equals("Discard"))
                 {
                     sLogger.info("pressed Discard");
                     controller.discardClicked();
+                }
+                else
+                {
+                    sLogger.info("pressed unknown area '" + area.getName() + "'");
                 }
             }
         }
@@ -183,7 +197,7 @@ public class BoardView extends JPanel implements GameChangeListener
             int x = border + (int) (i * cardSpace);
             int y = Constants.BOARD_HEIGHT - Constants.HAND_BORDER + border;
             gfx.drawImage(cardImage, x, y, null);
-            areas.add(new SensitiveArea("HandCard", x, y, 50, 71));
+            areas.add(new SensitiveArea("HandCard", x, y, (int) ((i + 1) * cardSpace) - (int) (i * cardSpace), 71));
 
             i++;
         }
@@ -300,9 +314,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[0], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 1
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
@@ -314,9 +326,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.HAND_BORDER;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[1], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 break;
             case 4:
@@ -328,9 +338,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[0], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[0], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 1
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
@@ -340,9 +348,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                + Constants.SHARED_CARDS_SPACE;
                 outlayY = Constants.HAND_BORDER;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[1], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[1], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 2
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
@@ -354,9 +360,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.HAND_BORDER;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[2], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[2], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 3
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
@@ -369,9 +373,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                + Constants.SHARED_CARDS_SPACE;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                gfx.translate(outlayX, outlayY);
-                paintOutlay(gfx, players[3], outlayWidth, outlayHeight);
-                gfx.translate(-outlayX, -outlayY);
+                paintOutlay(gfx, players[3], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 break;
             default:
@@ -381,7 +383,7 @@ public class BoardView extends JPanel implements GameChangeListener
         }
     }
 
-    private void paintOutlay(Graphics2D gfx, Player player, int width, int height)
+    private void paintOutlay(Graphics2D gfx, Player player, int x, int y, int width, int height)
     {
         // negative values will throw exeptions, redicular small outlay spaces will produce errors!
         if (width <= 0 || height <= 0) throw new IllegalArgumentException("outlay space too small");
@@ -405,12 +407,10 @@ public class BoardView extends JPanel implements GameChangeListener
             int whichStackX = i % stackCountX;
             int whichStackY = i / stackCountX;
 
-            int translateX = (int) ((whichStackX + 1) * stackSpaceX + whichStackX * 3.0 * cardImage.getWidth());
-            int translateY = (whichStackY + 1) * stackSpaceY + whichStackY * cardImage.getHeight();
+            int translateX = x + (int) ((whichStackX + 1) * stackSpaceX + whichStackX * 3.0 * cardImage.getWidth());
+            int translateY = y + (whichStackY + 1) * stackSpaceY + whichStackY * cardImage.getHeight();
 
-            gfx.translate(translateX, translateY);
-            paintCardStack(gfx, cardStack);
-            gfx.translate(-translateX, -translateY);
+            paintCardStack(gfx, translateX, translateY, cardStack);
 
             i++;
 
@@ -425,33 +425,33 @@ public class BoardView extends JPanel implements GameChangeListener
 
         // some debugging
         gfx.setPaint(new Color(0xFF0000));
-        gfx.drawRect(0, 0, width, height);
+        gfx.drawRect(x, y, width, height);
         // gfx.drawString(((Integer) stackCountX).toString(), width / 2 - 10, height / 2);
         // gfx.drawString(((Integer) stackCountY).toString(), width / 2 + 10, height / 2);
         // gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
         // gfx.drawString(((Integer) height).toString(), width / 2 + 30, height / 2 + 20);
     }
 
-    private void paintCardStack(Graphics2D gfx, CardStack cardStack)
+    private void paintCardStack(Graphics2D gfx, int x, int y, CardStack cardStack)
     {
         // gfx.setPaint(new Color(0xFF00FF));
-        // gfx.drawRect(0, 0, 4, 4);
+        // gfx.drawRect(x, y, 4, 4);
 
         for (int i = 0; i < cardStack.size(); i++)
         {
-            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), i * 2 + 20, 0, null);
-
+            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), x + i * 2 + 20, y, null);
         }
 
-        areas.add(new SensitiveArea("CardStack", (cardStack.size() - 1) * 2, 0, cardStack.size() * 2 + 40, 57));
-
+        areas.add(new SensitiveArea("CardStack", x + (cardStack.size() - 1) * 2, y, cardStack.size() * 2 + 40, 57));
+        gfx.setPaint(new Color(0xFF00FF));
+        gfx.drawRect(x + (cardStack.size() - 1) * 2, y, cardStack.size() * 2 + 40, 57);
         // gfx.setFont(Font.)
 
         gfx.setPaint(new Color(0xFFFF00));
-        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), 0, 40);
+        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), x, y + 40);
 
         gfx.setPaint(new Color(0xFFFFFF));
-        gfx.drawString(((Integer) cardStack.size()).toString(), 0, 20);
+        gfx.drawString(((Integer) cardStack.size()).toString(), x, y + 20);
     }
 
     private void paintTalon(Graphics2D gfx)
@@ -527,6 +527,11 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             r = new Rectangle(x, y, w, h);
             this.name = name;
+
+            // if (name == "CardStack")
+            // {
+            // sLogger.info("cardStack " + x + " " + y + " " + w + " " + h);
+            // }
         }
 
         public boolean contains(int x, int y)
