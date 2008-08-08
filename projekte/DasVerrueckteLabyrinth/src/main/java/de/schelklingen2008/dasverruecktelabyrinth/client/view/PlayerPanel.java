@@ -1,6 +1,5 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,7 +66,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
         JPanel drehButtons = new JPanel();
 
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         try
         {
@@ -142,21 +141,20 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         SearchThisCard.add(searchThisCard);
         FoundCard.add(foundCard);
 
-        Cards.add(SearchThisCard);
-        Cards.add(FoundCard);
+        add(drehButtons);
 
-        add(drehButtons, BorderLayout.WEST);
+        add(linsert);
 
-        add(linsert, BorderLayout.CENTER);
+        add(FoundCard);
 
-        add(Cards, BorderLayout.EAST);
+        add(SearchThisCard);
 
     }
 
     @Override
     public Dimension getPreferredSize()
     {
-        return new Dimension(600, 200);
+        return new Dimension(600, 130);
     }
 
     private TreasureCard openCards()
