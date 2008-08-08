@@ -21,6 +21,7 @@ public class CarFrame extends JFrame
 
         setVisible(true);
         pack();
+
         try
         {
             fahrrad = ImageIO.read(new File("./src/carspack/car.bmp"));
@@ -32,6 +33,7 @@ public class CarFrame extends JFrame
         {
             throw new RuntimeException("Kann Bild nicht laden.");
         }
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
