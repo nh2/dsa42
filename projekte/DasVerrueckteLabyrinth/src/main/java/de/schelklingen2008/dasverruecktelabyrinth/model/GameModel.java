@@ -48,6 +48,7 @@ public class GameModel implements Serializable
     {
         clear();
         init();
+
     }
 
     private void init()
@@ -77,6 +78,7 @@ public class GameModel implements Serializable
         player.put(PlayerType.RED, new Player(PlayerType.RED, RAND.nextInt(board.length), RAND.nextInt(board.length)));
 
         playerCardsMap.put(PlayerType.WHITE, dummie);
+
     }
 
     private List<Tile> generateTiles()
@@ -245,17 +247,13 @@ public class GameModel implements Serializable
     public Tile rechtsDrehen(Tile pT)
     {
         pT.turnRight(pT);
-
         return pT;
-
     }
 
     public Tile linksDrehen(Tile pT)
     {
         pT.turnLeft(pT);
-
         return pT;
-
     }
 
     private void advanceTurnHolder()

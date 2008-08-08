@@ -18,7 +18,7 @@ public class GameContext
     private static final Logger     sLogger         = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel               gameModel       = new GameModel(4);
+    private GameModel               gameModel       = new GameModel(getNoOfPlayers());
 
     /** Is the name of the player playing in this client. */
     private String                  myName;
@@ -53,7 +53,9 @@ public class GameContext
 
     public int getNoOfPlayers()
     {
-        return playerTypeNames.size();
+        return 4;
+        // TODO
+        // return playerTypeNames.size();
     }
 
     public PlayerType getMyPlayerType()
