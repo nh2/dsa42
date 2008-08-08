@@ -30,7 +30,7 @@ import de.schelklingen2008.doppelkopf.model.SpielerListe;
 /**
  * Displays the main game interface (the board).
  */
-public class BoardView extends JPanel implements GameChangeListener // TODO Aspekt beim rezise neu berechnen
+public class BoardView extends JPanel implements GameChangeListener
 {
 
     private Controller        controller;
@@ -47,6 +47,7 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
     Mittenplatz               mpOben     = new Mittenplatz(mx - 37, my - 97);
     Mittenplatz               mpRechts   = new Mittenplatz(mx - 10, my - 60);
 
+    GameModel                 spiel;
     SpielerListe              tempListe;
     Spieler                   ich;
 
@@ -89,25 +90,10 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
         tempListe = new SpielerListe();
         // tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
-        GameModel spiel = getGameContext().getGameModel();
-        if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom Server geladen
-        // sind
-        tempListe.addAll(spiel.getTisch().getSpieler());
-        // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
-        ich = tempListe.getSpieler("Spieler 1");
 
-        List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
-        List<Karte> mitte = spiel.getTisch().getMitte();
-        mitte.add(l.get(0));
-        mitte.add(l.get(1));
-        mitte.add(l.get(2));
-        mitte.add(l.get(3));
-        tempListe.getAnDerReihe().getBlatt().getKarten().remove(l.get(0));
-        mpUnten.inhalt = new ZeichenKarte(mitte.get(3));
-        mpLinks.inhalt = new ZeichenKarte(mitte.get(2));
-        mpOben.inhalt = new ZeichenKarte(mitte.get(1));
-        mpRechts.inhalt = new ZeichenKarte(mitte.get(0));
-        mitte.clear();
+        // if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom Server geladen
+        // if (spiel.getTisch().getStichAnzahl() == 0) return;
+        // sind
 
         // for (Farbe f : Farbe.values())
         // for (Bild b : Bild.values())
@@ -119,12 +105,10 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
     private void moved(MouseEvent e)
     {
-        // TODO respond to playerï¿½s mouse movements
     }
 
     private void pressed(MouseEvent e)
     {
-        // TODO respond to playerï¿½s mouse clicks
         int startx = 140;
         int starty = 463;
         int kartenhoehe = 107;
@@ -165,7 +149,6 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
     @Override
     public Dimension getPreferredSize()
     {
-        // TODO calculate correct dimensions for the board view
         return new Dimension(800, 600);
     }
 
@@ -173,7 +156,6 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
-        // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
     }
@@ -214,8 +196,8 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
     private void paintBoard(Graphics2D gfx)
     {
-        if (getGameContext().getGameModel().getTisch() == null) return; // Wenn die Spieler noch nicht vom
-                                                                        // Server geladen
+        if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom
+        if (spiel.getTisch().getSpieler().size() == 0) return; // Server geladen
 
         // Spielernamen zeichnen
         // Bis zum aktuellen Spieler vorrÃ¼cken (mir)
@@ -287,6 +269,25 @@ public class BoardView extends JPanel implements GameChangeListener // TODO Aspe
 
     public void gameChanged()
     {
+        spiel = getGameContext().getGameModel();
+
+        tempListe.addAll(spiel.getTisch().getSpieler());
+        // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
+        ich = tempListe.getSpieler(getGameContext().getMyName());
+
+        List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
+        List<Karte> mitte = spiel.getTisch().getMitte();
+        mitte.add(l.get(0));
+        mitte.add(l.get(1));
+        mitte.add(l.get(2));
+        mitte.add(l.get(3));
+        // tempListe.getAnDerReihe().getBlatt().getKarten().remove(l.get(0)); // TODO entfernen: Karte löschen
+        // mpUnten.inhalt = new ZeichenKarte(mitte.get(3));
+        // mpLinks.inhalt = new ZeichenKarte(mitte.get(2));
+        // mpOben.inhalt = new ZeichenKarte(mitte.get(1));
+        // mpRechts.inhalt = new ZeichenKarte(mitte.get(0));
+        // mitte.clear();
+
         repaint();
     }
 

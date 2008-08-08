@@ -62,6 +62,7 @@ public class GameModel implements Serializable
 
     public void karteAusspielen(String spielerName, Karte karte)
     {
-        // Spieler spieler =
+        Spieler spieler = spielerliste.getSpieler(spielerName);
+
     }
 }

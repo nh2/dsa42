@@ -37,12 +37,14 @@ public class SpielerListe extends ArrayList<Spieler> implements Serializable
 
     public Spieler getSpieler(String spielerName)
     {
+        Spieler gesuchterSpieler = null;
         for (Spieler p : this)
         {
-            if (p.getName().equals(spielerName)) return p;
+            if (p.getName().equals(spielerName)) gesuchterSpieler = p;
         }
 
-        return null; // TODO Exception
+        if (gesuchterSpieler == null) throw new RuntimeException("Spieler '" + spielerName + "' nicht gefunden;");
+        return gesuchterSpieler;
     }
 
     private int nextAnDerReihe(int aktuell)
