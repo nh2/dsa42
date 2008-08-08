@@ -1,0 +1,82 @@
+switch ( c )
+{
+   case 'a':                    // fall through
+   case 'e': case 'i': case 'o': case 'u':
+        vowel = true;
+        break;
+   default:
+        vowel = false;
+}
+ 
+------------------------------------------------------------------------
+
+String s = javax.swing.JOptionPane.showInputDialog( "Wo kommst du denn wech?" );
+System.exit( 0 ); 
+
+JOptionPane.showMessageDialog( null, s );
+
+-------------------------------------------------------------------------
+
+import java.text.*;
+
+public class DecimalFormatDemo
+{
+  public static void main( String[] args )
+  {
+    double d = 12345.67890;
+    
+    DecimalFormat df = new DecimalFormat( "###,##0.00" );
+    System.out.println( df.format(d) );           // 12.345,68
+  }
+}
+
+---------------------------------------------------------------------------
+
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.util.Date;
+
+public class FormatClassesDemo
+{
+  public static void main( String[] args )
+  {
+    String s;
+    
+    s = DateFormat.getDateInstance().format( new Date() );       // 02.06.2005
+    System.out.println( s );
+   
+    s = DateFormat.getTimeInstance().format( new Date() );       // 15:25:16
+    System.out.println( s );
+
+    s = DateFormat.getDateTimeInstance().format( new Date() );   // 02.06.2005 15:25:16
+    System.out.println( s );
+
+    s = NumberFormat.getInstance().format( 12345.6789 );         // 12.345,679
+    System.out.println( s );
+
+    s = NumberFormat.getIntegerInstance().format( 12345.6789 );  // 12.346
+    System.out.println( s );
+
+    s = NumberFormat.getCurrencyInstance().format( 12345.6789 ); // 12.345,68 €
+    System.out.println( s );
+
+    s = NumberFormat.getPercentInstance().format( 0.12333 );       // 12%
+    System.out.println( s );
+  }
+}
+
+----------------------------------------------------------------------------------------
+
+import java.util.Date;
+
+  Date t = new Date();
+  out.printf( "%tT%n", t );                    // 11:01:39
+  out.printf( "%tD%n", t );                    // 05/23/06
+  out.printf( "%1$te. %1$tb%n", t );           // 23. Mai
+
+-------------------------------------------------------------------------------------
+
+import java.util.Random;
+
+Random zufall = new Random;
+int a = zufall.nextInt( 49 ) + 1;
