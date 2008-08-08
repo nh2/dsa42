@@ -2,6 +2,8 @@ package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,22 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     BufferedImage               fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
     BufferedImage               troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
     BufferedImage               schmuckkasten, schluessel, schwert, gespenst;
+
+    private class ActionListenerImplementation implements ActionListener
+    {
+
+        private Controller controller;
+
+        private ActionListenerImplementation(Controller controller)
+        {
+            this.controller = controller;
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            controller.leaveButtonClicked();
+        }
+    }
 
     public PlayerPanel(Controller controller)
 
