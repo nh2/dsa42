@@ -57,7 +57,14 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    public void raise(BodyObject client, int bet)
+    public void raise(BodyObject client, long bet)
+    {
+
+        // TODO and model weitergeben
+        updateSharedState();
+    }
+
+    public void reRaise(BodyObject client, long bet)
     {
 
         // TODO and model weitergeben

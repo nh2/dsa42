@@ -191,9 +191,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                controller.callButtonClicked();
                 System.out.print(getActPlayer().getName());
                 System.out.println(" hat gecallt.");
+                controller.callButtonClicked();
+
             }
 
         };
@@ -218,9 +219,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                controller.foldButtonClicked();
                 System.out.print(getActPlayer().getName());
                 System.out.println(" hat gefoldet.");
+                controller.foldButtonClicked();
+
             }
 
         };
@@ -229,9 +231,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                controller.checkButtonClicked();
                 System.out.print(getActPlayer().getName());
                 System.out.println("hat gecheckt.");
+                controller.checkButtonClicked();
+
             }
 
         };
@@ -247,9 +250,10 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + " Wie viel wollen Sie noch extra drauflegen?");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
-                controller.reRaiseButtonClicked(longBetrag);
                 System.out.print(getActPlayer().getName());
                 System.out.println("hat geReRaised.");
+                controller.reRaiseButtonClicked(longBetrag);
+
             }
 
         };
