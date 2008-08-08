@@ -39,16 +39,6 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    // TODO add methods to make a move, etc. that can be called by clients
-
-    /**
-     * Updates the shared state and thus send changes to all clients.
-     */
-    private void updateSharedState()
-    {
-        sharedState.setModel(gameModel);
-    }
-
     public void drawCard(BodyObject client)
     {
         Player player = getPlayer(client);
@@ -56,6 +46,14 @@ public class Manager extends GameManager
         gameModel.drawCard(player);
 
         updateSharedState();
+    }
+
+    /**
+     * Updates the shared state and thus send changes to all clients.
+     */
+    private void updateSharedState()
+    {
+        sharedState.setModel(gameModel);
     }
 
     private Player getPlayer(BodyObject client)

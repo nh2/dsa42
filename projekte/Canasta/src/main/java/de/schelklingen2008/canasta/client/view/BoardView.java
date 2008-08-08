@@ -131,18 +131,21 @@ public class BoardView extends JPanel implements GameChangeListener
         paintTalon(gfx);
         paintDiscard(gfx);
         Player[] players = getGameModel().getPlayers();
+
+        int localPlayerNumber = controller.getGameContext().getLocalPlayerNumber();
+
         switch (players.length)
         {
             case 2:
-                paintHandBottom(gfx, 0);
-                paintHandTop(gfx, 1);
+                paintHandBottom(gfx, localPlayerNumber);
+                paintHandTop(gfx, (localPlayerNumber + 1) % 2);
                 break;
 
             case 4:
-                paintHandBottom(gfx, 0);
-                paintHandRight(gfx, 1);
-                paintHandTop(gfx, 2);
-                paintHandLeft(gfx, 3);
+                paintHandBottom(gfx, localPlayerNumber);
+                paintHandRight(gfx, (localPlayerNumber + 1) % 4);
+                paintHandTop(gfx, (localPlayerNumber + 2) % 4);
+                paintHandLeft(gfx, (localPlayerNumber + 3) % 4);
         }
 
         paintOutlays(gfx);
@@ -274,18 +277,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintOutlays(Graphics2D gfx)
     {
-        // CardStack cardStack = new CardStack();
-        // cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
-        // cardStack.add(new Card(Rank.ACE, Suit.DIAMONDS));
-        // cardStack.add(new Card(Rank.ACE, Suit.CLUBS));
-        // cardStack.add(new Card(Rank.ACE, Suit.HEARTS));
-        // cardStack.add(new Card(Rank.JOKER, null));
-        // cardStack.add(new Card(Rank.TWO, Suit.DIAMONDS));
-        // cardStack.add(new Card(Rank.TWO, Suit.SPADES));
-        // gfx.translate(30, 30);
-        // paintCardStack(gfx, cardStack);
-        // gfx.translate(-30, -30);
-
         Player[] players = getGameModel().getPlayers();
 
         int outlayWidth;
@@ -383,7 +374,6 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                      + players.length
                                                                      + " players not allowed at the moment."));
         }
-
     }
 
     private void paintOutlay(Graphics2D gfx, Player player, int width, int height)
