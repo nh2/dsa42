@@ -16,7 +16,6 @@ import de.schelklingen2008.risiko.client.controller.Controller;
 import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.model.GameModel;
-import de.schelklingen2008.risiko.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -24,7 +23,10 @@ import de.schelklingen2008.risiko.model.Player;
 public class TurnPanel extends JPanel implements GameChangeListener
 {
 
+    // TODO turnpanel throws NullPointer
+
     private Controller             controller;
+    private String                 msgWin;
 
     private static final Polygon   TRIANGLE  = new Polygon(new int[] { 0, 12, 0 }, new int[] { 0, 6, 12 }, 3);
     private static final Ellipse2D CIRCLE    = new Ellipse2D.Float(0, 0, 12, 12);
@@ -34,6 +36,10 @@ public class TurnPanel extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
+
+        msgWin = controller.getMessage(de.schelklingen2008.risiko.client.Constants.MSG_WINNER);
+
+        gameChanged();
     }
 
     public void gameChanged()
@@ -53,18 +59,22 @@ public class TurnPanel extends JPanel implements GameChangeListener
         nameAndCountConstraints.insets.left = 10;
         nameAndCountConstraints.gridwidth = GridBagConstraints.REMAINDER;
 
-        for (int i = 0; i < getGameModel().getPlayerArray().length; i++)
+        // TODO auskommentierte Teile throw nullpointer weil player nicht init werden
+        for (int i = 0; i < 5/* getGameModel().getPlayerArray().length */; i++)
         {
-            Player player = getGameModel().valueOf(i);
+            /* Player player = getGameModel().valueOf(i); */
             JLabel turnHolderLabel = new JLabel();
-            if (getGameModel().isWinner(player)) turnHolderLabel.setText(de.schelklingen2008.risiko.client.Constants.MSG_WINNER);
-            if (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
-            add(turnHolderLabel, turnHolderConstraints);
+            turnHolderLabel.setForeground(Color.BLACK);
+            /*
+             * if (getGameModel().isWinner(player)) turnHolderLabel.setText(msgWin); if
+             * (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
+             * add(turnHolderLabel, turnHolderConstraints);
+             */
 
-            String name = getGameContext().getName(player);
-            // count = units player has in all countrys
-            int count = player.getPlayerUnits();
-            Color color = player.getPlayerColor();
+            String name = "a";/* getGameContext().getName(player); */
+            // count = number of units player has in all countrys
+            int count = i;/* player.getPlayerUnits(); */
+            Color color = Color.BLUE;/* player.getPlayerColor(); */
             JLabel nameAndCountLabel = new JLabel(name + ": " + count);
             nameAndCountLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
             add(nameAndCountLabel, nameAndCountConstraints);

@@ -168,4 +168,5 @@ public class BoardView extends JPanel implements GameChangeListener
                            getGameModel().getCountry(i).getPositionNameY() + 10);
         }
     }
+
 }
