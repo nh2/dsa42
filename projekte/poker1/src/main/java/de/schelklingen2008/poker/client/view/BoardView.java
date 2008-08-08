@@ -259,7 +259,7 @@ public class BoardView extends JPanel implements GameChangeListener
         if (model.mustCallOrReRaise(getMyIndex()) == true)
         {
             callButton.setEnabled(true);
-            reRaiseButton.Enabled(true);
+            reRaiseButton.setEnabled(true);
             foldButton.setEnabled(true);
         }
 

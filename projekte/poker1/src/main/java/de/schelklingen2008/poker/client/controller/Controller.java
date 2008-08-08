@@ -94,14 +94,19 @@ public class Controller extends GameController
         sharedState.manager.invoke("call");
     }
 
-    public void raiseButtonClicked()
+    public void raiseButtonClicked(long bet)
     {
-        sharedState.manager.invoke("raise");
+        sharedState.manager.invoke("raise", bet);
     }
 
     public void checkButtonClicked()
     {
         sharedState.manager.invoke("check");
+    }
+
+    public void reRaiseButtonClicked(long bet)
+    {
+        sharedState.manager.invoke("reRaise", bet);
     }
 
     private void updateGameContext()
