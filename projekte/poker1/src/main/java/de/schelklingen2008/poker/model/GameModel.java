@@ -228,4 +228,13 @@ public class GameModel implements Serializable
     {
         return playerList.get(actPlayerIndex).getBalance();
     }
+
+    public void nextPlayer()
+    {
+        actPlayerIndex += 1;
+        if (actPlayerIndex == playerList.size())
+        {
+            actPlayerIndex = 0;
+        }
+    }
 }

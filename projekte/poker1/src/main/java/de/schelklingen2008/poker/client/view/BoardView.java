@@ -196,7 +196,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 controller.callButtonClicked();
 
             }
-
         };
 
         ActionListener raiseListener = new ActionListener()
@@ -211,7 +210,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 System.out.println(" hat geraist.");
                 controller.raiseButtonClicked(longBetrag);
             }
-
         };
 
         ActionListener foldListener = new ActionListener()
@@ -224,7 +222,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 controller.foldButtonClicked();
 
             }
-
         };
         ActionListener checkListener = new ActionListener()
         {
@@ -236,7 +233,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 controller.checkButtonClicked();
 
             }
-
         };
 
         ActionListener reRaiseListener = new ActionListener()
@@ -255,7 +251,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 controller.reRaiseButtonClicked(longBetrag);
 
             }
-
         };
 
         callButton.addActionListener(callListener);
