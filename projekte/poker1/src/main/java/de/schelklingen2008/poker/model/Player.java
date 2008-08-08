@@ -59,6 +59,11 @@ public class Player implements Serializable
         return balance;
     }
 
+    public void setBalance(long newBalance)
+    {
+        balance = newBalance;
+    }
+
     public long getOwnBet()
     {
         return ownBet;
