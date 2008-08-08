@@ -17,6 +17,16 @@ public class CarFrame extends JFrame
 
     public CarFrame()
     {
+        setVisible(true);
+        pack();
+        try
+        {
+            auto = ImageIO.read(new File("./src/carspack/car.bmp"));
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Kann Bild nicht laden.");
+        }
 
     }
 
@@ -24,18 +34,8 @@ public class CarFrame extends JFrame
     {
 
         CarFrame f = new CarFrame();
+        f.repaint();
 
-        f.setVisible(true);
-        f.pack();
-
-        try
-        {
-            f.auto = ImageIO.read(new File("./src/carspack/car.bmp"));
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException("Kann Bild nicht laden.");
-        }
     }
 
     @Override
