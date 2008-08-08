@@ -21,12 +21,17 @@ public class Ball
         BLACK, WHITE, SOLID, STRIPED
     }
 
+    private static final double ballXDist = Math.sqrt(3) * GlobalConstants.BALL_RADIUS + 1E-4;
+    private static final double ballYDist = GlobalConstants.BALL_RADIUS + 1E-4;
+
     private static final double[] INITIAL_BALL_POSITIONS_X =
-        { 0.75d * MAX_X - 31.18d, 0.75d * MAX_X - 15.59d, 0.75d * MAX_X, 0.75d * MAX_X + 15.59d, 0.75d * MAX_X + 31.18d };
+        { 0.75d * MAX_X - 2 * ballXDist, 0.75d * MAX_X - ballXDist, 0.75d * MAX_X, 0.75d * MAX_X + ballXDist,
+         0.75d * MAX_X + 2 * ballXDist };
 
     private static final double[] INITIAL_BALL_POSITIONS_Y =
-        { 0.5d * MAX_Y - 38d, 0.5d * MAX_Y - 28.5d, 0.5d * MAX_Y - 19d, 0.5d * MAX_Y - 9.5d, 0.5d * MAX_Y,
-         0.5d * MAX_Y + 9.5d, 0.5d * MAX_Y + 19d, 0.5d * MAX_Y + 28.5d, 0.5d * MAX_Y + 38d };
+        { 0.5d * MAX_Y - 4 * ballYDist, 0.5d * MAX_Y - 3 * ballYDist, 0.5d * MAX_Y - 2 * ballYDist,
+         0.5d * MAX_Y - ballYDist, 0.5d * MAX_Y, 0.5d * MAX_Y + ballYDist, 0.5d * MAX_Y + 2 * ballYDist,
+         0.5d * MAX_Y + 3 * ballYDist, 0.5d * MAX_Y + 4 * ballYDist };
 
     public static final Vector2d[] INITIAL_BALL_POSITIONS =
         { new Vector2d(INITIAL_BALL_POSITIONS_X[0], INITIAL_BALL_POSITIONS_Y[4]),

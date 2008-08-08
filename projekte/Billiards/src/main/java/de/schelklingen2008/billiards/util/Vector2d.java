@@ -20,7 +20,7 @@ public class Vector2d
 
     public static Vector2d getPolarVector(double angle, double length)
     {
-        return new Vector2d(cos(angle) * length, sin(angle) * length, length, angle);
+        return new Vector2d(cos(angle) * length, -sin(angle) * length, length, angle);
     }
 
     @Override
@@ -82,26 +82,27 @@ public class Vector2d
     public double getAngle()
     {
 
-        if (x == 0)
+        if (Double.isNaN(angle))
         {
-            if (y == 0)
+
+            if (x == 0)
             {
-                return Double.NaN; // undefined
+                if (y != 0)
+                {
+                    angle = PI / 2; // 90°
+                }
             }
             else
             {
-                return PI / 2; // 90°
+                angle = atan(-y / x);
+                if (x < 0)
+                {
+                    angle += PI;
+                }
             }
         }
-        else
-        {
-            double result = atan(y / x);
-            if (x < 0)
-            {
-                result += PI;
-            }
-            return result;
-        }
+
+        return angle;
 
     }
 

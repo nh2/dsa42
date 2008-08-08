@@ -13,8 +13,15 @@ public class Wall
     {
         Vector2d v = p1.subtract(p2);
         angle = v.getAngle();
+        if (angle > Math.PI)
+        {
+            angle -= Math.PI;
+        }
         slope = v.getY() / v.getX();
-        yIntercept = p1.getY();
+        if (!Double.isInfinite(slope))
+        {
+            yIntercept = p1.getY() - slope * p1.getX();
+        }
 
         if (p1.getX() < p2.getX())
         {
@@ -23,8 +30,8 @@ public class Wall
         }
         else
         {
-            minX = p1.getX();
-            maxX = p2.getX();
+            minX = p2.getX();
+            maxX = p1.getX();
         }
 
         if (p1.getY() < p2.getY())
@@ -34,8 +41,8 @@ public class Wall
         }
         else
         {
-            minY = p1.getY();
-            maxY = p2.getY();
+            minY = p2.getY();
+            maxY = p1.getY();
         }
 
     }
@@ -57,12 +64,39 @@ public class Wall
 
             double x0 = ball.getPosition().getX(), y0 = ball.getPosition().getY();
 
-            double deltaY = Math.abs(slope * x0 - y0);
+            double deltaY = yIntercept + slope * x0 - y0;
 
-            double alpha = angle + Math.PI / 2 - ball.getVelocity().getAngle();
+            double deltaAngle = ball.getVelocity().getAngle() - angle;
 
-            double dist = Math.cos(-angle) * deltaY - GlobalConstants.BALL_RADIUS / Math.cos(alpha);
-            double t = dist / ball.getVelocity().getAngle();
+            if (deltaY < 0)
+            {
+                if (deltaAngle <= 0 || deltaAngle >= Math.PI)
+                {
+                    return Double.NaN;
+                }
+            }
+            else
+            {
+                if (deltaAngle >= 0 && deltaAngle <= Math.PI)
+                {
+                    return Double.NaN;
+                }
+            }
+
+            deltaY = Math.abs(deltaY);
+
+            double perpendicularAngle = angle + Math.PI / 2;
+            if (perpendicularAngle > Math.PI)
+            {
+                perpendicularAngle -= Math.PI;
+            }
+
+            double alpha = Math.abs(perpendicularAngle - ball.getVelocity().getAngle());
+
+            double perpendicularDist = Math.abs(Math.cos(perpendicularAngle - Math.PI / 2) * deltaY);
+            double dist = Math.abs((perpendicularDist - BALL_RADIUS) / Math.cos(alpha));
+
+            double t = dist / ball.getVelocity().getLength();
 
             Vector2d collisionPos = ball.getPosition().add(ball.getVelocity().scale(t));
 
@@ -92,7 +126,7 @@ public class Wall
 
         if (ball.getVelocity().getX() < 0)
         {
-            t = (minX - ball.getPosition().getX() - BALL_RADIUS) / ball.getVelocity().getX();
+            t = (minX - ball.getPosition().getX() + BALL_RADIUS) / ball.getVelocity().getX();
         }
         else if (ball.getVelocity().getX() > 0)
         {
@@ -105,8 +139,8 @@ public class Wall
 
         if (!Double.isNaN(t))
         {
-            double x = ball.getPosition().getX() - ball.getVelocity().getX() * t;
-            if (x < minX || x > maxX)
+            double y = ball.getPosition().getY() - ball.getVelocity().getY() * t;
+            if (y < minY || y > maxY)
             {
                 t = Double.NaN;
             }
@@ -126,7 +160,7 @@ public class Wall
 
         if (ball.getVelocity().getY() < 0)
         {
-            t = (minY - ball.getPosition().getY() - BALL_RADIUS) / ball.getVelocity().getY();
+            t = (minY - ball.getPosition().getY() + BALL_RADIUS) / ball.getVelocity().getY();
         }
         else if (ball.getVelocity().getY() > 0)
         {
@@ -139,8 +173,8 @@ public class Wall
 
         if (!Double.isNaN(t))
         {
-            double y = ball.getPosition().getY() - ball.getVelocity().getY() * t;
-            if (y < minY || y > maxY)
+            double x = ball.getPosition().getX() - ball.getVelocity().getX() * t;
+            if (x < minX || x > maxX)
             {
                 t = Double.NaN;
             }
@@ -183,6 +217,103 @@ public class Wall
     private void handleHorizontalWallCollision(Ball ball)
     {
         ball.setVelocity(new Vector2d(ball.getVelocity().getX(), -ball.getVelocity().getY()).scale(1 - GlobalConstants.COLLISION_IMPULSE_LOSS));
+    }
+
+    public double getSlope()
+    {
+        return slope;
+    }
+
+    public void setSlope(double slope)
+    {
+        this.slope = slope;
+    }
+
+    public double getYIntercept()
+    {
+        return yIntercept;
+    }
+
+    public void setYIntercept(double intercept)
+    {
+        yIntercept = intercept;
+    }
+
+    public double getMinX()
+    {
+        return minX;
+    }
+
+    public void setMinX(double minX)
+    {
+        this.minX = minX;
+    }
+
+    public double getMinY()
+    {
+        return minY;
+    }
+
+    public void setMinY(double minY)
+    {
+        this.minY = minY;
+    }
+
+    public double getMaxX()
+    {
+        return maxX;
+    }
+
+    public void setMaxX(double maxX)
+    {
+        this.maxX = maxX;
+    }
+
+    public double getMaxY()
+    {
+        return maxY;
+    }
+
+    public void setMaxY(double maxY)
+    {
+        this.maxY = maxY;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(maxX);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(maxY);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(minX);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(minY);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(slope);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(yIntercept);
+        result = prime * result + (int) (temp ^ temp >>> 32);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Wall other = (Wall) obj;
+        if (Double.doubleToLongBits(maxX) != Double.doubleToLongBits(other.maxX)) return false;
+        if (Double.doubleToLongBits(maxY) != Double.doubleToLongBits(other.maxY)) return false;
+        if (Double.doubleToLongBits(minX) != Double.doubleToLongBits(other.minX)) return false;
+        if (Double.doubleToLongBits(minY) != Double.doubleToLongBits(other.minY)) return false;
+        if (Double.doubleToLongBits(slope) != Double.doubleToLongBits(other.slope)) return false;
+        if (Double.doubleToLongBits(yIntercept) != Double.doubleToLongBits(other.yIntercept)) return false;
+        return true;
     }
 
 }

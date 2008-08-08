@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.model.Ball.BallType;
@@ -87,6 +88,8 @@ public class GameModel
         addBalls();
         addWalls();
 
+        walls.add(new Wall(new Vector2d(0, 200), new Vector2d(200, 0)));
+
         setUpGame();
 
     }
@@ -108,7 +111,6 @@ public class GameModel
 
         ballsOnTable.clear();
 
-        // TODO Change this
         ballsOnTable.addAll(balls);
 
         resetBalls();
@@ -122,7 +124,6 @@ public class GameModel
         {
             ball.setVelocity(Vector2d.ZERO);
         }
-        // TODO remove debugging stuff
 
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
         Collections.shuffle(tmpBalls);
@@ -181,7 +182,7 @@ public class GameModel
 
     public void processTimeStep(double deltaT)
     {
-        final double EPSILON = 0.000001d;
+        final double EPSILON = 0.0001d;
 
         if (!inMotion || deltaT < EPSILON)
         {
@@ -189,29 +190,25 @@ public class GameModel
         }
 
         double remainingTime = deltaT;
+        PriorityQueue<Collision> collisions = new PriorityQueue<Collision>();
 
         do
         {
 
-            double tCollision = Double.NaN;
-            Ball ball1 = null, ball2 = null;
-            Wall wall = null;
-
             for (int i = 0; i < ballsOnTable.size(); i++)
             {
 
-                if (ballsOnTable.get(i).isInMotion())
+                Ball ball1 = ballsOnTable.get(i);
+
+                if (ball1.isInMotion())
                 {
 
-                    for (Wall tmpWall : walls)
+                    for (Wall wall : walls)
                     {
-                        double wallCollisionTime = tmpWall.getCollisionTime(ballsOnTable.get(i));
-                        if (!Double.isNaN(wallCollisionTime)
-                            && (Double.isNaN(tCollision) || wallCollisionTime < tCollision))
+                        Collision collision = Collision.getWallCollision(ball1, wall);
+                        if (collision != null && collision.getTime() <= remainingTime)
                         {
-                            tCollision = wallCollisionTime;
-                            ball1 = ballsOnTable.get(i);
-                            wall = tmpWall;
+                            collisions.offer(collision);
                         }
                     }
 
@@ -219,29 +216,35 @@ public class GameModel
 
                 for (int j = i + 1; j < ballsOnTable.size(); j++)
                 {
-                    if (!ballsOnTable.get(i).isInMotion() && !ballsOnTable.get(j).isInMotion())
+                    Ball ball2 = ballsOnTable.get(j);
+
+                    if (!ball1.isInMotion() && !ball2.isInMotion())
                     {
                         continue;
                     }
 
-                    double ballCollisionTime = ballsOnTable.get(i).getNextBallCollision(ballsOnTable.get(j));
-
-                    if (!Double.isNaN(ballCollisionTime)
-                        && (Double.isNaN(tCollision) || ballCollisionTime < tCollision))
+                    Collision collision = Collision.getBallCollision(ball1, ball2);
+                    if (collision != null && collision.getTime() <= remainingTime)
                     {
-                        tCollision = ballCollisionTime;
-                        ball1 = ballsOnTable.get(i);
-                        ball2 = ballsOnTable.get(j);
-                        wall = null;
+                        collisions.offer(collision);
                     }
                 }
             }
 
-            if (!Double.isNaN(tCollision) && tCollision < remainingTime)
+            if (!collisions.isEmpty())
             {
-                moveBalls(tCollision);
-                remainingTime -= tCollision;
-                handleCollision(tCollision, ball1, ball2, wall);
+                double firstCollisionTime = collisions.peek().getTime();
+
+                Collision collision = collisions.poll();
+
+                moveBalls(collision.getTime());
+                remainingTime -= collision.getTime();
+
+                do
+                {
+                    collision.handle();
+                    collision = collisions.poll();
+                } while (!collisions.isEmpty() && collision.getTime() - firstCollisionTime < EPSILON);
             }
             else
             {
@@ -267,32 +270,6 @@ public class GameModel
         if (!tmpInMotion)
         {
             inMotion = false;
-        }
-
-    }
-
-    private void handleCollision(double tCollision, Ball ball1, Ball ball2, Wall wall)
-    {
-
-        if (wall != null)
-        {
-            wall.handleWallCollision(ball1);
-        }
-        else
-        {
-
-            double alpha = ball1.getPosition().subtract(ball2.getPosition()).getAngle();
-
-            Vector2d v1 = ball1.getVelocity().rotate(-alpha);
-            Vector2d v2 = ball2.getVelocity().rotate(-alpha);
-
-            double tmp = v1.getX();
-            v1 = new Vector2d(v2.getX(), v1.getY()).scale(1 - GlobalConstants.COLLISION_IMPULSE_LOSS);
-            v2 = new Vector2d(tmp, v2.getY()).scale(1 - GlobalConstants.COLLISION_IMPULSE_LOSS);
-
-            ball1.setVelocity(v1.rotate(alpha));
-            ball2.setVelocity(v2.rotate(alpha));
-
         }
 
     }

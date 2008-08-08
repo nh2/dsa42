@@ -1,6 +1,7 @@
 package de.schelklingen2008.billiards.client.view;
 
 import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
+import static de.schelklingen2008.billiards.GlobalConstants.BG_IMAGE_FILENAME;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_HEIGHT;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_WIDTH;
 import static de.schelklingen2008.billiards.GlobalConstants.STRIPE_HEIGHT;
@@ -16,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -27,6 +29,7 @@ import de.schelklingen2008.billiards.model.Ball;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Displays the main game interface (the board).
@@ -34,12 +37,14 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
+    private static final Logger logger = LoggerFactory.create();
+
     /**
      * 
      */
     private static final long serialVersionUID = -9064861386229239709L;
-    private Controller        controller;
-    private Image             bg;
+    private Controller controller;
+    private Image bg;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -71,11 +76,12 @@ public class BoardView extends JPanel implements GameChangeListener
 
         try
         {
-            bg = ImageIO.read(new File("src/main/resources/images/billiardtable.png"));
+            bg = ImageIO.read(new File(BG_IMAGE_FILENAME));
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            logger.severe(String.format("Could not open file: %s", BG_IMAGE_FILENAME));
+            throw new RuntimeException("Could not open file: %s", e);
         }
 
     }
@@ -93,7 +99,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         // TODO remove this
         ball.setVelocity(new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(ball.getPosition())
-                                                                                        .scale(2));
+                                                                                        .scale(1.5d));
         gameModel.inMotion = true;
 
         controller.startBoardProcessThread(this);
@@ -125,6 +131,9 @@ public class BoardView extends JPanel implements GameChangeListener
     private void paintBoard(Graphics2D gfx)
     {
 
+        gfx.setColor(Color.BLACK);
+        gfx.drawLine(30, 230, 230, 30);
+
         GameModel gameModel = getGameModel();
 
         for (Ball ball : gameModel.getBallsOnTable())
@@ -142,13 +151,9 @@ public class BoardView extends JPanel implements GameChangeListener
                          (int) Math.round(ball.getPosition().getY() + BORDER_HEIGHT - BALL_RADIUS),
                          (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
 
-            final int x = (int) Math.round(Math.sqrt(1
-                                                     - 0.25
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS)
-                                           * BALL_RADIUS);
+            final int x =
+                (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
+                                 * BALL_RADIUS);
             final int y = (int) Math.round(0.5 * BALL_RADIUS);
             final int angle = (int) Math.round(Math.atan((double) y / (double) x) * 180 / Math.PI);
 

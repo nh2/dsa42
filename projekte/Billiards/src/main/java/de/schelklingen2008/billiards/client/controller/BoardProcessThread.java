@@ -26,10 +26,9 @@ public class BoardProcessThread extends Thread
             long tick = System.currentTimeMillis();
 
             boardView.repaint();
-            // gameModel.processTimeStep((tick - lastTick) / 1000d);
-            for (int i = 0; i < tick - lastTick; i++)
+            for (int i = 0; i < tick - lastTick; i += 10)
             {
-                gameModel.processTimeStep(0.001d);
+                gameModel.processTimeStep(0.01d);
             }
             lastTick = tick;
 
