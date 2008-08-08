@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   sodipodi:docbase="c:\dsa"
+   sodipodi:docname="throwabletree.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="323.89603"
+     inkscape:cy="782.15511"
+     inkscape:document-units="px"
+     inkscape:current-layer="g6482"
+     inkscape:window-width="1024"
+     inkscape:window-height="742"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g5419"
+       transform="matrix(0.739019,0,0,0.738655,103.0233,-74.68399)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212891"
+         y="127.52295"
+         x="232.85251"
+         height="47.984821"
+         width="144.96478"
+         id="rect1872"
+         style="opacity:1;fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347939;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5.41391772, 5.41391772;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text5415"
+         y="158.07648"
+         x="255"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="158.07648"
+           x="255"
+           id="tspan5417"
+           sodipodi:role="line">Throwable</tspan></text>
+    </g>
+    <g
+       id="g6320"
+       transform="matrix(0.739019,0,0,0.738655,176.2002,-48.00814)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212891"
+         y="184.08406"
+         x="48.946209"
+         height="47.984821"
+         width="144.96478"
+         id="rect5426"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347939;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text5428"
+         y="214.29839"
+         x="71.807983"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="71.807983"
+           id="tspan5430"
+           sodipodi:role="line">Exception</tspan></text>
+    </g>
+    <g
+       id="g6325"
+       transform="matrix(0.739019,0,0,0.738655,313.915,-48.00814)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212891"
+         y="184.08406"
+         x="48.946209"
+         height="47.984821"
+         width="144.96478"
+         id="rect6327"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347939;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6329"
+         y="214.29839"
+         x="95.041489"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="95.041489"
+           id="tspan6331"
+           sodipodi:role="line">Error</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999964px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 328.06763,54.856816 C 328.06763,64.370286 328.06763,64.370286 328.06763,64.370286 L 266.29015,64.370286 L 266.29015,88.247216"
+       id="path6333"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.00000024px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 328.37539,64.370816 L 402.72903,64.370816 L 402.72903,88.247746"
+       id="path6335"
+       sodipodi:nodetypes="ccc" />
+    <g
+       id="g6337"
+       transform="matrix(0.739019,0,0,0.738655,46.01484,34.79926)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212934"
+         y="184.08406"
+         x="48.946251"
+         height="47.984821"
+         width="184.91646"
+         id="rect6339"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6341"
+         y="214.29839"
+         x="54.483868"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="54.483868"
+           id="tspan6343"
+           sodipodi:role="line">RuntimeException</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999964px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 150.69927,171.00497 C 150.69927,146.37944 150.69927,146.37944 150.69927,146.37944 L 265.84985,146.37944 L 265.84985,124.06256"
+       id="path6345" />
+    <g
+       id="g6398"
+       transform="matrix(0.739019,0,0,0.738655,103.5512,-36.18825)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212895"
+         y="280.18781"
+         x="432.02011"
+         height="47.984821"
+         width="205.9648"
+         id="rect6349"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347939;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6351"
+         y="310.40213"
+         x="439.11539"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="310.40213"
+           x="439.11539"
+           id="tspan6353"
+           sodipodi:role="line">VirtualMachineError</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.739019,0,0,0.738655,322.057,93.89166)"
+       id="g6357">
+      <rect
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect6359"
+         width="198.96478"
+         height="47.984821"
+         x="48.946205"
+         y="184.08406"
+         rx="5.8212895"
+         ry="5.8241539" />
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         x="56.041489"
+         y="214.29839"
+         id="text6361"><tspan
+           sodipodi:role="line"
+           id="tspan6363"
+           x="56.041489"
+           y="214.29839">HeapOverflowError</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.739019,0,0,0.738655,482.4582,93.89166)"
+       id="g6365">
+      <rect
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect6367"
+         width="198.96478"
+         height="47.984821"
+         x="48.946205"
+         y="184.08406"
+         rx="5.8212895"
+         ry="5.8241539" />
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         x="53.92017"
+         y="214.29839"
+         id="text6369"><tspan
+           sodipodi:role="line"
+           id="tspan6371"
+           x="53.92017"
+           y="214.29839">StackOverflowError</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999982px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 500.93174,170.60087 C 500.93174,145.66708 500.93174,145.66708 500.93174,145.66708 L 403.78926,145.66708 L 403.78926,123.07083"
+       id="path6355" />
+    <g
+       id="g6384"
+       transform="matrix(0.739019,0,0,0.738655,641.3286,93.89166)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212881"
+         y="184.08406"
+         x="48.946201"
+         height="47.984821"
+         width="70.464775"
+         id="rect6386"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6388"
+         y="214.29839"
+         x="75.041489"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="75.041489"
+           id="tspan6390"
+           sodipodi:role="line">...</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.00000036px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 596.99554,230.09036 C 596.99554,217.74729 596.99554,217.74729 596.99554,217.74729 L 499.8857,217.74729 L 499.8857,206.56139"
+       id="path6392" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 596.8,218.6464 C 702.46879,218.6464 702.65516,218.6464 702.65516,218.6464 L 702.65516,230.10936"
+       id="path6394" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.00000012px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 431.85287,230.05282 C 431.85287,217.74621 431.85287,217.74621 431.85287,217.74621 L 499.80369,217.74621"
+       id="path6396" />
+    <g
+       transform="matrix(0.739019,0,0,0.738655,89.48908,199.398)"
+       id="g6403">
+      <g
+         id="g6411"
+         transform="translate(-148.4924,-142.8356)">
+        <rect
+           ry="5.8241539"
+           rx="5.8212872"
+           y="184.08406"
+           x="48.946182"
+           height="47.984821"
+           width="214.52104"
+           id="rect6405"
+           style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347891;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <text
+           id="text6407"
+           y="214.29839"
+           x="56.041489"
+           style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+           xml:space="preserve"><tspan
+             y="214.29839"
+             x="56.041489"
+             id="tspan6409"
+             sodipodi:role="line">NullPointerException</tspan></text>
+      </g>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.00000048px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 95.169037,229.43839 C 95.169037,217.1085 95.169037,217.1085 95.169037,217.1085 L 150.34188,217.1085 L 150.34188,205.93452"
+       id="path6416" />
+    <g
+       id="g6418"
+       transform="matrix(0.739019,0,0,0.738655,148.9901,93.89166)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212881"
+         y="184.08406"
+         x="48.946201"
+         height="47.984821"
+         width="70.464775"
+         id="rect6420"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6422"
+         y="214.29839"
+         x="75.041489"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="75.041489"
+           id="tspan6424"
+           sodipodi:role="line">...</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999946px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 150.58202,217.09867 C 211.46084,217.09867 211.46084,217.09867 211.46084,217.09867 L 211.46084,229.82992"
+       id="path6426" />
+    <g
+       transform="matrix(0.739019,0,0,0.738655,302.3603,140.3056)"
+       id="g6428">
+      <g
+         id="g6430"
+         transform="translate(-148.4924,-142.8356)">
+        <rect
+           ry="5.8241539"
+           rx="5.8212833"
+           y="184.08406"
+           x="48.946159"
+           height="47.984821"
+           width="132.49657"
+           id="rect6432"
+           style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347843;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <text
+           id="text6434"
+           y="214.29839"
+           x="56.041489"
+           style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+           xml:space="preserve"><tspan
+             y="214.29839"
+             x="56.041489"
+             id="tspan6436"
+             sodipodi:role="line">IOException</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="matrix(0.739019,0,0,0.738655,282.7731,257.3768)"
+       id="g6438">
+      <g
+         id="g6440"
+         transform="translate(-148.4924,-142.8356)">
+        <rect
+           ry="5.8241539"
+           rx="5.8212891"
+           y="184.08406"
+           x="48.946201"
+           height="47.984821"
+           width="237.52113"
+           id="rect6442"
+           style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <text
+           id="text6444"
+           y="214.29839"
+           x="56.041489"
+           style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+           xml:space="preserve"><tspan
+             y="214.29839"
+             x="56.041489"
+             id="tspan6446"
+             sodipodi:role="line">FileNotFoundException</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g6458"
+       transform="matrix(0.739019,0,0,0.738655,364.0117,151.8706)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212881"
+         y="184.08406"
+         x="48.946201"
+         height="47.984821"
+         width="70.464775"
+         id="rect6460"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6462"
+         y="214.29839"
+         x="75.041489"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="75.041489"
+           id="tspan6464"
+           sodipodi:role="line">...</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 265.74955,146.37875 C 278.69613,146.37875 278.69613,146.37875 278.69613,146.37875 L 278.69613,171.03598"
+       id="path6466" />
+    <g
+       id="g6468"
+       transform="matrix(0.739019,0,0,0.738655,302.0755,34.79926)">
+      <rect
+         ry="5.8241539"
+         rx="5.8212881"
+         y="184.08406"
+         x="48.946201"
+         height="47.984821"
+         width="70.464775"
+         id="rect6470"
+         style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.35347927;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text6472"
+         y="214.29839"
+         x="75.041489"
+         style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         xml:space="preserve"><tspan
+           y="214.29839"
+           x="75.041489"
+           id="tspan6474"
+           sodipodi:role="line">...</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999982px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 278.61055,146.39129 C 363.63291,146.39129 363.63291,146.39129 363.63291,146.39129 L 363.63291,170.80919"
+       id="path6476" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.00000012px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 301.47534,287.52619 C 301.47534,263.68506 301.47534,274.63477 301.47534,274.63477 L 277.20365,274.63477 L 277.20365,206.03786"
+       id="path6478"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.99999958px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 301.4619,274.63234 C 425.89635,274.63234 425.89635,274.63234 425.89635,274.63234 L 425.89635,288.28693"
+       id="path6480" />
+    <g
+       transform="translate(-40.21437,396.1213)"
+       id="g6482">
+      <g
+         id="g6484"
+         transform="matrix(0.739019,0,0,0.738655,67.86329,-244.2507)">
+        <rect
+           ry="5.8241539"
+           rx="5.8212924"
+           y="184.08406"
+           x="48.946224"
+           height="47.984821"
+           width="175.52122"
+           id="rect6486"
+           style="fill:white;fill-opacity:1;stroke:black;stroke-width:1.3534795;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <text
+           id="text6488"
+           y="214.29839"
+           x="56.041489"
+           style="font-size:20px;font-style:normal;font-weight:bold;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+           xml:space="preserve"><tspan
+             y="214.29839"
+             x="56.041489"
+             id="tspan6490"
+             sodipodi:role="line">SocketException</tspan></text>
+      </g>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 317.19954,-121.47965 C 168.86454,-121.47965 168.86454,-121.47965 168.86454,-121.47965 L 168.86454,-108.5763"
+         id="path6492" />
+    </g>
+  </g>
+</svg>
