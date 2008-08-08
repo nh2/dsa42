@@ -29,7 +29,8 @@ import de.schelklingen2008.util.LoggerFactory;
 /**
  * Handles the client side of the game.
  */
-public class Controller extends GameController {
+public class Controller extends GameController
+{
 
     private static final Logger      sLogger         = LoggerFactory.create();
 
@@ -42,7 +43,8 @@ public class Controller extends GameController {
     private ToyBoxContext            toyBoxContext;
 
     @Override
-    public void init(CrowdContext crowdContext, PlaceConfig placeConfig) {
+    public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
+    {
         sLogger.finer("trace");
 
         toyBoxContext = (ToyBoxContext) crowdContext;
@@ -51,13 +53,15 @@ public class Controller extends GameController {
     }
 
     @Override
-    protected PlaceView createPlaceView(CrowdContext crowdContext) {
+    protected PlaceView createPlaceView(CrowdContext crowdContext)
+    {
         sLogger.finer("trace");
         return new GamePanel(this);
     }
 
     @Override
-    public void didLeavePlace(PlaceObject placeObject) {
+    public void didLeavePlace(PlaceObject placeObject)
+    {
         super.didLeavePlace(placeObject);
         sLogger.finer("trace");
 
@@ -65,7 +69,8 @@ public class Controller extends GameController {
     }
 
     @Override
-    public void willEnterPlace(PlaceObject placeObject) {
+    public void willEnterPlace(PlaceObject placeObject)
+    {
         sLogger.finer("trace");
 
         sharedState = (SharedState) placeObject;
@@ -74,11 +79,13 @@ public class Controller extends GameController {
         super.willEnterPlace(placeObject);
     }
 
-    public void leaveButtonClicked() {
+    public void leaveButtonClicked()
+    {
         toyBoxContext.getLocationDirector().moveBack();
     }
 
-    private void updateGameContext() {
+    private void updateGameContext()
+    {
         if (sharedState == null) return;
         if (sharedState.getModel() == null) return;
 
@@ -88,71 +95,88 @@ public class Controller extends GameController {
         fireGameChange();
     }
 
-    public void addChangeListener(GameChangeListener listener) {
+    public void addChangeListener(GameChangeListener listener)
+    {
         changeListeners.add(listener);
     }
 
-    public void removeChangeListeners() {
+    public void removeChangeListeners()
+    {
         changeListeners.clear();
     }
 
-    private void fireGameChange() {
+    private void fireGameChange()
+    {
         for (GameChangeListener listener : changeListeners)
             listener.gameChanged();
     }
 
-    private MessageBundle getMsgBundle() {
+    private MessageBundle getMsgBundle()
+    {
         return toyBoxContext.getMessageManager().getBundle(Constants.BUNDLE_NAME);
     }
 
-    public String getMessage(String key) {
+    public String getMessage(String key)
+    {
         return getMsgBundle().get(key);
     }
 
-    public GameContext getGameContext() {
+    public GameContext getGameContext()
+    {
         return gameContext;
     }
 
-    public ToyBoxContext getToyBoxContext() {
+    public ToyBoxContext getToyBoxContext()
+    {
         return toyBoxContext;
     }
 
-    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener {
+    private class SharedStateListener implements AttributeChangeListener, SetListener, ElementUpdateListener
+    {
 
-        public void attributeChanged(AttributeChangedEvent event) {
+        public void attributeChanged(AttributeChangedEvent event)
+        {
             updateGameContext();
         }
 
-        public void elementUpdated(ElementUpdatedEvent event) {
+        public void elementUpdated(ElementUpdatedEvent event)
+        {
             updateGameContext();
         }
 
-        public void entryAdded(EntryAddedEvent event) {
+        public void entryAdded(EntryAddedEvent event)
+        {
             updateGameContext();
         }
 
-        public void entryRemoved(EntryRemovedEvent event) {
+        public void entryRemoved(EntryRemovedEvent event)
+        {
             updateGameContext();
         }
 
-        public void entryUpdated(EntryUpdatedEvent event) {
+        public void entryUpdated(EntryUpdatedEvent event)
+        {
             updateGameContext();
         }
     }
 
-    public void foldButtonClicked() {
+    public void foldButtonClicked()
+    {
         sharedState.manager.invoke("fold");
     }
 
-    public void checkButtonClicked() {
+    public void checkButtonClicked()
+    {
         sharedState.manager.invoke("check");
     }
 
-    public void betButtonClicked() {
-        sharedState.manager.invoke("bet", 10);
+    public void betButtonClicked(String betFieldWert)
+    {
+        sharedState.manager.invoke("bet", betFieldWert);
     }
 
-    public void raiseButtonClicked() {
+    public void raiseButtonClicked()
+    {
         sharedState.manager.invoke("raise", 10);
     }
 }

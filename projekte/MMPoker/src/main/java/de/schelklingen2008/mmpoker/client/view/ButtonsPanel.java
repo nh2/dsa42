@@ -13,22 +13,27 @@ import javax.swing.JTextField;
 import de.schelklingen2008.mmpoker.client.controller.Controller;
 import de.schelklingen2008.mmpoker.client.controller.GameChangeListener;
 
-public class ButtonsPanel extends JPanel implements ActionListener, GameChangeListener {
+public class ButtonsPanel extends JPanel implements ActionListener, GameChangeListener
+{
 
     private Controller controller;
+    JTextField         betField;
 
-    public ButtonsPanel(Controller pController) {
+    public ButtonsPanel(Controller pController)
+    {
         controller = pController;
         controller.addChangeListener(this);
         gameChanged();
     }
 
-    public void actionPerformed(ActionEvent e) {
-        controller.betButtonClicked();
+    public void actionPerformed(ActionEvent e)
+    {
+        controller.betButtonClicked(betField.getText());
         controller.raiseButtonClicked();
     }
 
-    public void gameChanged() {
+    public void gameChanged()
+    {
         removeAll();
 
         JButton betButton = new JButton("bet");
@@ -36,20 +41,26 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
         JButton raiseButton = new JButton("raise");
         raiseButton.addActionListener(this);
         JButton foldButton = new JButton("fold");
-        foldButton.addActionListener(new ActionListener() {
+        foldButton.addActionListener(new ActionListener()
+        {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 controller.foldButtonClicked();
             }
         });
         JButton checkButton = new JButton("check");
-        checkButton.addActionListener(new ActionListener() {
+        checkButton.addActionListener(new ActionListener()
+        {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 controller.checkButtonClicked();
             }
         });
-        JTextField betField = new JTextField(controller.getGameContext().getGameModel().autoErgaenzen());
+
+        betField = new JTextField(controller.getGameContext().getGameModel().autoErgaenzen());
+
         betField.setMaximumSize(new Dimension(100, 25));
         betField.setPreferredSize(new Dimension(100, 25));
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
