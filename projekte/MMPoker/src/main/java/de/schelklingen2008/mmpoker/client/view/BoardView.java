@@ -121,8 +121,24 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.black);
-        gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 420, 700, null);
-        gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()], 350, 700, null);
+        if (getGameModel().getAmZug().isNochDabei())
+        {
+            // zeichne
+            gfx.drawImage(
+                          cardImages[getGameModel().getAmZug().getHandblatt()[0].getKartentyp().ordinal()][getGameModel().getAmZug()
+                                                                                                                         .getHandblatt()[0].getKartenwert()
+                                                                                                                                           .ordinal()],
+                          385, 350, null);
+            gfx.drawImage(
+                          cardImages[getGameModel().getAmZug().getHandblatt()[1].getKartentyp().ordinal()][getGameModel().getAmZug()
+                                                                                                                         .getHandblatt()[1].getKartenwert()
+                                                                                                                                           .ordinal()],
+                          385, 350, null);
+        }
+        else
+        {
+            // kartenrücken zeichnen
+        }
 
     }
 

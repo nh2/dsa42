@@ -35,7 +35,7 @@ public class GameModel implements Serializable
         // Geld verteilen ende
         Spieler spieler1 = new Spieler();
         getSpielerliste().add(0, spieler1);
-        amZug = spieler1;
+        setAmZug(spieler1);
         Kartenstapel spielKarten = new Kartenstapel();
 
         // Karten aufs Spielfeld legen
@@ -49,9 +49,13 @@ public class GameModel implements Serializable
         {
             spielerliste.get(i).setWasfuernBlind(Blind.NICHTS);
         }
-        spielerliste.get(spielerliste.size()).setWasfuernBlind(Blind.DEALER);
+        spielerliste.get(spielerliste.size() - 1).setWasfuernBlind(Blind.DEALER);
         spielerliste.get(0).setWasfuernBlind(Blind.SMALLBLIND);
-        spielerliste.get(1).setWasfuernBlind(Blind.BIGBLIND);
+        if (spielerliste.size() > 1)
+        {
+            spielerliste.get(1).setWasfuernBlind(Blind.BIGBLIND);
+        }
+
         // Blinds Setzen ende
 
     }
@@ -59,6 +63,26 @@ public class GameModel implements Serializable
     public void RundeWiederholen()
     {
         // blinds verschieben, karten ausgeben, gewinner ermitteln
+        // Blinds verschieben
+        boolean b = true;
+        int i = 0;
+        while (b)
+        {
+
+            if (spielerliste.get(i).getWasfuernBlind() == Blind.DEALER)
+            {
+                spielerliste.get(i).setWasfuernBlind(Blind.NICHTS);
+                spielerliste.get(istBeimLetzten(i + 1)).setWasfuernBlind(Blind.DEALER);
+                spielerliste.get(istBeimLetzten(i + 2)).setWasfuernBlind(Blind.SMALLBLIND);
+                spielerliste.get(istBeimLetzten(i + 3)).setWasfuernBlind(Blind.BIGBLIND);
+                b = false;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        // Blinds verschieben ende
 
     }
 
@@ -66,7 +90,7 @@ public class GameModel implements Serializable
     { // Ergänzt fehlenden Betrag im Wettkästchen des Spielers zur aktuellen
 
         // Wettsumme.
-        return "" + (getPot() - amZug.getWettsumme());
+        return "" + (getPot() - getAmZug().getWettsumme());
 
     }
 
@@ -136,14 +160,38 @@ public class GameModel implements Serializable
         System.out.println("Es funzt!!!");
     }
 
-    public void check()
+    public void check(Spieler client)
     {
         // sendet dem Server die Aktion
     }
 
-    public void fold()
+    public void fold(Spieler client)
     {
-        // sendet dem Server die Aktion
+        client.setNochDabei(false);
     }
 
+    public int istBeimLetzten(int i)
+    {
+        if (spielerliste.get(i).equals(spielerliste.get(spielerliste.size())))
+        {
+            i = 0;
+            return 0;
+
+        }
+        else
+        {
+            return i;
+        }
+
+    }
+
+    public void setAmZug(Spieler amZug)
+    {
+        this.amZug = amZug;
+    }
+
+    public Spieler getAmZug()
+    {
+        return amZug;
+    }
 }

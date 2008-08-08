@@ -10,6 +10,8 @@ public class Spieler implements Serializable
     private Blind        wasfuernBlind;
     private int          wettsumme;
     private String       name;
+    private Blatt        handkarten;
+    private boolean      nochDabei;
 
     public Spieler()
     {
@@ -64,6 +66,26 @@ public class Spieler implements Serializable
     public Blind getWasfuernBlind()
     {
         return wasfuernBlind;
+    }
+
+    public void setHandblatt(Spielkarte[] handblatt)
+    {
+        this.handblatt = handblatt;
+    }
+
+    public Spielkarte[] getHandblatt()
+    {
+        return handblatt;
+    }
+
+    public void setNochDabei(boolean nochDabei)
+    {
+        this.nochDabei = nochDabei;
+    }
+
+    public boolean isNochDabei()
+    {
+        return nochDabei;
     }
 
 }

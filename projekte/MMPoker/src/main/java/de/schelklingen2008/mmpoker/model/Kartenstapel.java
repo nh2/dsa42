@@ -14,7 +14,7 @@ public class Kartenstapel implements Serializable
     public Spielkarte zufallsKarte()
     {
         random = new Random();
-        int zufall = random.nextInt(52);
+        int zufall = random.nextInt(49);
         Spielkarte zufallk = kartenstapel.get(zufall);
         kartenstapel.remove(zufall);
         return zufallk;
