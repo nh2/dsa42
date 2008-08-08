@@ -55,6 +55,15 @@ public class Tile implements Serializable
 
     }
 
+    public void turnLeft(Tile pT)
+    {
+        left = getUp();
+        up = getRight();
+        down = getLeft();
+        right = getDown();
+
+    }
+
     public TreasureCard getTC()
     {
         return tc;
