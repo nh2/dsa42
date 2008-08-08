@@ -222,13 +222,20 @@ public class GameModel implements Serializable
         turnHolder = other.turnHolder;
     }
 
-    public Tile rechtsDrehen(Tile pT){
-        if (pT.isCross() == true) return pT;
-        if (pT.isCurve1()) == true) pT.
-        
-        
-        
-        
+    public Tile rechtsDrehen(Tile pT)
+    {
+        pT.turnRight(pT);
+
+        return pT;
+
+    }
+
+    public Tile linksDrehen(Tile pT)
+    {
+        pT.turnLeft(pT);
+
+        return pT;
+
     }
 
     private void advanceTurnHolder()
