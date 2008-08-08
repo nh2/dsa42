@@ -45,11 +45,10 @@ public class GameContext
     public void setPlayers(String[] names)
     {
         playerTypeNames.clear();
-        playerTypeNames.put(PlayerType.valueOf(0), names[0]);
-        playerTypeNames.put(PlayerType.valueOf(1), names[1]);
-        playerTypeNames.put(PlayerType.valueOf(2), names[2]);
-        playerTypeNames.put(PlayerType.valueOf(3), names[3]);
-
+        for (int i = 0; i < names.length; i++)
+        {
+            playerTypeNames.put(PlayerType.valueOf(i), names[i]);
+        }
     }
 
     public int getNoOfPlayers()
