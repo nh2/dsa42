@@ -241,7 +241,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:");
+                String s = javax.swing.JOptionPane.showInputDialog("Die "
+                                                                   + model.getHighestBet()
+                                                                   + " Euro wurden bereits in den Pot gezahlt. \n"
+                                                                   + " Wie viel wollen Sie noch extra drauflegen?");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
                 controller.reRaiseButtonClicked(longBetrag);
@@ -285,6 +288,8 @@ public class BoardView extends JPanel implements GameChangeListener
         myButtonPanel.add(raiseButton);
         myButtonPanel.add(Box.createVerticalStrut(5));
         myButtonPanel.add(checkButton);
+        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(reRaiseButton);
         myButtonPanel.add(Box.createVerticalStrut(5));
 
     }
