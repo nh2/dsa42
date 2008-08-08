@@ -41,6 +41,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     public PlayerPanel(Controller controller)
 
     {
+
+        JPanel PlayerPanel = new JPanel();
         this.controller = controller;
         controller.addChangeListener(this);
 
@@ -88,7 +90,6 @@ public class PlayerPanel extends JPanel implements GameChangeListener
             throw new RuntimeException("Kann Bild nicht laden.", e);
 
         }
-        JPanel Zeug = new JPanel();
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
         drehButtons.add(new Button("rechts drehen"));
@@ -99,19 +100,19 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
 
-        Zeug.add(linsert);
-        add(Zeug, BorderLayout.NORTH);
+        PlayerPanel.add(linsert);
+        add(PlayerPanel, BorderLayout.NORTH);
 
-        JPanel Zeug2 = new JPanel();
-        JPanel Zeug3 = new JPanel();
+        JPanel Cards = new JPanel();
+        Cards.setLayout(new BoxLayout(Cards, BoxLayout.PAGE_AXIS));
 
-        Zeug2.add(searchThisCard);
-        Zeug3.add(foundCard);
+        JPanel SearchThisCard = new JPanel();
+        JPanel FoundCard = new JPanel();
 
-        add(Zeug2, BorderLayout.SOUTH);
-        add(Zeug3, BorderLayout.EAST);
-        BoardView b = new BoardView(controller);
-        add(b, BorderLayout.CENTER);
+        Cards.SearchThisCard.add(searchThisCard);
+        FoundCard.add(foundCard);
+
+        add(Cards, BorderLayout.EAST);
 
     }
 
