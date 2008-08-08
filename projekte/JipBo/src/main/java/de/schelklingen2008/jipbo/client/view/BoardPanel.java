@@ -47,23 +47,11 @@ public class BoardPanel extends JPanel
                     {
                         CardPanel cardPanel = (CardPanel) e.getComponent();
                         cardPanel.setBorder();
-                        System.out.println(cardPanel.getValue());
-                        if (isDrawPile())
-                        {
-                            System.out.println("Hand");
-                        }
-                        else if (isPublicCards())
-                        {
-                            System.out.println("Ablegestapel");
-                        }
-                        else if (isMyBoardPanel())
-                        {
-                            System.out.println("Meine Karten");
-                        }
                         if (!isPublicCards())
                         {
                             controller.setSelectedCard(isDrawPile(), cardPanel.getValue());
                         }
+                        System.out.println(controller.getSelectedCardIndex());
                     }
                 });
             }

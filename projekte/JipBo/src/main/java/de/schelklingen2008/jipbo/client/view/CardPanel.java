@@ -1,5 +1,6 @@
 package de.schelklingen2008.jipbo.client.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class CardPanel extends JPanel
@@ -72,7 +74,7 @@ public class CardPanel extends JPanel
         Graphics2D gfx = (Graphics2D) g;
         if (mBorder)
         {
-            // setBorder();
+            setBorder(BorderFactory.createLineBorder(Color.RED));
         }
         if (mRotate) gfx.rotate(-Math.PI / 24);
 
