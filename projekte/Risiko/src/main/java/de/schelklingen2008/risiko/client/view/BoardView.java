@@ -75,9 +75,21 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         getGameModel().setAllCountriesUnselected();
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
+        if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
+        {
 
-        getGameModel().getCountryByColor(c).setSelected(true);
-        controller.setSelected(getGameModel().getCountryByColor(c));
+            if (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
+            {
+                getGameModel().getCountrybyColor(c).setUnits(getGameModel().getCountrybyColor(c).getUnits() + 1);
+                getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() - 1);
+            }
+
+        }
+        else
+        {
+            controller.setMine(getGameModel().getCountrybyColor(c), getGameContext().getMyPlayer().getPlayerIndex());
+        }
+
         repaint();
     }
 
@@ -112,6 +124,7 @@ public class BoardView extends JPanel implements GameChangeListener
     public void gameChanged()
     {
         // System.out.println(getGameModel().getCountry(0).isSelected());
+
         repaint();
     }
 

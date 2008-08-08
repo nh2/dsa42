@@ -10,7 +10,7 @@ public class GameModel implements Serializable
 {
 
     private Country[]       c = new Country[30];
-    private static Player[] p;
+    private static Player[] p = new Player[2];  // TODO variabel machen
     private Player          turnholder;
     private int             player;
 
@@ -23,7 +23,10 @@ public class GameModel implements Serializable
 
     public Player valueOf(int playerIndex)
     {
+
+        // TODO Auto-generated method stub
         return p[playerIndex];
+
     }
 
     public Country[] getCountryArray()
@@ -101,7 +104,7 @@ public class GameModel implements Serializable
         turnholder = p[player++];
     }
 
-    public Country getCountryByColor(Color pc)
+    public Country getCountrybyColor(Color pc)
     {
         for (int i = 0; i < 30; i++)
         {

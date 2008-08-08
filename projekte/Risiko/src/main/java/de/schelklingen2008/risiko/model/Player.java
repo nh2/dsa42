@@ -13,6 +13,7 @@ public class Player implements Serializable
     private int    units;
     private int    index;
     private Color  c;
+    private int    unitstoset;
 
     public Player(String pName, int pIndex, Color pColor)
     {
@@ -20,6 +21,16 @@ public class Player implements Serializable
         units = 0;
         index = pIndex;
         c = pColor;
+    }
+
+    public int getUnitsToSet()
+    {
+        return unitstoset;
+    }
+
+    public void getUnitsToSet(int units)
+    {
+        unitstoset = units;
     }
 
     public String getPlayerName()

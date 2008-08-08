@@ -50,10 +50,10 @@ public class Manager extends GameManager
         return gameModel.valueOf(getPlayerIndex(client.username));
     }
 
-    public void setSelected(BodyObject client, int index)
+    public void setMine(BodyObject client, int index, int playerindex)
     {
-        gameModel = new GameModel();
-        gameModel.getCountry(index).setSelected(true);
+
+        gameModel.getCountry(index).setOccupier(gameModel.valueOf(playerindex));
         updateSharedState();
     }
 }

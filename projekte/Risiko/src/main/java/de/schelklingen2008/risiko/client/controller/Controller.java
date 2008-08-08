@@ -53,9 +53,9 @@ public class Controller extends GameController
         super.init(crowdContext, placeConfig);
     }
 
-    public void setSelected(Country c)
+    public void setMine(Country c, int i)
     {
-        sharedState.manager.invoke("setSelected", c.getIndex());
+        sharedState.manager.invoke("setMine", c.getIndex(), i);
     }
 
     @Override
