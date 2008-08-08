@@ -208,4 +208,24 @@ public class GameModel implements Serializable
         }
         return false;
     }
+
+    public long getMinBet()
+    {
+        long minBet = smallBlind * 2;
+        long callValue = highestBet - playerList.get(actPlayerIndex).getOwnBet();
+        if (callValue > 0)
+        {
+            long actBal = playerList.get(actPlayerIndex).getBalance() - callValue;
+            if (minBet > actBal)
+            {
+                return 0;
+            }
+        }
+        return minBet;
+    }
+
+    public long getMaxBet()
+    {
+        return playerList.get(actPlayerIndex).getBalance();
+    }
 }
