@@ -31,7 +31,11 @@ public class Manager extends GameManager
     {
         super.gameWillStart();
 
-        gameModel = new GameModel();
+        String[] names = new String[getPlayerCount()];
+        for (int i = 0; i < names.length; i++)
+            names[i] = getPlayer(i).username.toString();
+
+        gameModel = new GameModel(names);
         updateSharedState();
     }
 

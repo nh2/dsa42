@@ -17,8 +17,12 @@ public class GameModel implements Serializable
     private List<Spieler> spielerliste = new ArrayList<Spieler>();
     private Spielstadien  spielstadium;
 
-    public GameModel()
+    public GameModel(String[] names)
     {
+        for (int i = 0; i < names.length; i++)
+        {
+            spielerliste.add(new Spieler(names[i]));
+        }
         pot = 0;
         spielfeld = new Spielkarte[5];
         spielstadium = Spielstadien.FLOP;
@@ -35,9 +39,7 @@ public class GameModel implements Serializable
             iterator.next().setWettsumme(5000);
         }// Geld verteilen ende
 
-        Spieler spieler1 = new Spieler();
-        getSpielerliste().add(0, spieler1);
-        setAmZug(spieler1);
+        setAmZug(spielerliste.get(0));
         Kartenstapel spielKarten = new Kartenstapel();
 
         // Karten aufs Spielfeld legen

@@ -2,7 +2,8 @@ package de.schelklingen2008.mmpoker.model;
 
 import java.io.Serializable;
 
-public class Spieler implements Serializable {
+public class Spieler implements Serializable
+{
 
     private Spielkarte[] handblatt;
     private int          geld;
@@ -13,7 +14,8 @@ public class Spieler implements Serializable {
     private Blatt        handkarten;
     private boolean      nochDabei;
 
-    public Spieler() {
+    public Spieler(String name)
+    {
         setGeld(0);
         setWasfuernBlind(Blind.NICHTS);
         Spielkarte[] handblatt = new Spielkarte[2];
@@ -21,56 +23,69 @@ public class Spieler implements Serializable {
         name = "DefaultSpieler";
     }
 
-    public int getWettsumme() {
+    public int getWettsumme()
+    {
 
         return wettsumme;
     }
 
-    public void setWettsumme(int wettbetrag) {
+    public void setWettsumme(int wettbetrag)
+    {
         wettsumme = wettbetrag;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public Blatt blattErmitteln() { // Kartenwert, Blatt, Höchste Karte
+    public Blatt blattErmitteln()
+    { // Kartenwert, Blatt, Höchste Karte
         return null;
     }
 
-    public void setGeld(int geld) {
+    public void setGeld(int geld)
+    {
         this.geld = geld;
     }
 
-    public int getGeld() {
+    public int getGeld()
+    {
         return geld;
     }
 
-    public void setWasfuernBlind(Blind wasfuernBlind) {
+    public void setWasfuernBlind(Blind wasfuernBlind)
+    {
         this.wasfuernBlind = wasfuernBlind;
     }
 
-    public Blind getWasfuernBlind() {
+    public Blind getWasfuernBlind()
+    {
         return wasfuernBlind;
     }
 
-    public void setHandblatt(Spielkarte[] handblatt) {
+    public void setHandblatt(Spielkarte[] handblatt)
+    {
         this.handblatt = handblatt;
     }
 
-    public Spielkarte[] getHandblatt() {
+    public Spielkarte[] getHandblatt()
+    {
         return handblatt;
     }
 
-    public void setNochDabei(boolean nochDabei) {
+    public void setNochDabei(boolean nochDabei)
+    {
         this.nochDabei = nochDabei;
     }
 
-    public boolean isNochDabei() {
+    public boolean isNochDabei()
+    {
         return nochDabei;
     }
 

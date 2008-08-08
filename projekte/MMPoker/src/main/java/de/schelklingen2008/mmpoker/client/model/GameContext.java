@@ -18,7 +18,7 @@ public class GameContext
     private static final Logger sLogger     = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel           gameModel   = new GameModel();
+    private GameModel           gameModel;
 
     /** Is the name of the player playing in this client. */
     private String              myName;

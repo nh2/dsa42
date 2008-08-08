@@ -2,7 +2,7 @@ package de.schelklingen2008.mmpoker.model;
 
 import java.io.Serializable;
 
-public class Blatt extends GameModel implements Serializable
+public class Blatt implements Serializable
 {
 
     Kartenwert blattWert;
