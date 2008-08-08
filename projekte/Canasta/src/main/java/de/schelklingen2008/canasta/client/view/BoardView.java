@@ -91,12 +91,12 @@ public class BoardView extends JPanel implements GameChangeListener
                 }
                 else if (area.getName().equals("HandCard"))
                 {
-                    sLogger.info("pressed HandCard");
+                    sLogger.info("pressed HandCard " + area.getAreaNumber());
                     // controller.discardClicked();
                 }
                 else if (area.getName().equals("CardStack"))
                 {
-                    sLogger.info("pressed CardStack");
+                    sLogger.info("pressed CardStack " + area.getAreaNumber());
                     // controller.discardClicked();
                 }
                 else if (area.getName().equals("Discard"))
@@ -197,7 +197,7 @@ public class BoardView extends JPanel implements GameChangeListener
             int x = border + (int) (i * cardSpace);
             int y = Constants.BOARD_HEIGHT - Constants.HAND_BORDER + border;
             gfx.drawImage(cardImage, x, y, null);
-            areas.add(new SensitiveArea("HandCard", x, y, (int) ((i + 1) * cardSpace) - (int) (i * cardSpace), 71));
+            areas.add(new SensitiveArea("HandCard", x, y, (int) ((i + 1) * cardSpace) - (int) (i * cardSpace), 71, i));
 
             i++;
         }
@@ -410,7 +410,26 @@ public class BoardView extends JPanel implements GameChangeListener
             int translateX = x + (int) ((whichStackX + 1) * stackSpaceX + whichStackX * 3.0 * cardImage.getWidth());
             int translateY = y + (whichStackY + 1) * stackSpaceY + whichStackY * cardImage.getHeight();
 
-            paintCardStack(gfx, translateX, translateY, cardStack);
+            for (int i1 = 0; i1 < cardStack.size(); i1++)
+            {
+                gfx.drawImage(getCardImage(cardStack.get(i1), 40, false), translateX + i1 * 2 + 20, translateY, null);
+            }
+
+            areas.add(new SensitiveArea("CardStack",
+                                        translateX + (cardStack.size() - 1) * 2,
+                                        translateY,
+                                        cardStack.size() * 2 + 40,
+                                        57,
+                                        i));
+            gfx.setPaint(new Color(0xFF00FF));
+            gfx.drawRect(translateX + (cardStack.size() - 1) * 2, translateY, cardStack.size() * 2 + 40, 57);
+            // gfx.setFont(Font.)
+
+            gfx.setPaint(new Color(0xFFFF00));
+            gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), translateX, translateY + 40);
+
+            gfx.setPaint(new Color(0xFFFFFF));
+            gfx.drawString(((Integer) cardStack.size()).toString(), translateX, translateY + 20);
 
             i++;
 
@@ -430,28 +449,6 @@ public class BoardView extends JPanel implements GameChangeListener
         // gfx.drawString(((Integer) stackCountY).toString(), width / 2 + 10, height / 2);
         // gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
         // gfx.drawString(((Integer) height).toString(), width / 2 + 30, height / 2 + 20);
-    }
-
-    private void paintCardStack(Graphics2D gfx, int x, int y, CardStack cardStack)
-    {
-        // gfx.setPaint(new Color(0xFF00FF));
-        // gfx.drawRect(x, y, 4, 4);
-
-        for (int i = 0; i < cardStack.size(); i++)
-        {
-            gfx.drawImage(getCardImage(cardStack.get(i), 40, false), x + i * 2 + 20, y, null);
-        }
-
-        areas.add(new SensitiveArea("CardStack", x + (cardStack.size() - 1) * 2, y, cardStack.size() * 2 + 40, 57));
-        gfx.setPaint(new Color(0xFF00FF));
-        gfx.drawRect(x + (cardStack.size() - 1) * 2, y, cardStack.size() * 2 + 40, 57);
-        // gfx.setFont(Font.)
-
-        gfx.setPaint(new Color(0xFFFF00));
-        gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), x, y + 40);
-
-        gfx.setPaint(new Color(0xFFFFFF));
-        gfx.drawString(((Integer) cardStack.size()).toString(), x, y + 20);
     }
 
     private void paintTalon(Graphics2D gfx)
@@ -522,16 +519,33 @@ public class BoardView extends JPanel implements GameChangeListener
 
         Rectangle r;
         String    name;
+        int       areaNumber;
 
         public SensitiveArea(String name, int x, int y, int w, int h)
         {
+            this(name, x, y, w, h, 0);
+        }
+
+        public SensitiveArea(String name, int x, int y, int w, int h, int areaNumber)
+        {
             r = new Rectangle(x, y, w, h);
             this.name = name;
+            this.areaNumber = areaNumber;
 
             // if (name == "CardStack")
             // {
             // sLogger.info("cardStack " + x + " " + y + " " + w + " " + h);
             // }
+        }
+
+        public Rectangle getRectangle()
+        {
+            return r;
+        }
+
+        public int getAreaNumber()
+        {
+            return areaNumber;
         }
 
         public boolean contains(int x, int y)
