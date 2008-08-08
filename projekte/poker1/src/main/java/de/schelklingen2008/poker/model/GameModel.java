@@ -237,4 +237,5 @@ public class GameModel implements Serializable
             actPlayerIndex = 0;
         }
     }
+
 }
