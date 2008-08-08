@@ -14,6 +14,7 @@ public class CarFrame extends JFrame
 {
 
     BufferedImage auto;
+    private int   pos = 0;
 
     public CarFrame()
     {
@@ -32,18 +33,15 @@ public class CarFrame extends JFrame
 
     }
 
-    public static void main(String[] args)
-    {
-
-        CarFrame f = new CarFrame();
-        f.repaint();
-
-    }
-
     @Override
     public Dimension getPreferredSize()
     {
         return new Dimension(1000, 1000);
+    }
+
+    public void setPos(int x)
+    {
+        pos = x;
     }
 
     @Override
@@ -51,14 +49,7 @@ public class CarFrame extends JFrame
     {
         g.setColor(Color.white);
         g.fillRect(0, 0, 1000, 1000);
-        for (int i = -200; i < 1200; i += 20)
-        {
-            g.drawImage(auto, i, 500, 100, 100, null);
-
-            // auto = ImageIO.read("./src/carspack/auto.bmp");
-
-        }
-        repaint();
+        g.drawImage(auto, pos, 500, 100, 100, null);
 
     }
 
