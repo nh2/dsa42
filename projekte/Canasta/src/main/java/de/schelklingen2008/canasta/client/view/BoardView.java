@@ -123,10 +123,20 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         paintTalon(gfx);
         paintDiscard(gfx);
-        paintHand0(gfx);
-        paintHand1(gfx);
-        paintHand2(gfx);
-        paintHand3(gfx);
+        Player[] players = getGameModel().getPlayers();
+        switch (players.length)
+        {
+            case 2:
+                paintHand0(gfx);
+                paintHand1top(gfx);
+                break;
+
+            case 4:
+                paintHand0(gfx);
+                paintHand1(gfx);
+                paintHand2(gfx);
+                paintHand3(gfx);
+        }
 
         paintOutlays(gfx);
     }
@@ -253,6 +263,34 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.rotate(Math.PI / 2);
         gfx.translate(-(Constants.BOARD_WIDTH - border - cardImage.getHeight()), -(Constants.BOARD_HEIGHT - border));
 
+    }
+
+    private void paintHand1top(Graphics2D gfx)
+    {
+        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player player = players[1];
+        Hand hand = player.getHand();
+        BufferedImage cardImage = getCardImage(null, 40, true);
+        final int border = (Constants.HAND_BORDER - cardImage.getHeight()) / 2;
+
+        final int cardCount = hand.size();
+        final int hand_space = Constants.BOARD_WIDTH - Constants.HAND_BORDER - border * 2;
+
+        double cardSpace = (double) hand_space / (double) cardCount;
+
+        cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+
+        int i = 0;
+        for (Card card : hand)
+        {
+            cardImage = getCardImage(card, 40, true);
+
+            int x = Constants.BOARD_WIDTH - border - (int) (i * cardSpace) - cardImage.getWidth();
+            int y = border;
+            gfx.drawImage(cardImage, x, y, null);
+
+            i++;
+        }
     }
 
     private void paintOutlays(Graphics2D gfx)
