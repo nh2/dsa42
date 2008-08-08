@@ -17,6 +17,7 @@ public class CarFrame extends JFrame
 
     public CarFrame()
     {
+
         setVisible(true);
         pack();
         try
@@ -27,6 +28,7 @@ public class CarFrame extends JFrame
         {
             throw new RuntimeException("Kann Bild nicht laden.");
         }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
@@ -49,7 +51,14 @@ public class CarFrame extends JFrame
     {
         g.setColor(Color.white);
         g.fillRect(0, 0, 1000, 1000);
-        g.drawImage(auto, 200, 200, 100, 100, null);
+        for (int i = -200; i < 1200; i += 20)
+        {
+            g.drawImage(auto, i, 500, 100, 100, null);
+
+            // auto = ImageIO.read("./src/carspack/auto.bmp");
+
+        }
+        repaint();
 
     }
 
