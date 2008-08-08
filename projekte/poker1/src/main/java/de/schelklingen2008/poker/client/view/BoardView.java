@@ -277,10 +277,6 @@ public class BoardView extends JPanel implements GameChangeListener
             foldButton.setEnabled(true);
         }
 
-        checkButton.setEnabled(true);
-        foldButton.setEnabled(true);
-        raiseButton.setEnabled(true);
-
         myButtonPanel.add(Box.createVerticalStrut(5));
         myButtonPanel.add(callButton);
         myButtonPanel.add(Box.createVerticalStrut(5));
