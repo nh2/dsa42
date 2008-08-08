@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ import de.schelklingen2008.canasta.model.Hand;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.model.Talon;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Displays the main game interface (the board).
@@ -36,9 +38,11 @@ import de.schelklingen2008.canasta.model.Talon;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
+    private static final Logger sLogger = LoggerFactory.create();
+
     private Controller          controller;
 
-    private List<SensitiveArea> areas = new ArrayList<SensitiveArea>();
+    private List<SensitiveArea> areas   = new ArrayList<SensitiveArea>();
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -82,6 +86,7 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 if (area.getName().equals("Talon"))
                 {
+                    sLogger.info("pressed");
                     controller.talonClicked();
                 }
             }
@@ -98,6 +103,8 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     protected void paintComponent(Graphics g)
     {
+        areas.clear();
+
         Graphics2D gfx = (Graphics2D) g;
         // TODO do proper painting of game state
         paintBackground(gfx);

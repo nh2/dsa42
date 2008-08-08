@@ -48,10 +48,7 @@ public class Controller extends GameController
         sLogger.finer("trace");
 
         toyBoxContext = (ToyBoxContext) crowdContext;
-        /**
-         * TODO ??
-         */
-        // gameContext.setMyName(toyBoxContext.getUsername().toString());
+        gameContext.setMyName(toyBoxContext.getUsername().toString());
         super.init(crowdContext, placeConfig);
     }
 

@@ -144,4 +144,16 @@ public class GameModel implements Serializable
         }
         throw new RuntimeException(new IllegalArgumentException("Playername " + string + " not found in game model"));
     }
+
+    public int getPlayerIndex(String string)
+    {
+        for (int i = 0; i < players.length; i++)
+        {
+            if (players[i].getName().equals(string))
+            {
+                return i;
+            }
+        }
+        throw new RuntimeException(new IllegalArgumentException("Playername " + string + " not found in game model"));
+    }
 }

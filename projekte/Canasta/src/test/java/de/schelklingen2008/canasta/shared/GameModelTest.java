@@ -6,7 +6,7 @@ import de.schelklingen2008.canasta.model.GameModel;
 public class GameModelTest extends TestCase
 {
 
-    private GameModel gameModel = new GameModel(new String[] { "Lars", "Alexander" });
+    private GameModel gameModel = new GameModel(new String[] { "dick", "doof" });
 
     public void testSomething() throws Exception
     {
