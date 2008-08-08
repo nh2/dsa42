@@ -1,7 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -110,8 +110,12 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         }
 
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
-        drehButtons.add(new Button("rechts drehen"));
-        drehButtons.add(new Button("links drehen"));
+        JButton right = new JButton("rechts");
+        JButton left = new JButton("links");
+        right.addActionListener(controller);
+        left.addActionListener(controller);
+        drehButtons.add(right);
+        drehButtons.add(left);
         add(drehButtons, BorderLayout.WEST);
 
         JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
