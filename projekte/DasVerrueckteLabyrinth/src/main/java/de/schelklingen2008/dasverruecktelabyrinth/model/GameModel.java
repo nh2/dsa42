@@ -42,7 +42,7 @@ public class GameModel implements Serializable
 
     private static final Random    RAND           = new Random();
 
-    public GameModel()
+    public GameModel(int SpielerAnzahl)
     {
         clear();
         init();
@@ -184,6 +184,13 @@ public class GameModel implements Serializable
         int x = (int) Math.random() * board.length;
         int y = (int) Math.random() * board.length;
 
+        pPlayer.setXKoordinate(x);
+        pPlayer.setYKoordinate(y);
+    }
+
+    private void placePlayer(int x, int y, Player pPlayer)
+    {   
+        if ( findWay(board, ))
         pPlayer.setXKoordinate(x);
         pPlayer.setYKoordinate(y);
     }

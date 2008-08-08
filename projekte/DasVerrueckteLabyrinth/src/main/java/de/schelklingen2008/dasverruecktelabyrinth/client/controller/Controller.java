@@ -164,4 +164,9 @@ public class Controller extends GameController
             updateGameContext();
         }
     }
+
+    public void rechtsDrehen()
+    {
+        sharedState.manager.invoke("rechtsDrehen");
+    }
 }

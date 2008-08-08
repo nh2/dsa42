@@ -26,16 +26,30 @@ public class Manager extends GameManager
         return sharedState = new SharedState();
     }
 
+    public void placePlayer(BodyObject client, int x, int y)
+    {
+        gameModel.placePiece(x, y, getPlayer(client));
+        updateSharedState();
+        if (gameModel.isFinished()) endGame();
+    }
+
     @Override
     protected void gameWillStart()
     {
         super.gameWillStart();
 
-        gameModel = new GameModel();
+        gameModel = new GameModel(getPlayerCount());
         updateSharedState();
     }
 
     // TODO add methods to make a move, etc. that can be called by clients
+
+    public void rechtsDrehen(BodyObject client)
+    {
+        getPlayerType(client);
+        gameModel.rechtsDrehen();
+
+    }
 
     /**
      * Updates the shared state and thus send changes to all clients.
