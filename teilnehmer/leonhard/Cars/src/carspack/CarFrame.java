@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 public class CarFrame extends JFrame
 {
 
-    BufferedImage auto;
+    BufferedImage fahrrad, autoAlt, autoNeu, Schlitten, LKW;
     private int   pos = 0;
 
     public CarFrame()
@@ -23,7 +23,10 @@ public class CarFrame extends JFrame
         pack();
         try
         {
-            auto = ImageIO.read(new File("./src/carspack/car.bmp"));
+            fahrrad = ImageIO.read(new File("./src/carspack/car.bmp"));
+            autoAlt = ImageIO.read(new File("./src/carspack/AutoAlt.bmp"));
+            autoNeu = ImageIO.read(new File("./src/carspack/AutoNeu.bmp"));
+
         }
         catch (IOException e)
         {
@@ -49,8 +52,22 @@ public class CarFrame extends JFrame
     {
         g.setColor(Color.white);
         g.fillRect(0, 0, 1000, 1000);
-        g.drawImage(auto, pos, 500, 100, 100, null);
+
+        for (int i = -100; i < 1100; i++)
+        {
+            g.drawImage(fahrrad, i, 500, 100, 100, null);
+
+            try
+            {
+                Thread.sleep(1L);
+            }
+            catch (InterruptedException e)
+            {
+                // TODO Auto-generated catch block
+                throw new RuntimeException("kann nicht warten", e);
+            }
+            repaint();
+        }
 
     }
-
 }
