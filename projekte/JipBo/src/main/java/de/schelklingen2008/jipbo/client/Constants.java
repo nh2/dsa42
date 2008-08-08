@@ -21,6 +21,6 @@ public final class Constants
     public static final int    DURATION             = 10;
 
     /** board colors */
-    public static final Color  COL_BOARD_BACKGROUND = Color.decode("#00009900");
-    public static final Color  COL_BOARD_GRID       = Color.BLACK;
+    public static final Color  COL_BOARD_BACKGROUND = Color.decode("#0000688B");
+    public static final Color  COL_BOARD_GRID       = Color.DARK_GRAY;
 }

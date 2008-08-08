@@ -1,6 +1,7 @@
 package de.schelklingen2008.jipbo.client.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -40,17 +41,21 @@ public class BoardView extends JPanel implements GameChangeListener
 
             JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
             playerLabel.setAlignmentX(CENTER_ALIGNMENT);
-            playerLabel.setForeground(Color.WHITE);
+            playerLabel.setForeground(Color.BLACK);
+            Font newFontP = playerLabel.getFont().deriveFont(13.0f);
+            playerLabel.setFont(newFontP);
             add(playerLabel);
             BoardPanel player = new BoardPanel(null,
                                                getGameModel().getPlayerIndexOf(i).getBoardCards(),
                                                false,
-                                               Color.decode("#000054" + i * 15));
+                                               new Color(151, 216, 230 - i * 40));
             add(player);
         }
 
         // Public Cards Panel
         JLabel publicLabel = new JLabel("Ablegestapel");
+        Font newFont = publicLabel.getFont().deriveFont(17.0f);
+        publicLabel.setFont(newFont);
         publicLabel.setAlignmentX(CENTER_ALIGNMENT);
         publicLabel.setForeground(Color.WHITE);
         add(publicLabel);
@@ -62,29 +67,40 @@ public class BoardView extends JPanel implements GameChangeListener
         // Own Cards Panel
         JLabel myNameLabel = new JLabel(getGameModel().getPlayerNameIndexOf(0));
         myNameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        myNameLabel.setForeground(Color.WHITE);
+        myNameLabel.setForeground(Color.BLACK);
+        Font newFontI = myNameLabel.getFont().deriveFont(13.0f);
+        myNameLabel.setFont(newFontI);
         add(myNameLabel);
+
         JLabel myLabel = new JLabel("Meine Karten");
+        Font newFontM = myLabel.getFont().deriveFont(15.0f);
+        myLabel.setFont(newFontM);
         myLabel.setAlignmentX(CENTER_ALIGNMENT);
         myLabel.setForeground(Color.WHITE);
         add(myLabel);
         BoardPanel myBoardPanel = new BoardPanel(controller,
                                                  getGameModel().getPlayerIndexOf(0).getBoardCards(),
                                                  false,
-                                                 Color.decode("#00005500"));
+                                                 Color.decode("#0000688B"));
         add(myBoardPanel);
         JPanel drawPilePanel = new JPanel();
-        drawPilePanel.setBackground(Color.decode("#00005500"));
+        BoardPanel drawPileBackPanel = new BoardPanel(controller,
+                                                      getGameModel().getPlayerIndexOf(0).getBoardCards(),
+                                                      false,
+                                                      Color.decode("#0000688B"));
 
         JLabel drawPileLabel = new JLabel("Meine Hand");
+        Font newFontH = drawPileLabel.getFont().deriveFont(15.0f);
+        drawPileLabel.setFont(newFontH);
         drawPileLabel.setAlignmentX(CENTER_ALIGNMENT);
         drawPileLabel.setForeground(Color.WHITE);
+
         drawPilePanel.add(drawPileLabel);
         add(drawPilePanel);
         BoardPanel drawPile = new BoardPanel(controller,
                                              getGameModel().getPlayerIndexOf(0).getDrawPile(),
                                              true,
-                                             Color.decode("#00005500"));
+                                             Color.decode("#0000688B"));
         add(drawPile);
 
         addMouseMotionListener(new MouseMotionAdapter()
