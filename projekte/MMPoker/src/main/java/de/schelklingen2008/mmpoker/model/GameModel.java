@@ -45,11 +45,19 @@ public class GameModel implements Serializable
 
         // Karten aufs Spielfeld legen
 
-        for (int i = 0; i < 4; i++)
+        kartenStapel.neuerStapel();
+        for (int j = 0; j < spielfeld.length; j++)
         {
-
-            getSpielfeld()[i] = spielKarten.zufallsKarte();
-        }// Karten aufs Spielfeld legen ende
+            spielfeld[j] = kartenStapel.zufallsKarte();
+        }
+        for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
+        {
+            Spielkarte[] zufallsHandBlatt = new Spielkarte[2];
+            zufallsHandBlatt[0] = kartenStapel.zufallsKarte();
+            zufallsHandBlatt[1] = kartenStapel.zufallsKarte();
+            iterator.next().setHandblatt(zufallsHandBlatt);
+        }
+        // Karten aufs Spielfeld legen ende
 
         // Blinds Setzen(ein zu kurz)
         for (int i = 0; i < spielerliste.size(); i++)
