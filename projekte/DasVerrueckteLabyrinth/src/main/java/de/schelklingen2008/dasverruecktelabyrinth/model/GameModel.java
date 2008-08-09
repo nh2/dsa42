@@ -265,25 +265,48 @@ public class GameModel implements Serializable
 
     private void einschiebenNord(int x, int y)
     {
-        for (int i = board.length; i < 1; i--)
+        Tile temp = insert;
+        insert = board[x][board.length - 1];
+        for (int i = board.length - 1; i < 1; i--)
         {
-
+            board[x][i] = board[x][i - 1];
         }
+        board[x][0] = temp;
     }
 
     private void einschiebenSued(int x, int y)
     {
+        Tile temp = insert;
+        insert = board[x][0];
+        for (int i = 0; i < board.length - 1; i++)
+        {
+            board[x][i] = board[x][i + 1];
+        }
+        board[x][(board.length - 1)] = temp;
 
     }
 
     private void einschiebenOst(int x, int y)
     {
 
+        Tile temp = insert;
+        insert = board[0][y];
+        for (int i = 0; i < board.length - 1; i++)
+        {
+            board[i][y] = board[i - 1][y];
+        }
+        board[(board.length - 1)][y] = temp;
     }
 
     private void einschiebenWest(int x, int y)
     {
-
+        Tile temp = insert;
+        insert = board[board.length - 1][y];
+        for (int i = board.length - 1; i < 1; i--)
+        {
+            board[i][y] = board[i - 1][y];
+        }
+        board[0][y] = temp;
     }
 
     private void advanceTurnHolder()

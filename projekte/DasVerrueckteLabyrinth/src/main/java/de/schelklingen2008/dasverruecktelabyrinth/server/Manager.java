@@ -65,7 +65,7 @@ public class Manager extends GameManager
     {
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
-            gameModel.insert();
+            gameModel.insert(null);
         }
     }
 
