@@ -264,7 +264,7 @@ public class GameModel implements Serializable
 
     public void nextPlayer()
     {
-        actPlayerIndex++;
+        actPlayerIndex = getRisenPlayerIndex(actPlayerIndex + 1);
         if (actPlayerIndex == playerList.size())
         {
             actPlayerIndex = 0;
@@ -273,36 +273,66 @@ public class GameModel implements Serializable
         {
             nextPhase();
         }
+        if (playerList.get(actPlayerIndex).isStillIn() == false || playerList.get(actPlayerIndex).hasLost() == false)
+        {
+            nextPlayer();
+        }
     }
 
     public void nextPhase()
     {
         phase++;
+        highestBet = 0;
+        actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
+        highestBetIndex = actPlayerIndex;
+        for (Iterator iterator = playerList.iterator(); iterator.hasNext();)
+        {
+            Player player = (Player) iterator.next();
+            player.setOwnBet(0);
+        }
         switch (phase)
         {
             case 1:
                 cardList.add(getRandomCard());
                 cardList.add(getRandomCard());
                 cardList.add(getRandomCard());
-                highestBet = 0;
-                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
                 break;
             case 2:
                 cardList.add(getRandomCard());
-                highestBet = 0;
-                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
                 break;
             case 3:
                 cardList.add(getRandomCard());
-                highestBet = 0;
-                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
                 break;
             case 4:
                 // computeWinner();
-                // nextRound();
+                nextRound();
                 break;
         }
+    }
 
+    public void nextRound()
+    {
+        phase = 0;
+        dealerIndex = getRisenPlayerIndex(dealerIndex + 1);
+        playerList.get(getRisenPlayerIndex(dealerIndex + 1)).setOwnBet(smallBlind);
+        playerList.get(getRisenPlayerIndex(dealerIndex + 2)).setOwnBet(2 * smallBlind);
+        pot = playerList.get(getRisenPlayerIndex(dealerIndex + 1)).getOwnBet();
+        pot += playerList.get(getRisenPlayerIndex(dealerIndex + 2)).getOwnBet();
+        actPlayerIndex = getRisenPlayerIndex(dealerIndex + 3);
+        getHighestBetterIndex();
+    }
+
+    public void getHighestBetterIndex()
+    {
+        long actHighestBet = 0;
+        for (int i = 0; playerList.size() < i; i++)
+        {
+            Player player = playerList.get(i);
+            if (player.getOwnBet() > actHighestBet)
+            {
+                highestBetIndex = i;
+            }
+        }
     }
 
     public int getRisenPlayerIndex(int playerIndex)

@@ -13,6 +13,7 @@ public class Player implements Serializable
     // private int potNumber; // Zahl der Pots, die der Spieler noch bekommen kann
     private Card    card1, card2; // Karten des Spielers
     private long    ownBet;      // geleisteter Einsatz in der momentanen Phase
+    private boolean isAllIn;
     private boolean stillIn;     // Ist der Spieler noch in der Runde
     private boolean lost;        // true, wenn der Spieler am Ende einer Runde kein Geld mehr hat, also
 
@@ -27,6 +28,16 @@ public class Player implements Serializable
         card2 = null;
         ownBet = 0;
         stillIn = true;
+    }
+
+    public boolean isAllIn()
+    {
+        return isAllIn;
+    }
+
+    public void setAllIn(boolean isAllIn)
+    {
+        this.isAllIn = isAllIn;
     }
 
     public Card getCard1()
@@ -74,14 +85,23 @@ public class Player implements Serializable
         return stillIn;
     }
 
-    public void setStillIn(boolean bool)
-    {
-        stillIn = bool;
-    }
-
     public boolean hasLost()
     {
         return lost;
     }
 
+    public void setOwnBet(long ownBet)
+    {
+        this.ownBet = ownBet;
+    }
+
+    public void setStillIn(boolean stillIn)
+    {
+        this.stillIn = stillIn;
+    }
+
+    public void setLost(boolean lost)
+    {
+        this.lost = lost;
+    }
 }

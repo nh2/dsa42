@@ -53,7 +53,6 @@ public class Manager extends GameManager
         sLogger.fine("call by " + client);
         gameModel.call();
         updateSharedState();
-
     }
 
     public void check(BodyObject client)
