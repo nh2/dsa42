@@ -10,6 +10,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import de.schelklingen2008.risiko.client.controller.Controller;
 import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.model.GameModel;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Displays the main game interface (the board).
@@ -27,6 +29,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private Controller    controller;
     private BufferedImage map;
+    private final Logger  logger = LoggerFactory.create();
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -35,7 +38,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-
+        logger.info("fjd11111");
         try
         {
             map = ImageIO.read(new File("./src/main/resources/europa_karte_de.png"));
@@ -73,22 +76,19 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
+        logger.info("fjd11111");
         getGameModel().setAllCountriesUnselected();
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
-        if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
-        {
-
-            if (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
-            {
-                getGameModel().getCountrybyColor(c).setUnits(getGameModel().getCountrybyColor(c).getUnits() + 1);
-                getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() - 1);
-            }
-
-        }
-        else
-        {
-            controller.setMine(getGameModel().getCountrybyColor(c), getGameContext().getMyPlayer().getPlayerIndex());
-        }
+        getGameModel().getCountrybyColor(c).setSelected(true);
+        /*
+         * if (getGameContext().getMyPlayer().getUnitsToSet() != 0) { logger.info("fjd"); if
+         * (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer())) {
+         * controller.placeUnit(getGameModel().getCountrybyColor(c));
+         * getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() - 1); } }
+         * else { controller.setMine(getGameModel().getCountrybyColor(c),
+         * getGameContext().getMyPlayer().getPlayerIndex());
+         * getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1); }
+         */
 
         repaint();
     }

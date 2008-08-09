@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class GameModel implements Serializable
 {
 
-    private Country[]       c = new Country[30];
-    private static Player[] p = new Player[2];  // TODO variabel machen
-    private Player          turnholder;
-    private int             player;
+    private Country[] c = new Country[30];
+    private Player[]  p = new Player[2];  // TODO variabel machen
+    private Player    turnholder;
+    private int       player;
 
     public GameModel()
     {
@@ -108,6 +108,11 @@ public class GameModel implements Serializable
     public Player[] getPlayerArray()
     {
         return p;
+    }
+
+    public void setPlayerArray(Player[] p)
+    {
+        this.p = p;
     }
 
 }
