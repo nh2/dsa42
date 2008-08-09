@@ -19,5 +19,5 @@ public final class Constants
 
     /** is the pixel dimension of the pieces */
     public static final int    SPRITE_SIZE          = 80;
-    public static final Color  COL_BOARD_BACKGROUND = new Color(150, 30, 20);
+    public static final Color  COL_BOARD_BACKGROUND = new Color(0, 0, 0);
 }
