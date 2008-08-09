@@ -246,7 +246,8 @@ public class BoardView extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 String s = javax.swing.JOptionPane.showInputDialog("Die "
-                                                                   + model.getHighestBet()
+                                                                   + (model.getHighestBet() - model.getActPlayer()
+                                                                                                   .getOwnBet())
                                                                    + " Euro wurden bereits in den Pot gezahlt.\n"
                                                                    + " Wie viel wollen Sie noch extra drauflegen?\n"
                                                                    + "(min.: "

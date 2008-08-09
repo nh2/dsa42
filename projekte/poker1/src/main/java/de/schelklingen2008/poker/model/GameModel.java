@@ -316,6 +316,27 @@ public class GameModel implements Serializable
         {
             getActPlayer().setBalance(getActPlayer().getBalance() - raiseValue);
             pot = pot + raiseValue;
+            nextPlayer();
         }
     }
+
+    public void reRaise(long reRaiseValue) // Betrag der noch extra auf den schon vorhandenen Betrag
+    // draufgelegt wurde
+    {
+        long value = highestBet - getActPlayer().getOwnBet() + reRaiseValue;
+        {
+            if (mustCallOrReRaise(actPlayerIndex) == true && getActPlayer().getBalance() >= value)
+            {
+                getActPlayer().setBalance(getActPlayer().getBalance() - value);
+                pot = pot + value;
+            }
+        }
+        nextPlayer();
+    }
+
+    public void fold()
+    {
+
+    }
+
 }
