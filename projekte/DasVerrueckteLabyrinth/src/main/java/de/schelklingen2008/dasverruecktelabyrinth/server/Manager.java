@@ -28,7 +28,7 @@ public class Manager extends GameManager
 
     public void placePlayer(BodyObject client, int x, int y)
     {
-        gameModel.placePlayer(x, y, getPlayer(client));
+        gameModel.placePlayer(x, y, getPlayerType(client));
         updateSharedState();
         if (gameModel.isFinished()) endGame();
     }
@@ -46,9 +46,19 @@ public class Manager extends GameManager
 
     public void rechtsDrehen(BodyObject client)
     {
-        getPlayerType(client);
-        gameModel.rechtsDrehen();
+        if (getPlayerType(client) == gameModel.getTurnHolder())
+        {
+            gameModel.rechtsDrehen();
+        }
+    }
 
+    public void linksDrehen(BodyObject client)
+    {
+
+        if (getPlayerType(client) == gameModel.getTurnHolder())
+        {
+            gameModel.rechtsDrehen();
+        }
     }
 
     /**

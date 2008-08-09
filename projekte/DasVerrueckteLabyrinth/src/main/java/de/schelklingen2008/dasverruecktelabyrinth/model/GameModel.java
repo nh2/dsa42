@@ -192,7 +192,7 @@ public class GameModel implements Serializable
         pPlayer.setYKoordinate(y);
     }
 
-    private void placePlayer(int x, int y, PlayerType pPlayerType)
+    public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
         if (isLegal(pPlayerType))
         {

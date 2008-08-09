@@ -169,4 +169,9 @@ public class Controller extends GameController
     {
         sharedState.manager.invoke("rechtsDrehen");
     }
+
+    public void linksDrehen()
+    {
+        sharedState.manager.invoke("linksDrehen");
+    }
 }

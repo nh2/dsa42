@@ -40,22 +40,6 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     BufferedImage               troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
     BufferedImage               schmuckkasten, schluessel, schwert, gespenst;
 
-    private class ActionListenerImplementation implements ActionListener
-    {
-
-        private Controller controller;
-
-        private ActionListenerImplementation(Controller controller)
-        {
-            this.controller = controller;
-        }
-
-        public void actionPerformed(ActionEvent e)
-        {
-            controller.leaveButtonClicked();
-        }
-    }
-
     public PlayerPanel(Controller controller)
 
     {
@@ -122,7 +106,14 @@ public class PlayerPanel extends JPanel implements GameChangeListener
                 PlayerPanel.this.controller.rechtsDrehen();
             }
         });
-        left.addActionListener(new ActionListenerImplementation(controller));
+        left.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                PlayerPanel.this.controller.linksDrehen();
+            }
+        });
 
         drehButtons.add(right);
         drehButtons.add(left);
