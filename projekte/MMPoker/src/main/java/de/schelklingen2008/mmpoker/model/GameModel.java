@@ -16,6 +16,7 @@ public class GameModel implements Serializable
     private int           pot;
     private List<Spieler> spielerliste = new ArrayList<Spieler>();
     private Spielstadien  spielstadium;
+    private Kartenstapel  kartenStapel = new Kartenstapel();
 
     public GameModel(String[] names)
     {
@@ -36,7 +37,7 @@ public class GameModel implements Serializable
 
         for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
         {
-            iterator.next().setWettsumme(5000);
+            iterator.next().setGeld(5000);
         }// Geld verteilen ende
 
         setAmZug(spielerliste.get(0));
@@ -66,29 +67,43 @@ public class GameModel implements Serializable
 
     }
 
-    public void RundeWiederholen()
+    public void neueRunde()
     {
         // blinds verschieben, karten ausgeben, gewinner ermitteln
         // Blinds verschieben
-        boolean b = true;
+        boolean hatBlindsVerschoben = false;
         int i = 0;
-        while (b)
+        while (hatBlindsVerschoben)
         {
-
             if (spielerliste.get(i).getWasfuernBlind() == Blind.DEALER)
             {
                 spielerliste.get(i).setWasfuernBlind(Blind.NICHTS);
-                spielerliste.get(istBeimLetzten(i + 1)).setWasfuernBlind(Blind.DEALER);
-                spielerliste.get(istBeimLetzten(i + 2)).setWasfuernBlind(Blind.SMALLBLIND);
-                spielerliste.get(istBeimLetzten(i + 3)).setWasfuernBlind(Blind.BIGBLIND);
-                b = false;
-            }
-            else
-            {
                 i++;
+                spielerliste.get(kleinerAlsSpielerliste(i)).setWasfuernBlind(Blind.DEALER);
+                i++;
+                spielerliste.get(kleinerAlsSpielerliste(i)).setWasfuernBlind(Blind.SMALLBLIND);
+                i++;
+                spielerliste.get(kleinerAlsSpielerliste(i)).setWasfuernBlind(Blind.BIGBLIND);
+                hatBlindsVerschoben = true;
             }
+            i++;
+
         }
         // Blinds verschieben ende
+        // Karten ausgeben
+        kartenStapel.neuerStapel();
+        for (int j = 0; j < spielfeld.length; j++)
+        {
+            spielfeld[j] = kartenStapel.zufallsKarte();
+        }
+        for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
+        {
+            Spielkarte[] zufallsHandBlatt = new Spielkarte[2];
+            zufallsHandBlatt[0] = kartenStapel.zufallsKarte();
+            zufallsHandBlatt[1] = kartenStapel.zufallsKarte();
+            iterator.next().setHandblatt(zufallsHandBlatt);
+        }
+        // Karten ausgeben ende
 
     }
 
@@ -180,17 +195,15 @@ public class GameModel implements Serializable
 
     }
 
-    public int istBeimLetzten(int i)
+    public boolean istBeimLetzten(int i)
     {
-        if (spielerliste.get(i).equals(spielerliste.get(spielerliste.size())))
+        if (spielerliste.get(i).equals(spielerliste.get(spielerliste.size() - 1)))
         {
-            i = 0;
-            return 0;
-
+            return true;
         }
         else
         {
-            return i;
+            return false;
         }
 
     }
@@ -203,5 +216,20 @@ public class GameModel implements Serializable
     public Spieler getAmZug()
     {
         return amZug;
+
+    }
+
+    public int kleinerAlsSpielerliste(int i)
+    {
+        if (i == spielerliste.size() - 1)
+        {
+
+            return 0;
+        }
+        else
+        {
+            return i;
+        }
+
     }
 }

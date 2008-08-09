@@ -28,8 +28,9 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
 
     public void actionPerformed(ActionEvent e)
     {
+        betField.setText(controller.getGameContext().getGameModel().autoErgaenzen());
         controller.betButtonClicked(betField.getText());
-        controller.raiseButtonClicked();
+        controller.raiseButtonClicked(betField.getText());
     }
 
     public void gameChanged()
@@ -59,7 +60,7 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
             }
         });
 
-        betField = new JTextField(controller.getGameContext().getGameModel().autoErgaenzen());
+        betField = new JTextField();
 
         betField.setMaximumSize(new Dimension(100, 25));
         betField.setPreferredSize(new Dimension(100, 25));

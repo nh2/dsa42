@@ -17,13 +17,13 @@ import de.schelklingen2008.mmpoker.client.model.GameContext;
 import de.schelklingen2008.mmpoker.model.GameModel;
 import de.schelklingen2008.mmpoker.model.Kartentyp;
 import de.schelklingen2008.mmpoker.model.Kartenwert;
-import de.schelklingen2008.mmpoker.model.Spielkarte;
 import de.schelklingen2008.mmpoker.model.Spielstadien;
 
 /**
  * Displays the main game interface (the board).
  */
-public class BoardView extends JPanel implements GameChangeListener {
+public class BoardView extends JPanel implements GameChangeListener
+{
 
     private Controller controller;
 
@@ -32,9 +32,12 @@ public class BoardView extends JPanel implements GameChangeListener {
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
-    public BoardView(Controller controller) {
-        for (Kartentyp typ : Kartentyp.values()) {
-            for (Kartenwert wert : Kartenwert.values()) {
+    public BoardView(Controller controller)
+    {
+        for (Kartentyp typ : Kartentyp.values())
+        {
+            for (Kartenwert wert : Kartenwert.values())
+            {
                 loadImage(typ, wert);
             }
         }
@@ -44,21 +47,26 @@ public class BoardView extends JPanel implements GameChangeListener {
 
     }
 
-    private void loadImage(Kartentyp typ, Kartenwert wert) {
+    private void loadImage(Kartentyp typ, Kartenwert wert)
+    {
         String filename = "75/" + typ.getImageName() + "-" + wert.getImageName() + "-75.png";
 
-        try {
+        try
+        {
             BufferedImage image = ImageIO.read(new File(filename));
             cardImages[typ.ordinal()][wert.ordinal()] = image;
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             throw new RuntimeException("Kann Bild " + filename + " nicht laden.");
         }
     }
 
-    public void gemeinschaftsKarten(Graphics g, Spielkarte karte, Spielstadien spielstadium) {
+    public void gemeinschaftsKarten(Graphics g)
+    {
         Graphics2D gfx = (Graphics2D) g;
-        if (getGameModel().getSpielstadium() == Spielstadien.FLOP) {
+        if (getGameModel().getSpielstadium() == Spielstadien.FLOP)
+        {
             gfx.drawImage(
                           cardImages[getGameModel().getSpielfeld()[1].getKartentyp().ordinal()][getGameModel().getSpielfeld()[1].getKartenwert()
                                                                                                                                 .ordinal()],
@@ -72,7 +80,8 @@ public class BoardView extends JPanel implements GameChangeListener {
                                                                                                                                 .ordinal()],
                           385, 350, null);
         }
-        else {
+        else
+        {
 
         }
 
@@ -80,7 +89,8 @@ public class BoardView extends JPanel implements GameChangeListener {
         // (spielstadium.ordinal() + 1) * 80 + 145, 350, null);
     }
 
-    public void handKarten(Graphics g, Spielkarte karte) {
+    public void handKarten(Graphics g)
+    {
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.black);
         if (getGameModel().getAmZug().isNochDabei())
@@ -105,54 +115,39 @@ public class BoardView extends JPanel implements GameChangeListener {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g)
+    {
 
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.GREEN);
         g.fillRect(0, 0, 800, 800);
-        // gemeinschaftsKarten(g, getGameModel().getSpielfeld()[1], Spielstadien.FLOPE);
-        // gemeinschaftsKarten(g, getGameModel().getSpielfeld()[2], Spielstadien.FLOPZ);
-        // gemeinschaftsKarten(g, getGameModel().getSpielfeld()[3], Spielstadien.FLOPD);
-        // gemeinschaftsKarten(g, getGameModel().getSpielfeld()[4], Spielstadien.TURN);
-        // gemeinschaftsKarten(g, getGameModel().getSpielfeld()[5], Spielstadien.RIVER);
-        // handKarten(g, getGameModel().getSpielfeld()[1]);
+        handKarten(g);
+        gemeinschaftsKarten(g);
         g.setColor(Color.BLACK);
+
         String pot = "$" + getGameModel().getPot();
         gfx.drawString(pot, 200, 250);
-        String spielername = getGameModel().getSpielerliste().get(0).getName();
-        g.setColor(Color.BLACK);
-        gfx.drawString(spielername, 100, 200);
-
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 225, 350, null);
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 305, 350, null);
-        // Flop
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 385, 350, null);
-        // Flop
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 465, 350, null);
-        // Flop
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 545, 350, null);
-        // Turn
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 385, 680, null);
-        // River
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 465, 680, null);
-        // gfx.drawImage(cardImages[Kartentyp.HERZ.ordinal()][Kartenwert.BUBE.ordinal()], 20, 350, null);
 
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize()
+    {
         return new Dimension(800, 800);
     }
 
-    public void gameChanged() {
+    public void gameChanged()
+    {
         repaint();
     }
 
-    private GameModel getGameModel() {
+    private GameModel getGameModel()
+    {
         return getGameContext().getGameModel();
     }
 
-    private GameContext getGameContext() {
+    private GameContext getGameContext()
+    {
         return controller.getGameContext();
     }
 }
