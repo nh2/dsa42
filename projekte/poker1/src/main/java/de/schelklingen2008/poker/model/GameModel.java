@@ -115,6 +115,12 @@ public class GameModel implements Serializable
         return actPlayerIndex;
     }
 
+    public Player getActPlayer()
+    {
+        Player actPlayer = playerList.get(actPlayerIndex);
+        return actPlayer;
+    }
+
     public int getDealerIndex()
     {
         return dealerIndex;
@@ -247,6 +253,23 @@ public class GameModel implements Serializable
             actPlayer.setBalance(actPlayer.getBalance() - callValue);
             pot = pot + callValue;
             nextPlayer();
+        }
+    }
+
+    public void check()
+    {
+        if (mustCheckOrRaise(actPlayerIndex) == true)
+        {
+            nextPlayer();
+        }
+    }
+
+    public void raise(long raiseValue)
+    {
+        if (mustCheckOrRaise(actPlayerIndex) == true && getActPlayer().getBalance() >= highestBet)
+        {
+            getActPlayer().setBalance(getActPlayer().getBalance() - raiseValue);
+            pot = pot + raiseValue;
         }
     }
 }
