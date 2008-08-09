@@ -237,10 +237,56 @@ public class GameModel implements Serializable
 
     public void nextPlayer()
     {
-        actPlayerIndex += 1;
+        actPlayerIndex++;
         if (actPlayerIndex == playerList.size())
         {
             actPlayerIndex = 0;
+        }
+        if (highestBetIndex == actPlayerIndex)
+        {
+            nextPhase();
+        }
+    }
+
+    public void nextPhase()
+    {
+        phase++;
+        switch (phase)
+        {
+            case 1:
+                cardList.add(getRandomCard());
+                cardList.add(getRandomCard());
+                cardList.add(getRandomCard());
+                highestBet = 0;
+                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
+                break;
+            case 2:
+                cardList.add(getRandomCard());
+                highestBet = 0;
+                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
+                break;
+            case 3:
+                cardList.add(getRandomCard());
+                highestBet = 0;
+                actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
+                break;
+            case 4:
+                // computeWinner();
+                // nextRound();
+                break;
+        }
+
+    }
+
+    public int getRisenPlayerIndex(int playerIndex)
+    {
+        if (playerIndex >= playerList.size())
+        {
+            return playerIndex - playerList.size();
+        }
+        else
+        {
+            return playerIndex;
         }
     }
 
