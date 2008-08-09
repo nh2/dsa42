@@ -18,6 +18,6 @@ public final class Constants
     public static final String MSG_DRAW             = "m.draw";
 
     /** is the pixel dimension of the pieces */
-    public static final int    SPRITE_SIZE          = 64;
+    public static final int    SPRITE_SIZE          = 80;
     public static final Color  COL_BOARD_BACKGROUND = new Color(150, 30, 20);
 }
