@@ -46,17 +46,16 @@ public class GamePanel extends JPanel implements PlaceView
      */
     public GamePanel(Controller controller)
     {
-        LabyrinthPanel labyrinth = new LabyrinthPanel(controller);
-        PlayerPanel playerPanel = new PlayerPanel(controller);
+        LabyPlusPlayerPanel labyPlusPP = new LabyPlusPlayerPanel(controller);
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
         setBackground(new Color(0x6699CC));
 
-        JPanel box = GroupLayout.makeHBox();
-        box.setOpaque(false);
-        box.add(new LabyrinthPanel(controller));
-        add(box, BorderLayout.CENTER);
+        // JPanel box = GroupLayout.makeHBox();
+        // box.setOpaque(false);
+        // box.add(new LabyrinthPanel(controller));
+        // add(box, BorderLayout.CENTER);
 
         // create a side panel to hold our chat and other extra interfaces
         JPanel sidePanel = GroupLayout.makeVStretchBox(5);
@@ -84,8 +83,9 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add our side panel to the main display
         add(sidePanel, BorderLayout.EAST);
-        add(labyrinth, BorderLayout.NORTH);
-        add(playerPanel, BorderLayout.SOUTH);
+
+        add(labyPlusPP, BorderLayout.WEST);
+
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */
