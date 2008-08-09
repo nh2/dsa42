@@ -36,6 +36,7 @@ public class Karte implements Serializable, Comparable<Karte>
 
     public int compareTo(Karte other)
     {
+        // TODO: Trümpfe richtig sortieren
         if (isTrumpf()) return -1;
         if (other.isTrumpf()) return 1;
         if (farbe != other.farbe)
