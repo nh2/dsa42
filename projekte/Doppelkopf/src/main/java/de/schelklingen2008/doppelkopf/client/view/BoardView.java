@@ -229,28 +229,32 @@ public class BoardView extends JPanel implements GameChangeListener
                 zk.draw(gfx, i * 40, 0);
                 i++;
             }
+            tempListe.rotieren();
             gfx.translate(-140, -463);
         }
 
         // Links
         gfx.translate(30, 385);
         gfx.rotate(-Math.PI / 2d);
-        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.getAnDerReihe().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
+        tempListe.rotieren();
         gfx.rotate(Math.PI / 2d);
         gfx.translate(-30, -385);
 
         // Oben
         gfx.translate(265, 30);
-        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.getAnDerReihe().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
+        tempListe.rotieren();
         gfx.translate(-265, -30);
 
         // Rechts
         gfx.translate(770, 115);
         gfx.rotate(Math.PI / 2d);
-        for (int i = 0; i < tempListe.next().getBlatt().getKartenanzahl(); i++)
+        for (int i = 0; i < tempListe.getAnDerReihe().getBlatt().getKartenanzahl(); i++)
             gfx.drawImage(rueckseite, i * 20, 0, null);
+        tempListe.rotieren();
         gfx.rotate(-Math.PI / 2d);
         gfx.translate(-770, -115);
 
