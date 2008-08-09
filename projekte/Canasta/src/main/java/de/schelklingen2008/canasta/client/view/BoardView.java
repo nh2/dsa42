@@ -44,6 +44,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private List<SensitiveArea> areas   = new ArrayList<SensitiveArea>();
 
+    private boolean[]           isCardSelected;
+
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
@@ -51,6 +53,8 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
+
+        isCardSelected = new boolean[getGameContext().getMyPlayer().getHand().size()];
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
@@ -92,7 +96,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 else if (area.getName().equals("HandCard"))
                 {
                     sLogger.info("pressed HandCard " + area.getAreaNumber());
-                    // controller.discardClicked();
+                    handCardClicked(area.getAreaNumber());
                 }
                 else if (area.getName().equals("CardStack"))
                 {
@@ -196,6 +200,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
             int x = border + (int) (i * cardSpace);
             int y = Constants.BOARD_HEIGHT - Constants.HAND_BORDER + border;
+            if (isCardSelected[i])
+            {
+                y -= 10;
+            }
             gfx.drawImage(cardImage, x, y, null);
             areas.add(new SensitiveArea("HandCard", x, y, (int) ((i + 1) * cardSpace) - (int) (i * cardSpace), 71, i));
 
@@ -501,6 +509,20 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
+        isCardSelected = new boolean[getGameContext().getMyPlayer().getHand().size()];
+
+        repaint();
+    }
+
+    public boolean isCardSelected(int cardNumber)
+    {
+        return isCardSelected[cardNumber];
+    }
+
+    public void handCardClicked(int cardNumber)
+    {
+        isCardSelected[cardNumber] = !isCardSelected[cardNumber];
+
         repaint();
     }
 

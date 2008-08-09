@@ -56,4 +56,19 @@ public class Hand implements Iterable<Card>, Serializable
         Collections.sort(cards);
     }
 
+    // public int findCard(Card lookupCard)
+    // {
+    // int i = 0;
+    // for (Card card : cards)
+    // {
+    // if (card == lookupCard)
+    // {
+    // return i;
+    //
+    // }
+    // i++;
+    // }
+    // throw new RuntimeException(new IllegalArgumentException("Card not in Hand"));
+    // }
+
 }

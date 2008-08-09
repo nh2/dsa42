@@ -1,6 +1,7 @@
 package de.schelklingen2008.canasta.client.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -48,8 +49,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
-        // TODO set bg color
-        // setBackground(new Color(0x003300));
+        setBackground(new Color(Constants.OutlayColor));
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);
