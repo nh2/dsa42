@@ -57,7 +57,7 @@ public class Manager extends GameManager
 
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
-            gameModel.rechtsDrehen();
+            gameModel.linksDrehen();
         }
     }
 
