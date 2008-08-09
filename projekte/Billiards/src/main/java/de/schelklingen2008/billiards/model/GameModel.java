@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -31,6 +32,8 @@ public class GameModel
 
     private List<Wall> walls = new ArrayList<Wall>();
     private List<Hole> holes = new ArrayList<Hole>();
+
+    private List<GameEventListener> gameEventListeners = new LinkedList<GameEventListener>();
 
     private Ball whiteBall, blackBall;
 
@@ -120,6 +123,25 @@ public class GameModel
         return holes;
     }
 
+    public void addGameEventListener(GameEventListener listener)
+    {
+        gameEventListeners.add(listener);
+    }
+
+    public void takeShot(double angle, double velocity) throws IllegalStateException
+    {
+        if (isInMotion())
+        {
+            throw new IllegalStateException("Cannot take a shot while balls are still moving.");
+        }
+
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.shotTaken(new ShotEvent(angle, velocity, turnHolder));
+        }
+
+    }
+
     public GameModel()
     {
 
@@ -140,6 +162,8 @@ public class GameModel
             player.resetScore();
         }
 
+        turnHolder = players[0];
+
         inMotion = false;
 
         for (Ball ball : balls)
@@ -153,6 +177,11 @@ public class GameModel
 
         resetBalls();
 
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.gameStarted();
+        }
+
     }
 
     private void resetBalls()
@@ -161,6 +190,7 @@ public class GameModel
         for (Ball ball : balls)
         {
             ball.setVelocity(Vector2d.ZERO);
+            ball.setSunk(false);
         }
 
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
@@ -234,7 +264,12 @@ public class GameModel
             {
                 if (hole.ballIsSunk(ball))
                 {
+                    ball.setSunk(true);
                     ballIterator.remove();
+                    for (GameEventListener listener : gameEventListeners)
+                    {
+                        listener.ballSunk(new BallSunkEvent(ball, turnHolder));
+                    }
                     break;
                 }
             }

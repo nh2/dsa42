@@ -46,6 +46,8 @@ public class BoardView extends JPanel implements GameChangeListener
     private Controller controller;
     private Image bg;
 
+    private Vector2d rayEndingPoint;
+
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
@@ -88,7 +90,58 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        // TODO respond to player´s mouse movements
+        GameModel gameModel = getGameModel();
+        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()))
+        {
+            castRay(e.getX(), e.getY());
+        }
+    }
+
+    private void castRay(int x, int y)
+    {
+        int deltaX = x - BORDER_WIDTH, deltaY = y - BORDER_HEIGHT;
+        double slope = deltaY / deltaX, yIntercept = y - slope * x;
+        Vector2d position = new Vector2d(x, y);
+
+        GameModel gameModel = getGameModel();
+
+        Vector2d rayEndingPoint = null;
+        Double minSquaredLength = Double.NaN;
+
+        for (Ball ball : gameModel.getBallsOnTable())
+        {
+            if (Math.signum(ball.getPosition().getX() - x) == Math.signum(deltaX)
+                && Math.signum(ball.getPosition().getY() - y) == Math.signum(deltaY))
+            {
+                Vector2d castPoint = castRayOnBall(x, y, slope, yIntercept, ball);
+                Double raySquaredLength = position.subtract(castPoint).getSquaredLength();
+                if (castPoint != null && (rayEndingPoint == null || raySquaredLength < minSquaredLength))
+                {
+                    rayEndingPoint = castPoint;
+                }
+            }
+        }
+
+        this.rayEndingPoint = rayEndingPoint;
+    }
+
+    private Vector2d castRayOnBall(int x, int y, double slope, double yIntercept, Ball ball)
+    {
+        double a = slope * slope + 1;
+        double b = 2 * slope * yIntercept;
+        double c = yIntercept * yIntercept - BALL_RADIUS * BALL_RADIUS;
+
+        double disc = b * b - 4 * a * c;
+        if (disc < 0)
+        {
+            return null;
+        }
+        else
+        {
+            double xCollision = (-b - Math.sqrt(disc)) / (2 * a);
+            double yCollision = xCollision * slope + yIntercept;
+            return new Vector2d(xCollision, yCollision);
+        }
     }
 
     private void pressed(MouseEvent e)
@@ -132,6 +185,16 @@ public class BoardView extends JPanel implements GameChangeListener
     {
 
         GameModel gameModel = getGameModel();
+
+        if (rayEndingPoint != null)
+        {
+            int x1 = (int) Math.round(gameModel.getWhiteBall().getPosition().getX() + BORDER_WIDTH);
+            int y1 = (int) Math.round(gameModel.getWhiteBall().getPosition().getY() + BORDER_HEIGHT);
+            int x2 = (int) Math.round(rayEndingPoint.getX() + BORDER_WIDTH);
+            int y2 = (int) Math.round(rayEndingPoint.getY() + BORDER_HEIGHT);
+
+            gfx.drawLine(x1, y1, x2, y2);
+        }
 
         for (Ball ball : gameModel.getBallsOnTable())
         {
