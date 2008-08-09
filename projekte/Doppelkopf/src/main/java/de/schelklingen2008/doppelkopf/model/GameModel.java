@@ -74,6 +74,8 @@ public class GameModel implements Serializable
         // TODO berechnen, ob der Zug gültig ist
         boolean zugGueltig = true;
 
+        if (spieler != spielerliste.getAnDerReihe()) zugGueltig = false;
+
         if (zugGueltig)
         {
             logger.log(Level.INFO, "Gültiger Zug.");

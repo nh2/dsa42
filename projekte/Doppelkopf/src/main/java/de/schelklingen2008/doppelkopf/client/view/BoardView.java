@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.doppelkopf.client.controller.Controller;
@@ -131,19 +130,19 @@ public class BoardView extends JPanel implements GameChangeListener
         boolean gueltig = true;
         controller.karteClicked(klickKarte);
 
-        String gueltigMeldung = "Zug ist ";
-        if (!gueltig) gueltigMeldung += "nicht ";
-        gueltigMeldung += "gültig.";
-        JOptionPane.showMessageDialog(this, "Karte "
-                                            + klickKarte
-                                            + ": "
-                                            + karteVonLinks
-                                            + ": ( "
-                                            + clickx
-                                            + " | "
-                                            + clicky
-                                            + " ) "
-                                            + gueltigMeldung);
+        // String gueltigMeldung = "Zug ist ";
+        // if (!gueltig) gueltigMeldung += "nicht ";
+        // gueltigMeldung += "gültig.";
+        // JOptionPane.showMessageDialog(this, "Karte "
+        // + klickKarte
+        // + ": "
+        // + karteVonLinks
+        // + ": ( "
+        // + clickx
+        // + " | "
+        // + clicky
+        // + " ) "
+        // + gueltigMeldung);
     }
 
     @Override
