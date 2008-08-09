@@ -74,6 +74,11 @@ public class Player implements Serializable
         return stillIn;
     }
 
+    public void setStillIn(boolean bool)
+    {
+        stillIn = bool;
+    }
+
     public boolean hasLost()
     {
         return lost;

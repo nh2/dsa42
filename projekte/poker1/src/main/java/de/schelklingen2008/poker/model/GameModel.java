@@ -336,7 +336,7 @@ public class GameModel implements Serializable
 
     public void fold()
     {
-
+        getActPlayer().setStillIn(false);
+        nextPlayer();
     }
-
 }

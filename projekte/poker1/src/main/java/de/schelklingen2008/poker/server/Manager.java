@@ -48,27 +48,25 @@ public class Manager extends GameManager
 
     public void check(BodyObject client)
     {
-        // TODO ans Model weitergeben
+        gameModel.check();
         updateSharedState();
     }
 
     public void fold(BodyObject client)
     {
-        // TODO ans Model weitergeben
+        gameModel.fold();
         updateSharedState();
     }
 
     public void raise(BodyObject client, long bet)
     {
-
-        // TODO and model weitergeben
+        gameModel.raise(bet);
         updateSharedState();
     }
 
     public void reRaise(BodyObject client, long bet)
     {
-
-        // TODO and model weitergeben
+        gameModel.reRaise(bet);
         updateSharedState();
     }
 
