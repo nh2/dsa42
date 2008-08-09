@@ -7,6 +7,7 @@ import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -29,6 +30,7 @@ public class GameModel
     private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
     private List<Wall> walls = new ArrayList<Wall>();
+    private List<Hole> holes = new ArrayList<Hole>();
 
     private Ball whiteBall, blackBall;
 
@@ -103,12 +105,28 @@ public class GameModel
         return walls;
     }
 
+    private void addHoles()
+    {
+        holes.add(new Hole(new Vector2d(0, 0)));
+        holes.add(new Hole(new Vector2d(MAX_X / 2, 0)));
+        holes.add(new Hole(new Vector2d(MAX_X, 0)));
+        holes.add(new Hole(new Vector2d(0, MAX_Y)));
+        holes.add(new Hole(new Vector2d(MAX_X / 2, MAX_Y)));
+        holes.add(new Hole(new Vector2d(MAX_X, MAX_Y)));
+    }
+
+    public List<Hole> getHoles()
+    {
+        return holes;
+    }
+
     public GameModel()
     {
 
         addPlayers();
         addBalls();
         addWalls();
+        addHoles();
 
         setUpGame();
 
@@ -207,6 +225,19 @@ public class GameModel
         if (!inMotion || deltaT < EPSILON)
         {
             return;
+        }
+
+        Iterator<Ball> ballIterator = ballsOnTable.iterator();
+        for (Ball ball = ballIterator.next(); ballIterator.hasNext(); ball = ballIterator.next())
+        {
+            for (Hole hole : holes)
+            {
+                if (hole.ballIsSunk(ball))
+                {
+                    ballIterator.remove();
+                    break;
+                }
+            }
         }
 
         double remainingTime = deltaT;
