@@ -20,12 +20,9 @@ public class GameModel implements Serializable
         player = 0;
     }
 
-    public Player valueOf(int playerIndex)
+    public Country getCountry(int i)
     {
-
-        // TODO Auto-generated method stub
-        return p[playerIndex];
-
+        return c[i];
     }
 
     public Country[] getCountryArray()
@@ -33,9 +30,18 @@ public class GameModel implements Serializable
         return c;
     }
 
-    public Country getCountry(int i)
+    public Country getCountrybyColor(Color pc)
     {
-        return c[i];
+        for (int i = 0; i < 30; i++)
+        {
+            if (c[i].getColor().equals(pc)) return c[i];
+        }
+        return c[0]; // TODO anders machen
+    }
+
+    public Player[] getPlayerArray()
+    {
+        return p;
     }
 
     public Player getTurnholder()
@@ -77,18 +83,10 @@ public class GameModel implements Serializable
         c[29] = new Country("Ungarn", 29, 550, 673, 13, 13, 255);
     }
 
-    public void setTurnholder()
+    public boolean isWinner(Player player2)
     {
-        turnholder = p[player++];
-    }
-
-    public Country getCountrybyColor(Color pc)
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            if (c[i].getColor().equals(pc)) return c[i];
-        }
-        return c[0]; // TODO anders machen
+        // TODO Auto-generated method stub
+        return false;
     }
 
     public void setAllCountriesUnselected()
@@ -99,20 +97,22 @@ public class GameModel implements Serializable
         }
     }
 
-    public boolean isWinner(Player player2)
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    public Player[] getPlayerArray()
-    {
-        return p;
-    }
-
     public void setPlayerArray(Player[] p)
     {
         this.p = p;
+    }
+
+    public void setTurnholder()
+    {
+        turnholder = p[player++];
+    }
+
+    public Player valueOf(int playerIndex)
+    {
+
+        // TODO Auto-generated method stub
+        return p[playerIndex];
+
     }
 
 }
