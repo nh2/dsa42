@@ -46,7 +46,7 @@ public class Tile implements Serializable
         return left;
     }
 
-    public void turnRight(Tile pT)
+    public void turnRight()
     {
         left = getDown();
         up = getLeft();
@@ -55,7 +55,7 @@ public class Tile implements Serializable
 
     }
 
-    public void turnLeft(Tile pT)
+    public void turnLeft()
     {
         left = getUp();
         up = getRight();

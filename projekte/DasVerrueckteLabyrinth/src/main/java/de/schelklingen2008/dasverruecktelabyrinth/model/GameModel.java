@@ -244,16 +244,16 @@ public class GameModel implements Serializable
         turnHolder = other.turnHolder;
     }
 
-    public Tile rechtsDrehen(Tile pT)
+    public Tile rechtsDrehen()
     {
-        pT.turnRight(pT);
-        return pT;
+        insert.turnRight();
+        return insert;
     }
 
-    public Tile linksDrehen(Tile pT)
+    public Tile linksDrehen()
     {
-        pT.turnLeft(pT);
-        return pT;
+        insert.turnLeft();
+        return insert;
     }
 
     private void advanceTurnHolder()
