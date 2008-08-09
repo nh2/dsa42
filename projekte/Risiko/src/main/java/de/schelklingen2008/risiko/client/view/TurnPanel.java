@@ -16,7 +16,6 @@ import de.schelklingen2008.risiko.client.controller.Controller;
 import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.model.GameModel;
-import de.schelklingen2008.risiko.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -61,20 +60,20 @@ public class TurnPanel extends JPanel implements GameChangeListener
         nameAndCountConstraints.gridwidth = GridBagConstraints.REMAINDER;
 
         // TODO throws nullpointer
-        for (int i = 0; i < getGameModel().getPlayerArray().length; i++)
+        for (int i = 0; i < 5 /* getGameModel().getPlayerArray().length */; i++)
         {
-            Player player = getGameModel().valueOf(i);
+            // Player player = getGameModel().valueOf(i);
             JLabel turnHolderLabel = new JLabel();
             turnHolderLabel.setForeground(Color.BLACK);
 
-            if (getGameModel().isWinner(player)) turnHolderLabel.setText(msgWin);
-            if (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
-            add(turnHolderLabel, turnHolderConstraints);
+            // if (getGameModel().isWinner(player)) turnHolderLabel.setText(msgWin);
+            // if (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
+            // add(turnHolderLabel, turnHolderConstraints);
 
-            String name = getGameContext().getName(player);
+            String name = "abc"/* getGameContext().getName(player) */;
             // count = number of units player has in all countrys
-            int count = player.getPlayerUnits();
-            Color color = player.getPlayerColor();
+            int count = i/* player.getPlayerUnits() */;
+            Color color = Color.CYAN /* player.getPlayerColor() */;
             JLabel nameAndCountLabel = new JLabel(name + ": " + count);
             nameAndCountLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
             add(nameAndCountLabel, nameAndCountConstraints);

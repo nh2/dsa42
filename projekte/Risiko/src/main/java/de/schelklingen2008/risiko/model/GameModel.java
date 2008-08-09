@@ -54,7 +54,7 @@ public class GameModel implements Serializable
         c[0] = new Country("Island", 0, 90, 160, 255, 255, 0);
         c[1] = new Country("Irland", 1, 128, 498, 216, 230, 40);
         c[2] = new Country("Groﬂbritanien", 2, 210, 518, 248, 199, 5);
-        c[3] = new Country("Norwegen", 3, 378, 307, 74, 32, 0);
+        c[3] = new Country("Norwegen", 3, 378, 307, 74, 37, 0);
         c[4] = new Country("Finnland", 4, 578, 253, 199, 98, 31);
         c[5] = new Country("Schweden", 5, 467, 346, 128, 128, 0);
         c[6] = new Country("D‰nemark", 6, 383, 439, 128, 64, 0);
@@ -69,8 +69,8 @@ public class GameModel implements Serializable
         c[15] = new Country("Griechenland", 15, 652, 848, 255, 0, 255);
         c[16] = new Country("Jugoslawien", 16, 546, 732, 255, 0, 128);
         c[17] = new Country("Albanien", 17, 605, 819, 128, 0, 255);
-        c[18] = new Country("Bulgarien", 18, 652, 672, 128, 0, 128);
-        c[19] = new Country("Rum‰nien", 19, 688, 758, 255, 128, 255);
+        c[18] = new Country("Bulgarien", 18, 652, 672, 255, 128, 255);
+        c[19] = new Country("Rum‰nien", 19, 688, 758, 128, 0, 128);
         c[20] = new Country("Portugal", 20, 25, 803, 100, 2, 2);
         c[21] = new Country("Frankreich", 21, 247, 674, 234, 67, 11);
         c[22] = new Country("Spanien", 22, 113, 826, 234, 0, 11);
@@ -79,8 +79,8 @@ public class GameModel implements Serializable
         c[25] = new Country("Tschechien", 25, 480, 610, 0, 64, 128);
         c[26] = new Country("Schweiz", 26, 367, 685, 0, 196, 196);
         c[27] = new Country("Slowakei", 27, 557, 633, 196, 196, 255);
-        c[28] = new Country("÷sterreich", 28, 465, 675, 44, 162, 224);
-        c[29] = new Country("Ungarn", 29, 550, 673, 13, 13, 255);
+        c[28] = new Country("÷sterreich", 28, 465, 675, 13, 13, 255);
+        c[29] = new Country("Ungarn", 29, 550, 673, 44, 162, 224);
     }
 
     public boolean isWinner(Player player2)

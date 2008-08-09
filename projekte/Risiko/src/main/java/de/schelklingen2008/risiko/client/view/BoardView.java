@@ -134,14 +134,14 @@ public class BoardView extends JPanel implements GameChangeListener
             }
             gfx.drawString(getGameModel().getCountry(j).getName(), getGameModel().getCountry(j).getPositionNameX(),
                            getGameModel().getCountry(j).getPositionNameY());
-            // gfx.drawString("Groﬂbritanien", 210, 538);
+            gfx.setColor(Color.BLACK);
         }
 
     }
 
     private void paintUnits(Graphics2D gfx)
     {
-
+        gfx.setColor(Color.BLACK);
         for (int i = 0; i < getGameModel().getCountryArray().length; i++)
         {
             int lUnits = getGameModel().getCountry(i).getUnits();
@@ -165,6 +165,7 @@ public class BoardView extends JPanel implements GameChangeListener
          * getGameContext().getMyPlayer().getPlayerIndex());
          * getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1); }
          */
+        System.out.println(c);
 
         repaint();
     }
