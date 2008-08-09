@@ -18,11 +18,10 @@ public class GameContext
     private static final Logger sLogger     = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel           gameModel   = new GameModel();
+    private GameModel           gameModel   = new GameModel(new String[] { "dick", "doof" });
 
     /** Is the name of the player playing in this client. */
     private String              myName;
-    private int                 myIndex;
 
     /** Provides a name for each player in the game. */
     private Map<Player, String> playerNames = new HashMap<Player, String>();
@@ -34,41 +33,36 @@ public class GameContext
 
     public String getMyName()
     {
-        return getGameModel().getPlayerList().get(myIndex).getName();
+        return myName;
     }
 
     public int getMyIndex()
     {
-        return myIndex;
+        for (int i = 0; i < gameModel.getPlayerList().size(); i++)
+        {
+            if (gameModel.getPlayerList().get(i).getName().equals(myName) == true)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void setMyName(String myName)
     {
         sLogger.fine("setMyName: " + myName);
-        for (int i = 0; i < gameModel.getPlayerList().size(); i++)
-        {
-            if (gameModel.getPlayerList().get(i).getName().equals(myName) == true)
-            {
-                this.myName = myName;
-                myIndex = i;
-            }
-        }
+        this.myName = myName;
     }
 
     public void setPlayers(String[] names)
     {
-        for (int i = 0; i < names.length; i++)
-        {
-            String string = names[i];
-            gameModel.getPlayerList().add(new Player(names[i]));
-        }
-
+        gameModel.setPlayers(names);
     }
 
     public Player getMyPlayer()
     {
         if (myName == null) return null;
-        return gameModel.getPlayerList().get(myIndex);
+        return gameModel.getPlayerList().get(getMyIndex());
     }
 
     public GameModel getGameModel()

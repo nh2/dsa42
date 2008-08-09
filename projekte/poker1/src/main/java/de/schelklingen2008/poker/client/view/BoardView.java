@@ -1,5 +1,6 @@
 package de.schelklingen2008.poker.client.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -131,6 +132,7 @@ public class BoardView extends JPanel implements GameChangeListener
         middlePanel.add(Box.createVerticalStrut(5));
         middlePanel.add(potPanel);
         middlePanel.add(Box.createVerticalStrut(5));
+        middlePanel.setBackground(new Color(0x44FF44));
 
         cardPanel.add(Box.createVerticalStrut(5));
         for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
@@ -194,7 +196,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 System.out.print(getActPlayer().getName());
                 System.out.println(" hat gecallt.");
                 controller.callButtonClicked();
-
             }
         };
 
@@ -301,6 +302,8 @@ public class BoardView extends JPanel implements GameChangeListener
         myButtonPanel.add(Box.createVerticalStrut(5));
         myButtonPanel.add(foldButton);
         myButtonPanel.add(Box.createVerticalStrut(5));
+
+        setBackground(new Color(0x44FF44));
 
     }
 

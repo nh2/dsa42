@@ -30,6 +30,16 @@ public class GameModel implements Serializable
     private int              dealerIndex;
     private long             smallBlind;
 
+    public GameModel()
+    {
+    }
+
+    public GameModel(String[] names)
+    {
+        setPlayers(names);
+        initGame();
+    }
+
     public boolean isFinished()
     {
         return false;
@@ -140,6 +150,23 @@ public class GameModel implements Serializable
                 stack.add(new Card(i, j));
             }
         }
+    }
+
+    private void initGame()
+    {
+        fillStack();
+        fillCardList(3);
+        fillCardList(1);
+        fillCardList(1);
+
+        giveCardsToPlayers();
+
+        setPot(0);
+        setHighestBet(30);
+        setPhase(3);
+        setActPlayerIndex(1);
+        setDealerIndex(0);
+        setSmallBlind(20);
     }
 
     public Card getRandomCard()
@@ -338,5 +365,11 @@ public class GameModel implements Serializable
     {
         getActPlayer().setStillIn(false);
         nextPlayer();
+    }
+
+    public void setPlayers(String[] names)
+    {
+        for (int i = 0; i < names.length; i++)
+            getPlayerList().add(new Player(names[i]));
     }
 }

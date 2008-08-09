@@ -27,12 +27,11 @@ public class BoardViewTest extends GameViewTest
     {
         Controller controller = new Controller();
 
-        GameModel model = controller.getGameContext().getGameModel();
-
         GameContext ctx = controller.getGameContext();
-        ctx.setPlayers(new String[] { "Tobias", "Matthias", "Georg", "Ben" });
         ctx.setMyName("Matthias");
 
+        GameModel model = controller.getGameContext().getGameModel();
+        model.setPlayers(new String[] { "Tobias", "Matthias", "Georg", "Ben" });
         model.fillStack();
         model.fillCardList(3);
         model.fillCardList(1);
@@ -58,7 +57,7 @@ public class BoardViewTest extends GameViewTest
         // }
 
         model.setPot(0);
-        model.setHighestBet(0);
+        model.setHighestBet(30);
         model.setPhase(3);
         model.setActPlayerIndex(1);
         model.setDealerIndex(0);
