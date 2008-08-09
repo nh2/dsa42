@@ -24,7 +24,6 @@ public class GameModel implements Serializable
         {
             spielerliste.add(new Spieler(names[i]));
         }
-        pot = 0;
         spielfeld = new Spielkarte[5];
         spielstadium = Spielstadien.FLOP;
         Rundenstart();
@@ -185,7 +184,7 @@ public class GameModel implements Serializable
     public void betraise(String wettSummeText, Spieler client)
     {
         Integer wettSumme = new Integer(wettSummeText);
-        if (wettSumme > pot)
+        if (wettSumme.compareTo(pot) > 0)
         {
             pot = wettSumme;
         }

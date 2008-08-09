@@ -20,7 +20,7 @@ public class Spieler implements Serializable
         setWasfuernBlind(Blind.NICHTS);
         Spielkarte[] handblatt = new Spielkarte[2];
         wettsumme = 0;
-        name = "DefaultSpieler";
+        this.name = name;
         nochDabei = true;
     }
 

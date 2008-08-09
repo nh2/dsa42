@@ -3,6 +3,7 @@ package de.schelklingen2008.mmpoker.server;
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
+import com.threerings.util.Name;
 
 import de.schelklingen2008.mmpoker.model.GameModel;
 import de.schelklingen2008.mmpoker.model.Spieler;
@@ -79,12 +80,14 @@ public class Manager extends GameManager
 
     private Spieler getPlayer(BodyObject client)
     {
+        Name username = client.username;
         for (int i = 1; i < gameModel.getSpielerliste().size(); i++)
         {
-            if (client.username.toString().equals(gameModel.getSpielerliste().get(i).getName())) return gameModel.getSpielerliste()
-                                                                                                                 .get(i);
+
+            Spieler spieler = gameModel.getSpielerliste().get(i);
+            if (username.toString().equals(spieler.getName())) return spieler;
 
         }
-        throw new IllegalStateException("Name not Found:" + client.username);
+        throw new IllegalStateException("Name not Found:" + username);
     }
 }
