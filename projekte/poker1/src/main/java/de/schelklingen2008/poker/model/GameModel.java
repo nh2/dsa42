@@ -241,12 +241,12 @@ public class GameModel implements Serializable
     public void call()
     {
         Player actPlayer = playerList.get(actPlayerIndex);
-        long callValue = gameModel.getHighestBet() - actPlayer.getOwnBet();
-        // if (gameModel.mustCallOrReRaise(gameModel.getActPlayerIndex()) == true && actPlayer.getBalance() >=
-        // callValue)
-        // {
-        // actPlayer.setBalance(actPlayer.getBalance() - callValue);
-        // gameModel.setPot(gameModel.getPot() + callValue);
+        long callValue = highestBet - actPlayer.getOwnBet();
+        if (mustCallOrReRaise(actPlayerIndex) == true && actPlayer.getBalance() >= callValue)
+        {
+            actPlayer.setBalance(actPlayer.getBalance() - callValue);
+            pot = pot + callValue;
+            nextPlayer();
+        }
     }
-
 }
