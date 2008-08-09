@@ -28,6 +28,8 @@ public class BoardViewTest extends GameViewTest
         GameContext ctx = controller.getGameContext();
         ctx.setPlayers(new String[] { "dick", "doof", "Hassel", "Hoff" });
         ctx.setMyName("dick");
+
         return new LabyPlusPlayerPanel(controller);
+
     }
 }

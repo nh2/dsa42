@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.text.Position;
 
 /**
@@ -246,6 +247,7 @@ public class GameModel implements Serializable
 
     public Tile rechtsDrehen()
     {
+
         insert.turnRight();
         return insert;
     }
@@ -254,6 +256,34 @@ public class GameModel implements Serializable
     {
         insert.turnLeft();
         return insert;
+    }
+
+    public void insert(JButton pButton)
+    {
+
+    }
+
+    private void einschiebenNord(int x, int y)
+    {
+        for (int i = board.length; i < 1; i--)
+        {
+
+        }
+    }
+
+    private void einschiebenSued(int x, int y)
+    {
+
+    }
+
+    private void einschiebenOst(int x, int y)
+    {
+
+    }
+
+    private void einschiebenWest(int x, int y)
+    {
+
     }
 
     private void advanceTurnHolder()

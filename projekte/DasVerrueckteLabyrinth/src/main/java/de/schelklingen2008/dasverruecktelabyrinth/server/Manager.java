@@ -61,6 +61,14 @@ public class Manager extends GameManager
         }
     }
 
+    public void insert(BodyObject client)
+    {
+        if (getPlayerType(client) == gameModel.getTurnHolder())
+        {
+            gameModel.insert();
+        }
+    }
+
     /**
      * Updates the shared state and thus send changes to all clients.
      */

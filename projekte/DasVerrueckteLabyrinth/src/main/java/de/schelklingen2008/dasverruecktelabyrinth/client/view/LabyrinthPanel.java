@@ -1,6 +1,8 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,22 +16,121 @@ import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 public class LabyrinthPanel extends JPanel
 {
 
+    private Controller controller;
+
     public LabyrinthPanel(Controller controller)
     {
         setLayout(new BorderLayout());
 
-        JButton pushButton1 = new JButton("hier");
-        JButton pushButton2 = new JButton("hier");
-        JButton pushButton3 = new JButton("hier");
-        JButton pushButton4 = new JButton("hier");
-        JButton pushButton5 = new JButton("hier");
-        JButton pushButton6 = new JButton("hier");
-        JButton pushButton7 = new JButton("hier");
-        JButton pushButton8 = new JButton("hier");
-        JButton pushButton9 = new JButton("hier");
-        JButton pushButton10 = new JButton("hier");
-        JButton pushButton11 = new JButton("hier");
-        JButton pushButton12 = new JButton("hier");
+        final JButton pushButton1 = new JButton("hier");
+        final JButton pushButton2 = new JButton("hier");
+        final JButton pushButton3 = new JButton("hier");
+        final JButton pushButton4 = new JButton("hier");
+        final JButton pushButton5 = new JButton("hier");
+        final JButton pushButton6 = new JButton("hier");
+        final JButton pushButton7 = new JButton("hier");
+        final JButton pushButton8 = new JButton("hier");
+        final JButton pushButton9 = new JButton("hier");
+        final JButton pushButton10 = new JButton("hier");
+        final JButton pushButton11 = new JButton("hier");
+        final JButton pushButton12 = new JButton("hier");
+
+        pushButton1.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton1);
+            }
+        });
+        pushButton2.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton2);
+            }
+        });
+        pushButton3.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton3);
+            }
+        });
+        pushButton4.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton4);
+            }
+        });
+        pushButton5.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton5);
+            }
+        });
+        pushButton6.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton6);
+            }
+        });
+        pushButton7.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton7);
+            }
+        });
+        pushButton8.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton8);
+            }
+        });
+        pushButton9.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton9);
+            }
+        });
+        pushButton10.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton10);
+            }
+        });
+        pushButton11.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton11);
+            }
+        });
+        pushButton12.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                LabyrinthPanel.this.controller.insert(pushButton12);
+            }
+        });
 
         JPanel buttonsSued = new JPanel();
         buttonsSued.setLayout(new BoxLayout(buttonsSued, BoxLayout.LINE_AXIS));

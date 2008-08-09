@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.swing.JButton;
+
 import com.threerings.crowd.client.PlaceView;
 import com.threerings.crowd.data.PlaceConfig;
 import com.threerings.crowd.data.PlaceObject;
@@ -129,6 +131,11 @@ public class Controller extends GameController
     public void boardClicked(int x, int y)
     {
         sharedState.manager.invoke("placePlayer", x, y);
+    }
+
+    public void insert(JButton pButton)
+    {
+        sharedState.manager.invoke("insert");
     }
 
     public ToyBoxContext getToyBoxContext()
