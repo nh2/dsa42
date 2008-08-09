@@ -37,6 +37,7 @@ public class BoardViewTest extends GameViewTest
         model.fillCardList(3);
         model.fillCardList(1);
         model.fillCardList(1);
+
         // for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
         // {
         // Card card = (Card) iterator.next();
@@ -56,8 +57,8 @@ public class BoardViewTest extends GameViewTest
         //
         // }
 
-        model.setPot(500);
-        model.setHighestBet(200);
+        model.setPot(0);
+        model.setHighestBet(0);
         model.setPhase(3);
         model.setActPlayerIndex(1);
         model.setDealerIndex(0);
