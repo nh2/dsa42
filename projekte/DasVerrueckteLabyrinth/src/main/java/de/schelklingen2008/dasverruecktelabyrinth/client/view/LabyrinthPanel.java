@@ -1,7 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -75,13 +74,6 @@ public class LabyrinthPanel extends JPanel
 
         BoardView b = new BoardView(controller);
         add(b, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void setPreferredSize(Dimension preferredSize)
-    {
-        // TODO Auto-generated method stub
-        return new Dimension(680, 640);
     }
 
     public static void main(String[] args)
