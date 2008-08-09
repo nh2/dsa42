@@ -48,14 +48,15 @@ public class Manager extends GameManager
     /**
      * Updates the shared state and thus send changes to all clients.
      */
-    private void updateSharedState()
-    {
-        sharedState.setModel(gameModel);
-    }
-
     private Player getPlayer(BodyObject client)
     {
         return gameModel.valueOf(getPlayerIndex(client.username));
+    }
+
+    public void placeUnit(BodyObject client, int index)
+    {
+        gameModel.getCountry(index).setUnits(gameModel.getCountry(index).getUnits() + 1);
+        updateSharedState();
     }
 
     public void setMine(BodyObject client, int index, int playerindex)
@@ -66,9 +67,9 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    public void placeUnit(BodyObject client, int index)
+    private void updateSharedState()
     {
-        gameModel.getCountry(index).setUnits(gameModel.getCountry(index).getUnits() + 1);
-        updateSharedState();
+        sharedState.setModel(gameModel);
     }
+
 }

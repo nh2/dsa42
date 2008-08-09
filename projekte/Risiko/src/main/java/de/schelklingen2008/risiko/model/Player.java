@@ -24,14 +24,14 @@ public class Player implements Serializable
         unitstoset = 0;
     }
 
-    public int getUnitsToSet()
+    public Color getPlayerColor()
     {
-        return unitstoset;
+        return c;
     }
 
-    public void getUnitsToSet(int units)
+    public int getPlayerIndex()
     {
-        unitstoset = units;
+        return index;
     }
 
     public String getPlayerName()
@@ -44,19 +44,19 @@ public class Player implements Serializable
         return units;
     }
 
-    public int getPlayerIndex()
+    public int getUnitsToSet()
     {
-        return index;
-    }
-
-    public Color getPlayerColor()
-    {
-        return c;
+        return unitstoset;
     }
 
     public void setUnits(int i)
     {
         index = i;
+    }
+
+    public void setUnitsToSet(int units)
+    {
+        unitstoset = units;
     }
 
 }
