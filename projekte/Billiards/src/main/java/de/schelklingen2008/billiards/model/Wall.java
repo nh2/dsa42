@@ -8,6 +8,7 @@ public class Wall
 {
 
     private double slope, yIntercept, minX, minY, maxX, maxY, angle;
+    private Vector2d p1, p2;
 
     public Wall(Vector2d p1, Vector2d p2)
     {
@@ -50,6 +51,11 @@ public class Wall
 
     public double getCollisionTime(Ball ball)
     {
+        if (!ball.isInMotion())
+        {
+            return Double.NaN;
+        }
+
         final double EPSILON = 0.0001d;
 
         if (Math.abs(slope) < EPSILON)
@@ -123,7 +129,16 @@ public class Wall
             if (collisionPos.getX() < minX || collisionPos.getX() > maxX || collisionPos.getY() < minY
                 || collisionPos.getY() > maxY)
             {
-                return Double.NaN;
+                Vector2d edge;
+                if (collisionPos.getX() < minX)
+                {
+                    edge = new Vector2d(minX, yIntercept);
+                }
+                else
+                {
+                    edge = new Vector2d(maxX, maxX * slope + yIntercept);
+                }
+                return getEdgeCollisionTime(ball, edge);
             }
             else
             {
@@ -131,6 +146,38 @@ public class Wall
             }
 
         }
+    }
+
+    private double getEdgeCollisionTime(Ball ball, Vector2d collisionPos)
+    {
+
+        double vX = ball.getVelocity().getX(), vY = ball.getVelocity().getY();
+        double deltaX = collisionPos.getX() - ball.getPosition().getX(), deltaY =
+            collisionPos.getY() - ball.getPosition().getY();
+
+        double a = vX * vX + vY * vY;
+        double b = -2 * (deltaX * vX + deltaY * vY);
+        double c = deltaX * deltaX + deltaY * deltaY - GlobalConstants.BALL_RADIUS * GlobalConstants.BALL_RADIUS;
+
+        double disc = b * b - 4 * a * c;
+
+        if (disc < 0)
+        {
+            return Double.NaN;
+        }
+        else
+        {
+            double t = (-b - Math.sqrt(disc)) / (2 * a);
+            if (t < 0)
+            {
+                return Double.NaN;
+            }
+            else
+            {
+                return ball.adjustCollisionTime(t);
+            }
+        }
+
     }
 
     private double getVerticalWallCollisionTime(Ball ball)

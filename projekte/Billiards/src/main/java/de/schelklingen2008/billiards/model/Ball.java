@@ -207,10 +207,21 @@ public class Ball
 
     public double adjustCollisionTime(double t)
     {
+        double v, a;
 
-        double a = -0.5d * Math.cos(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
-        double b = velocity.getX();
-        double c = -velocity.getX() * t;
+        if (velocity.getX() == 0)
+        {
+            v = velocity.getY();
+            a = -0.5d * Math.sin(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
+        }
+        else
+        {
+            v = velocity.getX();
+            a = -0.5d * Math.cos(velocity.getAngle()) * GlobalConstants.FRICTION_FACTOR;
+        }
+
+        double b = v;
+        double c = -v * t;
         double result1 = Double.NaN, result2 = Double.NaN;
         double disc = Double.NaN;
 
