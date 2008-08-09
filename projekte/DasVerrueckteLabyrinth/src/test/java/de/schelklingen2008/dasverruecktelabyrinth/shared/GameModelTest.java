@@ -5,7 +5,8 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
 public class GameModelTest extends TestCase
 {
-    private GameModel gameModel = new GameModel();
+
+    private GameModel gameModel = new GameModel(4);
 
     public void testSomething() throws Exception
     {
