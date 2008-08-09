@@ -2,7 +2,9 @@ package de.schelklingen2008.doppelkopf.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Blatt implements Serializable
@@ -51,9 +53,10 @@ public class Blatt implements Serializable
         return new HashSet<Karte>(karten);
     }
 
-    public ArrayList<Karte> getKartenSortiert() // TODO Sortierregeln hinzufügen
+    public List<Karte> getKartenSortiert() // TODO Sortierregeln hinzufügen
     {
-        ArrayList<Karte> sortierteKarten = new ArrayList<Karte>(karten);
+        List<Karte> sortierteKarten = new ArrayList<Karte>(karten);
+        Collections.sort(sortierteKarten);
         // Karten sortieren
         return sortierteKarten;
     }

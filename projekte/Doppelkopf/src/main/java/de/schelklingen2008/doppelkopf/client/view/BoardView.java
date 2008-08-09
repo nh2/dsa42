@@ -142,7 +142,9 @@ public class BoardView extends JPanel implements GameChangeListener
         // + " | "
         // + clicky
         // + " ) "
-        // + gueltigMeldung);
+        // + gueltigMeldung
+        // + " Karte ist trumpf: "
+        // + klickKarte.isTrumpf());
     }
 
     @Override
@@ -206,10 +208,17 @@ public class BoardView extends JPanel implements GameChangeListener
             tempListe.rotieren();
 
         gfx.setColor(Color.white);
-        gfx.drawString(tempListe.getAnDerReihe().getName(), 135, 451);
-        gfx.drawString(tempListe.next().getName(), 30, 103);
-        gfx.drawString(tempListe.next().getName(), 265, 18);
-        gfx.drawString(tempListe.next().getName(), 700, 103);
+        int namenspositionen[][] = { { 135, 451 }, { 30, 103 }, { 265, 18 }, { 700, 103 } };
+
+        for (int i = 0; i < 4; i++)
+        {
+            Spieler zeichenSpieler = tempListe.getAnDerReihe();
+            String name = "";
+            if (zeichenSpieler == spiel.getSpieler().getAnDerReihe()) name += "* ";
+            name += zeichenSpieler.getName();
+            gfx.drawString(name, namenspositionen[i][0], namenspositionen[i][1]);
+            tempListe.rotieren();
+        }
 
         // Bis zum aktuellen Spieler vorruecken (mir)
         while (tempListe.getAnDerReihe() != ich)
@@ -258,20 +267,9 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.translate(-770, -115);
 
         // Karten in der Mitte
-
         for (Mittenplatz mp : mittenKarten)
             mp.draw(gfx);
-        // mpUnten.draw(gfx);
-        // mpLinks.draw(gfx);
-        // mpOben.draw(gfx);
-        // mpRechts.draw(gfx);
 
-        // gfx.translate(400, 250);
-        // gfx.fillRect(0, 0, 30, 70);
-        // gfx.rotate(Math.PI / 2d);
-        // gfx.fillRect(0, 0, 30, 70);
-        // gfx.translate(400, 250);
-        // gfx.fillOval(395, 295, 10, 10);
     }
 
     public void gameChanged()
@@ -280,16 +278,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
         tempListe.clear();
         tempListe.addAll(spiel.getSpieler());
-        // ich = tempListe.getSpieler(controller.getGameContext().getMyName());
         ich = tempListe.getSpieler(getGameContext().getMyName());
 
         List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
         List<Karte> mitte = spiel.getTisch().getMitte();
-        // mitte.add(l.get(0));
-        // mitte.add(l.get(1));
-        // mitte.add(l.get(2));
-        // mitte.add(l.get(3));
-        // tempListe.getAnDerReihe().getBlatt().getKarten().remove(l.get(0)); // TODO entfernen: Karte löschen
 
         {
             int i = 0;

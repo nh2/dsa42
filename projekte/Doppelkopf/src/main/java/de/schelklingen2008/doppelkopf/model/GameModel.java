@@ -67,23 +67,33 @@ public class GameModel implements Serializable
 
     public void karteAusspielen(Spieler spieler, Karte karte)
     {
-        logger.log(Level.INFO, spieler.toString() + " will Karte spielen: " + karte.toString());
+        logger.log(Level.INFO, spieler.toString() + " will Karte spielen: " + karte.toString() + " ");
         // Spieler spieler = spielerliste.getSpieler(spielerName);
         Blatt blatt = spieler.getBlatt();
         List<Karte> mitte = tisch.getMitte();
         // TODO berechnen, ob der Zug gültig ist
         boolean zugGueltig = true;
 
-        if (spieler != spielerliste.getAnDerReihe()) zugGueltig = false;
+        if (spieler != spielerliste.getAnDerReihe())
+        {
+            zugGueltig = false;
+            logger.log(Level.INFO, "Spieler nicht an der Reihe. ");
+        }
+
+        if (mitte.size() == 4)
+        {
+            zugGueltig = false;
+            logger.log(Level.INFO, "Mitte ist voll. ");
+        }
 
         if (zugGueltig)
         {
-            logger.log(Level.INFO, "Gültiger Zug.");
+            logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
             getSpieler().next();
             return;
         }
-        logger.log(Level.INFO, "Unültiger Zug.");
+        logger.log(Level.INFO, "Ungültiger Zug. ");
     }
 }
