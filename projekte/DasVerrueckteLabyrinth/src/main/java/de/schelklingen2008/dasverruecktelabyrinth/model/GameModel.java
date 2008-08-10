@@ -66,9 +66,9 @@ public class GameModel implements Serializable
         setTurnHolder(PLAYER_START);
         insert = tiles.get(board.length * board.length);
 
-        player.put(PlayerType.GREEN, new Player(PlayerType.GREEN,
-                                                RAND.nextInt(board.length),
-                                                RAND.nextInt(board.length)));
+        if (getPlayers().size() == 0) player.put(PlayerType.GREEN, new Player(PlayerType.GREEN,
+                                                                              RAND.nextInt(board.length),
+                                                                              RAND.nextInt(board.length)));
         player.put(PlayerType.WHITE, new Player(PlayerType.WHITE,
                                                 RAND.nextInt(board.length),
                                                 RAND.nextInt(board.length)));
@@ -185,7 +185,8 @@ public class GameModel implements Serializable
         int noOfPlayers = getPlayers().size();
         int cardsPerPlayer = 24 / noOfPlayers;
         getPlayers();
-        if (noOfPlayers == 2)
+
+        if (noOfPlayers > 1)
         {
             PlayerCards temp2 = new PlayerCards();
             PlayerCards temp3 = new PlayerCards();
@@ -201,65 +202,30 @@ public class GameModel implements Serializable
                 temp3.getHiddenCards().add(i, null);
             }
             playerCardsMap.put(PlayerType.BLACK, temp3);
-        }
 
-        if (noOfPlayers == 3)
-        {
-            PlayerCards temp2 = new PlayerCards();
-            PlayerCards temp3 = new PlayerCards();
-            PlayerCards temp4 = new PlayerCards();
-
-            for (int i = 0; i < cardsPerPlayer; i++)
+            if (noOfPlayers > 2)
             {
-                temp2.getHiddenCards().add(i, null);
+
+                PlayerCards temp4 = new PlayerCards();
+
+                for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
+                {
+                    temp4.getHiddenCards().add(i, null);
+                }
+                playerCardsMap.put(PlayerType.RED, temp4);
+
+                if (noOfPlayers > 3)
+                {
+                    PlayerCards temp5 = new PlayerCards();
+                    for (int i = cardsPerPlayer * 3; i < 4 * cardsPerPlayer; i++)
+                    {
+                        temp5.getHiddenCards().add(i, null);
+                    }
+                    playerCardsMap.put(PlayerType.GREEN, temp5);
+
+                }
+
             }
-            playerCardsMap.put(PlayerType.WHITE, temp2);
-
-            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
-            {
-                temp3.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.BLACK, temp3);
-
-            for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
-            {
-                temp4.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.RED, temp4);
-
-        }
-
-        if (noOfPlayers == 4)
-        {
-            PlayerCards temp2 = new PlayerCards();
-            PlayerCards temp3 = new PlayerCards();
-            PlayerCards temp4 = new PlayerCards();
-            PlayerCards temp5 = new PlayerCards();
-
-            for (int i = 0; i < cardsPerPlayer; i++)
-            {
-                temp2.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.WHITE, temp2);
-
-            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
-            {
-                temp3.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.BLACK, temp3);
-
-            for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
-            {
-                temp4.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.RED, temp4);
-
-            for (int i = cardsPerPlayer * 3; i < 4 * cardsPerPlayer; i++)
-            {
-                temp5.getHiddenCards().add(i, null);
-            }
-            playerCardsMap.put(PlayerType.GREEN, temp5);
-
         }
 
     }
