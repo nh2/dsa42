@@ -44,8 +44,9 @@ public class Manager extends GameManager
 
     public void putCard(BodyObject client, int pCard, boolean pFromHand, int pToCard)
     {
+        // TODO fix me
         getPlayer(client);
-        gameModel.putCard(pCard, pFromHand, pToCard);
+        gameModel.putCard(client.getOid(), pCard, pFromHand, pToCard);
         updateSharedState();
     }
 

@@ -17,4 +17,9 @@ public class Card implements Serializable
         return mN;
 
     }
+
+    public void setNumber(int pN)
+    {
+        mN = pN;
+    }
 }

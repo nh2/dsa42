@@ -150,10 +150,26 @@ public class GameModel implements Serializable
         return mPlayers[getPlayerIDByName(pName)];
     }
 
-    public void putCard(int pCard, boolean pFromHand, int pToCard)
+    public void putCard(int pPlayerID, int pCard, boolean pFromHand, int pToCard)
     {
-        // TODO Auto-generated method stub
+        // update BuildPile
+        for (int i = 0; i < mBuildPile.length; i++)
+        {
+            if (mBuildPile[i].getNumber() == pToCard)
+            {
+                mBuildPile[i].setNumber(pCard);
+                break;
+            }
+        }
+        // remove PlayerPiles
+        if (pFromHand)
+        {
+            mPlayers[pPlayerID].getDiscardPile();
+        }
+        else
+        {
 
+        }
     }
 
     public void placeCardInDiscardPile(int pCard, boolean pFromHand, int pToCard)

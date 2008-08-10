@@ -49,8 +49,9 @@ public class GameContext
 
     public Player getMyPlayer()
     {
-        // TODO
-        return null;
+        // TODO FixMe
+        // controller.getGameContext().getMyName()
+        return gameModel.getPlayerByName("Fabio");
     }
 
     public GameModel getGameModel()
@@ -62,4 +63,5 @@ public class GameContext
     {
         gameModel = model;
     }
+
 }

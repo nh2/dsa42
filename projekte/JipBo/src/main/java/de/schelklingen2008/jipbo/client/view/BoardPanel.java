@@ -42,7 +42,7 @@ public class BoardPanel extends JPanel
                 mCardPanel[i] = new CardPanel(mCards[i].getNumber(), false, false);
             }
             add(mCardPanel[i]);
-            if (mController != null && mCards[i].getNumber() != -1)
+            if (mController != null && (mCards[i].getNumber() != -1 || !mIsDrawPile))
             {
                 mCardPanel[i].addMouseListener(new MouseAdapter()
                 {

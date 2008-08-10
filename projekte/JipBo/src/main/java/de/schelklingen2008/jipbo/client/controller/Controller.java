@@ -204,7 +204,8 @@ public class Controller extends GameController
                 || selectedPublicCardIndex == selectedOwnCardIndex - 1
                 || selectedOwnCardIndex == 0)// defensive programming
             {
-                // sharedState.manager.invoke("putCard", 1, 2);
+                sharedState.manager.invoke("putCard", selectedOwnCardIndex, selectedOwnCardIsInHand,
+                                           selectedPublicCardIndex);
                 sLogger.info("send data to server");
             }
         }
