@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.JButton;
 import javax.swing.text.Position;
 
 /**
@@ -235,8 +234,10 @@ public class GameModel implements Serializable
 
     private boolean isTurnHolder(Player player2)
     {
+        boolean temp = false;
+        if (player2.getPlayerType() == turnHolder) temp = true;
 
-        return false;
+        return temp;
     }
 
     public GameModel(GameModel other)
@@ -258,7 +259,7 @@ public class GameModel implements Serializable
         return insert;
     }
 
-    public void insert(JButton pButton)
+    public void insert(PushButton pPushButton)
     {
 
     }

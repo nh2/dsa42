@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.swing.JButton;
-
 import com.threerings.crowd.client.PlaceView;
 import com.threerings.crowd.data.PlaceConfig;
 import com.threerings.crowd.data.PlaceObject;
@@ -25,6 +23,7 @@ import com.threerings.util.MessageBundle;
 import de.schelklingen2008.dasverruecktelabyrinth.client.Constants;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.client.view.GamePanel;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PushButton;
 import de.schelklingen2008.dasverruecktelabyrinth.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -133,7 +132,7 @@ public class Controller extends GameController
         sharedState.manager.invoke("placePlayer", x, y);
     }
 
-    public void insert(JButton pButton)
+    public void insert(PushButton pPushButton)
     {
         sharedState.manager.invoke("insert");
     }

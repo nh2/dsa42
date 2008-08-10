@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PushButton;
 
 public class LabyrinthPanel extends JPanel
 {
@@ -40,7 +41,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton1);
+                LabyrinthPanel.this.controller.insert(PushButton.SuedLinks);
             }
         });
         pushButton2.addActionListener(new ActionListener()
@@ -48,7 +49,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton2);
+                LabyrinthPanel.this.controller.insert(PushButton.SuedMitte);
             }
         });
         pushButton3.addActionListener(new ActionListener()
@@ -56,7 +57,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton3);
+                LabyrinthPanel.this.controller.insert(PushButton.SuedRechts);
             }
         });
         pushButton4.addActionListener(new ActionListener()
@@ -64,7 +65,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton4);
+                LabyrinthPanel.this.controller.insert(PushButton.OstUnten);
             }
         });
         pushButton5.addActionListener(new ActionListener()
@@ -72,7 +73,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton5);
+                LabyrinthPanel.this.controller.insert(PushButton.OstMitte);
             }
         });
         pushButton6.addActionListener(new ActionListener()
@@ -80,7 +81,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton6);
+                LabyrinthPanel.this.controller.insert(PushButton.OstOben);
             }
         });
         pushButton7.addActionListener(new ActionListener()
@@ -88,7 +89,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton7);
+                LabyrinthPanel.this.controller.insert(PushButton.NordRechts);
             }
         });
         pushButton8.addActionListener(new ActionListener()
@@ -96,7 +97,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton8);
+                LabyrinthPanel.this.controller.insert(PushButton.NordMitte);
             }
         });
         pushButton9.addActionListener(new ActionListener()
@@ -104,7 +105,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton9);
+                LabyrinthPanel.this.controller.insert(PushButton.NordLinks);
             }
         });
         pushButton10.addActionListener(new ActionListener()
@@ -112,7 +113,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton10);
+                LabyrinthPanel.this.controller.insert(PushButton.WestOben);
             }
         });
         pushButton11.addActionListener(new ActionListener()
@@ -120,7 +121,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton11);
+                LabyrinthPanel.this.controller.insert(PushButton.WestMitte);
             }
         });
         pushButton12.addActionListener(new ActionListener()
@@ -128,7 +129,7 @@ public class LabyrinthPanel extends JPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                LabyrinthPanel.this.controller.insert(pushButton12);
+                LabyrinthPanel.this.controller.insert(PushButton.WestUnten);
             }
         });
 

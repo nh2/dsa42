@@ -6,6 +6,7 @@ import com.threerings.parlor.game.server.GameManager;
 
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
+import de.schelklingen2008.dasverruecktelabyrinth.model.PushButton;
 import de.schelklingen2008.dasverruecktelabyrinth.transport.SharedState;
 
 /**
@@ -61,11 +62,11 @@ public class Manager extends GameManager
         }
     }
 
-    public void insert(BodyObject client)
+    public void insert(BodyObject client, PushButton pPushButton)
     {
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
-            gameModel.insert(null);
+            gameModel.insert(pPushButton);
         }
     }
 
