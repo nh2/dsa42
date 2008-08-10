@@ -22,13 +22,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.model.Ball;
 import de.schelklingen2008.billiards.model.GameModel;
-import de.schelklingen2008.billiards.model.Wall;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 import de.schelklingen2008.util.LoggerFactory;
@@ -47,8 +45,6 @@ public class BoardView extends JPanel implements GameChangeListener
     private static final long serialVersionUID = -9064861386229239709L;
     private Controller controller;
     private Image bg;
-
-    private Vector2d rayEndingPoint;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -92,141 +88,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        GameModel gameModel = getGameModel();
-        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()))
-        {
-            castRay(e.getX(), e.getY());
-            repaint();
-        }
-    }
-
-    private void castRay(int x, int y)
-    {
-        GameModel gameModel = getGameModel();
-
-        x -= BORDER_WIDTH;
-        y -= BORDER_HEIGHT;
-
-        int deltaX = (int) Math.round(x - gameModel.getWhiteBall().getPosition().getX());
-        int deltaY = (int) Math.round(y - gameModel.getWhiteBall().getPosition().getY());
-
-        if (deltaX == 0)
-        {
-            castVerticalRay();
-        }
-
-        double slope = (double) deltaY / (double) deltaX, yIntercept = y - slope * x;
-        Vector2d position = new Vector2d(x, y);
-
-        Vector2d rayEndingPoint = null;
-        Double minSquaredLength = Double.NaN;
-
-        for (Ball ball : gameModel.getBallsOnTable())
-        {
-            if (ball == gameModel.getWhiteBall())
-            {
-                continue;
-            }
-
-            Vector2d castPoint = castRayOnBall(x, y, slope, yIntercept, ball);
-
-            if (castPoint != null
-                && Math.signum(castPoint.getX() - gameModel.getWhiteBall().getPosition().getX()) == Math.signum(deltaX))
-            {
-                Double raySquaredLength = position.subtract(castPoint).getSquaredLength();
-                if (castPoint != null && (rayEndingPoint == null || raySquaredLength < minSquaredLength))
-                {
-                    rayEndingPoint = castPoint;
-                }
-            }
-        }
-
-        if (rayEndingPoint == null)
-        {
-            for (Wall wall : gameModel.getWalls())
-            {
-
-                minSquaredLength = Double.NaN;
-
-                Vector2d castPoint = castRayOnWall(slope, yIntercept, wall);
-
-                if (castPoint != null
-                    && Math.signum(castPoint.getX() - gameModel.getWhiteBall().getPosition().getX()) == Math.signum(deltaX))
-                {
-                    Double raySquaredLength = position.subtract(castPoint).getSquaredLength();
-                    if (castPoint != null && (rayEndingPoint == null || raySquaredLength < minSquaredLength))
-                    {
-                        rayEndingPoint = castPoint;
-                    }
-                }
-
-            }
-        }
-
-        if (rayEndingPoint == null)
-        {
-            int xCollision = (int) (Math.signum(deltaX) * GlobalConstants.MAX_X);
-            rayEndingPoint = new Vector2d(xCollision, Math.round(xCollision * slope + yIntercept));
-        }
-
-        this.rayEndingPoint = rayEndingPoint;
-    }
-
-    private void castVerticalRay()
-    {
-
-    }
-
-    private Vector2d castRayOnWall(double slope, double yIntercept, Wall wall)
-    {
-        if (Double.isInfinite(wall.getSlope()))
-        {
-            double xCollision = wall.getMinX();
-            double yCollision = slope * xCollision + yIntercept;
-
-            if (yCollision < wall.getMinY() || yCollision > wall.getMaxY())
-            {
-                return null;
-            }
-            else
-            {
-                return new Vector2d(xCollision, yCollision);
-            }
-        }
-        else
-        {
-
-            double xCollision = (yIntercept - wall.getYIntercept()) / (wall.getSlope() - slope);
-            if (xCollision < wall.getMinX() || xCollision > wall.getMaxX())
-            {
-                return null;
-            }
-            else
-            {
-                double yCollision = slope * xCollision + yIntercept;
-                return new Vector2d(xCollision, yCollision);
-            }
-        }
-    }
-
-    private Vector2d castRayOnBall(int x, int y, double slope, double yIntercept, Ball ball)
-    {
-        double dY = yIntercept - ball.getPosition().getY();
-        double a = slope * slope + 1;
-        double b = 2 * (slope * dY - ball.getPosition().getX());
-        double c = ball.getPosition().getX() * ball.getPosition().getX() + dY * dY - BALL_RADIUS * BALL_RADIUS;
-
-        double disc = b * b - 4 * a * c;
-        if (disc < 0)
-        {
-            return null;
-        }
-        else
-        {
-            double xCollision = (-b - Math.sqrt(disc)) / (2 * a);
-            double yCollision = xCollision * slope + yIntercept;
-            return new Vector2d(xCollision, yCollision);
-        }
     }
 
     private void pressed(MouseEvent e)
@@ -270,16 +131,6 @@ public class BoardView extends JPanel implements GameChangeListener
     {
 
         GameModel gameModel = getGameModel();
-
-        if (rayEndingPoint != null)
-        {
-            int x1 = (int) Math.round(gameModel.getWhiteBall().getPosition().getX() + BORDER_WIDTH);
-            int y1 = (int) Math.round(gameModel.getWhiteBall().getPosition().getY() + BORDER_HEIGHT);
-            int x2 = (int) Math.round(rayEndingPoint.getX() + BORDER_WIDTH);
-            int y2 = (int) Math.round(rayEndingPoint.getY() + BORDER_HEIGHT);
-
-            gfx.drawLine(x1, y1, x2, y2);
-        }
 
         for (Ball ball : gameModel.getBallsOnTable())
         {
