@@ -1,5 +1,6 @@
 package de.schelklingen2008.dasverruecktelabyrinth.client.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,6 +49,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JPanel PlayerPanel = new JPanel();
         this.controller = controller;
         controller.addChangeListener(this);
+
+        setBackground(Color.white);
 
         JPanel drehButtons = new JPanel();
 
@@ -122,12 +126,21 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
 
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
+        linsert.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel Cards = new JPanel();
         Cards.setLayout(new BoxLayout(Cards, BoxLayout.PAGE_AXIS));
 
         JPanel SearchThisCard = new JPanel();
+        SearchThisCard.setBorder(BorderFactory.createLineBorder(Color.black));
+        SearchThisCard.setBackground(Color.white);
+
         JPanel FoundCard = new JPanel();
+        FoundCard.setBorder(BorderFactory.createLineBorder(Color.black));
+        FoundCard.setBackground(Color.white);
+
+        JLabel Text = new JLabel("TEST");
+        FoundCard.add(Text);
 
         SearchThisCard.add(searchThisCard);
         FoundCard.add(foundCard);
