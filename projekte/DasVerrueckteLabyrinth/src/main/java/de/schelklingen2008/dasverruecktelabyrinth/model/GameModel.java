@@ -255,12 +255,7 @@ public class GameModel implements Serializable
             pPlayer.setXKoordinate(x);
             pPlayer.setYKoordinate(y);
         }
-    }
-
-    private boolean isLegal(PlayerType pPlayerType)
-    {
-
-        return false;
+        changeTurnholder();
     }
 
     public List<Position> findWay(Tile[][] pBoard, int sx, int sy, int ex, int ey, int lx, int ly)
@@ -469,8 +464,10 @@ public class GameModel implements Serializable
 
     public boolean isFinished()
     {
-
-        return false;
+        boolean temp = false;
+        if (playerCardsMap.get(turnHolder).getHiddenCards() == null) temp = true;
+        turnHolder = null;
+        return temp;
     }
 
     public Tile getInsertTile()
