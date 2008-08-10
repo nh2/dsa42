@@ -68,6 +68,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
     }
 
+    private void bg(JPanel panel) // Hintergrund einstellen
+    {
+        panel.setBackground(new Color(0x44FF44));
+    }
+
     private void paintBoard()
     {
         removeAll();
@@ -132,7 +137,6 @@ public class BoardView extends JPanel implements GameChangeListener
         middlePanel.add(Box.createVerticalStrut(5));
         middlePanel.add(potPanel);
         middlePanel.add(Box.createVerticalStrut(5));
-        middlePanel.setBackground(new Color(0x44FF44));
 
         cardPanel.add(Box.createVerticalStrut(5));
         for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
