@@ -1,7 +1,5 @@
 package de.schelklingen2008.risiko.server;
 
-import java.awt.Color;
-
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
@@ -33,13 +31,12 @@ public class Manager extends GameManager
     {
         super.gameWillStart();
 
-        Player[] p = new Player[getPlayerCount()];
+        String[] names = new String[getPlayerCount()];
         for (int i = 0; i < getPlayerCount(); i++)
         {
-            p[i] = new Player(getPlayer(i).username.toString(), i, Color.BLUE);
+            names[i] = getPlayer(i).username.toString();
         }
-        gameModel = new GameModel();
-        gameModel.setPlayerArray(p);
+        gameModel = new GameModel(names);
         updateSharedState();
     }
 
@@ -69,11 +66,6 @@ public class Manager extends GameManager
 
     private void updateSharedState()
     {
-
-        updateSharedState();
-
         sharedState.setModel(gameModel);
-
     }
-
 }

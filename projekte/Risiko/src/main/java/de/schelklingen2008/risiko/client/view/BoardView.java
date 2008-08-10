@@ -140,6 +140,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBoard(Graphics2D gfx)
     {
+        if (getGameModel() == null) return;
         paintCountrys(gfx);
         paintUnits(gfx);
     }

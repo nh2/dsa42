@@ -16,14 +16,13 @@ import de.schelklingen2008.risiko.client.controller.Controller;
 import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 import de.schelklingen2008.risiko.client.model.GameContext;
 import de.schelklingen2008.risiko.model.GameModel;
+import de.schelklingen2008.risiko.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
  */
 public class TurnPanel extends JPanel implements GameChangeListener
 {
-
-    // TODO turnpanel throws NullPointer
 
     private Controller             controller;
     private String                 msgWin;
@@ -46,6 +45,9 @@ public class TurnPanel extends JPanel implements GameChangeListener
     {
         removeAll();
 
+        GameModel model = getGameModel();
+        if (model == null) return;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         GridBagLayout gridbag = new GridBagLayout();
         setLayout(gridbag);
@@ -59,21 +61,19 @@ public class TurnPanel extends JPanel implements GameChangeListener
         nameAndCountConstraints.insets.left = 10;
         nameAndCountConstraints.gridwidth = GridBagConstraints.REMAINDER;
 
-        // TODO throws nullpointer
-        for (int i = 0; i < 5 /* getGameModel().getPlayerArray().length */; i++)
+        for (int i = 0; i < model.getPlayerArray().length; i++)
         {
-            // Player player = getGameModel().valueOf(i);
+            Player player = model.valueOf(i);
             JLabel turnHolderLabel = new JLabel();
             turnHolderLabel.setForeground(Color.BLACK);
 
-            // if (getGameModel().isWinner(player)) turnHolderLabel.setText(msgWin);
-            // if (player.equals(getGameModel().getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
-            // add(turnHolderLabel, turnHolderConstraints);
+            if (model.isWinner(player)) turnHolderLabel.setText(msgWin);
+            if (player.equals(model.getTurnholder())) turnHolderLabel.setIcon(ICON_TURN);
+            add(turnHolderLabel, turnHolderConstraints);
 
-            String name = "abc"/* getGameContext().getName(player) */;
-            // count = number of units player has in all countrys
-            int count = i/* player.getPlayerUnits() */;
-            Color color = Color.CYAN /* player.getPlayerColor() */;
+            String name = player.getPlayerName();
+            int count = player.getPlayerUnits();
+            Color color = player.getPlayerColor();
             JLabel nameAndCountLabel = new JLabel(name + ": " + count);
             nameAndCountLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
             add(nameAndCountLabel, nameAndCountConstraints);

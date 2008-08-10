@@ -1,7 +1,5 @@
 package de.schelklingen2008.risiko.client.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import de.schelklingen2008.risiko.model.GameModel;
@@ -15,21 +13,13 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameContext
 {
 
-    private static final Logger sLogger     = LoggerFactory.create();
+    private static final Logger sLogger   = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel           gameModel   = new GameModel();
+    private GameModel           gameModel = null;
 
     /** Is the name of the player playing in this client. */
     private String              myName;
-
-    /** Provides a name for each player in the game. */
-    private Map<Player, String> playerNames = new HashMap<Player, String>();
-
-    public String getName(Player player)
-    {
-        return playerNames.get(player);
-    }
 
     public String getMyName()
     {
@@ -42,19 +32,9 @@ public class GameContext
         this.myName = myName;
     }
 
-    public void setPlayers(String[] names)
-    {
-        playerNames.clear();
-        // playerNames.put(Player.valueOf(0), names[0]);
-        // playerNames.put(Player.valueOf(1), names[1]);
-    }
-
     public Player getMyPlayer()
     {
-        if (myName == null) return null;
-        // if (myName.equals(playerNames.get(Player.WHITE))) return Player.WHITE;
-        // if (myName.equals(playerNames.get(Player.BLACK))) return Player.BLACK;
-        return null;
+        return gameModel.getPlayerbyName(myName);
     }
 
     public GameModel getGameModel()

@@ -2,6 +2,7 @@ package de.schelklingen2008.risiko.model;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Maintains the rules and the state of the game.
@@ -10,14 +11,27 @@ public class GameModel implements Serializable
 {
 
     private Country[] c = new Country[30];
-    private Player[]  p = new Player[2];  // TODO variabel machen
+    private Player[]  p;
     private Player    turnholder;
-    private int       player;
+    private int       turnholderIndex;
 
-    public GameModel()
+    public GameModel(String[] names)
     {
+        initPlayers(names);
         initCountrys();
-        player = 0;
+        initNeigbours();
+
+        turnholderIndex = 0;
+        turnholder = p[0];
+    }
+
+    private void initPlayers(String[] names)
+    {
+        p = new Player[names.length];
+        for (int i = 0; i < names.length; i++)
+        {
+            p[i] = new Player(names[i], i, Color.BLUE);
+        }
     }
 
     public Country getCountry(int i)
@@ -74,6 +88,40 @@ public class GameModel implements Serializable
         c[29] = new Country("Ungarn", 29, 550, 673, 44, 162, 224);
     }
 
+    private void initNeigbours()
+    {
+        // TODO füllen
+        // init neighbours Island
+        ArrayList island = new ArrayList<Country>();
+        island.add(0, c[1]); // Irland
+        island.add(1, c[2]); // GB
+        island.add(2, c[3]); // Norwegen
+        c[0].setNeighbours(island);
+
+        // init neighbours Irland
+        ArrayList irland = new ArrayList<Country>();
+        irland.add(0, c[0]); // Island
+        irland.add(1, c[2]); // GB
+        c[1].setNeighbours(irland);
+
+        // init neighbours GB
+        ArrayList gb = new ArrayList<Country>();
+        gb.add(0, c[1]); // Irland
+        gb.add(1, c[23]); // BeNeLux
+        gb.add(2, c[21]); // Frankreich
+        gb.add(3, c[0]); // Island
+        c[2].setNeighbours(gb);
+
+        // TODO init neighbours Norwegen
+        ArrayList norwegen = new ArrayList<Country>();
+        /*
+         * norwegen.add(0, c[1]); //Irland norwegen.add(1, c[23]); //Schweden
+         */
+        // norwegen.add(2, c[6]); // Dänemark
+        // norwegen.add(3, c[0]); // Island
+        // c[2].setNeighbours(norwegen);
+    }
+
     public boolean isWinner(Player player2)
     {
         // TODO Auto-generated method stub
@@ -102,17 +150,21 @@ public class GameModel implements Serializable
         this.p = p;
     }
 
-    public void setTurnholder()
+    public void setNextTurnholder()
     {
-        turnholder = p[player++];
+        turnholderIndex++;
+        if (turnholderIndex == getPlayerCount()) turnholderIndex = 0;
+        turnholder = p[turnholderIndex];
     }
 
     public Player valueOf(int playerIndex)
     {
-
-        // TODO Auto-generated method stub
         return p[playerIndex];
+    }
 
+    private int getPlayerCount()
+    {
+        return p.length;
     }
 
     public Player getPlayerbyName(String name)
