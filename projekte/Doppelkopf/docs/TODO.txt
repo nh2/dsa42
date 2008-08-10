@@ -1,0 +1,11 @@
+Bedienregel
+Ermitteln, wem der Stich gehört
+zuteilen, rauskommen
+Tisch leeren
+Kartenwertigkeit
+Wer zusammen spielt
+Spiel beendet / Neues Spiel
+Punkteliste
+
+View:
+Tischplätze der Mitte zuordnen

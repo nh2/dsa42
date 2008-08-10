@@ -43,7 +43,7 @@ public class Blatt implements Serializable
     }
 
     /**
-     * Erzeugt eine Kopie des Spielerblattes. Das gew√§hrleistet, dass das Spielerblatt nicht direkt ge√§ndert
+     * Erzeugt eine Kopie des Spielerblattes. Das gew√§hrleistet, dass das Spielerblatt nicht direkt ge‰ndert
      * werden kann.
      * 
      * @return Kopie des Spielerblattes
@@ -53,10 +53,10 @@ public class Blatt implements Serializable
         return new HashSet<Karte>(karten);
     }
 
-    public List<Karte> getKartenSortiert() // TODO Sortierregeln hinzuf¸gen
+    public List<Karte> getKartenSortiert()
     {
         List<Karte> sortierteKarten = new ArrayList<Karte>(karten);
-        Collections.sort(sortierteKarten);
+        Collections.sort(sortierteKarten, Collections.reverseOrder());
         // Karten sortieren
         return sortierteKarten;
     }
