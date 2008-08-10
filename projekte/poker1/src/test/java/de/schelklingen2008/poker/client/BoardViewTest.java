@@ -32,36 +32,6 @@ public class BoardViewTest extends GameViewTest
 
         GameModel model = controller.getGameContext().getGameModel();
         model.setPlayers(new String[] { "Tobias", "Matthias", "Georg", "Ben" });
-        model.fillStack();
-        model.fillCardList(3);
-        model.fillCardList(1);
-        model.fillCardList(1);
-
-        // for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
-        // {
-        // Card card = (Card) iterator.next();
-        // System.out.println(BoardView.getFileName(card));
-        // }
-        // System.out.println(model.getStack().size());
-        // System.out.println(model.getCardList().size());
-
-        model.giveCardsToPlayers();
-
-        // for (Iterator iterator = model.getPlayerList().iterator(); iterator.hasNext();)
-        // {
-        // Player player = (Player) iterator.next();
-        // System.out.println(player.getName());
-        // System.out.println(player.getCard1().getName());
-        // System.out.println(player.getCard2().getName());
-        //
-        // }
-
-        model.setPot(0);
-        model.setHighestBet(30);
-        model.setPhase(3);
-        model.setActPlayerIndex(1);
-        model.setDealerIndex(0);
-        model.setSmallBlind(20);
 
         return new BoardView(controller);
 

@@ -65,7 +65,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 iconBuffer[i][j] = new ImageIcon("src/main/resources/cards/" + getFileName(new Card(i, j)));
             }
         }
-
     }
 
     private void bg(JPanel panel) // Hintergrund einstellen

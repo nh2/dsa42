@@ -32,6 +32,7 @@ public class GameModel implements Serializable
 
     public GameModel()
     {
+        initGame();
     }
 
     public GameModel(String[] names)
@@ -155,8 +156,8 @@ public class GameModel implements Serializable
     private void initGame()
     {
         fillStack();
-        fillCardList(3);
-        fillCardList(1);
+        // fillCardList(3);
+        // fillCardList(1);
         fillCardList(1);
 
         giveCardsToPlayers();
