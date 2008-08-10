@@ -152,9 +152,10 @@ public class GameModel implements Serializable
         return temp;
     }
 
-    private generateTreasureCards(){
+    private generateTreasureCards()
+    {
         List<TreasureCard> temp = new ArrayList<TreasureCard>();
-        
+
         temp.add(TreasureCard.BIBEL);
         temp.add(TreasureCard.DRACHE);
         temp.add(TreasureCard.EIDECHSE);
@@ -179,8 +180,7 @@ public class GameModel implements Serializable
         temp.add(TreasureCard.SPINNE);
         temp.add(TreasureCard.TOTENKOPF);
         temp.add(TreasureCard.TROLL);
-        
-        
+
         Collections.shuffle(temp);
         int noOfPlayers = getPlayers().size();
         int cardsPerPlayer = 24 / noOfPlayers;
@@ -188,39 +188,23 @@ public class GameModel implements Serializable
         PlayerCards temp2 = new PlayerCards();
         if (noOfPlayers == 2)
         {
-            
 
-                for (int i = 0; i < cardsPerPlayer;i++)
-                {
-                    temp2.getHiddenCards().add(i, null);
-                }
-                playerCardsMap.put(PlayerType.WHITE, temp2);
-                
-                for (int i = 0; i < cardsPerPlayer;i++)
-                {
-                    temp2.getHiddenCards().add(i, null);
-                }
-                playerCardsMap.put(PlayerType.BLACK, temp2);
-                
-                
-                
-                
-                
+            for (int i = 0; i < cardsPerPlayer; i++)
+            {
+                temp2.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.WHITE, temp2);
+
+            for (int i = 0; i < cardsPerPlayer; i++)
+            {
+                temp2.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.BLACK, temp2);
+
         }
-        }
-        
-        
-//    WHITE, BLACK, RED, GREEN;
-
-        
-        
-        
-        
-        
-        
-        
-
     }
+
+    // WHITE, BLACK, RED, GREEN;
 
     private void setUnmoveable(Tile[][] pBoard)
     {
