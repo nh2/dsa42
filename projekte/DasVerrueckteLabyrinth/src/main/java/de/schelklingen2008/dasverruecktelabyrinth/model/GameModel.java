@@ -77,7 +77,6 @@ public class GameModel implements Serializable
                                                 RAND.nextInt(board.length)));
         player.put(PlayerType.RED, new Player(PlayerType.RED, RAND.nextInt(board.length), RAND.nextInt(board.length)));
 
-        playerCardsMap.put(PlayerType.WHITE, dummie);
         generateTreasureCards();
 
     }
