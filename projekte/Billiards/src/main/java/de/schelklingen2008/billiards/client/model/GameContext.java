@@ -15,13 +15,13 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameContext
 {
 
-    private static final Logger sLogger     = LoggerFactory.create();
+    private static final Logger sLogger = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel           gameModel   = new GameModel();
+    private GameModel gameModel = new GameModel();
 
     /** Is the name of the player playing in this client. */
-    private String              myName;
+    private String myName;
 
     /** Provides a name for each player in the game. */
     private Map<Player, String> playerNames = new HashMap<Player, String>();
@@ -52,8 +52,8 @@ public class GameContext
     public Player getMyPlayer()
     {
         if (myName == null) return null;
-        if (myName.equals(playerNames.get(0))) return gameModel.getPlayer(0);
-        if (myName.equals(playerNames.get(1))) return gameModel.getPlayer(1);
+        if (myName.equals(playerNames.get(gameModel.getPlayer(0)))) return gameModel.getPlayer(0);
+        if (myName.equals(playerNames.get(gameModel.getPlayer(1)))) return gameModel.getPlayer(1);
         return null;
     }
 

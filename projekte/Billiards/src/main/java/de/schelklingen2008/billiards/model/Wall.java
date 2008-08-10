@@ -8,7 +8,6 @@ public class Wall
 {
 
     private double slope, yIntercept, minX, minY, maxX, maxY, angle;
-    private Vector2d p1, p2;
 
     public Wall(Vector2d p1, Vector2d p2)
     {
@@ -73,12 +72,11 @@ public class Wall
 
             double deltaY = yIntercept + slope * x0 - y0;
 
-            double xCollision, yCollision;
+            double xCollision;
 
             if (ball.getVelocity().getX() == 0)
             {
                 xCollision = x0;
-                yCollision = deltaY + y0;
                 if (Math.signum(deltaY) != Math.signum(ball.getVelocity().getY()))
                 {
                     return Double.NaN;
@@ -88,7 +86,6 @@ public class Wall
             {
                 double vSlope = ball.getVelocity().getY() / ball.getVelocity().getX();
                 xCollision = (x0 * vSlope - y0 + yIntercept) / (vSlope - slope);
-                yCollision = xCollision * slope + yIntercept;
                 if (Math.signum(xCollision - x0) != Math.signum(ball.getVelocity().getX()))
                 {
                     return Double.NaN;
@@ -132,7 +129,7 @@ public class Wall
                 Vector2d edge;
                 if (collisionPos.getX() < minX)
                 {
-                    edge = new Vector2d(minX, yIntercept);
+                    edge = new Vector2d(minX, minX * slope + yIntercept);
                 }
                 else
                 {
