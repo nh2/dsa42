@@ -194,9 +194,10 @@ public class GameModel implements Serializable
 
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
-        if (isLegal(pPlayerType))
+        Player pPlayer = player.get(pPlayerType);
+        if (isLegalMove(x, y, pPlayer))
         {
-            Player pPlayer = player.get(pPlayerType);
+
             pPlayer.setXKoordinate(x);
             pPlayer.setYKoordinate(y);
         }
@@ -204,10 +205,7 @@ public class GameModel implements Serializable
 
     private boolean isLegal(PlayerType pPlayerType)
     {
-        // Player pPlayer = player.get(pPlayerType);
-        // Position ende = getMouseKoordinates();
-        // if (findWay(board, pPlayer.getXKoordinate(), pPlayer.getYKoordinate(), , pPlayer.getXKoordinate(),
-        // pPlayer.getYKoordinate()) != null) return true;
+
         return false;
     }
 
@@ -219,17 +217,18 @@ public class GameModel implements Serializable
 
     public boolean isLegalMove(int x, int y, Player player)
     {
-        if (isFinished()) return false;
-        if (!isInBounds(x, y)) return false;
+        boolean temp = false;
+        if (isFinished())
+        ;
+        if (!isInBounds(x, y))
+        ;
+        if (findWay(board, player.getXKoordinate(), player.getYKoordinate(), x, y, player.getXKoordinate(),
+                    player.getYKoordinate()) != null) temp = true;
 
-        if (!isTurnHolder(player)) return false;
-        //    
-        // for (int direction = 0; direction < DIRECTIONS_COUNT; direction++)
-        // {
-        // int captureCount = countCapturedPieces(x, y, player, direction);
-        // if (captureCount > 0) return true;
-        // }
-        return false;
+        if (!isTurnHolder(player))
+        ;
+
+        return temp;
     }
 
     private boolean isTurnHolder(Player player2)
@@ -238,6 +237,15 @@ public class GameModel implements Serializable
         if (player2.getPlayerType() == turnHolder) temp = true;
 
         return temp;
+    }
+
+    public void changeTurnholder()
+    {
+        if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
+        if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
+        if (turnHolder == PlayerType.RED) turnHolder = PlayerType.GREEN;
+        if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
+
     }
 
     public GameModel(GameModel other)
