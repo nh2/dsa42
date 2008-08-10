@@ -1,7 +1,5 @@
 package de.schelklingen2008.poker.client.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import de.schelklingen2008.poker.model.GameModel;
@@ -15,21 +13,13 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameContext
 {
 
-    private static final Logger sLogger     = LoggerFactory.create();
+    private static final Logger sLogger   = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
-    private GameModel           gameModel   = new GameModel(new String[] { "dick", "doof" });
+    private GameModel           gameModel = null;
 
     /** Is the name of the player playing in this client. */
     private String              myName;
-
-    /** Provides a name for each player in the game. */
-    private Map<Player, String> playerNames = new HashMap<Player, String>();
-
-    public String getName(Player player)
-    {
-        return playerNames.get(player);
-    }
 
     public String getMyName()
     {

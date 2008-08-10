@@ -30,8 +30,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private ImageIcon[][] iconBuffer = new ImageIcon[4][13];
 
-    private GameModel     model;
-
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
@@ -39,7 +37,6 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-        model = getGameModel();
         fillImageArray();
         paintBoard();
     }
@@ -76,6 +73,8 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         removeAll();
 
+        if (getGameModel() == null) return;
+
         JPanel playerPanel = new JPanel();
         JPanel middlePanel = new JPanel();
         JPanel cardPanel = new JPanel();
@@ -107,18 +106,21 @@ public class BoardView extends JPanel implements GameChangeListener
         add(myPanel);
         add(Box.createHorizontalStrut(5));
 
+        GameModel model = getGameModel();
+
         playerPanel.add(Box.createVerticalStrut(5));
-        for (int i = 0; i < model.getPlayerList().size(); i++)
+        for (int i = 0; i < getGameModel().getPlayerList().size(); i++)
         {
             JPanel actPlayerPanel = new JPanel();
             actPlayerPanel.setLayout(new BoxLayout(actPlayerPanel, BoxLayout.PAGE_AXIS));
             actPlayerPanel.add(new JLabel(i + 1 + ": " + model.getPlayerList().get(i).getName()));
             actPlayerPanel.add(new JLabel("Kontostand: " + model.getPlayerList().get(i).getBalance()));
-            if (model.getPlayerList().get(i).isStillIn() == false)
+            if (getGameModel().getPlayerList().get(i).isStillIn() == false)
             {
                 actPlayerPanel.add(new JLabel("Folded"));
             }
-            if (model.getPlayerList().get(i).isStillIn() == true && model.getPlayerList().get(i).getBalance() == 0)
+            if (getGameModel().getPlayerList().get(i).isStillIn() == true
+                && model.getPlayerList().get(i).getBalance() == 0)
             {
                 actPlayerPanel.add(new JLabel("All-in"));
             }
@@ -209,9 +211,9 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:\n"
                                                                    + "(min.: "
-                                                                   + String.valueOf(model.getMinBet())
+                                                                   + String.valueOf(getGameModel().getMinBet())
                                                                    + " Euro, max.: "
-                                                                   + String.valueOf(model.getMaxBet())
+                                                                   + String.valueOf(getGameModel().getMaxBet())
                                                                    + " Euro)");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
@@ -250,14 +252,14 @@ public class BoardView extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 String s = javax.swing.JOptionPane.showInputDialog("Die "
-                                                                   + (model.getHighestBet() - model.getActPlayer()
-                                                                                                   .getOwnBet())
+                                                                   + (getGameModel().getHighestBet() - getGameModel().getActPlayer()
+                                                                                                                     .getOwnBet())
                                                                    + " Euro wurden bereits in den Pot gezahlt.\n"
                                                                    + " Wie viel wollen Sie noch extra drauflegen?\n"
                                                                    + "(min.: "
-                                                                   + String.valueOf(model.getMinBet())
+                                                                   + String.valueOf(getGameModel().getMinBet())
                                                                    + " Euro, max.: "
-                                                                   + String.valueOf(model.getMaxBet())
+                                                                   + String.valueOf(getGameModel().getMaxBet())
                                                                    + " Euro)");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;

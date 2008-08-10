@@ -46,8 +46,6 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    // TODO add methods to make a move, etc. that can be called by clients
-
     public void call(BodyObject client)
     {
         sLogger.fine("call by " + client);
