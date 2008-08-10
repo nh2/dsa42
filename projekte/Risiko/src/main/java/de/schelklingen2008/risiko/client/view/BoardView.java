@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -47,16 +46,7 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             throw new RuntimeException("Kann Bild nicht laden.");
         }
-
-        addMouseMotionListener(new MouseMotionAdapter()
-        {
-
-            @Override
-            public void mouseMoved(MouseEvent e)
-            {
-                moved(e);
-            }
-        });
+        ;
 
         addMouseListener(new MouseAdapter()
         {
@@ -69,11 +59,6 @@ public class BoardView extends JPanel implements GameChangeListener
         });
     }
 
-    private void moved(MouseEvent e)
-    {
-        // TODO respond to player´s mouse movements
-    }
-
     private void pressed(MouseEvent e)
     {
 
@@ -84,11 +69,16 @@ public class BoardView extends JPanel implements GameChangeListener
         if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
         {
 
-            if (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
+            if (getGameModel().getCountryByColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
             {
-                controller.placeUnit(getGameModel().getCountrybyColor(c));
+                controller.placeUnit(getGameModel().getCountryByColor(c));
 
             }
+        }
+        else
+        {
+            controller.setMine(getGameModel().getCountryByColor(c), getGameContext().getMyPlayer().getPlayerIndex());
+            getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1);
         }
 
         repaint();

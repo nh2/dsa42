@@ -119,7 +119,7 @@ public class GameModel implements Serializable
         return false;
     }
 
-    public Country getCountrybyColor(Color pc)
+    public Country getCountryByColor(Color pc)
     {
         for (int i = 0; i < 30; i++)
         {
@@ -170,4 +170,25 @@ public class GameModel implements Serializable
         throw new IllegalArgumentException();
     }
 
+    public boolean isLegalMove(Player pPlayer, Country country1, Country country2)
+    {
+        Player player = pPlayer;
+
+        if (player == turnholder)
+        {
+            if (player == country1.getOccupier())
+            {
+                if (country1.isNeighbour(country2))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
 }

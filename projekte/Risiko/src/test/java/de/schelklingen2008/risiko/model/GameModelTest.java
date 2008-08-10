@@ -8,7 +8,6 @@ public class GameModelTest extends TestCase
     public void testInit()
     {
         GameModel model = new GameModel(new String[] { "leo", "lena" });
-
     }
 
 }
