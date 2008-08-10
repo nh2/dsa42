@@ -21,7 +21,7 @@ public class Player implements Serializable
         units = 0;
         index = pIndex;
         c = pColor;
-        unitstoset = 0;
+        unitstoset = 5;
     }
 
     public Color getPlayerColor()

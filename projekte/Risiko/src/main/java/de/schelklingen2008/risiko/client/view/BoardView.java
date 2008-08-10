@@ -38,7 +38,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-        logger.info("fjd11111");
+
         try
         {
             map = ImageIO.read(new File("./src/main/resources/europa_karte_de.png"));
@@ -89,11 +89,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 controller.placeUnit(getGameModel().getCountrybyColor(c));
 
             }
-        }
-        else
-        {
-            controller.setMine(getGameModel().getCountrybyColor(c), getGameContext().getMyPlayer().getPlayerIndex());
-            getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1);
         }
 
         repaint();

@@ -37,6 +37,7 @@ public class Manager extends GameManager
             names[i] = getPlayer(i).username.toString();
         }
         gameModel = new GameModel(names);
+        gameModel.getCountryArray()[0].setOccupier(gameModel.getPlayerArray()[0]);
         updateSharedState();
     }
 
