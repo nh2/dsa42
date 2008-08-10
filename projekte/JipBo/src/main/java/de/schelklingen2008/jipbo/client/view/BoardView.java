@@ -71,7 +71,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
-        getGameModel();
+        if (getGameModel() == null) return;
         removeAll();
 
         // Other Players Panel
