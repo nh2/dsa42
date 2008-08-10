@@ -152,6 +152,76 @@ public class GameModel implements Serializable
         return temp;
     }
 
+    private generateTreasureCards(){
+        List<TreasureCard> temp = new ArrayList<TreasureCard>();
+        
+        temp.add(TreasureCard.BIBEL);
+        temp.add(TreasureCard.DRACHE);
+        temp.add(TreasureCard.EIDECHSE);
+        temp.add(TreasureCard.EULE);
+        temp.add(TreasureCard.FEE);
+        temp.add(TreasureCard.FLASCHENGEIST);
+        temp.add(TreasureCard.FLEDERMAUS);
+        temp.add(TreasureCard.GELDBEUTEL);
+        temp.add(TreasureCard.GESPENST);
+        temp.add(TreasureCard.HELM);
+        temp.add(TreasureCard.KARTE);
+        temp.add(TreasureCard.KRONE);
+        temp.add(TreasureCard.LEUCHTER);
+        temp.add(TreasureCard.MAUS);
+        temp.add(TreasureCard.MOTTE);
+        temp.add(TreasureCard.RING);
+        temp.add(TreasureCard.SCARABAEUS);
+        temp.add(TreasureCard.SCHLÜSSEL);
+        temp.add(TreasureCard.SCHMUCKKASTEN);
+        temp.add(TreasureCard.SCHWERT);
+        temp.add(TreasureCard.SMARAGD);
+        temp.add(TreasureCard.SPINNE);
+        temp.add(TreasureCard.TOTENKOPF);
+        temp.add(TreasureCard.TROLL);
+        
+        
+        Collections.shuffle(temp);
+        int noOfPlayers = getPlayers().size();
+        int cardsPerPlayer = 24 / noOfPlayers;
+        getPlayers();
+        PlayerCards temp2 = new PlayerCards();
+        if (noOfPlayers == 2)
+        {
+            
+
+                for (int i = 0; i < cardsPerPlayer;i++)
+                {
+                    temp2.getHiddenCards().add(i, null);
+                }
+                playerCardsMap.put(PlayerType.WHITE, temp2);
+                
+                for (int i = 0; i < cardsPerPlayer;i++)
+                {
+                    temp2.getHiddenCards().add(i, null);
+                }
+                playerCardsMap.put(PlayerType.BLACK, temp2);
+                
+                
+                
+                
+                
+        }
+        }
+        
+        
+//    WHITE, BLACK, RED, GREEN;
+
+        
+        
+        
+        
+        
+        
+        
+
+    }
+
     private void setUnmoveable(Tile[][] pBoard)
     {
         for (int i = 0; i < pBoard.length; i++)
