@@ -403,4 +403,15 @@ public class GameModel implements Serializable
         for (int i = 0; i < names.length; i++)
             getPlayerList().add(new Player(names[i]));
     }
+
+    public void kartenAusgeben()
+    {
+        for (Iterator iterator = cardList.iterator(); iterator.hasNext();)
+        {
+            Card card = (Card) iterator.next();
+            System.out.println(card.getSuit());
+            System.out.println(card.getValue());
+
+        }
+    }
 }
