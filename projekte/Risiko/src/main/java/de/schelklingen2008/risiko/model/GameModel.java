@@ -111,15 +111,6 @@ public class GameModel implements Serializable
         gb.add(2, c[21]); // Frankreich
         gb.add(3, c[0]); // Island
         c[2].setNeighbours(gb);
-
-        // TODO init neighbours Norwegen
-        ArrayList norwegen = new ArrayList<Country>();
-        /*
-         * norwegen.add(0, c[1]); //Irland norwegen.add(1, c[23]); //Schweden
-         */
-        // norwegen.add(2, c[6]); // Dänemark
-        // norwegen.add(3, c[0]); // Island
-        // c[2].setNeighbours(norwegen);
     }
 
     public boolean isWinner(Player player2)
