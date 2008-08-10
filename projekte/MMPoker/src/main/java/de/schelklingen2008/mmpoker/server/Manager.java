@@ -40,8 +40,6 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    // TODO add methods to make a move, etc. that can be called by clients
-
     public void fold(BodyObject client)
     {
         gameModel.fold(getPlayer(client));

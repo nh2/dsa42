@@ -237,6 +237,15 @@ public class GameModel implements Serializable
         {
             return i;
         }
+    }
 
+    public Spieler getSpieler(String name)
+    {
+        if (name == null) return null;
+        for (Spieler spieler : spielerliste)
+        {
+            if (name.equals(spieler.getName())) return spieler;
+        }
+        return null;
     }
 }

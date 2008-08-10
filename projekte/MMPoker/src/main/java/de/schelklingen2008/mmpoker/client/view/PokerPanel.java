@@ -6,11 +6,13 @@ import javax.swing.JPanel;
 
 import de.schelklingen2008.mmpoker.client.controller.Controller;
 
-public class PokerPanel extends JPanel {
+public class PokerPanel extends JPanel
+{
 
     private Controller controller;
 
-    public PokerPanel(Controller controller) {
+    public PokerPanel(Controller controller)
+    {
         this.controller = controller;
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -20,8 +22,7 @@ public class PokerPanel extends JPanel {
         add(new ButtonsPanel(controller));
     }
 
-    public void gameChanged() {
-        // TODO Auto-generated method stub
-
+    public void gameChanged()
+    {
     }
 }

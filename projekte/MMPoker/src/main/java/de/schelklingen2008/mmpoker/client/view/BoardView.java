@@ -121,13 +121,14 @@ public class BoardView extends JPanel implements GameChangeListener
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.GREEN);
         g.fillRect(0, 0, 800, 800);
+        if (getGameModel() == null) return;
+
         handKarten(g);
         gemeinschaftsKarten(g);
         g.setColor(Color.BLACK);
 
         String pot = "$" + getGameModel().getPot();
         gfx.drawString(pot, 200, 250);
-
     }
 
     @Override
