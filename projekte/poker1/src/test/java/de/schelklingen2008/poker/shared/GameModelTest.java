@@ -6,18 +6,31 @@ import de.schelklingen2008.poker.model.GameModel;
 public class GameModelTest extends TestCase
 {
 
-    private static final String[] TEST_NAMES = new String[] { "tobias", "matthias" };
-    private GameModel             gameModel  = new GameModel(TEST_NAMES);
-
-    public void testInit() throws Exception
+    public void testInitTwoPlayers() throws Exception
     {
+        String[] TEST_NAMES = new String[] { "tobias", "matthias" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+
         gameModel.getPlayerList();
 
         assertEquals(0, gameModel.getActPlayerIndex());
     }
 
+    public void testInitSevenPlayers() throws Exception
+    {
+        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg", "Ben", "Maja", "Jo", "Paula" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+
+        gameModel.getPlayerList();
+
+        assertEquals(3, gameModel.getActPlayerIndex());
+    }
+
     public void testFirstMove() throws Exception
     {
+        String[] TEST_NAMES = new String[] { "tobias", "matthias" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+
         assertEquals(0, gameModel.getActPlayerIndex());
 
         try
@@ -30,7 +43,7 @@ public class GameModelTest extends TestCase
             // erwartet
         }
 
-        gameModel.reRaise(100);
+        // gameModel.reRaise(100);
 
     }
 }

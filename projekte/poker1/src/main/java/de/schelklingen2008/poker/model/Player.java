@@ -2,6 +2,8 @@ package de.schelklingen2008.poker.model;
 
 import java.io.Serializable;
 
+import de.schelklingen2008.poker.client.Constants;
+
 /**
  * Is a simple abstraction for a player entity.
  */
@@ -22,7 +24,7 @@ public class Player implements Serializable
     public Player(String Name)
     {
         name = Name;
-        balance = GameModel.START_BALANCE;
+        balance = Constants.START_BALANCE;
         // potNumber = 0;
         card1 = null;
         card2 = null;

@@ -15,5 +15,6 @@ public final class Constants
     public static final String MSG_WINNER        = "m.winner";
     public static final String MSG_DRAW          = "m.draw";
 
-    public static final int    PLAYER_COUNT      = 5;
+    public static final long   START_BALANCE     = 10000;
+    public static final long   SMALL_BLIND       = 200;
 }

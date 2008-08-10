@@ -5,30 +5,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import de.schelklingen2008.poker.client.Constants;
+
 /**
  * Maintains the rules and the state of the game.
  */
 public class GameModel implements Serializable
 {
 
-    public static final long START_BALANCE = 10000;
-
-    private List<Player>     playerList    = new ArrayList<Player>();
+    private List<Player> playerList = new ArrayList<Player>();
     // private List<Pot> potList = new ArrayList<Pot>();
-    private long             pot;
-    private long             highestBet;
-    private int              highestBetIndex;
+    private long         pot;
+    private long         highestBet;
+    private int          highestBetIndex;
 
-    private List<Card>       stack         = new ArrayList<Card>();  // Liste aller 52 Karten, werden mit
+    private List<Card>   stack      = new ArrayList<Card>();  // Liste aller 52 Karten, werden mit
     // der
     // Zeit an cardList und auf die Spieler
     // verteilt, d.h. die Liste wird kleiner
     // = Kartenstapel
-    private List<Card>       cardList      = new ArrayList<Card>();  // Karten in der Mitte
-    private int              phase;
-    private int              actPlayerIndex;
-    private int              dealerIndex;
-    private long             smallBlind;
+    private List<Card>   cardList   = new ArrayList<Card>();  // Karten in der Mitte
+    private int          phase;
+    private int          actPlayerIndex;
+    private int          dealerIndex;
+    private long         smallBlind;
 
     public GameModel()
     {
@@ -155,19 +155,8 @@ public class GameModel implements Serializable
 
     private void initGame()
     {
-        fillStack();
-        // fillCardList(3);
-        // fillCardList(1);
-        fillCardList(1);
-
-        giveCardsToPlayers();
-
-        setPot(0);
-        setHighestBet(30);
-        setPhase(3);
-        setActPlayerIndex(1);
-        setDealerIndex(0);
-        setSmallBlind(20);
+        setSmallBlind(Constants.SMALL_BLIND);
+        nextRound();
     }
 
     public Card getRandomCard()
@@ -265,7 +254,7 @@ public class GameModel implements Serializable
 
     public void nextPlayer()
     {
-        actPlayerIndex = getRisenPlayerIndex(actPlayerIndex + 1);
+        actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
         if (actPlayerIndex == playerList.size())
         {
             actPlayerIndex = 0;
@@ -284,7 +273,7 @@ public class GameModel implements Serializable
     {
         phase++;
         highestBet = 0;
-        actPlayerIndex = getRisenPlayerIndex(dealerIndex + 1);
+        actPlayerIndex = getRisenPlayerIndex(dealerIndex, 1);
         highestBetIndex = actPlayerIndex;
         for (Iterator iterator = playerList.iterator(); iterator.hasNext();)
         {
@@ -294,15 +283,13 @@ public class GameModel implements Serializable
         switch (phase)
         {
             case 1:
-                cardList.add(getRandomCard());
-                cardList.add(getRandomCard());
-                cardList.add(getRandomCard());
+                fillCardList(3);
                 break;
             case 2:
-                cardList.add(getRandomCard());
+                fillCardList(1);
                 break;
             case 3:
-                cardList.add(getRandomCard());
+                fillCardList(1);
                 break;
             case 4:
                 // computeWinner();
@@ -314,13 +301,16 @@ public class GameModel implements Serializable
     public void nextRound()
     {
         phase = 0;
-        dealerIndex = getRisenPlayerIndex(dealerIndex + 1);
-        playerList.get(getRisenPlayerIndex(dealerIndex + 1)).setOwnBet(smallBlind);
-        playerList.get(getRisenPlayerIndex(dealerIndex + 2)).setOwnBet(2 * smallBlind);
-        pot = playerList.get(getRisenPlayerIndex(dealerIndex + 1)).getOwnBet();
-        pot += playerList.get(getRisenPlayerIndex(dealerIndex + 2)).getOwnBet();
-        actPlayerIndex = getRisenPlayerIndex(dealerIndex + 3);
+        stack.clear();
+        fillStack();
+        dealerIndex = getRisenPlayerIndex(dealerIndex, 1);
+        playerList.get(getRisenPlayerIndex(dealerIndex, 1)).setOwnBet(smallBlind);
+        playerList.get(getRisenPlayerIndex(dealerIndex, 2)).setOwnBet(2 * smallBlind);
+        pot = playerList.get(getRisenPlayerIndex(dealerIndex, 1)).getOwnBet();
+        pot += playerList.get(getRisenPlayerIndex(dealerIndex, 2)).getOwnBet();
+        actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         getHighestBetterIndex();
+        giveCardsToPlayers();
     }
 
     public void getHighestBetterIndex()
@@ -336,16 +326,17 @@ public class GameModel implements Serializable
         }
     }
 
-    public int getRisenPlayerIndex(int playerIndex)
+    public int getRisenPlayerIndex(int playerIndex, int toRaise)
     {
-        if (playerIndex >= playerList.size())
+        for (int i = 0; i < toRaise; i++)
         {
-            return playerIndex - playerList.size();
+            playerIndex++;
+            if (playerList.size() == playerIndex)
+            {
+                playerIndex = 0;
+            }
         }
-        else
-        {
-            return playerIndex;
-        }
+        return playerIndex;
     }
 
     public void call()
