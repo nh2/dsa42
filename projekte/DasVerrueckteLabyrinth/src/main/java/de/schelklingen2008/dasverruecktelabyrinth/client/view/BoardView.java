@@ -157,8 +157,8 @@ public class BoardView extends JPanel implements GameChangeListener
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
-        // TODO do proper painting of game state
         paintBackground(gfx);
+        if (getGameModel() == null) return;
         paintBoard(gfx);
         paintTreasureCards(gfx);
         paintPlayer(gfx);

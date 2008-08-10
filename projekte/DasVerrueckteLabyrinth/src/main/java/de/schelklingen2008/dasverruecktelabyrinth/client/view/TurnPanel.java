@@ -15,6 +15,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
  */
 public class TurnPanel extends JPanel implements GameChangeListener
 {
+
     private Controller controller;
 
     public TurnPanel(Controller controller)
@@ -26,12 +27,13 @@ public class TurnPanel extends JPanel implements GameChangeListener
     public void gameChanged()
     {
         removeAll();
+        if (getGameModel() == null) return;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         for (PlayerType playerType : PlayerType.values())
         {
-            String name = getGameContext().getName(playerType);
+            String name = getGameModel().getName(playerType);
             add(new JLabel(name));
         }
 

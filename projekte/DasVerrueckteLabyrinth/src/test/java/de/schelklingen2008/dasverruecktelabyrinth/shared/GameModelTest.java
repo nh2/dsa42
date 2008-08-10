@@ -6,7 +6,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 public class GameModelTest extends TestCase
 {
 
-    private GameModel gameModel = new GameModel(4);
+    private GameModel gameModel = new GameModel(new String[] { "niklas", "sophie", "georg", "ben" });
 
     public void testSomething() throws Exception
     {

@@ -17,41 +17,41 @@ import javax.swing.text.Position;
 public class GameModel implements Serializable
 {
 
-    public static final int        SIZE           = 7;
-    public static final PlayerType PLAYER_START   = PlayerType.WHITE;
+    private static final PlayerType[] TYPES          = new PlayerType[] { PlayerType.GREEN, PlayerType.WHITE,
+            PlayerType.BLACK, PlayerType.RED        };
 
-    private Tile[][]               board;                                                    // Spielbrett
-    private PlayerType             turnHolder;                                               // Wer ist
+    public static final int           SIZE           = 7;
+    public static final PlayerType    PLAYER_START   = PlayerType.WHITE;
+
+    private Tile[][]                  board;                                                    // Spielbrett
+    private PlayerType                turnHolder;                                               // Wer ist
     // dran
-    private boolean                walk           = false;                                   // false =
+    private boolean                   walk           = false;                                   // false =
     // Phase
     // 1
 
     // true = Phase2
-    private Tile                   insert         = new Tile(true, true, false, false, null); // einschiebbare
+    private Tile                      insert         = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
 
     // DummyList
 
-    private PlayerCards            dummie         = new PlayerCards();
+    private PlayerCards               dummie         = new PlayerCards();
 
-    Map<PlayerType, Player>        player         = new HashMap<PlayerType, Player>();
-    Map<PlayerType, PlayerCards>   playerCardsMap = new HashMap<PlayerType, PlayerCards>();
+    Map<PlayerType, Player>           player         = new HashMap<PlayerType, Player>();
+    Map<PlayerType, PlayerCards>      playerCardsMap = new HashMap<PlayerType, PlayerCards>();
 
     // TODO PlayerCards instanzieren
 
-    private static final int       NO_PLAYERS     = 4;
+    private static final Random       RAND           = new Random();
 
-    private static final Random    RAND           = new Random();
-
-    public GameModel(int SpielerAnzahl)
+    public GameModel(String[] names)
     {
         clear();
-        init();
-
+        init(names);
     }
 
-    private void init()
+    private void init(String[] names)
     {
         List<Tile> tiles = generateTiles();
         Collections.shuffle(tiles);
@@ -66,19 +66,14 @@ public class GameModel implements Serializable
         setTurnHolder(PLAYER_START);
         insert = tiles.get(board.length * board.length);
 
-        if (getPlayers().size() == 0) player.put(PlayerType.GREEN, new Player(PlayerType.GREEN,
-                                                                              RAND.nextInt(board.length),
-                                                                              RAND.nextInt(board.length)));
-        player.put(PlayerType.WHITE, new Player(PlayerType.WHITE,
-                                                RAND.nextInt(board.length),
-                                                RAND.nextInt(board.length)));
-        player.put(PlayerType.BLACK, new Player(PlayerType.BLACK,
-                                                RAND.nextInt(board.length),
-                                                RAND.nextInt(board.length)));
-        player.put(PlayerType.RED, new Player(PlayerType.RED, RAND.nextInt(board.length), RAND.nextInt(board.length)));
+        for (int i = 0; i < names.length; i++)
+        {
+            int x = RAND.nextInt(board.length);
+            int y = RAND.nextInt(board.length);
+            player.put(TYPES[i], new Player(TYPES[i], names[i], x, y));
+        }
 
         generateTreasureCards();
-
     }
 
     private List<Tile> generateTiles()
@@ -506,4 +501,18 @@ public class GameModel implements Serializable
         return player.values();
     }
 
+    public String getName(PlayerType playerType)
+    {
+        Player p = player.get(playerType);
+        if (p == null) return null;
+        return p.getName();
+    }
+
+    public Player getPlayer(String name)
+    {
+        if (name == null) return null;
+        for (Player p : player.values())
+            if (name.equals(p.getName())) return p;
+        return null;
+    }
 }

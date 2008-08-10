@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PushButton;
 
 public class LabyrinthPanel extends JPanel
@@ -182,7 +183,7 @@ public class LabyrinthPanel extends JPanel
     {
         Controller controller = new Controller();
         GameContext ctx = controller.getGameContext();
-        ctx.setPlayers(new String[] { "dick", "doof" });
+        ctx.setGameModel(new GameModel(new String[] { "dick", "doof", "Hassel", "Hoff" }));
         ctx.setMyName("dick");
 
         JFrame frame = new JFrame();

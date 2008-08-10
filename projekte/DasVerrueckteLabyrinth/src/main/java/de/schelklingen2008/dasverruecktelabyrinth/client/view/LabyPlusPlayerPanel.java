@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
 public class LabyPlusPlayerPanel extends JPanel
 {
@@ -31,7 +32,7 @@ public class LabyPlusPlayerPanel extends JPanel
     {
         Controller controller = new Controller();
         GameContext ctx = controller.getGameContext();
-        ctx.setPlayers(new String[] { "dick", "doof" });
+        ctx.setGameModel(new GameModel(new String[] { "dick", "doof", "Hassel", "Hoff" }));
         ctx.setMyName("dick");
 
         JFrame frame = new JFrame();

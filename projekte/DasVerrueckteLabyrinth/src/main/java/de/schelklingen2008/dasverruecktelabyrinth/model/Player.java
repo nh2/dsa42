@@ -6,15 +6,16 @@ public class Player implements Serializable
 {
 
     private PlayerType playertype;
+    private String     name;
     private int        x;
     private int        y;
 
-    public Player(PlayerType pPlayer, int pX, int pY)
+    public Player(PlayerType pPlayer, String pName, int pX, int pY)
     {
         playertype = pPlayer;
+        name = pName;
         x = pX;
         y = pY;
-
     }
 
     public PlayerType getPlayerType()
@@ -29,7 +30,6 @@ public class Player implements Serializable
 
     public int getYKoordinate()
     {
-
         return y;
     }
 
@@ -40,7 +40,11 @@ public class Player implements Serializable
 
     public void setYKoordinate(int pY)
     {
-
         y = pY;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 }
