@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.model.Ball;
+import de.schelklingen2008.billiards.model.BallSunkEvent;
+import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 
@@ -20,12 +22,23 @@ public class BallView extends JPanel
      * 
      */
     private static final long serialVersionUID = -8866337375992404949L;
-    Controller controller = null;
+    Controller                controller       = null;
 
     public BallView(Controller controller)
     {
         this.controller = controller;
         setOpaque(false);
+
+        controller.getGameContext().getGameModel().addGameEventListener(new GameEventAdapter()
+        {
+
+            @Override
+            public void ballSunk(BallSunkEvent e)
+            {
+                repaint();
+            }
+
+        });
     }
 
     @Override
@@ -54,6 +67,10 @@ public class BallView extends JPanel
             for (int j = 0; j < 2; j++)
             {
                 Ball ball = gameModel.getBalls().get(i * 2 + j + 2);
+                if (ball.isSunk())
+                {
+                    continue;
+                }
 
                 if (ball.getType() == BallType.STRIPED)
                 {
@@ -66,9 +83,13 @@ public class BallView extends JPanel
 
                 gfx.fillOval(i * 50 + 10, j * 50 + 10, 40, 40);
 
-                final int x =
-                    (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
-                                     * BALL_RADIUS);
+                final int x = (int) Math.round(Math.sqrt(1
+                                                         - 0.25
+                                                         * STRIPE_HEIGHT
+                                                         / BALL_RADIUS
+                                                         * STRIPE_HEIGHT
+                                                         / BALL_RADIUS)
+                                               * BALL_RADIUS);
 
                 final int y = (int) (0.5 * STRIPE_HEIGHT);
 

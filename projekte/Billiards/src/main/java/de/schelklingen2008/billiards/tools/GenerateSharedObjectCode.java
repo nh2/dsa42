@@ -30,15 +30,17 @@ import com.threerings.presents.tools.SourceFile;
 public class GenerateSharedObjectCode
 {
 
-    private static final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+    private static final ClassLoader    classloader  = Thread.currentThread().getContextClassLoader();
 
     private static final Class<DObject> dObjectClass = DObject.class;
 
-    private static final Class<DSet> dSetClass = DSet.class;
+    private static final Class<DSet>    dSetClass    = DSet.class;
 
     private static final Class<OidList> oidListClass = OidList.class;
 
-    private static VelocityEngine velocityEngine;
+    private static VelocityEngine       velocityEngine;
+
+    private static boolean              mergeTemplate;
 
     private static void execute()
     {
@@ -84,10 +86,9 @@ public class GenerateSharedObjectCode
         }
         catch (ClassNotFoundException cnfe)
         {
-            System.err.println("Failed to load " + name + ".\n" + "Missing class: "
-                    + cnfe.getMessage());
+            System.err.println("Failed to load " + name + ".\n" + "Missing class: " + cnfe.getMessage());
             System.err.println("Be sure to set the 'classpathref' attribute to a classpath\n"
-                    + "that contains your projects invocation service classes.");
+                               + "that contains your projects invocation service classes.");
         }
         catch (Exception e)
         {
@@ -104,8 +105,7 @@ public class GenerateSharedObjectCode
         for (Field f : fields)
         {
             int mods = f.getModifiers();
-            if (Modifier.isPublic(mods) && !Modifier.isStatic(mods) && !Modifier.isTransient(mods))
-                flist.add(f);
+            if (Modifier.isPublic(mods) && !Modifier.isStatic(mods) && !Modifier.isTransient(mods)) flist.add(f);
         }
 
         SourceFile sfile = new SourceFile();
@@ -115,8 +115,11 @@ public class GenerateSharedObjectCode
         }
         catch (IOException ioe)
         {
-            System.err.println(new StringBuilder().append("Error reading '").append(source).append(
-                    "': ").append(ioe).toString());
+            System.err.println(new StringBuilder().append("Error reading '")
+                                                  .append(source)
+                                                  .append("': ")
+                                                  .append(ioe)
+                                                  .toString());
             return;
         }
         StringBuilder fsection = new StringBuilder();
@@ -144,15 +147,16 @@ public class GenerateSharedObjectCode
             if (dSetClass.isAssignableFrom(ftype))
             {
                 java.lang.reflect.Type t;
-                for (t = f.getGenericType(); t instanceof Class; t = ((Class) t)
-                        .getGenericSuperclass())
+                for (t = f.getGenericType(); t instanceof Class; t = ((Class) t).getGenericSuperclass())
                     ;
                 if (t instanceof ParameterizedType)
                 {
                     ParameterizedType pt = (ParameterizedType) t;
-                    if (pt.getActualTypeArguments().length > 0)
-                        ctx.put("etype", com.samskivert.util.GenUtil.simpleName((Class) pt
-                                .getActualTypeArguments()[0], null));
+                    if (pt.getActualTypeArguments().length > 0) ctx.put(
+                                                                        "etype",
+                                                                        com.samskivert.util.GenUtil.simpleName(
+                                                                                                               (Class) pt.getActualTypeArguments()[0],
+                                                                                                               null));
                 }
                 else
                 {
@@ -167,11 +171,11 @@ public class GenerateSharedObjectCode
             StringWriter mwriter = new StringWriter();
             try
             {
-                velocityEngine.mergeTemplate("com/threerings/presents/tools/dobject_name.tmpl",
-                        "UTF-8", ctx, fwriter);
-                velocityEngine.mergeTemplate(new StringBuilder().append(
-                        "com/threerings/presents/tools/dobject_").append(tname).toString(),
-                        "UTF-8", ctx, mwriter);
+                mergeTemplate = velocityEngine.mergeTemplate("com/threerings/presents/tools/dobject_name.tmpl",
+                                                             "UTF-8", ctx, fwriter);
+                velocityEngine.mergeTemplate(new StringBuilder().append("com/threerings/presents/tools/dobject_")
+                                                                .append(tname)
+                                                                .toString(), "UTF-8", ctx, mwriter);
             }
             catch (Exception e)
             {
@@ -193,8 +197,11 @@ public class GenerateSharedObjectCode
         }
         catch (IOException ioe)
         {
-            System.err.println(new StringBuilder().append("Error writing '").append(source).append(
-                    "': ").append(ioe).toString());
+            System.err.println(new StringBuilder().append("Error writing '")
+                                                  .append(source)
+                                                  .append("': ")
+                                                  .append(ioe)
+                                                  .toString());
         }
     }
 }
