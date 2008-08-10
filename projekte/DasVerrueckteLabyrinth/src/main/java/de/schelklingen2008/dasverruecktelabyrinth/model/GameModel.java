@@ -185,9 +185,10 @@ public class GameModel implements Serializable
         int noOfPlayers = getPlayers().size();
         int cardsPerPlayer = 24 / noOfPlayers;
         getPlayers();
-        PlayerCards temp2 = new PlayerCards();
         if (noOfPlayers == 2)
         {
+            PlayerCards temp2 = new PlayerCards();
+            PlayerCards temp3 = new PlayerCards();
 
             for (int i = 0; i < cardsPerPlayer; i++)
             {
@@ -197,11 +198,70 @@ public class GameModel implements Serializable
 
             for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
             {
+                temp3.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.BLACK, temp3);
+        }
+
+        if (noOfPlayers == 3)
+        {
+            PlayerCards temp2 = new PlayerCards();
+            PlayerCards temp3 = new PlayerCards();
+            PlayerCards temp4 = new PlayerCards();
+
+            for (int i = 0; i < cardsPerPlayer; i++)
+            {
                 temp2.getHiddenCards().add(i, null);
             }
-            playerCardsMap.put(PlayerType.BLACK, temp2);
+            playerCardsMap.put(PlayerType.WHITE, temp2);
+
+            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
+            {
+                temp3.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.BLACK, temp3);
+
+            for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
+            {
+                temp4.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.RED, temp4);
 
         }
+
+        if (noOfPlayers == 4)
+        {
+            PlayerCards temp2 = new PlayerCards();
+            PlayerCards temp3 = new PlayerCards();
+            PlayerCards temp4 = new PlayerCards();
+            PlayerCards temp5 = new PlayerCards();
+
+            for (int i = 0; i < cardsPerPlayer; i++)
+            {
+                temp2.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.WHITE, temp2);
+
+            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
+            {
+                temp3.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.BLACK, temp3);
+
+            for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
+            {
+                temp4.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.RED, temp4);
+
+            for (int i = cardsPerPlayer * 3; i < 4 * cardsPerPlayer; i++)
+            {
+                temp5.getHiddenCards().add(i, null);
+            }
+            playerCardsMap.put(PlayerType.GREEN, temp5);
+
+        }
+
     }
 
     // WHITE, BLACK, RED, GREEN;
