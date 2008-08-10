@@ -152,7 +152,7 @@ public class GameModel implements Serializable
         return temp;
     }
 
-    private generateTreasureCards()
+    private void generateTreasureCards()
     {
         List<TreasureCard> temp = new ArrayList<TreasureCard>();
 
