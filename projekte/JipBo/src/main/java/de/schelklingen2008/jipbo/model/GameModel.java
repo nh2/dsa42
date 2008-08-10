@@ -45,7 +45,7 @@ public class GameModel implements Serializable
         for (int i = 0; i < pNames.length; i++)
         {
 
-            mPlayers[i] = new Player(pNames[i], shuffleStockPile(), (i == 0 ? shuffleDrawPile() : null), null);
+            mPlayers[i] = new Player(pNames[i], shuffleStockPile(), (i > 0 ? null : shuffleDrawPile()), null);
         }
     }
 
@@ -138,15 +138,11 @@ public class GameModel implements Serializable
 
     public int getPlayerIDByName(String pName)
     {
-        int n = 0;
         for (int i = 0; i < mPlayers.length; i++)
         {
-            if (mPlayers[i].getName() == pName)
-            {
-                n = i;
-            }
+            if (mPlayers[i].getName().equals(pName)) return i;
         }
-        return n;
+        throw new IllegalStateException("Kein Spieler gefunden.");
     }
 
     public Player getPlayerByName(String pName)
@@ -160,4 +156,9 @@ public class GameModel implements Serializable
 
     }
 
+    public void placeCardInDiscardPile(int pCard, boolean pFromHand, int pToCard)
+    {
+        // TODO Auto-generated method stub
+
+    }
 }

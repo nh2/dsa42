@@ -24,7 +24,7 @@ public class Player implements Serializable
         }
         else
         {
-            mDrawPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
+            mDrawPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
         }
         if (pDiscardPile != null)
         {

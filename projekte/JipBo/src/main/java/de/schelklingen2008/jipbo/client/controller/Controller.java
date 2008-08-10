@@ -179,6 +179,14 @@ public class Controller extends GameController
             selectedOwnCardIndex = -2;
             selectedOwnCardIsInHand = false;
         }
+        else if (pSelectedCardIndex == -2
+                 && selectedOwnCardIndex != -2
+                 || pSelectedCardIndex == selectedOwnCardIndex
+                 && !pSelectedCardIsInHand)
+        {
+            // sharedState.manager.invoke("placeCardInDiscardPile", 1, 2);
+            sLogger.info("Karte ablegen");
+        }
         else
         {
             selectedOwnCardIndex = pSelectedCardIndex;
@@ -191,8 +199,14 @@ public class Controller extends GameController
         if (selectedOwnCardIndex != -2)
         {
             selectedPublicCardIndex = pSelectedPublicCardIndex;
-            // sharedState.manager.invoke("putCard", 1, 2);
-            sLogger.info("send data to server");
+            if (selectedPublicCardIndex == -2
+                && selectedOwnCardIndex == 1
+                || selectedPublicCardIndex == selectedOwnCardIndex - 1
+                || selectedOwnCardIndex == 0)// defensive programming
+            {
+                // sharedState.manager.invoke("putCard", 1, 2);
+                sLogger.info("send data to server");
+            }
         }
         else
         {

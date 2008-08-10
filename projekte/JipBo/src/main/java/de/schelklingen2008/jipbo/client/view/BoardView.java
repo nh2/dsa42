@@ -36,6 +36,8 @@ public class BoardView extends JPanel implements GameChangeListener
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(Constants.COL_BOARD_BACKGROUND);
 
+        // gameChanged();
+
         addMouseMotionListener(new MouseMotionAdapter()
         {
 
@@ -73,20 +75,22 @@ public class BoardView extends JPanel implements GameChangeListener
         removeAll();
 
         // Other Players Panel
-        for (int i = 1; i < getGameModel().getPlayerSize(); i++)
+        for (int i = 0; i < getGameModel().getPlayerSize(); i++)
         {
-
-            JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
-            playerLabel.setAlignmentX(CENTER_ALIGNMENT);
-            playerLabel.setForeground(Color.BLACK);
-            Font newFontP = playerLabel.getFont().deriveFont(13.0f);
-            playerLabel.setFont(newFontP);
-            add(playerLabel);
-            BoardPanel player = new BoardPanel(null,
-                                               getGameModel().getPlayerIndexOf(i).getBoardCards(),
-                                               false,
-                                               new Color(151, 216, 230 - i * 40));
-            add(player);
+            if (i != getGameModel().getPlayerIDByName(getGameContext().getMyName()))
+            {
+                JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
+                playerLabel.setAlignmentX(CENTER_ALIGNMENT);
+                playerLabel.setForeground(Color.BLACK);
+                Font newFontP = playerLabel.getFont().deriveFont(13.0f);
+                playerLabel.setFont(newFontP);
+                add(playerLabel);
+                BoardPanel player = new BoardPanel(null,
+                                                   getGameModel().getPlayerIndexOf(i).getBoardCards(),
+                                                   false,
+                                                   new Color(151, 216, 230 - i * 40));
+                add(player);
+            }
         }
 
         // Public Cards Panel
@@ -102,7 +106,9 @@ public class BoardView extends JPanel implements GameChangeListener
         // Spacer
         add(Box.createVerticalStrut(20));
         // Own Cards Panel
-        JLabel myNameLabel = new JLabel(getGameModel().getPlayerNameIndexOf(0));
+        JLabel myNameLabel = new JLabel(getGameModel().getPlayerNameIndexOf(
+                                                                            getGameModel().getPlayerIDByName(
+                                                                                                             getGameContext().getMyName())));
         myNameLabel.setAlignmentX(CENTER_ALIGNMENT);
         myNameLabel.setForeground(Color.BLACK);
         Font newFontI = myNameLabel.getFont().deriveFont(13.0f);
@@ -116,21 +122,16 @@ public class BoardView extends JPanel implements GameChangeListener
         myLabel.setForeground(Color.WHITE);
         add(myLabel);
         BoardPanel myBoardPanel = new BoardPanel(controller,
-                                                 getGameModel().getPlayerIndexOf(0).getBoardCards(),
+                                                 getGameModel().getPlayerIndexOf(
+                                                                                 getGameModel().getPlayerIDByName(
+                                                                                                                  getGameContext().getMyName()))
+                                                               .getBoardCards(),
                                                  false,
                                                  Color.decode("#0000688B"));
 
         add(myBoardPanel);
 
         JPanel drawPilePanel = new JPanel();
-        BoardPanel drawPileBackPanel = new BoardPanel(controller,
-                                                      getGameModel().getPlayerIndexOf(
-                                                                                      getGameModel().getPlayerIDByName(
-                                                                                                                       getGameContext().getMyName()))
-                                                                    .getBoardCards(),
-
-                                                      false,
-                                                      Color.decode("#0000688B"));
 
         JLabel drawPileLabel = new JLabel("Meine Hand");
         Font newFontH = drawPileLabel.getFont().deriveFont(15.0f);
