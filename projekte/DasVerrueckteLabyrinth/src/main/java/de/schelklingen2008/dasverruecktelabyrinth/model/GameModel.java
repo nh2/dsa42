@@ -195,7 +195,7 @@ public class GameModel implements Serializable
             }
             playerCardsMap.put(PlayerType.WHITE, temp2);
 
-            for (int i = 0; i < cardsPerPlayer; i++)
+            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
             {
                 temp2.getHiddenCards().add(i, null);
             }
