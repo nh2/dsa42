@@ -172,11 +172,10 @@ public class GameModel implements Serializable
 
     public boolean isLegalMove(Player pPlayer, Country country1, Country country2)
     {
-        Player player = pPlayer;
 
-        if (player == turnholder)
+        if (pPlayer == turnholder)
         {
-            if (player == country1.getOccupier())
+            if (pPlayer == country1.getOccupier())
             {
                 if (country1.isNeighbour(country2))
                 {
