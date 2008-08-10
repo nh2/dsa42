@@ -30,15 +30,6 @@ public class GameModel implements Serializable
         return c;
     }
 
-    public Country getCountrybyColor(Color pc)
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            if (c[i].getColor().equals(pc)) return c[i];
-        }
-        return c[0]; // TODO anders machen
-    }
-
     public Player[] getPlayerArray()
     {
         return p;
@@ -89,6 +80,15 @@ public class GameModel implements Serializable
         return false;
     }
 
+    public Country getCountrybyColor(Color pc)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            if (c[i].getColor().equals(pc)) return c[i];
+        }
+        throw new IllegalArgumentException();
+    }
+
     public void setAllCountriesUnselected()
     {
         for (int i = 0; i < 30; i++)
@@ -113,6 +113,18 @@ public class GameModel implements Serializable
         // TODO Auto-generated method stub
         return p[playerIndex];
 
+    }
+
+    public Player getPlayerbyName(String name)
+    {
+        for (int i = 0; i < p.length; i++)
+        {
+            if (name == p[i].getPlayerName())
+            {
+                return p[i];
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
 }

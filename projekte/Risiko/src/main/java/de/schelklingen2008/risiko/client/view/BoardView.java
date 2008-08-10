@@ -69,6 +69,36 @@ public class BoardView extends JPanel implements GameChangeListener
         });
     }
 
+    private void moved(MouseEvent e)
+    {
+        // TODO respond to player´s mouse movements
+    }
+
+    private void pressed(MouseEvent e)
+    {
+
+        getGameModel().setAllCountriesUnselected();
+        Color c = new Color(map.getRGB(e.getX(), e.getY()));
+        // getGameModel().getCountrybyColor(c).setSelected(true);
+
+        if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
+        {
+
+            if (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
+            {
+                controller.placeUnit(getGameModel().getCountrybyColor(c));
+
+            }
+        }
+        else
+        {
+            controller.setMine(getGameModel().getCountrybyColor(c), getGameContext().getMyPlayer().getPlayerIndex());
+            getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1);
+        }
+
+        repaint();
+    }
+
     @Override
     public Dimension getPreferredSize()
     {
@@ -101,11 +131,6 @@ public class BoardView extends JPanel implements GameChangeListener
     private GameModel getGameModel()
     {
         return getGameContext().getGameModel();
-    }
-
-    private void moved(MouseEvent e)
-    {
-        // TODO respond to player´s mouse movements
     }
 
     private void paintBackground(Graphics2D gfx)
@@ -148,26 +173,6 @@ public class BoardView extends JPanel implements GameChangeListener
             gfx.drawString("" + lUnits, getGameModel().getCountry(i).getPositionNameX(),
                            getGameModel().getCountry(i).getPositionNameY() + 10);
         }
-    }
-
-    private void pressed(MouseEvent e)
-    {
-        logger.info("fjd11111");
-        getGameModel().setAllCountriesUnselected();
-        Color c = new Color(map.getRGB(e.getX(), e.getY()));
-        getGameModel().getCountrybyColor(c).setSelected(true);
-        /*
-         * if (getGameContext().getMyPlayer().getUnitsToSet() != 0) { logger.info("fjd"); if
-         * (getGameModel().getCountrybyColor(c).getOccupier().equals(getGameContext().getMyPlayer())) {
-         * controller.placeUnit(getGameModel().getCountrybyColor(c));
-         * getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() - 1); } }
-         * else { controller.setMine(getGameModel().getCountrybyColor(c),
-         * getGameContext().getMyPlayer().getPlayerIndex());
-         * getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1); }
-         */
-        System.out.println(c);
-
-        repaint();
     }
 
 }

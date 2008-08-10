@@ -69,7 +69,11 @@ public class Manager extends GameManager
 
     private void updateSharedState()
     {
+
+        updateSharedState();
+
         sharedState.setModel(gameModel);
+
     }
 
 }
