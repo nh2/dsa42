@@ -4,15 +4,18 @@
  - Warum Versionsverwaltung
 	Ein Versionsverwaltungssystem wird benötigt, da mehrere Personen hier an einem Projekt arbeiten und diese Personen immer auf dem selben Stand des Quelltextes sein sollten. Bearbeiten mehrere Programmierer den selben Teil des Quelltexts gleichzeitig, so erkennt Subversion beim Upload der Sourcen Konflikte und zeigt diese an. Ein weiterer Vorteil einer Versionsverwaltung besteht darin, dass im Falle, dass Änderungen am Quelltext vorgenommen worden sind und dass diese Änderungen nicht das gewünschte Ergebnis liefern, eine vorherige und funktionierende Version wiederhergestellt werden kann.
 
+ - Die Geschichte von Subversion
+ 	Die erste stablie Version von Subversion, das von der Firma CollabNet entwickelt wird, erschien 2004. Die Unterschiede zu der damaligen Version sind im wesentlichen die, dass kein Datenbanksystem zur Verwaltung des Projektes genutzt wird, sondern das Dateisystem selber. Als Vorgänger von Subversion könnte man das Concurrent Versions System (kurz: CVS) bezeichnen. Es gibt mehrere Unterschiede zwischen SVN und CVS. Der wohl größte Unterschied ist wohl, dass CVS beim Übertragen einer neuen Datei nur dieser einen Datei eine neue Revisionsnummer zuordnet, nicht aber dem ganzen Projekt. Auch werden die Änderungen einer Datei im Vergleich zu ihrer vorherigen Version beim Client und nicht, wie bei CVS, serverseitig berechnet, was den Vorteil hat, dass nicht so viele Daten übertragen werden müssen.
+
  - Konfliktlösung
 	Solange die Programmierer Quelltext in verschiedenen Dateien editieren ist es kein Problem diese zu synchronisieren. Sobald sie aber die selbe Datei verändern werden die Änderungen derjenigen Person der beiden, der zuerst speichert, überschireben, sobald der andere speichert. Um so entstehenden Konflikten vorzubeugen überprüft Subversion bei jedem Upload der Dateien, ob schon eine neuere Version auf dem Server vorhanden ist. Besteht ein Konflikt, wir der User davon in Kenntnis gesetzt und aufgefordert, den Konflikt zu lösen. Sobald er dies getan hat und den Konflikt als gelöst markiert kann er seinen Quelltext, in dem dann die Änderungen seines Vorgängers mit seinen eigenen kombiniert sind, hochladen.
 
  - Grundlagen von SVN
-	Bei Subversion gibt es einen Server, der ein sogenanntes Repository (Projektarchiv) verwaltet. In ihm werden die einzelnen Dateien, wie z.B. Quellcode oder andere Ressourcen, gespeichert. Es besteht eine verzeichnisartige Struktur, die es ermöglicht einzelne Bestandteile eines Projektes, die zusammen gehören, zusammen zu speichern. Jede hochgeladene Dateiversion wird dabei gespeichert und kann jederzeit wieder hergestellt werden. Im folgenden werden die wichtigsten Befehle an den SVN-Server aufgeführt:
-	 - update: überprüft auf neuere Versionen vom SVN-Server und lädt diese bei Bedarf mit check-out herunter
+	Bei Subversion gibt es einen Server, der ein sogenanntes Repository (Projektarchiv) verwaltet. In ihm werden die einzelnen Dateien, wie z.B. Quellcode oder andere Ressourcen, gespeichert. Es besteht eine verzeichnisartige Struktur, die es ermöglicht einzelne Bestandteile eines Projektes, die zusammen gehören, zusammen zu speichern. Jede hochgeladene Dateiversion wird dabei gespeichert und kann jederzeit wieder hergestellt werden. Im folgenden werden die wichtigsten Funktionen von SVN:
+	 - update: überprüft auf neuere Versionen vom SVN-Server und lädt diese bei Bedarf herunter
 	 - check-out: lädt ein angegebenes Verzeichnis vom SVN-Server
-	 - commit: lädt eine veränderte (__?__) Datei auf den SVN-Server hoch, sofern kein Konflikt besteht
-	 - merge: (__?__)
+	 - commit: lädt eine aktualisierte Datei auf den SVN-Server hoch, sofern kein Konflikt besteht
+	 - merge: integriert bei einem Update eine aktualisierte Datei vom Server in die lokal schon modifizierte Datei
 
  - Integration von Subversion in Eclipse
-	
+	Die Integration von Subversion in Eclipse ist sehr gut. Man kann durch einfache Tastenkombinationen updaten oder einzelne Klassen committen. Desweiteren ist es möglich eine Baumstruktur der auf dem Server schon vorhandenen Dateien und Verzeichnisse anzuzeigen und diese bei Bedarf in ein Projekt zu integrieren bezwihungsweise ein neues Projekt aus ihnen anzulegen. Zudem regelt Eclipse das Mergen der modifizierten Dateien so, dass man die fragliche Stelle leicht finden und den Konflikt beheben kann. Es erlaubt das Committen der Datei solange nicht, bis der Konflikt behoben worden ist.  
