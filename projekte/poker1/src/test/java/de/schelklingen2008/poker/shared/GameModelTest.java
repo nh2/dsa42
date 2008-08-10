@@ -5,10 +5,32 @@ import de.schelklingen2008.poker.model.GameModel;
 
 public class GameModelTest extends TestCase
 {
-    private GameModel gameModel = new GameModel();
 
-    public void testSomething() throws Exception
+    private static final String[] TEST_NAMES = new String[] { "tobias", "matthias" };
+    private GameModel             gameModel  = new GameModel(TEST_NAMES);
+
+    public void testInit() throws Exception
     {
-        // TODO add tests to test the rules and the state of the game
+        gameModel.getPlayerList();
+
+        assertEquals(0, gameModel.getActPlayerIndex());
+    }
+
+    public void testFirstMove() throws Exception
+    {
+        assertEquals(0, gameModel.getActPlayerIndex());
+
+        try
+        {
+            gameModel.call();
+            fail("call ganz am Anfang geht nicht");
+        }
+        catch (IllegalStateException e)
+        {
+            // erwartet
+        }
+
+        gameModel.reRaise(100);
+
     }
 }
