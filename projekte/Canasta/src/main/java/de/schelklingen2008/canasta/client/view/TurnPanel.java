@@ -28,6 +28,8 @@ public class TurnPanel extends JPanel implements GameChangeListener
     {
         removeAll();
 
+        if (getGameModel() == null) return;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         for (Player player : getGameModel().getPlayers())

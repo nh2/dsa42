@@ -129,9 +129,9 @@ public class BoardView extends JPanel implements GameChangeListener
         areas.clear();
 
         Graphics2D gfx = (Graphics2D) g;
-        // TODO do proper painting of game state
         paintBackground(gfx);
         paintBoard(gfx);
+        if (getGameModel() == null) return;
         paintCards(gfx);
     }
 
@@ -176,7 +176,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintHandBottom(Graphics2D gfx, int playerNumber)
     {
-        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player[] players = getGameModel().getPlayers();
 
         Player player = players[playerNumber];
 
@@ -214,7 +214,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintHandRight(Graphics2D gfx, int playerNumber)
     {
-        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player[] players = getGameModel().getPlayers();
         Player player = players[playerNumber];
         Hand hand = player.getHand();
         BufferedImage cardImage = getCardImage(null, 40, true);
@@ -245,7 +245,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintHandTop(Graphics2D gfx, int playerNumber)
     {
-        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player[] players = getGameModel().getPlayers();
         Player player = players[playerNumber];
         Hand hand = player.getHand();
         BufferedImage cardImage = getCardImage(null, 40, true);
@@ -273,7 +273,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintHandLeft(Graphics2D gfx, int playerNumber)
     {
-        Player[] players = controller.getGameContext().getGameModel().getPlayers();
+        Player[] players = getGameModel().getPlayers();
         Player player = players[playerNumber];
         Hand hand = player.getHand();
         BufferedImage cardImage = getCardImage(null, 40, true);
@@ -461,14 +461,14 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintTalon(Graphics2D gfx)
     {
-        Talon talon = controller.getGameContext().getGameModel().getTalon();
+        Talon talon = getGameModel().getTalon();
         gfx.drawImage(getCardImage(talon.peek(), 50, true), 410, 380, null);
         areas.add(new SensitiveArea("Talon", 410, 380, 50, 71));
     }
 
     private void paintDiscard(Graphics2D gfx)
     {
-        Discard discard = controller.getGameContext().getGameModel().getDiscard();
+        Discard discard = getGameModel().getDiscard();
         gfx.drawImage(getCardImage(discard.peek(), 50, false), 350, 380, null);
         areas.add(new SensitiveArea("Discard", 350, 380, 50, 71));
     }

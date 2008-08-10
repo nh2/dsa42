@@ -13,21 +13,16 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameContext
 {
 
-    private static final Logger sLogger = LoggerFactory.create();
+    private static final Logger sLogger   = LoggerFactory.create();
 
     /**
      * Contains the rules and the state of the game. TODO correct player count (should be optained from
      * controller)
      */
-    private GameModel           gameModel;
+    private GameModel           gameModel = null;
 
     /** Is the name of the player playing in this client. */
     private String              myName;
-
-    public GameContext()
-    {
-        gameModel = new GameModel(new String[] { "dick", "doof" });
-    }
 
     public int getLocalPlayerNumber()
     {
