@@ -158,6 +158,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         Graphics2D gfx = (Graphics2D) g;
         paintBackground(gfx);
+        if (getGameModel() == null) return;
         paintBoard(gfx);
     }
 
@@ -173,7 +174,6 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.drawRect(260, 25, 280, 80); // Oberer Spielerbereich
         gfx.drawRect(695, 110, 80, 280);// Rechter Spielerbereich
         gfx.setColor(Color.black);
-
     }
 
     private class Mittenplatz

@@ -22,7 +22,6 @@ public class GameModel implements Serializable
 
     public GameModel()
     {
-
     }
 
     public GameModel(String[] spielerNamen)
