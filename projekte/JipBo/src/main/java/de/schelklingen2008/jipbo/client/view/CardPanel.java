@@ -49,10 +49,17 @@ public class CardPanel extends JPanel
         return mRotate;
     }
 
-    public void setBorder()
+    public void setBorder(boolean pEnable)
     {
-        mBorder = true;
-        repaint();
+        mBorder = pEnable;
+        if (mBorder)
+        {
+            setBorder(BorderFactory.createLineBorder(Color.RED));
+        }
+        else
+        {
+            setBorder(BorderFactory.createEmptyBorder());
+        }
     }
 
     @Override
@@ -72,22 +79,26 @@ public class CardPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         Graphics2D gfx = (Graphics2D) g;
-        if (mBorder)
-        {
-            setBorder(BorderFactory.createLineBorder(Color.RED));
-        }
-        if (mRotate) gfx.rotate(-Math.PI / 24);
 
-        if (mIsBig)
+        if (mN != -2)
         {
-            gfx.drawImage(drawCard(mN), 6, 15, 63, 100, null);
+            if (mRotate) gfx.rotate(-Math.PI / 24);
+
+            if (mIsBig)
+            {
+                gfx.drawImage(drawCard(mN), 6, 15, 63, 100, null);
+            }
+            else
+            {
+                gfx.drawImage(drawCard(mN), 6, 25, 50, 80, null);
+            }
+
+            if (mRotate) gfx.rotate(Math.PI / 24);
         }
         else
         {
-            gfx.drawImage(drawCard(mN), 6, 25, 50, 80, null);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
-
-        if (mRotate) gfx.rotate(Math.PI / 24);
 
     }
 

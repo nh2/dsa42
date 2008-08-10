@@ -42,8 +42,17 @@ public class Controller extends GameController
 
     private ToyBoxContext            toyBoxContext;
 
-    private int                      selectedCardIndex;
-    private boolean                  selectedCardIsInHand;
+    private int                      selectedOwnCardIndex;
+    private boolean                  selectedOwnCardIsInHand;
+
+    private int                      selectedPublicCardIndex;
+
+    public Controller()
+    {
+        selectedOwnCardIndex = -2;
+        selectedOwnCardIsInHand = false;
+        selectedPublicCardIndex = -2;
+    }
 
     @Override
     public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
@@ -163,20 +172,48 @@ public class Controller extends GameController
         }
     }
 
-    public void setSelectedCard(boolean pSelectedCardIsInHand, int pSelectedCardIndex)
+    public void setOwnSelectedCard(boolean pSelectedCardIsInHand, int pSelectedCardIndex)
     {
-        selectedCardIndex = pSelectedCardIndex;
-        selectedCardIsInHand = pSelectedCardIsInHand;
+        if (selectedOwnCardIndex == pSelectedCardIndex && selectedOwnCardIsInHand == pSelectedCardIsInHand)
+        {
+            selectedOwnCardIndex = -2;
+            selectedOwnCardIsInHand = false;
+        }
+        else
+        {
+            selectedOwnCardIndex = pSelectedCardIndex;
+            selectedOwnCardIsInHand = pSelectedCardIsInHand;
+        }
     }
 
-    public int getSelectedCardIndex()
+    public void setPublicSelectedCard(int pSelectedPublicCardIndex)
     {
-        return selectedCardIndex;
+        if (selectedOwnCardIndex != -2)
+        {
+            selectedPublicCardIndex = pSelectedPublicCardIndex;
+            // sharedState.manager.invoke("putCard", 1, 2);
+            sLogger.info("send data to server");
+        }
+        else
+        {
+            selectedPublicCardIndex = -2;
+            sLogger.info("no own card was selected");
+        }
     }
 
-    public boolean isSelectedCardIsInHand()
+    public int getSelectedOwnCardIndex()
     {
-        return selectedCardIsInHand;
+        return selectedOwnCardIndex;
+    }
+
+    public boolean isSelectedOwnCardIsInHand()
+    {
+        return selectedOwnCardIsInHand;
+    }
+
+    public int getSelectedPublicCardIndex()
+    {
+        return selectedPublicCardIndex;
     }
 
 }

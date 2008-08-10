@@ -31,11 +31,23 @@ public class Manager extends GameManager
     {
         super.gameWillStart();
 
+        String[] playerNames = new String[getPlayerCount()];
+        for (int i = 0; i < playerNames.length; i++)
+            playerNames[i] = getPlayer(i).username.toString();
+
         gameModel = new GameModel();
+        gameModel.createGame(playerNames);
         updateSharedState();
     }
 
     // TODO add methods to make a move, etc. that can be called by clients
+
+    public void putCard(BodyObject client, int pCard, boolean pFromHand, int pToCard)
+    {
+        getPlayer(client);
+        gameModel.putCard(pCard, pFromHand, pToCard);
+        updateSharedState();
+    }
 
     /**
      * Updates the shared state and thus send changes to all clients.
@@ -47,6 +59,6 @@ public class Manager extends GameManager
 
     private Player getPlayer(BodyObject client)
     {
-        return null;
+        return gameModel.getPlayerByName(client.username.toString());
     }
 }

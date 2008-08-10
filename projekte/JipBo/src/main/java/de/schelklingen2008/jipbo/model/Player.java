@@ -18,12 +18,26 @@ public class Player implements Serializable
     {
         mName = pName;
         mStockPile = pStockPile;
-        mDrawPile = pDrawPile;
-        mDiscardPile = pDiscardPile;
+        if (pDrawPile != null)
+        {
+            mDrawPile = pDrawPile;
+        }
+        else
+        {
+            mDrawPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
+        }
+        if (pDiscardPile != null)
+        {
+            mDiscardPile = pDiscardPile;
+        }
+        else
+        {
+            mDiscardPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
+        }
 
     }
 
-    public Card getLastStockCard()
+    public Card getLastStockPile()
     {
         return mStockPile.get(mStockPile.size() - 1);
     }
@@ -35,7 +49,7 @@ public class Player implements Serializable
         {
             rCards[i] = getDiscardPile()[i];
         }
-        rCards[4] = getLastStockCard();
+        rCards[4] = getLastStockPile();
         return rCards;
     }
 

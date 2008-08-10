@@ -35,6 +35,43 @@ public class BoardView extends JPanel implements GameChangeListener
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(Constants.COL_BOARD_BACKGROUND);
+
+        addMouseMotionListener(new MouseMotionAdapter()
+        {
+
+            @Override
+            public void mouseMoved(MouseEvent e)
+            {
+                moved(e);
+            }
+        });
+
+        addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                pressed(e);
+            }
+        });
+    }
+
+    private void moved(MouseEvent e)
+    {
+        // TODO respond to player큦 mouse movements
+    }
+
+    private void pressed(MouseEvent e)
+    {
+        // TODO respond to player큦 mouse clicks
+    }
+
+    public void gameChanged()
+    {
+        getGameModel();
+        removeAll();
+
         // Other Players Panel
         for (int i = 1; i < getGameModel().getPlayerSize(); i++)
         {
@@ -82,10 +119,16 @@ public class BoardView extends JPanel implements GameChangeListener
                                                  getGameModel().getPlayerIndexOf(0).getBoardCards(),
                                                  false,
                                                  Color.decode("#0000688B"));
+
         add(myBoardPanel);
+
         JPanel drawPilePanel = new JPanel();
         BoardPanel drawPileBackPanel = new BoardPanel(controller,
-                                                      getGameModel().getPlayerIndexOf(0).getBoardCards(),
+                                                      getGameModel().getPlayerIndexOf(
+                                                                                      getGameModel().getPlayerIDByName(
+                                                                                                                       getGameContext().getMyName()))
+                                                                    .getBoardCards(),
+
                                                       false,
                                                       Color.decode("#0000688B"));
 
@@ -98,45 +141,17 @@ public class BoardView extends JPanel implements GameChangeListener
         drawPilePanel.add(drawPileLabel);
         add(drawPilePanel);
         BoardPanel drawPile = new BoardPanel(controller,
-                                             getGameModel().getPlayerIndexOf(0).getDrawPile(),
+                                             getGameModel().getPlayerIndexOf(
+                                                                             getGameModel().getPlayerIDByName(
+                                                                                                              getGameContext().getMyName()))
+                                                           .getDrawPile(),
                                              true,
                                              Color.decode("#0000688B"));
         add(drawPile);
 
-        addMouseMotionListener(new MouseMotionAdapter()
-        {
+        myBoardPanel.setKBoardPanel(drawPile);
+        drawPile.setKBoardPanel(myBoardPanel);
 
-            @Override
-            public void mouseMoved(MouseEvent e)
-            {
-                moved(e);
-            }
-        });
-
-        addMouseListener(new MouseAdapter()
-        {
-
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                pressed(e);
-            }
-        });
-    }
-
-    private void moved(MouseEvent e)
-    {
-        // TODO respond to player큦 mouse movements
-    }
-
-    private void pressed(MouseEvent e)
-    {
-        // TODO respond to player큦 mouse clicks
-    }
-
-    public void gameChanged()
-    {
-        getGameModel();
         repaint();
     }
 
