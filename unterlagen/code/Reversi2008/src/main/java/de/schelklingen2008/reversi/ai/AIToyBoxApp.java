@@ -9,8 +9,6 @@ import com.threerings.presents.net.Credentials;
 import com.threerings.presents.net.UsernamePasswordCreds;
 import com.threerings.util.Name;
 
-import de.schelklingen2008.reversi.ai.evaluation.CornerEvaluationFunction;
-import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategy;
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
 
 /**
@@ -21,9 +19,7 @@ public class AIToyBoxApp
 
     // public static final ReversiStrategy REVERSI_STRATEGY = new MinimaxStrategy(new
     // CornerEvaluationFunction(), 6, false);
-    public static final ReversiStrategy REVERSI_STRATEGY = new AlphaBetaStrategy(new CornerEvaluationFunction(),
-                                                                                 5,
-                                                                                 false);
+    public static final ReversiStrategy REVERSI_STRATEGY = null;
 
     // public static final ReversiStrategy REVERSI_STRATEGY = new SimpleStrategy();
 

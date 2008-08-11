@@ -1,7 +1,6 @@
 package de.schelklingen2008.reversi.ai.strategy;
 
 import junit.framework.TestCase;
-import de.schelklingen2008.reversi.ai.evaluation.CornerEvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
@@ -11,8 +10,8 @@ public class StrategyTest extends TestCase
 
     public void testStrategy() throws Exception
     {
-        ReversiStrategy minimax = new MinimaxStrategy(new CornerEvaluationFunction(), 5, false);
-        ReversiStrategy alphabeta = new AlphaBetaStrategy(new CornerEvaluationFunction(), 5, false);
+        ReversiStrategy minimax = null; // new MinimaxStrategy(new CornerEvaluationFunction(), 5, false);
+        ReversiStrategy alphabeta = null; // new AlphaBetaStrategy(new CornerEvaluationFunction(), 5, false);
 
         play(minimax);
         System.out.println("#########");
