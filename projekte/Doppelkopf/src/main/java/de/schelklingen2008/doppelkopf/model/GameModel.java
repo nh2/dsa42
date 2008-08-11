@@ -95,7 +95,10 @@ public class GameModel implements Serializable
                 // Er spielt nicht trumpf, aber er hat Trumpf
                 if (!karte.isTrumpf() && spieler.getBlatt().hatTrumpf()) zugGueltig = false;
             }
-            if (karte.farbe != grundkarte.farbe && spieler.getBlatt().hatFarbe(grundkarte.farbe)) zugGueltig = false;
+            if (spieler.getBlatt().hatFarbe(grundkarte.farbe))
+            {
+                if (karte.farbe != grundkarte.farbe || karte.isTrumpf()) zugGueltig = false;
+            }
         }
 
         if (zugGueltig)
