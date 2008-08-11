@@ -43,7 +43,7 @@ public class GameModelTest extends TestCase
             // erwartet
         }
 
-        // gameModel.reRaise(100);
+        gameModel.reRaise(1, 100);
 
     }
 }
