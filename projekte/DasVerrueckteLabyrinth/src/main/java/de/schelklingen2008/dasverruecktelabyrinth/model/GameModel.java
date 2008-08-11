@@ -242,7 +242,7 @@ public class GameModel implements Serializable
     }
 
     // TODO getWinner()
-    // TODO isFinished()
+
     // TODO hasLegalMoved()
     // TODO getWinner()
 
@@ -292,11 +292,11 @@ public class GameModel implements Serializable
         ;
         if (!isInBounds(x, y))
         ;
-        if (findWay(board, player.getXKoordinate(), player.getYKoordinate(), x, y, player.getXKoordinate(),
-                    player.getYKoordinate()) != null) temp = true;
 
         if (!isTurnHolder(player))
         ;
+        if (findWay(board, player.getXKoordinate(), player.getYKoordinate(), x, y, player.getXKoordinate(),
+                    player.getYKoordinate()) != null) temp = true;
 
         return temp;
     }
@@ -413,7 +413,7 @@ public class GameModel implements Serializable
     {
         for (int y = 0; y < SIZE; y++)
             for (int x = 0; x < SIZE; x++)
-                if (isLegalMove(x, y, getTurnHolder())) return true;
+                if (isLegalMove(x, y, player.get(getTurnHolder()))) return true;
         return false;
     }
 
@@ -466,16 +466,8 @@ public class GameModel implements Serializable
         if (getTurnHolder() != player) return result;
         for (int x = 0; x < SIZE; x++)
             for (int y = 0; y < SIZE; y++)
-                result[x][y] = isLegalMove(x, y, player);
+                result[x][y] = isLegalMove(x, y, this.player.get(player));
         return result;
-    }
-
-    public boolean isLegalMove(int pX, int pY, PlayerType pPlayer)
-    {
-        boolean temp = false;
-        if (isFinished()) temp = false;
-        if (!isInBounds(pX, pY)) temp = false;
-        return temp;
     }
 
     public PlayerType getTurnHolder()

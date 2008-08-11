@@ -18,14 +18,8 @@ public class PlayerCards implements Serializable
         hidden = new ArrayList<TreasureCard>(); // Stapel der verdeckten Bildkarten
         open = new ArrayList<TreasureCard>();
 
-        hidden.add(TreasureCard.EULE);
-        hidden.add(TreasureCard.EULE);
-        hidden.add(TreasureCard.EULE);
-        hidden.add(TreasureCard.KRONE);
-        hidden.add(TreasureCard.EULE);
-        hidden.add(TreasureCard.EULE);
-
-        open.add(TreasureCard.BIBEL);
+        hidden = null;
+        open = null;
 
     }
 

@@ -122,8 +122,11 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.add(right);
         drehButtons.add(left);
 
-        JLabel searchThisCard = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
-        JLabel foundCard = new JLabel(new ImageIcon(getImageOfTC(openCards())));
+        JLabel foundCard = new JLabel();
+        if (openCards() != null) foundCard.add(foundCard, new ImageIcon(getImageOfTC(openCards())));
+
+        JLabel searchThisCard = new JLabel();
+        if (hiddenCards() != null) searchThisCard.add(searchThisCard, new ImageIcon(getImageOfTC(hiddenCards())));
 
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
         linsert.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -159,23 +162,6 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     public Dimension getPreferredSize()
     {
         return new Dimension(600, 130);
-    }
-
-    private TreasureCard openCards()
-    {
-        TreasureCard foundThisCard = null;
-        Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
-
-        PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
-        List<TreasureCard> open = openCards.getOpenCards();
-
-        if (open != null)
-        {
-            foundThisCard = open.get(0);
-        }
-
-        return foundThisCard;
-
     }
 
     private BufferedImage getImageOfTC(TreasureCard tC)
@@ -221,6 +207,23 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
         TreasureCard searchThisCard = hidden.get(0);
         return searchThisCard;
+    }
+
+    private TreasureCard openCards()
+    {
+        TreasureCard foundThisCard = null;
+        Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
+
+        PlayerCards openCards = MapWtf.get(PlayerType.WHITE);
+        List<TreasureCard> open = openCards.getOpenCards();
+
+        if (open != null)
+        {
+            foundThisCard = open.get(0);
+        }
+
+        return foundThisCard;
+
     }
 
     private BufferedImage getInsert()
