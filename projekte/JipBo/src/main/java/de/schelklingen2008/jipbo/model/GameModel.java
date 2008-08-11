@@ -19,27 +19,16 @@ public class GameModel implements Serializable
 
     private Player     turnHolder;
 
-    public GameModel()
+    public GameModel(String[] pNames)
     {
-        // test initialisation
-        // mBuildPile = new Card[] { new Card(2), new Card(4), new Card(6), new Card(8), new Card(-1) };
-        // List<Card> mStockPile = new ArrayList<Card>();
-        // mStockPile.add(new Card(12));
-        // mStockPile.add(new Card(0));
-        // mStockPile.add(new Card(12));
-        // mPlayers = new Player[] {
-        // new Player("Ich", mStockPile, new Card[] { new Card(1), new Card(-2), new Card(12), new Card(10),
-        // new Card(0) }, new Card[] { new Card(5), new Card(2), new Card(-2), new Card(10) }),
-        // new Player("Fabio", mStockPile, new Card[] { new Card(3), new Card(2), new Card(11), new Card(0),
-        // new Card(0) }, new Card[] { new Card(2), new Card(0), new Card(12), new Card(2) }),
-        // new Player("Peter", mStockPile, new Card[] { new Card(1), new Card(0), new Card(12), new Card(10),
-        // new Card(0) }, new Card[] { new Card(4), new Card(7), new Card(0), new Card(2) }),
-        // new Player("Bulgarien", mStockPile, new Card[] { new Card(1), new Card(0), new Card(12), new
-        // Card(10),
-        // new Card(0) }, new Card[] { new Card(1), new Card(3), new Card(11), new Card(6) }) };
+        clear();
+        if (pNames != null)
+        {
+            initialize(pNames);
+        }
     }
 
-    public void createGame(String[] pNames)
+    public void initialize(String[] pNames)
     {
         mStockCards = shuffleStockCards();
 
@@ -50,12 +39,9 @@ public class GameModel implements Serializable
         {
 
             mPlayers[i] = new Player(pNames[i], shuffleStockPile(), null);
-            // if (i == 0)
-            // {
-            // refreshDrawPile(mPlayers[i]);
-            // }
         }
-        turnHolder = mPlayers[0];
+        setTurnHolder(mPlayers[0]);
+        refreshDrawPile(mPlayers[0].getName());
     }
 
     private List<Card> shuffleStockCards()
@@ -105,8 +91,9 @@ public class GameModel implements Serializable
     // return rDrawPile;
     // }
 
-    public void refreshDrawPile(Player pPlayer)
+    public void refreshDrawPile(String pName)
     {
+        Player pPlayer = getPlayerByName(pName);
         if (!pPlayer.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
                                                                          + pPlayer.getName()
                                                                          + " (rDP)");
@@ -176,16 +163,22 @@ public class GameModel implements Serializable
 
     public void putCard(String pPlayerName, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
     {
+        // TODO INDEXOUTOFBOUNCE
         int playerID = getPlayerIDByName(pPlayerName);
         Player player = mPlayers[playerID];
         if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
                                                                         + player.getName()
                                                                         + " (pC)");
-
-        if (pFromHand
-            && mPlayers[playerID].getDrawPile()[pFromPlace].getNumber() == pCard
-            || !pFromHand
-            && mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == pCard)
+        // TODO fixit
+        // if(pFromHand
+        // && mPlayers[playerID].getDrawPile()[pFromPlace].getNumber() == pCard
+        // || !pFromHand
+        // && (pFromPlace < 4 && mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == pCard ||
+        // mPlayers[playerID].getLastStockPile()
+        // .getNumber() == pCard))
+        if (pCard != 0
+            || mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == 0
+            || mPlayers[playerID].getLastStockPile().getNumber() == 0)
         {
             // here comes the joker
             if (pCard == 0)
@@ -223,7 +216,7 @@ public class GameModel implements Serializable
 
     public void placeCardInDiscardPile(String pPlayerName, int pFromPlace, int pCard, int pToPlace)
     {
-        if (pCard >= 0)// must be a normal card
+        if (pCard >= 0 && pToPlace < 4)// must be a normal card - protect from IndexOutOfBounce
         {
             int playerID = getPlayerIDByName(pPlayerName);
             Player player = mPlayers[playerID];
@@ -234,8 +227,13 @@ public class GameModel implements Serializable
 
             playerDiscardPile[pToPlace].setNumber(pCard);
             player.removeDrawPileCard(pFromPlace);
+            int newPlayerID = 0;
+            if (getPlayerSize() - 1 != playerID)
+            {
+                newPlayerID = playerID + 1;
+            }
 
-            setTurnHolder(getPlayerIndexOf(getPlayerSize() == playerID ? 0 : playerID));
+            setTurnHolder(getPlayerIndexOf(newPlayerID));
 
         }
     }
