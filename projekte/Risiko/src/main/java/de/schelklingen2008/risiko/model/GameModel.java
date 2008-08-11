@@ -628,8 +628,8 @@ public class GameModel implements Serializable
             defender.setUnits(attacker.getUnits() / 2);
             attacker.setUnits(attacker.getUnits() - attacker.getUnits() / 2);
         }
-        history[0] = attacker.getName() + " - " + defender.getName();
-        history[1] = "Verluste" + attlostunits + " - " + deflostunits;
+        history[0] = attacker.getName() + "  -  " + defender.getName();
+        history[1] = "Verluste  " + attlostunits + "  -  " + deflostunits;
 
     }
 }
