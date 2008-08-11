@@ -25,21 +25,21 @@ public class GameModel implements Serializable
     /**
      * 
      */
-    private static final long serialVersionUID = 2947575224282572888L;
+    private static final long       serialVersionUID   = -1305594069915531267L;
 
-    private Player[] players = new Player[2];
-    private Player turnHolder = null;
-    private boolean inMotion = false; // Are there any balls in motion?
+    private Player[]                players            = new Player[2];
+    private Player                  turnHolder         = null;
+    private boolean                 inMotion           = false;
 
-    private List<Ball> balls = new ArrayList<Ball>();
-    private List<Ball> ballsOnTable = new ArrayList<Ball>();
+    private List<Ball>              balls              = new ArrayList<Ball>();
+    private List<Ball>              ballsOnTable       = new ArrayList<Ball>();
 
-    private List<Wall> walls = new ArrayList<Wall>();
-    private List<Hole> holes = new ArrayList<Hole>();
+    private List<Wall>              walls              = new ArrayList<Wall>();
+    private List<Hole>              holes              = new ArrayList<Hole>();
 
     private List<GameEventListener> gameEventListeners = new LinkedList<GameEventListener>();
 
-    private Ball whiteBall, blackBall;
+    private Ball                    whiteBall, blackBall;
 
     public boolean isInMotion()
     {
@@ -213,8 +213,8 @@ public class GameModel implements Serializable
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
         {
-            BallType ball2Type =
-                tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
+            BallType ball2Type = tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED
+                    : BallType.SOLID;
             for (int i = 0; i < tmpBalls.size(); i++)
             {
                 if (tmpBalls.get(i).getType() == ball2Type)
