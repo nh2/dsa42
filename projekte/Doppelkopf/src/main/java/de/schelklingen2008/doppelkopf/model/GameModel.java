@@ -91,6 +91,7 @@ public class GameModel implements Serializable
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
+            // TODO Spieler in mittenSpieler eintragen
             getSpieler().next();
 
             // TODO Auf vollen Stapel überprüfen, wenn nötig, Karten einstreichen

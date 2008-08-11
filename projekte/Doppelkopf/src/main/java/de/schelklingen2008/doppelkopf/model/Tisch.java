@@ -9,14 +9,16 @@ import java.util.Stack;
 public class Tisch implements Serializable
 {
 
-    private List<Karte>  mitte;
-    private Spieler      anDerReihe;
-    private int          stichAnzahl;
-    private SpielerListe spielerliste;
+    private List<Karte>   mitte;
+    private List<Spieler> mittenSpieler;
+    private Spieler       anDerReihe;
+    private int           stichAnzahl;
+    private SpielerListe  spielerliste;
 
     public Tisch(SpielerListe spielerliste)
     {
         mitte = new ArrayList<Karte>(4);
+        mittenSpieler = new ArrayList<Spieler>(4);
 
         this.spielerliste = spielerliste;
         // for (int i = 1; i <= 4; i++)
