@@ -22,6 +22,7 @@ public class LabyrinthPanel extends JPanel
 
     public LabyrinthPanel(Controller controller)
     {
+        this.controller = controller;
         setLayout(new BorderLayout());
 
         final JButton pushButton1 = new JButton("hier");
