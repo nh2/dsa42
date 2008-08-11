@@ -197,9 +197,9 @@ public class GameModel implements Serializable
 
     public void check(Spieler client)
     {
-        if (client.getWettsumme() == get)
+        if (client.getWettsumme() == getStandWettsumme())
         {
-
+            setAmZug(spielerliste.get(getSpielerNummer(client) + 1));
         }
     }
 
@@ -254,5 +254,30 @@ public class GameModel implements Serializable
             if (name.equals(spieler.getName())) return spieler;
         }
         return null;
+    }
+
+    public int getSpielerNummer(Spieler spieler)
+    {
+        for (int i = 0; i < spielerliste.size(); i++)
+        {
+            if (spielerliste.get(i).equals(spieler))
+            {
+                return i;
+            }
+
+        }
+
+        return 0;
+
+    }
+
+    public void setStandWettsumme(int standWettsumme)
+    {
+        this.standWettsumme = standWettsumme;
+    }
+
+    public int getStandWettsumme()
+    {
+        return standWettsumme;
     }
 }
