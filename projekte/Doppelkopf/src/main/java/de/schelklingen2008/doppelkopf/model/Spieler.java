@@ -17,6 +17,7 @@ public class Spieler implements Serializable
         this.name = name;
         blatt = new Blatt();
         gewinnstapel = new ArrayList<Karte>();
+        rundenpunkte = new ArrayList<Integer>();
     }
 
     @Override
