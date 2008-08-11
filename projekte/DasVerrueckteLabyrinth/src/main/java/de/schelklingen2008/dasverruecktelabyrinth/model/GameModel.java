@@ -425,20 +425,68 @@ public class GameModel implements Serializable
     {
         if (walk == false)
         {
-            if (pPushButton == PushButton.SuedLinks) einschiebenSued(1, 6);
-            if (pPushButton == PushButton.SuedMitte) einschiebenSued(3, 6);
-            if (pPushButton == PushButton.SuedRechts) einschiebenSued(5, 6);
-            if (pPushButton == PushButton.NordLinks) einschiebenNord(1, 0);
-            if (pPushButton == PushButton.NordMitte) einschiebenNord(3, 0);
-            if (pPushButton == PushButton.NordRechts) einschiebenNord(5, 0);
-            if (pPushButton == PushButton.OstUnten) einschiebenOst(6, 5);
-            if (pPushButton == PushButton.OstMitte) einschiebenOst(6, 3);
-            if (pPushButton == PushButton.OstOben) einschiebenOst(6, 1);
-            if (pPushButton == PushButton.WestUnten) einschiebenWest(0, 5);
-            if (pPushButton == PushButton.WestMitte) einschiebenWest(0, 3);
-            if (pPushButton == PushButton.WestOben) einschiebenWest(0, 1);
+            if (pPushButton == PushButton.SuedLinks)
+            {
+                einschiebenSued(1, 6);
+                walk = true;
+            }
+            if (pPushButton == PushButton.SuedMitte)
+            {
+                einschiebenSued(3, 6);
+                walk = true;
+            }
+            if (pPushButton == PushButton.SuedRechts)
+            {
+                einschiebenSued(5, 6);
+                walk = true;
+            }
+            if (pPushButton == PushButton.NordLinks)
+            {
+                einschiebenNord(1, 0);
+                walk = true;
+            }
+            if (pPushButton == PushButton.NordMitte)
+            {
+                einschiebenNord(3, 0);
+                walk = true;
+            }
+            if (pPushButton == PushButton.NordRechts)
+            {
+                einschiebenNord(5, 0);
+                walk = true;
+            }
+            if (pPushButton == PushButton.OstUnten)
+            {
+                einschiebenOst(6, 5);
+                walk = true;
+            }
+            if (pPushButton == PushButton.OstMitte)
+            {
+                einschiebenOst(6, 3);
+                walk = true;
+            }
+            if (pPushButton == PushButton.OstOben)
+            {
+                einschiebenOst(6, 1);
+                walk = true;
+            }
+            if (pPushButton == PushButton.WestUnten)
+            {
+                einschiebenWest(0, 5);
+                walk = true;
+            }
+            if (pPushButton == PushButton.WestMitte)
+            {
+                einschiebenWest(0, 3);
+                walk = true;
+            }
+            if (pPushButton == PushButton.WestOben)
+            {
+                einschiebenWest(0, 1);
+                walk = true;
+            }
         }
-        walk = true;
+
     }
 
     private void einschiebenNord(int x, int y)
