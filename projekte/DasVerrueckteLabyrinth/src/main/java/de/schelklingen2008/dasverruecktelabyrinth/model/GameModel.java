@@ -297,7 +297,7 @@ public class GameModel implements Serializable
     // setzt den Turnholder im normalen Spiel
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
-        if (walk)
+        while (walk)
         {
             Player pPlayer = player.get(pPlayerType);
             if (isLegalMove(x, y, pPlayer))
@@ -305,9 +305,12 @@ public class GameModel implements Serializable
                 pPlayer.setXKoordinate(x);
                 pPlayer.setYKoordinate(y);
                 placedOnSearchCard(pPlayer);
+                walk = false;
             }
-            changeTurnHolder();
+
         }
+
+        changeTurnHolder();
     }
 
     // setzt den herausgeschobenen Player -egal ob turnHolder oder nicht- auf der anderen Seite wieder ins
