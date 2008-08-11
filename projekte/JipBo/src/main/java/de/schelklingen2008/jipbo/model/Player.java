@@ -63,13 +63,41 @@ public class Player implements Serializable
         return mStockPile;
     }
 
+    public void removeLastStockPile()
+    {
+        mStockPile.remove(mStockPile.size() - 1);
+    }
+
     public Card[] getDrawPile()
     {
         return mDrawPile;
+    }
+
+    public void removeDrawPileCard(int pN)
+    {
+        for (int i = 0; i < mDrawPile.length; i++)
+        {
+            if (mDrawPile[i].getNumber() == pN)
+            {
+                mDrawPile[i].setNumber(-2);// -2 <=> no card
+            }
+        }
     }
 
     public Card[] getDiscardPile()
     {
         return mDiscardPile;
     }
+
+    public void removeDiscardPileCard(int pN)
+    {
+        for (int i = 0; i < mDiscardPile.length; i++)
+        {
+            if (mDiscardPile[i].getNumber() == pN)
+            {
+                mDiscardPile[i].setNumber(-2);// -2 <=> no card
+            }
+        }
+    }
+
 }

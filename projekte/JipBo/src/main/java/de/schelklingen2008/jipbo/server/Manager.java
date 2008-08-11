@@ -46,7 +46,7 @@ public class Manager extends GameManager
     {
         // TODO fix me
         getPlayer(client);
-        gameModel.putCard(client.getOid(), pCard, pFromHand, pToCard);
+        gameModel.putCard(client.username.toString(), pCard, pFromHand, pToCard);
         updateSharedState();
     }
 

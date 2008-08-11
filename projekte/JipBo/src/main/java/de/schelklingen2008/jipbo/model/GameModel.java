@@ -150,7 +150,7 @@ public class GameModel implements Serializable
         return mPlayers[getPlayerIDByName(pName)];
     }
 
-    public void putCard(int pPlayerID, int pCard, boolean pFromHand, int pToCard)
+    public void putCard(String pPlayerName, int pCard, boolean pFromHand, int pToCard)
     {
         // update BuildPile
         for (int i = 0; i < mBuildPile.length; i++)
@@ -164,10 +164,11 @@ public class GameModel implements Serializable
         // remove PlayerPiles
         if (pFromHand)
         {
-            mPlayers[pPlayerID].getDiscardPile();
+            mPlayers[getPlayerIDByName(pPlayerName)].getDiscardPile();
         }
         else
         {
+            mPlayers[getPlayerIDByName(pPlayerName)].getDrawPile();
 
         }
     }
