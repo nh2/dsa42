@@ -87,10 +87,14 @@ public class GameModel implements Serializable
 
         if (zugGueltig)
         {
+            // Zug ausführen
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
             getSpieler().next();
+
+            // TODO Auf vollen Stapel überprüfen, wenn nötig, Karten einstreichen
+
             return;
         }
         logger.log(Level.INFO, "Ungültiger Zug. ");
