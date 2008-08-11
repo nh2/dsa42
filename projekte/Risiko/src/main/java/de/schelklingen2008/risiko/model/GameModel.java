@@ -190,4 +190,9 @@ public class GameModel implements Serializable
         else
             return false;
     }
+
+    public double dice()
+    {
+        return 1.0;
+    }
 }
