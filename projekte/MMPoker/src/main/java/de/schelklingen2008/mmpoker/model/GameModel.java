@@ -52,6 +52,7 @@ public class GameModel implements Serializable
         {
             spielfeld[j] = kartenStapel.zufallsKarte();
         }
+
         for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
         {
             Spielkarte[] zufallsHandBlatt = new Spielkarte[2];
@@ -145,7 +146,7 @@ public class GameModel implements Serializable
         for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
         {
 
-            aktBlatt = iterator.next().blattErmitteln();
+            aktBlatt = iterator.next().blattErmitteln(getSpielfeld());
             // if (aktBlatt >= hoechstesBlatt) {
             // hoechstesBlatt = aktBlatt;
             // }
@@ -196,16 +197,6 @@ public class GameModel implements Serializable
         return spielstadium;
     }
 
-    public void call(String wettSummeText, Spieler client)
-    {
-        Integer wettSumme = new Integer(wettSummeText);
-        if (wettSumme == getPot())
-        {
-            setAmZug(spielerliste.get(getSpielerNummer(client) + 1));
-        }
-        rundeBeendet();
-    }
-
     public boolean rundeBeendet()
     {
         for (Spieler spieler : spielerliste)
@@ -222,51 +213,56 @@ public class GameModel implements Serializable
         return true;
     }
 
-    public void raise(String wettSummeText, Spieler client)
+    public void call(String wettSummeText, Spieler client)
     {
         Integer wettSumme = new Integer(wettSummeText);
-        if (wettSumme + client.getWettsumme() > getPot() && !getLetzterRaiser().equals(client))
+        if (wettSumme + client.getWettsumme() == getStandWettsumme())
         {
-            setStandWettsumme(wettSumme + client.getWettsumme());
-            setPot(getPot() + wettSumme);
-            setLetzterRaiser(client);
-            if (istBeimLetzten(getSpielerNummer(client)))
-            {
-                setAmZug(spielerliste.get(0));
-            }
-            else
-            {
-                setAmZug(spielerliste.get(getSpielerNummer(client) + 1));
-            }
+            advanceTurnHolder(client);
+            client.setGeld(client.getGeld() - wettSumme);
+            client.setWettsumme(getStandWettsumme());
+            client.setLetzteAktion(LetzteAktion.CALL);
         }
+        rundeBeendet();
+    }
 
+    public void raise(String wettSummeText, Spieler spieler)
+    {
+        Integer wettSumme = new Integer(wettSummeText);
+        int neueSumme = wettSumme + spieler.getWettsumme();
+        if (neueSumme <= getStandWettsumme()) return;
+        if (getLetzterRaiser() != null && getLetzterRaiser().equals(spieler)) return;
+
+        setStandWettsumme(neueSumme);
+        setPot(getPot() + wettSumme);
+        setLetzterRaiser(spieler);
+        spieler.setGeld(spieler.getGeld() - wettSumme);
+        spieler.setWettsumme(getStandWettsumme());
+        spieler.setLetzteAktion(LetzteAktion.RAISE);
+
+        advanceTurnHolder(spieler);
+    }
+
+    private void advanceTurnHolder(Spieler s)
+    {
+        int nextIndex = (getSpielerNummer(s) + 1) % 2;
+        setAmZug(spielerliste.get(nextIndex));
     }
 
     public void check(Spieler client)
     {
         if (client.getWettsumme() == getStandWettsumme())
         {
-            setAmZug(spielerliste.get(getSpielerNummer(client) + 1));
+            advanceTurnHolder(client);
+            client.setLetzteAktion(LetzteAktion.CHECKED);
         }
     }
 
     public void fold(Spieler client)
     {
+        advanceTurnHolder(client);
+
         client.setLetzteAktion(LetzteAktion.FOLD);
-        setAmZug(spielerliste.get(getSpielerNummer(client) + 1));
-
-    }
-
-    public boolean istBeimLetzten(int i)
-    {
-        if (spielerliste.get(i).equals(spielerliste.get(spielerliste.size() - 1)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
 
     }
 
@@ -306,17 +302,7 @@ public class GameModel implements Serializable
 
     public int getSpielerNummer(Spieler spieler)
     {
-        for (int i = 0; i < spielerliste.size(); i++)
-        {
-            if (spielerliste.get(i).equals(spieler))
-            {
-                return i;
-            }
-
-        }
-
-        return 0;
-
+        return spielerliste.indexOf(spieler);
     }
 
     public void setStandWettsumme(int standWettsumme)

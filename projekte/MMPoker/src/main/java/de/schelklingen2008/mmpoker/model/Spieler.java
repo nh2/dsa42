@@ -44,8 +44,32 @@ public class Spieler implements Serializable
         return name;
     }
 
-    public Blatt blattErmitteln()
+    public Blatt blattErmitteln(Spielkarte[] gemeinschaftsKarten)
     { // Kartenwert, Blatt, Höchste Karte
+        Spielkarte[] endKarten = new Spielkarte[6];
+        for (int i = 0; i < 2; i++)
+        {
+            endKarten[i] = getHandblatt()[i];
+        }
+        for (int i = 2; i < endKarten.length; i++)
+        {
+            endKarten[i] = gemeinschaftsKarten[i];
+        }
+
+        int[] flush = new int[3];
+        for (int i = 0; i < flush.length; i++)
+        {
+            for (int j = 0; i < flush.length; j++)
+            {
+                flush[endKarten[j].getKartentyp().ordinal()]++;
+            }
+            if (flush[i] >= 5)
+            {
+                handkarten.blatt = Blaetter.FLUSH;
+                setHandkarten(handkarten);
+            }
+        }
+
         return null;
     }
 
@@ -89,4 +113,19 @@ public class Spieler implements Serializable
         return letzteAktion;
     }
 
+    public void setHandkarten(Blatt handkarten)
+    {
+        this.handkarten = handkarten;
+    }
+
+    public Blatt getHandkarten()
+    {
+        return handkarten;
+    }
+
+    @Override
+    public String toString()
+    {
+        return name + "(" + geld + ")";
+    }
 }

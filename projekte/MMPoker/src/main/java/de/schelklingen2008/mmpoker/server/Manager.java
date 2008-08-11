@@ -79,7 +79,7 @@ public class Manager extends GameManager
     private Spieler getPlayer(BodyObject client)
     {
         Name username = client.username;
-        for (int i = 0; i < gameModel.getSpielerliste().size(); i++)
+        for (int i = 0; i < gameModel.getSpielerliste().size() - 1; i++)
         {
 
             Spieler spieler = gameModel.getSpielerliste().get(i);
