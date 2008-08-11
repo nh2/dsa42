@@ -88,6 +88,11 @@ public class PatternTest extends TestCase
 
     }
 
+    public void mehrlingsAusgabe(List<Card> list, PatternChecker checker)
+    {
+
+    }
+
     public void testHaupt()
     {
 

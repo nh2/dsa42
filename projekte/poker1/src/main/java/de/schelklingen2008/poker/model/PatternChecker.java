@@ -85,6 +85,20 @@ public class PatternChecker
         return false;
     }
 
+    public void mehrlinge()
+    {
+        int[] mehrlingsCounter = new int[13];
+
+        for (int i = 0; i < 13; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (cards.get(j).getValueInt() == i) mehrlingsCounter[i]++;
+            }
+            if (mehrlingsCounter[i] > 1) System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter[i]);
+        }
+    }
+
     public int getHighestPatternValue()
     {
         if (isFourOfAKind()) return FOUR_OF_A_KIND;
