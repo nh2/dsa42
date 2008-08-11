@@ -197,18 +197,18 @@ public class GameModel implements Serializable
             // remove PlayerPiles
             if (pFromHand)
             {
+                mPlayers[playerID].removeDrawPileCard(pFromPlace);
+            }
+            else
+            {
                 if (pFromPlace < 4)
                 {
-                    mPlayers[playerID].removeDrawPileCard(pFromPlace);
+                    mPlayers[playerID].removeDiscardPileCard(pFromPlace);
                 }
                 else
                 {
                     mPlayers[playerID].removeLastStockPile();
                 }
-            }
-            else
-            {
-                mPlayers[playerID].removeDiscardPileCard(pFromPlace);
             }
         }
     }
