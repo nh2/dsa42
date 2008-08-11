@@ -396,10 +396,25 @@ public class GameModel implements Serializable
 
     public void changeTurnHolder()
     {
-        if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
-        if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
-        if (turnHolder == PlayerType.RED) turnHolder = PlayerType.GREEN;
-        if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
+        if (getPlayers().size() == 2)
+        {
+            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
+            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.WHITE;
+        }
+        if (getPlayers().size() == 3)
+        {
+            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
+            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
+            if (turnHolder == PlayerType.RED) turnHolder = PlayerType.WHITE;
+        }
+        if (getPlayers().size() == 4)
+        {
+
+            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
+            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
+            if (turnHolder == PlayerType.RED) turnHolder = PlayerType.GREEN;
+            if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
+        }
 
     }
 
@@ -585,7 +600,6 @@ public class GameModel implements Serializable
 
     public Map<PlayerType, PlayerCards> getPlayerCardsMap()
     {
-
         return playerCardsMap;
     }
 
