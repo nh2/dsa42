@@ -31,5 +31,8 @@ public class GameModelTest extends TestCase
         model.call("49", spieler1);
         assertEquals(spieler1.getLetzteAktion(), LetzteAktion.CALL);
 
+        model.fold(spieler2);
+        assertEquals(spieler2.getLetzteAktion(), LetzteAktion.FOLD);
+
     }
 }
