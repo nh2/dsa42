@@ -24,6 +24,7 @@ import com.threerings.util.MessageBundle;
 import de.schelklingen2008.canasta.client.Constants;
 import de.schelklingen2008.canasta.client.model.GameContext;
 import de.schelklingen2008.canasta.client.view.GamePanel;
+import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -120,7 +121,12 @@ public class Controller extends GameController
             sLogger.info("Ich bin nicht dran!");
             return;
         }
-        sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
+
+        if (GameModel.getRank(getGameContext().getMyPlayer().getHand().getAll(selectedCardNumbers)) == null)
+            sLogger.info("cards in a cardstack must have the same rank!");
+
+        else
+            sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
     }
 
     private void updateGameContext()

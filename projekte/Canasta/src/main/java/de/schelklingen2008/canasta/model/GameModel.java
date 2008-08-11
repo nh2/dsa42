@@ -185,6 +185,30 @@ public class GameModel implements Serializable
         return cardScore >= minScore;
     }
 
+    public static Rank getRank(Card[] cards)
+    {
+        Rank rank = null;
+        for (Card card : cards)
+        {
+            if (card.getRank().isWildcard() && rank == null)
+                rank = Rank.JOKER;
+
+            else if (card.getRank().isWildcard() && rank != null)
+                continue;
+
+            else if (rank == null)
+                rank = card.getRank();
+
+            else if (rank == card.getRank())
+                continue;
+
+            else
+                return null;
+
+        }
+        return rank;
+    }
+
     public int getCardValue(Card card)
     {
         switch (card.getRank())
