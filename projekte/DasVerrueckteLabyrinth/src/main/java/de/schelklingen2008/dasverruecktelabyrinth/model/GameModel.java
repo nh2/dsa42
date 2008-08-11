@@ -482,7 +482,7 @@ public class GameModel implements Serializable
         insert = board[0][y];
         for (int i = 0; i < board.length - 1; i++)
         {
-            board[i][y] = board[i - 1][y];
+            board[i][y] = board[i + 1][y];
         }
         board[(board.length - 1)][y] = temp;
 
@@ -499,7 +499,7 @@ public class GameModel implements Serializable
     {
         Tile temp = insert;
         insert = board[board.length - 1][y];
-        for (int i = board.length - 1; i < 1; i--)
+        for (int i = board.length - 1; i >= 1; i--)
         {
             board[i][y] = board[i - 1][y];
         }

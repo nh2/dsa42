@@ -64,26 +64,27 @@ public class GameModelTest extends TestCase
         GameModel model = new GameModel(new String[] { "Dick", "Doof" });
         Tile[][] board = model.getBoard();
 
-        Tile[] boardSpalte = new Tile[7];
+        Tile[] boardZeile = new Tile[7];
 
-        for (int i = 0; i < boardSpalte.length; i++)
+        for (int i = 0; i < boardZeile.length; i++)
         {
-            boardSpalte[i] = board[1][i];
+            boardZeile[i] = board[1][i];
         }
 
         Tile tempInsert = model.getInsertTile();
 
-        model.insert(PushButton.NordLinks); // 0,1
+        model.insert(PushButton.SuedLinks);
 
         board = model.getBoard();
-        assertEquals(tempInsert, board[1][0]);
-        assertEquals(boardSpalte[0], board[1][1]);
-        assertEquals(boardSpalte[1], board[1][2]);
-        assertEquals(boardSpalte[2], board[1][3]);
-        assertEquals(boardSpalte[3], board[1][4]);
-        assertEquals(boardSpalte[4], board[1][5]);
-        assertEquals(boardSpalte[5], board[1][6]);
-        assertEquals(boardSpalte[6], model.getInsertTile());
+
+        assertEquals(tempInsert, board[1][6]);
+        assertEquals(boardZeile[6], board[1][5]);
+        assertEquals(boardZeile[5], board[1][4]);
+        assertEquals(boardZeile[4], board[1][3]);
+        assertEquals(boardZeile[3], board[1][2]);
+        assertEquals(boardZeile[2], board[1][1]);
+        assertEquals(boardZeile[1], board[1][0]);
+        assertEquals(boardZeile[0], model.getInsertTile());
 
     }
 }
