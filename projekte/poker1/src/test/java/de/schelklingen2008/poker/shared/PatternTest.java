@@ -97,11 +97,13 @@ public class PatternTest extends TestCase
         // cardList.clear();
         cardList = fill3(cardList);
         checker.mehrlinge();
+        System.out.println(checker.isPair());
         // cardList = fill3(cardList);
         // assertTrue(checker.isFlush());
 
         cardList.clear();
         straightList(cardList);
+        System.out.println(checker.isPair());
         System.out.println();
         if (checker.isStraight() == true) System.out.println("Straﬂe");
 

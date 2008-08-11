@@ -111,9 +111,38 @@ public class PatternChecker
         return pattern;
     }
 
-    public boolean isPair(boolean b)
+    public int getCount(int i)
     {
-        return b;
+        int mehrlingsCounter = 0;
+        for (int j = 0; j < 7; j++)
+        {
+            if (cards.get(j).getValueInt() == i) mehrlingsCounter++;
+        }
+        if (mehrlingsCounter > 1)
+        {
+            System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter);
+
+        }
+
+        return mehrlingsCounter;
+
+    }
+
+    public boolean isPair()
+    {
+        boolean pairFound = false;
+        for (int i = 0; i < 13; i++)
+        {
+            if (getCount(i) == 2)
+            {
+                if (pairFound)
+                    return false;
+                else
+                    pairFound = true;
+            }
+        }
+        return pairFound;
+
     }
 
     public boolean isStraight()
