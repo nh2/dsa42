@@ -16,7 +16,7 @@ public class GameModel implements Serializable
     private static final Logger logger       = LoggerFactory.create();
 
     private Tisch               tisch;
-    private List<Integer>[]     punkte;
+
     private SpielerListe        spielerliste = new SpielerListe();
     private boolean             rundeBeendet;
 
@@ -70,7 +70,7 @@ public class GameModel implements Serializable
         // Spieler spieler = spielerliste.getSpieler(spielerName);
         Blatt blatt = spieler.getBlatt();
         List<Karte> mitte = tisch.getMitte();
-        // TODO berechnen, ob der Zug gültig ist
+
         boolean zugGueltig = true;
 
         if (spieler != spielerliste.getAnDerReihe())
@@ -122,7 +122,35 @@ public class GameModel implements Serializable
 
             if (tisch.getStichAnzahl() == 12)
             {
-                // TODO implementieren
+                int repunkte = tisch.getRePunkte();
+                int contrapunkte = tisch.getContraPunkte();
+                int rundenpunkte = 0;
+
+                if (repunkte > contrapunkte)
+                {
+                    rundenpunkte++;
+                    int diff = repunkte - contrapunkte;
+                    rundenpunkte += diff / 30;
+                }
+                else if (contrapunkte > repunkte)
+                {
+                    rundenpunkte -= 2;
+                    int diff = contrapunkte - repunkte;
+                    rundenpunkte -= diff / 30;
+                }
+
+                if (tisch.getTeamRe().size() == 1) // Solo
+                    for (Spieler p : tisch.getTeamRe())
+                        p.rundenpunkte.add(rundenpunkte * 3);
+                else
+                    // kein Solo
+                    for (Spieler p : tisch.getTeamRe())
+                        p.rundenpunkte.add(rundenpunkte);
+
+                for (Spieler p : tisch.getTeamContra())
+                    p.rundenpunkte.add(-rundenpunkte);
+
+                neuesSpiel();
             }
 
             return;

@@ -216,6 +216,10 @@ public class BoardView extends JPanel implements GameChangeListener
             String name = "";
             if (zeichenSpieler == spiel.getSpieler().getAnDerReihe()) name += "* ";
             name += zeichenSpieler.getName();
+            int gesamtpunkte = 0;
+            for (int p : zeichenSpieler.rundenpunkte)
+                gesamtpunkte += p;
+            name += gesamtpunkte;
             gfx.drawString(name, namenspositionen[i][0], namenspositionen[i][1]);
             tempListe.rotieren();
         }

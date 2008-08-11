@@ -7,9 +7,10 @@ import java.util.List;
 public class Spieler implements Serializable
 {
 
-    private String      name;
-    private Blatt       blatt;
-    private List<Karte> gewinnstapel;
+    private String       name;
+    private Blatt        blatt;
+    private List<Karte>  gewinnstapel;
+    public List<Integer> rundenpunkte;
 
     public Spieler(String name)
     {
