@@ -30,8 +30,8 @@ public class BoardViewTest extends GameViewTest
         GameContext ctx = controller.getGameContext();
         ctx.setMyName("Matthias");
 
+        ctx.setGameModel(new GameModel(new String[] { "Tobias", "Matthias", "Georg", "Ben" }));
         GameModel model = controller.getGameContext().getGameModel();
-        model.setPlayers(new String[] { "Tobias", "Matthias", "Georg", "Ben" });
 
         return new BoardView(controller);
 

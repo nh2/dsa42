@@ -32,13 +32,12 @@ public class GameModel implements Serializable
 
     public GameModel()
     {
-        initGame();
+
     }
 
     public GameModel(String[] names)
     {
         setPlayers(names);
-        initGame();
     }
 
     public boolean isFinished()
@@ -440,7 +439,10 @@ public class GameModel implements Serializable
     public void setPlayers(String[] names)
     {
         for (int i = 0; i < names.length; i++)
+        {
             playerList.add(new Player(names[i]));
+        }
+        initGame();
     }
 
     public void kartenAusgeben()
