@@ -1,11 +1,19 @@
 package de.schelklingen2008.billiards.model;
 
 import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
+
+import java.io.Serializable;
+
 import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.util.Vector2d;
 
-public class Wall
+public class Wall implements Serializable
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5163253895724147660L;
 
     private double slope, yIntercept, minX, minY, maxX, maxY, angle;
 

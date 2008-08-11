@@ -88,7 +88,8 @@ public class Controller extends GameController
             @Override
             public void shotTaken(ShotEvent e)
             {
-
+                System.out.println(String.format("Invoking takeShot(%.2f, %.2f)", e.getAngle(), e.getVelocity()));
+                sharedState.manager.invoke("takeShot", e.getAngle(), e.getVelocity());
             }
 
         });
@@ -104,9 +105,11 @@ public class Controller extends GameController
     private void updateGameContext()
     {
         if (sharedState == null) return;
-        if (sharedState.getModel() == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
+
+        if (sharedState.getModel() == null) return;
+
         gameContext.setGameModel(sharedState.getModel());
 
         fireGameChange();

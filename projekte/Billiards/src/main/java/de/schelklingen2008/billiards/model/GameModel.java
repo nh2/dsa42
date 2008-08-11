@@ -5,6 +5,7 @@ import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -18,14 +19,17 @@ import de.schelklingen2008.billiards.util.Vector2d;
 /**
  * Maintains the rules and the state of the game.
  */
-public class GameModel
+public class GameModel implements Serializable
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2947575224282572888L;
 
     private Player[] players = new Player[2];
     private Player turnHolder = null;
-    // TODO Make this private
-    public boolean inMotion = false; // Are there any balls in
-    // motion?
+    private boolean inMotion = false; // Are there any balls in motion?
 
     private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> ballsOnTable = new ArrayList<Ball>();

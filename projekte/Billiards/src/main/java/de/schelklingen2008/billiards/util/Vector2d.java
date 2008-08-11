@@ -5,8 +5,15 @@ import static java.lang.Math.atan;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class Vector2d
+import java.io.Serializable;
+
+public class Vector2d implements Serializable
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6070769685446320518L;
 
     public static final Vector2d ZERO = new Vector2d(0, 0);
 

@@ -9,12 +9,18 @@ import static java.awt.Color.RED;
 import static java.awt.Color.YELLOW;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.util.Vector2d;
 
-public class Ball
+public class Ball implements Serializable
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5973044172239068676L;
 
     public enum BallType
     {

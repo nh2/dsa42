@@ -1,7 +1,14 @@
 package de.schelklingen2008.billiards.model;
 
-public class Player
+import java.io.Serializable;
+
+public class Player implements Serializable
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6235338883786642954L;
 
     public int getId()
     {
