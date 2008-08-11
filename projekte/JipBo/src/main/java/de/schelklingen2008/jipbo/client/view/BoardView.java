@@ -73,6 +73,10 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         if (getGameModel() == null) return;
         removeAll();
+        if (getGameModel().getTurnHolder().equals(getGameModel().getPlayerIDByName(getGameContext().getMyName())))
+        {
+            getGameModel().refreshDrawPile(getGameModel().getPlayerByName(getGameContext().getMyName()));
+        }
 
         // Other Players Panel
         for (int i = 0; i < getGameModel().getPlayerSize(); i++)

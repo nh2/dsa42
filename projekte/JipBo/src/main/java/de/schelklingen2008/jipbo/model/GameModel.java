@@ -50,11 +50,12 @@ public class GameModel implements Serializable
         {
 
             mPlayers[i] = new Player(pNames[i], shuffleStockPile(), null);
-            if (i == 0)
-            {
-                refreshDrawPile(mPlayers[i]);
-            }
+            // if (i == 0)
+            // {
+            // refreshDrawPile(mPlayers[i]);
+            // }
         }
+        turnHolder = mPlayers[0];
     }
 
     private List<Card> shuffleStockCards()
@@ -107,7 +108,7 @@ public class GameModel implements Serializable
     public void refreshDrawPile(Player pPlayer)
     {
         if (!pPlayer.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
-                                                                         + pPlayer
+                                                                         + pPlayer.getName()
                                                                          + " (rDP)");
         for (int i = 0; i < pPlayer.getDrawPile().length; i++)
         {
@@ -178,7 +179,7 @@ public class GameModel implements Serializable
         int playerID = getPlayerIDByName(pPlayerName);
         Player player = mPlayers[playerID];
         if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
-                                                                        + player
+                                                                        + player.getName()
                                                                         + " (pC)");
 
         if (pFromHand
@@ -227,7 +228,7 @@ public class GameModel implements Serializable
             int playerID = getPlayerIDByName(pPlayerName);
             Player player = mPlayers[playerID];
             if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
-                                                                            + player
+                                                                            + player.getName()
                                                                             + " (pCIDP)");
             Card[] playerDiscardPile = player.getDiscardPile();
 
