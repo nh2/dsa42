@@ -18,4 +18,6 @@
 	 - merge: integriert bei einem Update eine aktualisierte Datei vom Server in die lokal schon modifizierte Datei
 
  - Integration von Subversion in Eclipse
-	Die Integration von Subversion in Eclipse ist sehr gut. Man kann durch einfache Tastenkombinationen updaten oder einzelne Klassen committen. Desweiteren ist es möglich eine Baumstruktur der auf dem Server schon vorhandenen Dateien und Verzeichnisse anzuzeigen und diese bei Bedarf in ein Projekt zu integrieren bezwihungsweise ein neues Projekt aus ihnen anzulegen. Zudem regelt Eclipse das Mergen der modifizierten Dateien so, dass man die fragliche Stelle leicht finden und den Konflikt beheben kann. Es erlaubt das Committen der Datei solange nicht, bis der Konflikt behoben worden ist.  
+	Die Integration von Subversion in Eclipse ist sehr gut. Man kann durch einfache Tastenkombinationen updaten oder einzelne Klassen committen. Desweiteren ist es möglich eine Baumstruktur der auf dem Server schon vorhandenen Dateien und Verzeichnisse anzuzeigen und diese bei Bedarf in ein Projekt zu integrieren bezwihungsweise ein neues Projekt aus ihnen anzulegen. Zudem regelt Eclipse das Mergen der modifizierten Dateien so, dass man die fragliche Stelle leicht finden und den Konflikt beheben kann. Es erlaubt das Committen der Datei solange nicht, bis der Konflikt behoben worden ist.
+	
+von Tobias Theobald  
