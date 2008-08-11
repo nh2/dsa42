@@ -111,7 +111,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        logger.info("moved");
         if (!getGameModel().isTurnHolder(getGameContext().getMyPlayer()))
         {
             return;
