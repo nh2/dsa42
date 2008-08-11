@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import javax.swing.text.Position;
+import java.util.Stack;
 
 /**
  * Maintains the rules and the state of the game.
@@ -296,26 +295,66 @@ public class GameModel implements Serializable
         temp.setYKoordinate(y);
     }
 
-    public List<Position> findWay(Tile[][] pBoard, int sx, int sy, int ex, int ey, int lx, int ly)
+    public List<Position> findWay(int sx, int sy, int ex, int ey)
     {
+        List<Position> way = findWay(new Position(sx, sy), new Position(ex, ey), new Stack<Position>());
+        if (way != null) Collections.reverse(way);
+        return way;
+    }
 
-        return null;
+    private List<Position> findWay(Position start, Position end, Stack<Position> last)
+    {
+        List<Position> result = null;
+
+        if (start.equals(end))
+        {
+            result = new ArrayList<Position>();
+            result.add(start);
+            return result;
+        }
+
+        last.push(start);
+
+        Position right = start.incX();
+        Position left = start.decX();
+        Position up = start.decY();
+        Position down = start.incY();
+        if (isInBounds(right.getX(), right.getY())
+            && !last.contains(right)
+            && board[start.getX()][start.getY()].getRight()
+            && board[right.getX()][right.getY()].getLeft())
+            result = findWay(right, end, last);
+        else if (isInBounds(left.getX(), left.getY())
+                 && !last.contains(left)
+                 && board[start.getX()][start.getY()].getLeft()
+                 && board[left.getX()][left.getY()].getRight())
+            result = findWay(left, end, last);
+        else if (isInBounds(up.getX(), up.getY())
+                 && !last.contains(up)
+                 && board[start.getX()][start.getY()].getUp()
+                 && board[up.getX()][up.getY()].getDown())
+            result = findWay(up, end, last);
+        else if (isInBounds(down.getX(), down.getY())
+                 && !last.contains(down)
+                 && board[start.getX()][start.getY()].getDown()
+                 && board[down.getX()][down.getY()].getUp()) result = findWay(down, end, last);
+
+        last.pop();
+        if (result == null) return null;
+        result.add(start);
+        return result;
     }
 
     public boolean isLegalMove(int x, int y, Player player)
     {
-        boolean temp = false;
-        if (isFinished())
-        ;
-        if (!isInBounds(x, y))
-        ;
+        if (isFinished()) return false;
+        if (!isInBounds(x, y)) return false;
+        if (!isTurnHolder(player)) return false;
 
-        if (!isTurnHolder(player))
-        ;
-        if (findWay(board, player.getXKoordinate(), player.getYKoordinate(), x, y, player.getXKoordinate(),
-                    player.getYKoordinate()) != null) temp = true;
+        List<Position> way = findWay(player.getXKoordinate(), player.getYKoordinate(), x, y);
+        if (way == null) return false;
 
-        return temp;
+        return true;
     }
 
     private boolean isTurnHolder(Player player2)
@@ -599,5 +638,70 @@ public class GameModel implements Serializable
         for (Player p : player.values())
             if (name.equals(p.getName())) return p;
         return null;
+    }
+
+    public static class Position
+    {
+
+        final int x, y;
+
+        public Position(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + x;
+            result = prime * result + y;
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
+            Position other = (Position) obj;
+            if (x != other.x) return false;
+            if (y != other.y) return false;
+            return true;
+        }
+
+        public int getX()
+        {
+            return x;
+        }
+
+        public int getY()
+        {
+            return y;
+        }
+
+        public Position incX()
+        {
+            return new Position(x + 1, y);
+        }
+
+        public Position decX()
+        {
+            return new Position(x - 1, y);
+        }
+
+        public Position incY()
+        {
+            return new Position(x, y + 1);
+        }
+
+        public Position decY()
+        {
+            return new Position(x, y - 1);
+        }
+
     }
 }

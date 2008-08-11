@@ -5,9 +5,18 @@ import java.io.Serializable;
 public class Tile implements Serializable
 {
 
-    private boolean      unmoveable = false;
-    private boolean      up, down, right, left;
-    private TreasureCard tc         = null;
+    public static final Tile HORIZONTAL = new Tile(false, false, true, true, null);
+    public static final Tile VERTICAL   = new Tile(true, true, false, false, null);
+    public static final Tile CROSS      = new Tile(true, true, true, true, null);
+
+    public static final Tile CURVE1     = new Tile(false, true, false, true, null);
+    public static final Tile CURVE2     = new Tile(false, true, true, false, null);
+    public static final Tile CURVE3     = new Tile(true, false, true, false, null);
+    public static final Tile CURVE4     = new Tile(true, false, false, true, null);
+
+    private boolean          unmoveable = false;
+    private boolean          up, down, right, left;
+    private TreasureCard     tc         = null;
 
     public Tile(boolean pUp, boolean pDown, boolean pRight, boolean pLeft, TreasureCard pTc)
     {
