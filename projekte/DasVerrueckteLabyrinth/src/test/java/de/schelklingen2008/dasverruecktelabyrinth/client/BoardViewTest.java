@@ -27,6 +27,7 @@ public class BoardViewTest extends GameViewTest
     {
         Controller controller = new Controller();
         GameContext ctx = controller.getGameContext();
+
         ctx.setGameModel(new GameModel(new String[] { "dick", "doof", "Hassel", "Hoff" }));
         ctx.setMyName("dick");
 

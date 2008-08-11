@@ -143,7 +143,6 @@ public class GameModel implements Serializable
         temp.add(new Tile(true, false, true, false, TreasureCard.GESPENST));
         temp.add(new Tile(true, false, true, false, null));
 
-        // TODO List zu ende
         return temp;
     }
 
@@ -265,6 +264,14 @@ public class GameModel implements Serializable
 
         pPlayer.setXKoordinate(x);
         pPlayer.setYKoordinate(y);
+    }
+
+    private void placedOnSearchCard()
+    {
+        hiddenCards();
+        List<TreasureCard> hidden = hiddenCards.getHiddenCards();
+        TreasureCard searchThisCard = hidden.get(0);
+
     }
 
     public void placePlayer(int x, int y, PlayerType pPlayerType)
