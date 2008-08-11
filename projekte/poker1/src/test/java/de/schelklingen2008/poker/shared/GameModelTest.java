@@ -13,12 +13,12 @@ public class GameModelTest extends TestCase
 
         gameModel.getPlayerList();
 
-        assertEquals(0, gameModel.getActPlayerIndex());
+        assertEquals(1, gameModel.getActPlayerIndex());
     }
 
-    public void testInitSevenPlayers() throws Exception
+    public void testInitSixPlayers() throws Exception
     {
-        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg", "Ben", "Maja", "Jo", "Paula" };
+        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg", "Ben", "Jo", "Paula" };
         GameModel gameModel = new GameModel(TEST_NAMES);
 
         gameModel.getPlayerList();
@@ -30,20 +30,18 @@ public class GameModelTest extends TestCase
     {
         String[] TEST_NAMES = new String[] { "tobias", "matthias" };
         GameModel gameModel = new GameModel(TEST_NAMES);
-
-        assertEquals(0, gameModel.getActPlayerIndex());
-
+        assertEquals(1, gameModel.getActPlayerIndex());
         try
         {
             gameModel.call(0);
-            fail("call ganz am Anfang geht nicht");
+            fail("Spieler ist nicht dran -> darf nicht callen");
         }
         catch (IllegalStateException e)
         {
             // erwartet
         }
 
-        gameModel.reRaise(1, 100);
-
+        gameModel.reRaise(1, 500);
     }
+
 }
