@@ -10,8 +10,7 @@ import de.schelklingen2008.util.LoggerFactory;
  * Provides all necessary game information. On top of the game model it adds information on player names and
  * on which player corresponds to the client the context is used in.
  */
-public class GameContext
-{
+public class GameContext {
 
     private static final Logger sLogger   = LoggerFactory.create();
 
@@ -22,43 +21,24 @@ public class GameContext
     /** Is the name of the player playing in this client. */
     private String              myName;
 
-    public String getMyName()
-    {
+    public String getMyName() {
         return myName;
     }
 
-    public void setMyName(String myName)
-    {
+    public void setMyName(String myName) {
         sLogger.fine("setMyName: " + myName);
         this.myName = myName;
     }
 
-    public Spieler getMyPlayer()
-    {
+    public Spieler getMyPlayer() {
         return gameModel.getSpieler(myName);
     }
 
-    //
-    // public Spieler getMyPlayer()
-    // {
-    // if (myName == null) return null;
-    // for (Spieler spieler : getGameModel().getSpielerliste())
-    // {
-    // if (spieler.getName().equals(myName))
-    // {
-    // return spieler;
-    // }
-    // }
-    // return null;
-    // }
-
-    public GameModel getGameModel()
-    {
+    public GameModel getGameModel() {
         return gameModel;
     }
 
-    public void setGameModel(GameModel model)
-    {
+    public void setGameModel(GameModel model) {
         gameModel = model;
     }
 }
