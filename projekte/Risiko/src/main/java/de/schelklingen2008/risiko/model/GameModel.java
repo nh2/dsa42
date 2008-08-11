@@ -616,8 +616,10 @@ public class GameModel implements Serializable
                 deflostunits += 1;
             }
             else
+            {
                 attacker.setUnits(attacker.getUnits() - 1);
-            attlostunits += 1;
+                attlostunits += 1;
+            }
         }
 
         if (defender.getUnits() == 0)
