@@ -34,6 +34,5 @@ public class BoardViewTest extends GameViewTest
         GameModel model = controller.getGameContext().getGameModel();
 
         return new BoardView(controller);
-
     }
 }
