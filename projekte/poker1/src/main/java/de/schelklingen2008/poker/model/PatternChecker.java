@@ -1,5 +1,6 @@
 package de.schelklingen2008.poker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatternChecker
@@ -85,9 +86,13 @@ public class PatternChecker
         return false;
     }
 
-    public void mehrlinge()
+    public Pattern mehrlinge()
     {
         int[] mehrlingsCounter = new int[13];
+        List<Pattern> mehrlingsList = new ArrayList();
+        Pattern pattern = new Pattern(0, 0, 0);
+        int pairCounter = 0;
+        int tripleCounter = 0;
 
         for (int i = 0; i < 13; i++)
         {
@@ -95,8 +100,20 @@ public class PatternChecker
             {
                 if (cards.get(j).getValueInt() == i) mehrlingsCounter[i]++;
             }
-            if (mehrlingsCounter[i] > 1) System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter[i]);
+            if (mehrlingsCounter[i] > 1)
+            {
+                System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter[i]);
+                if (mehrlingsCounter[i] == 2) pairCounter++;
+            }
         }
+        System.out.println(pairCounter);
+
+        return pattern;
+    }
+
+    public boolean isPair(boolean b)
+    {
+        return b;
     }
 
     public boolean isStraight()

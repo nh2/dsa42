@@ -3,7 +3,16 @@ package de.schelklingen2008.poker.model;
 public class Pattern
 {
 
-    private int art; // Art des Patterns, z.B. HighCard, P‰rchen,...Straﬂe, Flush...
+    private int art;       // Art des Patterns, z.B. HighCard, P‰rchen,...Straﬂe, Flush...
+    private int value1 = 0;
+    private int value2 = 0;
+
+    public Pattern(int art, int value1, int value2)
+    {
+        this.art = art;
+        this.value1 = value1;
+        this.value2 = value2;
+    }
 
     public String artToSTring()
     {
