@@ -114,7 +114,7 @@ public class GameModelTest extends TestCase
                 new Card(Rank.QUEEN, Suit.DIAMONDS), new Card(Rank.TEN, Suit.DIAMONDS) };
 
         assertEquals(Rank.ACE, GameModel.getRank(testCards1));
-        assertEquals(Rank.ACE, GameModel.getRank(testCards2));
-        assertEquals(Rank.ACE, GameModel.getRank(testCards3));
+        assertEquals(Rank.QUEEN, GameModel.getRank(testCards2));
+        assertEquals(null, GameModel.getRank(testCards3));
     }
 }
