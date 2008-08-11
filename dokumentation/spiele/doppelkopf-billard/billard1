@@ -1,0 +1,51 @@
+Billard
+Bei der Programmierung von Billard haben wir uns auf eine zwei-Spieler-Variante von 8-Ball konzentriert.
+Auf dem Billardtisch liegen 7 volle, 7 halbe Kugeln sowie eine schwarze 8 Kugel. Jeder Spieler Spieler muss im Spielverlauf entweder alle Halben oder alle Vollen einlochen und zuletzt die schwarze Kugel versenken.
+Welche Kugeln der Spieler zugeteilt bekommt, hängt davon ab, welche Kugel er nach dem Eröffnungsstoß einlocht.
+Locht ein Spieler eine Kugel des Gegners oder die weiße Kugel ein, so gilt dies als Fowl; das hat zur Folge, dass der Gegner die weiße Kugel für seinen nächsten Stoß beliebig positionieren darf. Dasselbe gilt, wenn ein Spieler mit der weißen Kugel überhaupt keine Kugel berührt hat.
+Der Spieler, der als erster alle seine farbigen und zuletzt die schwarze Kugel einlocht, geht als Sieger hervor.
+
+<Klassendiagramm />
+
+Die größte Schwierigkeit bei der Umsetztung des Billard-Spiels bestand in der Spielphysik. So müssen die Kugeln physikalisch korrekt unter Einfluss der Reibung rollen, kollidieren und sich im richtigen Winkel mit richtigen Geschwindigkeit wieder voneienander entfernen.
+
+<Java-Code>
+    double getNextBallCollision(Ball other)
+    {
+
+        double deltaX = position.getX() - other.position.getX();
+        double deltaY = position.getY() - other.position.getY();
+        double deltaVX = velocity.getX() - other.velocity.getX();
+        double deltaVY = velocity.getY() - other.velocity.getY();
+
+        if (deltaX * deltaX + deltaY * deltaY < 4 * BALL_RADIUS * BALL_RADIUS)
+        {
+            double factor = 2 * BALL_RADIUS / new Vector2d(deltaX, deltaY).getLength();
+            deltaX *= factor;
+            deltaY *= factor;
+        }
+
+        double a = deltaVX * deltaVX + deltaVY * deltaVY;
+        double b = 2 * (deltaX * deltaVX + deltaY * deltaVY);
+        double c = deltaX * deltaX + deltaY * deltaY - 4 * BALL_RADIUS * BALL_RADIUS;
+
+        double result = Double.NaN;
+
+        if (a == 0)
+        {
+            if (b != 0)
+            {
+                return -c / b;
+            }
+        }
+        else
+        {
+
+            double disc = b * b - 4 * a * c;
+
+            if (disc >= 0)
+            {
+                result = (-b - Math.sqrt(disc)) / (2 * a);
+            }
+        }
+</Java-Code>  
