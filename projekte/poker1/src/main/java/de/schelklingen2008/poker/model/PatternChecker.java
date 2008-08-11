@@ -99,6 +99,14 @@ public class PatternChecker
         }
     }
 
+    public boolean isStraight()
+    {
+        if (straight(0, 5)) return true;
+        if (straight(1, 5)) return true;
+        if (straight(2, 5)) return true;
+        return false;
+    }
+
     public boolean straight(int pos, int length)
     {
         if (length == 1)

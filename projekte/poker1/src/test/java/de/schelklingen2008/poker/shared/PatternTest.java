@@ -60,12 +60,12 @@ public class PatternTest extends TestCase
     {
 
         cards.add(new Card(0, 0));
-        cards.add(new Card(1, 2));
+        cards.add(new Card(1, 0));
         cards.add(new Card(2, 3));
         cards.add(new Card(3, 4));
         cards.add(new Card(2, 5));
         cards.add(new Card(0, 6));
-        cards.add(new Card(1, 10));
+        cards.add(new Card(1, 7));
 
         return cards;
 
@@ -103,7 +103,7 @@ public class PatternTest extends TestCase
         cardList.clear();
         straightList(cardList);
         System.out.println();
-        System.out.println(checker.straight(0, 5));
+        System.out.println(checker.isStraight());
 
     }
 }
