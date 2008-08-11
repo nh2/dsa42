@@ -127,6 +127,97 @@ public class GameModel implements Serializable
         gb.add(2, c[21]); // Frankreich
         gb.add(3, c[0]); // Island
         c[2].setNeighbours(gb);
+
+        // init neighbours Norwegen
+
+        // init neighbours Finnland
+
+        // init neighbours Schweden
+
+        // init neighbours Dänemark
+
+        // init neighbours Russland
+
+        // init neighbours Estland
+
+        // init neighbours Lettland
+
+        // init neighbours Litauen
+
+        // init neighbours Weissrussland
+
+        // init neighbours Ukraine
+
+        // init neighbours Polen
+
+        // init neighbours Italien
+
+        // init neighbours Griechenland
+
+        // init neighbours Jugoslawien
+
+        // init neighbours Albanien
+
+        // init neighbours Bulgarien
+
+        // init neighbours Rumänien
+
+        // init neighbours Portugal
+        ArrayList portugal = new ArrayList<Country>();
+        portugal.add(0, c[22]); // Spanien
+        c[20].setNeighbours(portugal);
+
+        // init neighbours Frankreich
+        ArrayList frankreich = new ArrayList<Country>();
+        frankreich.add(0, c[2]); // GB
+        frankreich.add(1, c[23]); // BeNeLux
+        frankreich.add(2, c[24]); // Deutschland
+        frankreich.add(3, c[26]); // Schweiz
+        frankreich.add(4, c[14]); // Italien
+        frankreich.add(5, c[22]); // Spanien
+
+        // init neighbours Spanien
+        ArrayList spanien = new ArrayList<Country>();
+        spanien.add(0, c[20]); // Portugal
+        spanien.add(1, c[21]); // Frankreich
+        c[22].setNeighbours(spanien);
+
+        // init neighbours BeNeLux
+        ArrayList benelux = new ArrayList<Country>();
+        benelux.add(0, c[2]); // GB
+        benelux.add(1, c[24]);// Deutschland
+        benelux.add(2, c[21]);// Frankreich
+        c[23].setNeighbours(benelux);
+
+        // init neighbours Deutschland
+        ArrayList deutschland = new ArrayList<Country>();
+        deutschland.add(0, c[23]);// BeNeLux
+        deutschland.add(1, c[6]);// Dänemark
+        deutschland.add(2, c[13]);// Polen
+        deutschland.add(3, c[25]);// Tschechien
+        deutschland.add(4, c[28]);// Östereich
+        deutschland.add(5, c[26]);// Schweiz
+        deutschland.add(6, c[21]);// Frankreich
+        c[24].setNeighbours(deutschland);
+
+        // init neighbours Tschechien
+        // Deutschland
+        // Polen
+        // Slowakei
+        // Österreich
+
+        // init neighbours Schweiz
+        // Deutschland
+        // Österreich
+        // Italien
+        // Frankreich
+
+        // init neighbours Slowakei
+
+        // init neighbours Österreich
+
+        // init neighbours Ungarn
+
     }
 
     public boolean isWinner(Player player2)
