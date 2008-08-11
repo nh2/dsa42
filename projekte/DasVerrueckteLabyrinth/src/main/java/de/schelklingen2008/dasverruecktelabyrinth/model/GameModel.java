@@ -382,7 +382,6 @@ public class GameModel implements Serializable
 
     public Tile rechtsDrehen()
     {
-
         insert.turnRight();
         return insert;
     }
