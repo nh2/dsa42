@@ -60,34 +60,40 @@ public class SharedState extends GameObject
     // AUTO-GENERATED: FIELDS START
     /** The field name of the <code>modelBytes</code> field. */
     public static final String MODEL_BYTES = "modelBytes";
-
     // AUTO-GENERATED: FIELDS END
 
     // AUTO-GENERATED: METHODS START
     /**
-     * Requests that the <code>modelBytes</code> field be set to the specified value. The local value will be
-     * updated immediately and an event will be propagated through the system to notify all listeners that the
-     * attribute did change. Proxied copies of this object (on clients) will apply the value change when they
-     * received the attribute changed notification.
+     * Requests that the <code>modelBytes</code> field be set to the
+     * specified value. The local value will be updated immediately and an
+     * event will be propagated through the system to notify all listeners
+     * that the attribute did change. Proxied copies of this object (on
+     * clients) will apply the value change when they received the
+     * attribute changed notification.
      */
-    public void setModelBytes(byte[] value)
+    public void setModelBytes (byte[] value)
     {
-        byte[] ovalue = modelBytes;
-        requestAttributeChange(MODEL_BYTES, value, ovalue);
-        modelBytes = value == null ? null : value.clone();
+        byte[] ovalue = this.modelBytes;
+        requestAttributeChange(
+            MODEL_BYTES, value, ovalue);
+        this.modelBytes = (value == null) ? null : value.clone();
     }
 
     /**
-     * Requests that the <code>index</code>th element of <code>modelBytes</code> field be set to the specified
-     * value. The local value will be updated immediately and an event will be propagated through the system
-     * to notify all listeners that the attribute did change. Proxied copies of this object (on clients) will
-     * apply the value change when they received the attribute changed notification.
+     * Requests that the <code>index</code>th element of
+     * <code>modelBytes</code> field be set to the specified value.
+     * The local value will be updated immediately and an event will be
+     * propagated through the system to notify all listeners that the
+     * attribute did change. Proxied copies of this object (on clients)
+     * will apply the value change when they received the attribute
+     * changed notification.
      */
-    public void setModelBytesAt(byte value, int index)
+    public void setModelBytesAt (byte value, int index)
     {
-        byte ovalue = modelBytes[index];
-        requestElementUpdate(MODEL_BYTES, index, Byte.valueOf(value), Byte.valueOf(ovalue));
-        modelBytes[index] = value;
+        byte ovalue = this.modelBytes[index];
+        requestElementUpdate(
+            MODEL_BYTES, index, Byte.valueOf(value), Byte.valueOf(ovalue));
+        this.modelBytes[index] = value;
     }
     // AUTO-GENERATED: METHODS END
 }

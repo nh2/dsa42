@@ -83,8 +83,13 @@ public class Karte implements Serializable, Comparable<Karte>
 
     public static Karte gibtHoechsteAusStapel(List<Karte> stapel)
     {
-        // TODO implementieren
-        return null;
+        int hoechste = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            if (stapel.get(i + 1).sticht(stapel.get(hoechste))) hoechste = i + 1;
+        }
+
+        return stapel.get(hoechste);
     }
 
 }

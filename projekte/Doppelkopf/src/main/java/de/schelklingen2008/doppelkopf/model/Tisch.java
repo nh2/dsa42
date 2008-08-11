@@ -63,6 +63,11 @@ public class Tisch implements Serializable
         return mitte;
     }
 
+    public List<Spieler> getMittenspieler()
+    {
+        return mittenSpieler;
+    }
+
     public int getStichAnzahl()
     {
         return stichAnzahl;

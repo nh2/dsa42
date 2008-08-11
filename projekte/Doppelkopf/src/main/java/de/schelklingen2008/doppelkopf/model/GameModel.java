@@ -91,10 +91,18 @@ public class GameModel implements Serializable
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
-            // TODO Spieler in mittenSpieler eintragen
+            tisch.getMittenspieler().add(spieler);
+
             getSpieler().next();
 
-            // TODO Auf vollen Stapel überprüfen, wenn nötig, Karten einstreichen
+            if (mitte.size() == 4)
+            {
+                int position = mitte.indexOf(Karte.gibtHoechsteAusStapel(mitte));
+                Spieler stichsieger = tisch.getMittenspieler().get(position);
+                stichsieger.getGewinnstapel().addAll(mitte);
+                mitte.clear();
+                spielerliste.setAnDerReihe(stichsieger);
+            }
 
             return;
         }

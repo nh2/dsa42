@@ -18,6 +18,11 @@ public class SpielerListe extends ArrayList<Spieler> implements Serializable
         return get(anDerReihe);
     }
 
+    public void setAnDerReihe(Spieler neuAnDerReihe)
+    {
+        anDerReihe = indexOf(neuAnDerReihe);
+    }
+
     public Spieler getNext()
     {
         return get(nextAnDerReihe(anDerReihe));
