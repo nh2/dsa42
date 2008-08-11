@@ -161,10 +161,16 @@ public class GameModel implements Serializable
     public void firstMeldLegal(Player player, Card[] cards)
     {
         int minScore;
-        
-        for (Int score : Constants.GAME_SCORE_LEVEL[])
+
+        int i = 0;
+        for (int score : Constants.GAME_SCORE_LEVEL)
         {
-            
+            if (player.getScore() < score)
+            {
+                minScore = Constants.GAME_SCORE_LEVEL[i];
+
+                i++;
+            }
         }
     }
 
