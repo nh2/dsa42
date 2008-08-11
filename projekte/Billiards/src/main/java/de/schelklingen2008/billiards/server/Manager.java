@@ -56,25 +56,25 @@ public class Manager extends GameManager
         gameModel.takeShot(getPlayer(client), angle, velocity);
         updateSharedState();
 
-        long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
-        while (gameModel.isInMotion())
-        {
-            gameModel.processTimeStep(0.001d);
-            milliSecondsPassed++;
-        }
-
-        long deltaTime = System.currentTimeMillis() - startTick;
-
-        try
-        {
-            Thread.sleep(milliSecondsPassed - deltaTime);
-        }
-        catch (InterruptedException e)
-        {
-
-        }
-
-        updateSharedState();
+        // long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
+        // while (gameModel.isInMotion())
+        // {
+        // gameModel.processTimeStep(0.001d);
+        // milliSecondsPassed++;
+        // }
+        //
+        // long deltaTime = System.currentTimeMillis() - startTick;
+        //
+        // try
+        // {
+        // Thread.sleep(milliSecondsPassed - deltaTime);
+        // }
+        // catch (InterruptedException e)
+        // {
+        //
+        // }
+        //
+        // updateSharedState();
 
     }
 

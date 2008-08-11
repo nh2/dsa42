@@ -1,10 +1,15 @@
 package de.schelklingen2008.billiards.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.util.Vector2d;
 
 public class Collision implements Comparable<Collision>
 {
+
+    private List<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
 
     public static Collision getWallCollision(Ball ball, Wall wall)
     {
@@ -85,15 +90,40 @@ public class Collision implements Comparable<Collision>
         return wall == null;
     }
 
-    public void handle()
+    public void addCollisionListener(CollisionListener listener)
+    {
+        collisionListeners.add(listener);
+    }
+
+    void handle()
     {
 
         if (wall != null)
         {
+            WallCollisionEvent e = new WallCollisionEvent(ball1, wall);
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.wallCollisionImminent(e);
+            }
+
             wall.handleWallCollision(ball1);
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.wallCollisionHappened(e);
+            }
+
         }
         else
         {
+
+            BallCollisionEvent e = new BallCollisionEvent(ball1, ball2);
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.ballCollisionImminent(e);
+            }
 
             double alpha = -ball1.getPosition().subtract(ball2.getPosition()).getAngle();
 
@@ -106,6 +136,11 @@ public class Collision implements Comparable<Collision>
 
             ball1.setVelocity(v1.rotate(alpha));
             ball2.setVelocity(v2.rotate(alpha));
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.ballCollisionHappened(e);
+            }
 
         }
 
