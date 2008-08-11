@@ -11,7 +11,7 @@ Die gr��te Schwierigkeit bei der Umsetztung des Billard-Spiels bestand in de
 Wie merkt das Spiel, ob sich zwei Kugeln berühren, und vor allem, wann?
 Man könnte zur Lösung dieses Problems die Koordinaten jeder Kugel in sehr kleinen Zeitabständen überprüfen und auf eine Kollision bzw. Überlappung überprüfen. Das hätte jedoch folgende Nachteile: Zum einen müssen sich zur Kollision zwei Bälle erst einmal überschneiden, was nicht der Billard-Logik entspricht und die Berechnung von Ein- und Ausfallwinkel verfälschen würde. Zum anderen müsste die zeitliche Auflösung extrem hoch sein, damit bei hohen Geschwindigkeiten eine Kugelüberschneidung überhaupt registriert würde. Zuletzt wäre die Ballbewegung dadurch von der Geschwindigkeit des ausführenden Systems abhängig - die Kugeln würden sich also auf unterschiedlichen Maschinen unterschiedlich bewegen.
 Eine viel einfachere und zudem elegante Lösung ist die Berechnung der Zeit bis zur nächsten Kollision zwischen zwei Bällen. Ist diese bekannt, kann das Spiel exakt bis zum Kollisionszeitpunkt weiterlaufen, im richtigen Moment Winkel und Geschwindigkeiten berechnen und die Kollision durchführen.
-Die folgende Methode berechnet die Dauer bis zur nächsten Kollision zweier Ball-Objekte. So wird während des Spiels nach jeder Kollision jede Kugel auf den Kollisionszeitpunkt mit jeder anderen Kugel überprüft.
+Die folgende Methode berechnet die Dauer bis zur nächsten Kollision zweier Ball-Objekte. So wird während des Spiels nach jeder Kollision jede Kugel auf den Kollisionszeitpunkt mit jeder anderen Kugel überprüft. Bei 15 Kugeln ergeben sich 15+14+13...+1=136 Berechnungen pro Durchgang.
 
 
 <Java-Code>
