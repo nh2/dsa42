@@ -30,4 +30,15 @@ public class PlayerCards implements Serializable
         return open;
     }
 
+    public void moveFirstHiddenToOpen()
+    {
+        open.add(hidden.get(0));
+        hidden.remove(0);
+    }
+
+    public TreasureCard getFirstHidden()
+    {
+        return hidden.get(0);
+    }
+
 }

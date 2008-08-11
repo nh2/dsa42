@@ -267,22 +267,29 @@ public class GameModel implements Serializable
         pPlayer.setYKoordinate(y);
     }
 
-    // private void placedOnSearchCard()
-    // {
-    // hiddenCards();
-    // List<TreasureCard> hidden = hiddenCards.getHiddenCards();
-    // TreasureCard searchThisCard = hidden.get(0);
-    //
-    // }
+    private void placedOnSearchCard(Player pPlayer)
+    {
+        int x = pPlayer.getXKoordinate();
+        int y = pPlayer.getYKoordinate();
+
+        if (board[x][y].getTC() == null) return;
+
+        PlayerCards playerCards = playerCardsMap.get(player.get(pPlayer));
+
+        if (board[x][y].getTC() != playerCards.getFirstHidden()) return;
+
+        playerCards.moveFirstHiddenToOpen();
+
+    }
 
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
         Player pPlayer = player.get(pPlayerType);
         if (isLegalMove(x, y, pPlayer))
         {
-
             pPlayer.setXKoordinate(x);
             pPlayer.setYKoordinate(y);
+            placedOnSearchCard(pPlayer);
         }
         changeTurnholder();
     }
