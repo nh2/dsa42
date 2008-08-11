@@ -85,8 +85,9 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
                 playerLabel.setAlignmentX(CENTER_ALIGNMENT);
-                playerLabel.setForeground(Color.BLACK);
-                Font newFontP = playerLabel.getFont().deriveFont(13.0f);
+                // playerLabel.setForeground(Color.decode("#00CD0000"));
+                playerLabel.setForeground(Color.GREEN);
+                Font newFontP = playerLabel.getFont().deriveFont(15.0f);
                 playerLabel.setFont(newFontP);
                 add(playerLabel);
                 BoardPanel player = new BoardPanel(null,
@@ -114,13 +115,13 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                             getGameModel().getPlayerIDByName(
                                                                                                              getGameContext().getMyName())));
         myNameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        myNameLabel.setForeground(Color.BLACK);
-        Font newFontI = myNameLabel.getFont().deriveFont(13.0f);
+        myNameLabel.setForeground(Color.GREEN);
+        Font newFontI = myNameLabel.getFont().deriveFont(15.0f);
         myNameLabel.setFont(newFontI);
         add(myNameLabel);
 
         JLabel myLabel = new JLabel("Meine Karten");
-        Font newFontM = myLabel.getFont().deriveFont(15.0f);
+        Font newFontM = myLabel.getFont().deriveFont(16.0f);
         myLabel.setFont(newFontM);
         myLabel.setAlignmentX(CENTER_ALIGNMENT);
         myLabel.setForeground(Color.WHITE);
@@ -138,7 +139,7 @@ public class BoardView extends JPanel implements GameChangeListener
         JPanel drawPilePanel = new JPanel();
 
         JLabel drawPileLabel = new JLabel("Meine Hand");
-        Font newFontH = drawPileLabel.getFont().deriveFont(15.0f);
+        Font newFontH = drawPileLabel.getFont().deriveFont(16.0f);
         drawPileLabel.setFont(newFontH);
         drawPileLabel.setAlignmentX(CENTER_ALIGNMENT);
         drawPileLabel.setForeground(Color.WHITE);
