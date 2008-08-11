@@ -72,4 +72,18 @@ public class Blatt implements Serializable
         }
         return ausgabe.toString();
     }
+
+    public boolean hatFarbe(Farbe gesuchteFarbe)
+    {
+        for (Karte k : karten)
+            if (k.farbe == gesuchteFarbe && !k.isTrumpf()) return true;
+        return false;
+    }
+
+    public boolean hatTrumpf()
+    {
+        for (Karte k : karten)
+            if (k.isTrumpf()) return true;
+        return false;
+    }
 }

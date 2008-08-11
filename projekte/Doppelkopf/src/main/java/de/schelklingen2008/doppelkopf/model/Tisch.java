@@ -72,4 +72,11 @@ public class Tisch implements Serializable
     {
         return stichAnzahl;
     }
+
+    public void stichGespielt()
+    {
+        mitte.clear();
+        mittenSpieler.clear();
+        stichAnzahl++;
+    }
 }

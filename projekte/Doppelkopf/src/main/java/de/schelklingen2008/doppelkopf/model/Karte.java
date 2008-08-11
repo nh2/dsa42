@@ -92,4 +92,8 @@ public class Karte implements Serializable, Comparable<Karte>
         return stapel.get(hoechste);
     }
 
+    // public boolean bedient(Karte other)
+    // {
+    // if()
+    // }
 }

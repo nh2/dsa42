@@ -87,6 +87,17 @@ public class GameModel implements Serializable
             logger.log(Level.INFO, "Mitte ist voll. ");
         }
 
+        if (tisch.getMitte().size() != 0) // Der erste darf immer alles spielen
+        {
+            Karte grundkarte = tisch.getMitte().get(0);
+            if (grundkarte.isTrumpf())
+            { // Die Grundkarte ist Trumpf
+                // Er spielt nicht trumpf, aber er hat Trumpf
+                if (!karte.isTrumpf() && spieler.getBlatt().hatTrumpf()) zugGueltig = false;
+            }
+            if (karte.farbe != grundkarte.farbe && spieler.getBlatt().hatFarbe(grundkarte.farbe)) zugGueltig = false;
+        }
+
         if (zugGueltig)
         {
             // Zug ausführen
@@ -102,9 +113,13 @@ public class GameModel implements Serializable
                 int position = mitte.indexOf(Karte.gibtHoechsteAusStapel(mitte));
                 Spieler stichsieger = tisch.getMittenspieler().get(position);
                 stichsieger.getGewinnstapel().addAll(mitte);
-                mitte.clear();
-                tisch.getMittenspieler().clear();
+                tisch.stichGespielt();
                 spielerliste.setAnDerReihe(stichsieger);
+            }
+
+            if (tisch.getStichAnzahl() == 12)
+            {
+                // TODO implementieren
             }
 
             return;
