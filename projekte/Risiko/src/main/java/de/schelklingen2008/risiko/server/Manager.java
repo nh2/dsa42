@@ -41,8 +41,6 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    // TODO add methods to make a move, etc. that can be called by clients
-
     /**
      * Updates the shared state and thus send changes to all clients.
      */
