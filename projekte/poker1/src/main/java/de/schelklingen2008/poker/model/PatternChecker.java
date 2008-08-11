@@ -99,6 +99,21 @@ public class PatternChecker
         }
     }
 
+    public boolean straight(int pos, int length)
+    {
+        if (length == 1)
+            return true;
+        else
+        {
+            if (straight(pos + 1, length - 1) == true
+                && cards.get(pos + 1).getValueInt() == cards.get(pos).getValueInt() + 1)
+                return true;
+            else
+                return false;
+        }
+
+    }
+
     public int getHighestPatternValue()
     {
         if (isFourOfAKind()) return FOUR_OF_A_KIND;
