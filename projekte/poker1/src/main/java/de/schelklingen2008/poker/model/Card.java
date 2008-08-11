@@ -63,4 +63,23 @@ public class Card implements Serializable
         return getSuit() + " " + getValue();
     }
 
+    public boolean greaterThan(Card otherCard)
+    {
+        if (number > otherCard.getValueInt())
+            return true;
+        else
+        {
+            if (number == otherCard.getValueInt())
+            {
+                if (suit > otherCard.getValueInt())
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+    }
+
 }

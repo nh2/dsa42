@@ -16,6 +16,26 @@ public class PatternChecker
         this.cards = cards;
     }
 
+    public static List<Card> sort(List<Card> cardList)
+    {
+        // List<Card> newList = new ArrayList();
+        for (int i = 0; i < ANZAHL - 1; i++)
+        {
+            for (int j = 0; j < ANZAHL - 1; j++)
+            {
+                if (cardList.get(j).greaterThan(cardList.get(j + 1)))
+                {
+                    Card card = new Card(0, 0);
+                    card = cardList.get(j);
+                    cardList.set(j, cardList.get(j + 1));
+                    cardList.set(j + 1, card);
+
+                }
+            }
+        }
+        return cardList;
+    }
+
     public boolean isFourOfAKind()
     {
         return false;
