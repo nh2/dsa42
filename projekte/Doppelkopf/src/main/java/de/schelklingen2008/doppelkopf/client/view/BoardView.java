@@ -11,9 +11,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -25,6 +28,7 @@ import de.schelklingen2008.doppelkopf.model.GameModel;
 import de.schelklingen2008.doppelkopf.model.Karte;
 import de.schelklingen2008.doppelkopf.model.Spieler;
 import de.schelklingen2008.doppelkopf.model.SpielerListe;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Displays the main game interface (the board).
@@ -32,17 +36,20 @@ import de.schelklingen2008.doppelkopf.model.SpielerListe;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
+    private Logger            logger         = LoggerFactory.create();
+
     private Controller        controller;
 
-    private final Color       tischFarbe   = Color.decode("#00008800");
-    private Set<ZeichenKarte> karten       = new HashSet<ZeichenKarte>();
+    private Color             tischFarbe     = Color.decode("#00008800");
+    private Set<ZeichenKarte> karten         = new HashSet<ZeichenKarte>();
     private BufferedImage     rueckseite;
 
-    private final int         mx           = 400;
-    private final int         my           = 300;
+    private final int         mx             = 400;
+    private final int         my             = 300;
 
-    Mittenplatz[]             mittenKarten = { new Mittenplatz(mx - 37, my - 10), new Mittenplatz(mx - 65, my - 40),
+    Mittenplatz[]             mittenKarten   = { new Mittenplatz(mx - 37, my - 10), new Mittenplatz(mx - 65, my - 40),
             new Mittenplatz(mx - 37, my - 97), new Mittenplatz(mx - 10, my - 60), };
+    Map<Spieler, Mittenplatz> mittenPlatzMap = new HashMap<Spieler, Mittenplatz>(4);
 
     GameModel                 spiel;
     SpielerListe              tempListe;
@@ -86,18 +93,7 @@ public class BoardView extends JPanel implements GameChangeListener
         }
 
         tempListe = new SpielerListe();
-        // tempListe.addAll(controller.getGameContext().getGameModel().getSpielerListe());
 
-        // if (spiel.getTisch() == null) return; // Wenn die Spieler noch nicht vom Server geladen
-        // if (spiel.getTisch().getStichAnzahl() == 0) return;
-        // sind
-
-        // for (Farbe f : Farbe.values())
-        // for (Bild b : Bild.values())
-        // karten.add(new ZeichenKarte(new Karte(f, b)));
-
-        // int result = JOptionPane.showConfirmDialog(this, "Hallo Wellt");
-        // if (result == JOptionPane.YES_OPTION) System.out.println("Jo");
     }
 
     private void moved(MouseEvent e)
@@ -187,6 +183,7 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             this.x = x;
             this.y = y;
+            inhalt = null;
         }
 
         public void draw(Graphics g)
@@ -216,10 +213,6 @@ public class BoardView extends JPanel implements GameChangeListener
             String name = "";
             if (zeichenSpieler == spiel.getSpieler().getAnDerReihe()) name += "* ";
             name += zeichenSpieler.getName();
-            int gesamtpunkte = 0;
-            for (int p : zeichenSpieler.rundenpunkte)
-                gesamtpunkte += p;
-            name += gesamtpunkte;
             gfx.drawString(name, namenspositionen[i][0], namenspositionen[i][1]);
             tempListe.rotieren();
         }
@@ -271,13 +264,14 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.translate(-770, -115);
 
         // Karten in der Mitte
-        for (Mittenplatz mp : mittenKarten)
-            mp.draw(gfx);
+        for (Spieler p : spiel.getTisch().getMittenspieler())
+            mittenPlatzMap.get(p).draw(gfx);
 
     }
 
     public void gameChanged()
     {
+
         spiel = getGameContext().getGameModel();
 
         tempListe.clear();
@@ -287,15 +281,38 @@ public class BoardView extends JPanel implements GameChangeListener
         List<Karte> l = new ArrayList<Karte>(tempListe.getAnDerReihe().getBlatt().getKarten());
         List<Karte> mitte = spiel.getTisch().getMitte();
 
+        while (tempListe.getAnDerReihe() != ich)
+            tempListe.rotieren();
+        Spieler aktuell = ich;
+        for (int i = 0; i < 4; i++)
+        {
+            mittenPlatzMap.put(aktuell, mittenKarten[i]);
+            aktuell = tempListe.next();
+        }
+
+        leereMittenplaetze();
         {
             int i = 0;
             for (; i < mitte.size(); i++)
-                mittenKarten[i].inhalt = new ZeichenKarte(mitte.get(i));
-            for (; i < mittenKarten.length; i++)
-                mittenKarten[i].inhalt = null;
+                mittenPlatzMap.get(spiel.getTisch().getMittenspieler().get(i)).inhalt = new ZeichenKarte(mitte.get(i));
+            // for (; i < mittenKarten.length; i++)
+            // mittenPlatzMap.get(spiel.getTisch().getMittenspieler().get(i)).inhalt = null;
             mitte.clear();
         }
         repaint();
+
+        // if (spiel != null)
+        // {
+        // int x = spiel.getTisch().getMitte().size();
+        // if (spiel.getTisch().getMitte().size() == 4) try
+        // {
+        // Thread.sleep(2000);
+        // }
+        // catch (InterruptedException e)
+        // {
+        // logger.log(Level.SEVERE, "Fehler beim Pausieren.");
+        // }
+        // }
     }
 
     private GameModel getGameModel()
@@ -306,5 +323,11 @@ public class BoardView extends JPanel implements GameChangeListener
     private GameContext getGameContext()
     {
         return controller.getGameContext();
+    }
+
+    private void leereMittenplaetze()
+    {
+        for (Mittenplatz mp : mittenKarten)
+            mp.inhalt = null;
     }
 }

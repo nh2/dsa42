@@ -34,7 +34,12 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         for (Spieler p : getGameModel().getSpieler())
         {
-            String name = p.getName();
+            int gesamtpunkte = 0;
+            for (int punkt : p.rundenpunkte)
+                gesamtpunkte += punkt;
+            String name = gesamtpunkte + " : ";
+            name += p.getName();
+
             add(new JLabel(name));
         }
 

@@ -18,6 +18,7 @@ public class GameModel implements Serializable
     private Tisch               tisch;
 
     private SpielerListe        spielerliste = new SpielerListe();
+    private Spieler             kommtRaus;
     private boolean             rundeBeendet;
 
     public GameModel()
@@ -40,8 +41,19 @@ public class GameModel implements Serializable
 
     private void neuesSpiel()
     {
+        logger.log(Level.INFO, "Starte neues Spiel.");
+        kommtRaus = spielerliste.next(); // TODO testen
         tisch = new Tisch(spielerliste);
         tisch.gibKarten();
+
+        // TODO testen
+        for (Spieler p : spielerliste)
+        {
+            int anzahlNeunen = 0;
+            for (Karte k : p.getBlatt().getKarten())
+                if (k.bild == Bild.Neun) anzahlNeunen++;
+            if (anzahlNeunen >= 5) neuesSpiel();
+        }
     }
 
     public boolean isFinished()
@@ -116,28 +128,14 @@ public class GameModel implements Serializable
                 int position = mitte.indexOf(Karte.gibtHoechsteAusStapel(mitte));
                 Spieler stichsieger = tisch.getMittenspieler().get(position);
                 stichsieger.getGewinnstapel().addAll(mitte);
+
                 tisch.stichGespielt();
                 spielerliste.setAnDerReihe(stichsieger);
             }
 
             if (tisch.getStichAnzahl() == 12)
             {
-                int repunkte = tisch.getRePunkte();
-                int contrapunkte = tisch.getContraPunkte();
-                int rundenpunkte = 0;
-
-                if (repunkte > contrapunkte)
-                {
-                    rundenpunkte++;
-                    int diff = repunkte - contrapunkte;
-                    rundenpunkte += diff / 30;
-                }
-                else if (contrapunkte > repunkte)
-                {
-                    rundenpunkte -= 2;
-                    int diff = contrapunkte - repunkte;
-                    rundenpunkte -= diff / 30;
-                }
+                int rundenpunkte = berechneRundenpunkte(tisch.getRePunkte(), tisch.getContraPunkte());
 
                 if (tisch.getTeamRe().size() == 1) // Solo
                     for (Spieler p : tisch.getTeamRe())
@@ -156,5 +154,24 @@ public class GameModel implements Serializable
             return;
         }
         logger.log(Level.INFO, "Ungültiger Zug. ");
+    }
+
+    public int berechneRundenpunkte(int repunkte, int contrapunkte)
+    {
+        int rundenpunkte = 0;
+        if (repunkte > contrapunkte)
+        {
+            rundenpunkte++;
+            rundenpunkte += (120 - contrapunkte - 1) / 30;
+        }
+        else
+        {
+            if (repunkte != contrapunkte) rundenpunkte--;
+            rundenpunkte--; // "Gegen die Alten"
+            rundenpunkte -= (120 - repunkte - 1) / 30;
+        }
+
+        // TODO Modifiers implementieren
+        return rundenpunkte;
     }
 }
