@@ -25,6 +25,11 @@ public class Hand implements Iterable<Card>, Serializable
         return result;
     }
 
+    public void clear()
+    {
+        cards.clear();
+    }
+
     public Card get(int index)
     {
         return cards.get(index);

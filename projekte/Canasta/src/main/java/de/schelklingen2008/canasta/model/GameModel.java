@@ -41,12 +41,27 @@ public class GameModel implements Serializable
             i++;
         }
 
+        // create discard pile
+        discard = new Discard();
+
+        initialize();
+    }
+
+    private void initialize()
+    {
+        // clear hands and outlays (keep score and name!)
+        for (Player player : players)
+        {
+            player.getHand().clear();
+            player.getOutlay().clear();
+        }
+
         // create a full 110 card talon
         talon = Talon.getInstance();
         talon.shuffle();
 
-        // create discard pile
-        discard = new Discard();
+        // clear discard
+        discard.clear();
 
         // draw 15 cards for every player
         for (Player player : players)
@@ -59,22 +74,6 @@ public class GameModel implements Serializable
 
         // discard one card
         discard.push(talon.pop());
-
-        // create outlays
-
-        // for (Player player : players)
-        // {
-        // Outlay outlay = player.getOutlay();
-        // for (int j = 0; j < 10; j++)
-        // {
-        // CardStack cardStack = new CardStack();
-        // for (int k = 0; k < 10; k++)
-        // {
-        // cardStack.add(new Card(Rank.QUEEN, Suit.HEARTS));
-        // }
-        // outlay.add(cardStack);
-        // }
-        // }
     }
 
     public boolean isTurnHolder(Player player)
@@ -119,6 +118,8 @@ public class GameModel implements Serializable
             cardStack.add(card);
             player.getHand().remove(card);
         }
+
+        goOut();
     }
 
     public void discardCard(Player player, int whichCard)
@@ -131,10 +132,7 @@ public class GameModel implements Serializable
         if (!isTurnHolder(player)) return;
         player.getHand().remove(card);
         discard.push(card);
-        if (player.hasCanasta() && player.getHand().size() == 0)
-        {
-            goOut();
-        }
+        goOut();
         endTurn();
     }
 
@@ -162,6 +160,8 @@ public class GameModel implements Serializable
         CardStack cardStack = new CardStack();
         addCardsToStack(player, cards, cardStack);
         player.getOutlay().add(cardStack);
+
+        goOut();
     }
 
     public static boolean isFirstMeldLegal(Player player, Card[] cards)
@@ -273,8 +273,26 @@ public class GameModel implements Serializable
 
     public void goOut()
     {
+        Player winner = null;
+        for (Player player : players)
+        {
+            if (player.hasCanasta() && player.getHand().size() <= 0)
+            {
+                winner = player;
+            }
+        }
+        if (winner == null)
+        {
+            return;
+        }
+        for (Player player : players)
+        {
+            int score = player.getCurrentScore();
+            player.setTotalScore(player.getTotalScore() + score);
+        }
+        winner.setTotalScore(winner.getTotalScore() + Constants.SCORE_GO_OUT);
 
-        // TODO round is finished, deal new cards, evaluate score, etc
+        initialize();
     }
 
     public void endTurn()
