@@ -248,4 +248,90 @@ public class GameModel implements Serializable
         return d;
 
     }
+
+    public void placeUnit(Country c)
+    {
+        c.setUnits(c.getUnits() + 1);
+        c.getOccupier().setUnitsToSet(c.getOccupier().getUnitsToSet() - 1);
+    }
+
+    public void attack(Country attacker, Country defender)
+    {
+        int dicesattacker;
+        int dicesdefender;
+
+        if (attacker.getUnits() > 3)
+            dicesattacker = 3;
+        else
+            dicesattacker = attacker.getUnits() - 1;
+
+        if (defender.getUnits() > 1)
+            dicesdefender = 2;
+        else
+            dicesdefender = 1;
+
+        int[] da = new int[dicesattacker];
+        int[] dd = new int[dicesdefender];
+        for (int i = 0; i < dicesattacker; i++)
+        {
+            da[i] = dice();
+        }
+        for (int i = 0; i < dicesdefender; i++)
+        {
+            dd[i] = dice();
+        }
+        int vergleicha = 0;
+        int vergleichd = 0;
+
+        for (int i = 0; i < Math.min(dicesattacker, dicesdefender); i++)
+        {
+
+            if (da.length == 1)
+            {
+                vergleicha = da[0];
+            }
+            else if (da.length == 2)
+            {
+                vergleicha = Math.max(da[0], da[1]);
+                da[da[0] < da[1] ? 1 : 0] = 0;
+            }
+
+            else if (da.length == 3)
+            {
+                vergleicha = Math.max(da[0], Math.max(da[1], da[2]));
+                if (da[0] > da[1] && da[0] > da[2])
+                    da[0] = 0;
+                else if (da[1] > da[0] && da[1] > da[2])
+                    da[1] = 0;
+                else
+                    da[2] = 0;
+            }
+
+            if (dd.length == 1)
+            {
+                vergleichd = dd[0];
+            }
+            else if (dd.length == 2)
+            {
+                vergleichd = Math.max(dd[0], dd[1]);
+                dd[dd[0] < dd[1] ? 1 : 0] = 0;
+            }
+
+            if (vergleicha > vergleichd)
+            {
+                defender.setUnits(defender.getUnits() - 1);
+            }
+            else
+                attacker.setUnits(attacker.getUnits() - 1);
+
+        }
+
+        if (defender.getUnits() == 0)
+        {
+            defender.setOccupier(attacker.getOccupier());
+            defender.setUnits(attacker.getUnits() / 2);
+            attacker.setUnits(attacker.getUnits() - attacker.getUnits() / 2);
+        }
+
+    }
 }
