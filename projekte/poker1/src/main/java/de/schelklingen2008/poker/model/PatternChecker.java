@@ -54,14 +54,35 @@ public class PatternChecker
                 if (cards.get(i).getValueInt() == cards.get(j).getValueInt())
                 {
                     counter++;
+                    pairCounter++;
 
                 }
             }
-            pairCounter++;
+
         }
 
         return pairCounter;
 
+    }
+
+    public boolean isFlush()
+    {
+        int[] flushCounter = new int[4];
+        for (int i = 0; i < 4; i++)
+        {
+            // zähle wie viele karten es mit der SuitNr. i gibt
+            for (int j = 0; j < ANZAHL; j++)
+            {
+                if (cards.get(j).getSuitInt() == i) flushCounter[i]++;
+            }
+            if (flushCounter[i] >= 5)
+            {
+                System.out.println("Flush mit der Farbe" + i);
+                return true;
+            }
+
+        }
+        return false;
     }
 
     public int getHighestPatternValue()
