@@ -50,7 +50,7 @@ public class PatternTest extends TestCase
         cards.add(new Card(3, 7));
         cards.add(new Card(3, 3));
         cards.add(new Card(1, 7));
-        cards.add(new Card(3, 10));
+        cards.add(new Card(3, 9));
 
         return cards;
 
@@ -88,30 +88,17 @@ public class PatternTest extends TestCase
 
     }
 
-    public void mehrlingsAusgabe(List<Card> list, PatternChecker checker)
-    {
-
-    }
-
     public void testHaupt()
     {
-
         List<Card> cardList = new ArrayList<Card>();
         PatternChecker checker = new PatternChecker(cardList);
         cardList = fill(cardList);
-        output(cardList, checker);
+        checker.mehrlinge();
         cardList.clear();
-
-        // cardList = fill2(cardList);
-        // output(cardList);
-        // cardList.clear();
-        //
+        cardList = fill3(cardList);
+        checker.mehrlinge();
         cardList = fill3(cardList);
         assertTrue(checker.isFlush());
-        cardList.clear();
-        //
-        // cardList = fill4(cardList);
-        // output(cardList);
-        // cardList.clear();
+
     }
 }
