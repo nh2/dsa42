@@ -85,6 +85,7 @@ public class GameModel implements Serializable
     public void drawCard(Player player)
     {
         if (!isTurnHolder(player)) return;
+        if (hasDrawn) return;
 
         hasDrawn = true;
         Card card = talon.pop();

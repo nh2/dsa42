@@ -432,24 +432,27 @@ public class BoardView extends JPanel implements GameChangeListener
 
             for (int i1 = 0; i1 < cardStack.size(); i1++)
             {
-                gfx.drawImage(getCardImage(cardStack.get(i1), 40, false), translateX + i1 * 2 + 20, translateY, null);
+                gfx.drawImage(getCardImage(cardStack.get(i1), 40, false), translateX + i1 * 6 + 20, translateY, null);
             }
 
             areas.add(new SensitiveArea("CardStack",
-                                        translateX + (cardStack.size() - 1) * 2,
+                                        translateX + (cardStack.size() - 1) * 6,
                                         translateY,
-                                        cardStack.size() * 2 + 40,
+                                        cardStack.size() * 6 + 40,
                                         57,
                                         i));
             gfx.setPaint(new Color(0xFF00FF));
-            gfx.drawRect(translateX + (cardStack.size() - 1) * 2, translateY, cardStack.size() * 2 + 40, 57);
+            gfx.drawRect(translateX + (cardStack.size() + 5) * 2, translateY, cardStack.size() * 5 + 40, 57);
             // gfx.setFont(Font.)
 
             gfx.setPaint(new Color(0xFFFF00));
-            gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), translateX, translateY + 40);
+            gfx.drawString(((Integer) cardStack.getJokerCount()).toString(), translateX, translateY + 30);
 
             gfx.setPaint(new Color(0xFFFFFF));
-            gfx.drawString(((Integer) cardStack.size()).toString(), translateX, translateY + 20);
+            gfx.drawString(((Integer) cardStack.size()).toString(), translateX, translateY + 15);
+
+            gfx.setPaint(new Color(0xFFFFFF));
+            gfx.drawString(cardStack.getRank().getSmallString(), translateX, translateY + 45);
 
             i++;
 
