@@ -1,6 +1,7 @@
 package de.schelklingen2008.poker.shared;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -146,7 +147,11 @@ public class PatternTest extends TestCase
         cardList.clear();
         fill6(cardList);
         cardList = PatternChecker.sort(cardList);
-
+        for (Iterator iterator = cardList.iterator(); iterator.hasNext();)
+        {
+            Card card = (Card) iterator.next();
+            System.out.println(card.getName());
+        }
         ueberpruefung(checker);
     }
 
