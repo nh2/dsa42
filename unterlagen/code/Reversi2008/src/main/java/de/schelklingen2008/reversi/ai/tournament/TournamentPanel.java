@@ -10,7 +10,5 @@ public class TournamentPanel extends JPanel
     public TournamentPanel(Tournament model)
     {
         this.model = model;
-        
-        model.get
     }
 }
