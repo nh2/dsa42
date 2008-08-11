@@ -53,16 +53,13 @@ public class Manager extends GameManager
 
     public void placeUnit(BodyObject client, int index)
     {
-        gameModel.getCountry(index).setUnits(gameModel.getCountry(index).getUnits() + 1);
+        gameModel.placeUnit(gameModel.getCountry(index));
         updateSharedState();
     }
 
-    public void setMine(BodyObject client, int index, int playerindex)
+    public void EndofTurn(BodyObject client)
     {
-        // Player player = gameModel.getPlayerByName(client.username.toString());
-
-        gameModel.getCountry(index).setOccupier(gameModel.valueOf(playerindex));
-        updateSharedState();
+        gameModel.setNextTurnholder();
     }
 
     private void updateSharedState()

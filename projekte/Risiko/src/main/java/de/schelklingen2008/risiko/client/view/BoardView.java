@@ -62,25 +62,21 @@ public class BoardView extends JPanel implements GameChangeListener
     private void pressed(MouseEvent e)
     {
 
-        getGameModel().setAllCountriesUnselected();
-        Color c = new Color(map.getRGB(e.getX(), e.getY()));
-        // getGameModel().getCountrybyColor(c).setSelected(true);
-
-        if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
+        if (getGameContext().getMyPlayer().equals(getGameModel().getTurnholder()))
         {
+            // getGameModel().setAllCountriesUnselected();
+            // getGameModel().getCountrybyColor(c).setSelected(true);
 
-            if (getGameModel().getCountryByColor(c).getOccupier().equals(getGameContext().getMyPlayer()))
+            Color c = new Color(map.getRGB(e.getX(), e.getY()));
+            if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
             {
-                controller.placeUnit(getGameModel().getCountryByColor(c));
-
+                if (getGameModel().isLegalMoveSet(getGameContext().getMyPlayer(), getGameModel().getCountryByColor(c)))
+                {
+                    controller.placeUnit(getGameModel().getCountryByColor(c));
+                }
             }
-        }
-        else
-        {
-            controller.setMine(getGameModel().getCountryByColor(c), getGameContext().getMyPlayer().getPlayerIndex());
-            getGameContext().getMyPlayer().setUnits(getGameContext().getMyPlayer().getUnitsToSet() + 1);
-        }
 
+        }
         repaint();
     }
 
@@ -156,8 +152,9 @@ public class BoardView extends JPanel implements GameChangeListener
         for (int i = 0; i < getGameModel().getCountryArray().length; i++)
         {
             int lUnits = getGameModel().getCountry(i).getUnits();
-            gfx.drawString("" + lUnits, getGameModel().getCountry(i).getPositionNameX(),
-                           getGameModel().getCountry(i).getPositionNameY() + 10);
+            gfx.drawString("" + lUnits + " " + getGameModel().getCountry(i).getOccupier().getPlayerName(),
+                           getGameModel().getCountry(i).getPositionNameX(), getGameModel().getCountry(i)
+                                                                                          .getPositionNameY() + 10);
         }
     }
 

@@ -53,14 +53,15 @@ public class Controller extends GameController
         super.init(crowdContext, placeConfig);
     }
 
-    public void setMine(Country c, int i)// TODO testweise
-    {
-        sharedState.manager.invoke("setMine", c.getIndex(), i);
-    }
-
     public void placeUnit(Country c)
     {
         sharedState.manager.invoke("placeUnit", c.getIndex());
+    }
+
+    public void EndofTurn()
+    {
+
+        sharedState.manager.invoke("EndofTurn");
     }
 
     @Override

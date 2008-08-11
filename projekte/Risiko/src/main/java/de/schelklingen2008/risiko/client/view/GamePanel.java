@@ -42,7 +42,21 @@ public class GamePanel extends JPanel implements PlaceView
 
         public void actionPerformed(ActionEvent e)
         {
-            controller.leaveButtonClicked();
+            if (e.getActionCommand().equals(controller.getMessage(Constants.MSG_END_OF_TURN)))
+            {
+                if (controller.getGameContext().getMyPlayer().equals(
+                                                                     controller.getGameContext()
+                                                                               .getGameModel()
+                                                                               .getTurnholder()))
+                {
+                    controller.EndofTurn();
+                }
+            }
+            else
+            {
+                controller.leaveButtonClicked();
+            }
+
         }
     }
 

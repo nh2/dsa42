@@ -11,7 +11,7 @@ import java.util.Random;
 public class GameModel implements Serializable
 {
 
-    private Country[] c = new Country[29];
+    private Country[] c = new Country[30];
     private Player[]  p;
     private Player    turnholder;
     private int       turnholderIndex;
@@ -32,7 +32,7 @@ public class GameModel implements Serializable
     {
         for (int i = 0; i < c.length; i++)
         {
-            if (index > p.length)
+            if (index >= p.length)
             {
                 index = 0;
             }
@@ -409,7 +409,7 @@ public class GameModel implements Serializable
     {
         for (int i = 0; i < p.length; i++)
         {
-            if (name == p[i].getPlayerName())
+            if (name.equals(p[i].getPlayerName()))
             {
                 return p[i];
             }

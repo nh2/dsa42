@@ -21,7 +21,7 @@ public class Country implements Serializable
     public Country(String pName, int pIndex, int pX, int pY, int r, int g, int b)
     {
         name = pName;
-        units = 0;
+        units = 1;
         index = pIndex;
         positionNameX = pX;
         positionNameY = pY;
