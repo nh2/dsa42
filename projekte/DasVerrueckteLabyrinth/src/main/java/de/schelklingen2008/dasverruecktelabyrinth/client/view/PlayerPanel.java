@@ -162,7 +162,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
     private BufferedImage getImageOfTC(TreasureCard tC)
     {
 
-        sLogger.info("mal sehn");
+        sLogger.info("getImageOfTC() aufgerufen");
 
         BufferedImage temp = null;
         if (tC == TreasureCard.EULE) temp = eule;
