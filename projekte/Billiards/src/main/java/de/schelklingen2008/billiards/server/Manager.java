@@ -17,6 +17,35 @@ import de.schelklingen2008.util.LoggerFactory;
 public class Manager extends GameManager
 {
 
+    private class ShotCalculationThread extends Thread
+    {
+
+        @Override
+        public void run()
+        {
+            long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
+            while (gameModel.isInMotion())
+            {
+                gameModel.processTimeStep(0.01d);
+                milliSecondsPassed += 10;
+            }
+
+            long deltaTime = System.currentTimeMillis() - startTick;
+
+            try
+            {
+                Thread.sleep(milliSecondsPassed - deltaTime);
+            }
+            catch (InterruptedException e)
+            {
+
+            }
+
+            updateSharedState();
+        }
+
+    }
+
     private Logger logger = LoggerFactory.create();
 
     /** Is the state transmitted to the clients and managed by the server. */
@@ -61,28 +90,16 @@ public class Manager extends GameManager
         logger.info(String.format("Received shot from %s, sending game state to other clients.", client.username));
 
         gameModel.takeShot(getPlayer(client), angle, velocity);
+
         updateSharedState();
 
-        // long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
-        // while (gameModel.isInMotion())
-        // {
-        // gameModel.processTimeStep(0.001d);
-        // milliSecondsPassed++;
-        // }
-        //
-        // long deltaTime = System.currentTimeMillis() - startTick;
-        //
-        // try
-        // {
-        // Thread.sleep(milliSecondsPassed - deltaTime);
-        // }
-        // catch (InterruptedException e)
-        // {
-        //
-        // }
-        //
-        // updateSharedState();
+        startShotCalculationThread();
 
+    }
+
+    private void startShotCalculationThread()
+    {
+        new ShotCalculationThread().start();
     }
 
 }

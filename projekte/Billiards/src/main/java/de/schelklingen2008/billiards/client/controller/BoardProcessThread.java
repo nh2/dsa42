@@ -1,17 +1,20 @@
 package de.schelklingen2008.billiards.client.controller;
 
+import java.util.logging.Logger;
+
 import de.schelklingen2008.billiards.client.view.BoardView;
-import de.schelklingen2008.billiards.model.GameModel;
+import de.schelklingen2008.util.LoggerFactory;
 
 public class BoardProcessThread extends Thread
 {
 
-    private GameModel gameModel;
+    private Controller controller;
     private BoardView boardView;
+    private Logger logger = LoggerFactory.create();
 
-    public BoardProcessThread(GameModel gameModel, BoardView boardView)
+    public BoardProcessThread(Controller controller, BoardView boardView)
     {
-        this.gameModel = gameModel;
+        this.controller = controller;
         this.boardView = boardView;
     }
 
@@ -21,20 +24,21 @@ public class BoardProcessThread extends Thread
 
         long lastTick = System.currentTimeMillis();
 
-        while (gameModel.isInMotion())
+        while (controller.getGameContext().getGameModel().isInMotion())
         {
+
             long tick = System.currentTimeMillis();
 
             boardView.repaint();
             for (int i = 0; i < tick - lastTick; i += 10)
             {
-                gameModel.processTimeStep(0.01d);
+                controller.getGameContext().getGameModel().processTimeStep(0.01d);
             }
             lastTick = tick;
 
             try
             {
-                Thread.sleep(50); // TODO Adjust this
+                Thread.sleep(50);
             }
             catch (InterruptedException e)
             {

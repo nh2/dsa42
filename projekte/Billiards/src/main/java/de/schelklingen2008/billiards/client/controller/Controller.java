@@ -111,7 +111,7 @@ public class Controller extends GameController
             @Override
             public void shotTaken(ShotEvent e)
             {
-                System.out.println(String.format("Invoking takeShot(%.2f, %.2f)", e.getAngle(), e.getVelocity()));
+                sLogger.info(String.format("Invoking takeShot(%.2f, %.2f)", e.getAngle(), e.getVelocity()));
                 sharedState.manager.invoke("takeShot", e.getAngle(), e.getVelocity());
             }
 
@@ -160,7 +160,7 @@ public class Controller extends GameController
     {
         if (boardProcessThread == null || !boardProcessThread.isAlive())
         {
-            boardProcessThread = new BoardProcessThread(gameContext.getGameModel(), boardView);
+            boardProcessThread = new BoardProcessThread(this, boardView);
             boardProcessThread.start();
         }
     }

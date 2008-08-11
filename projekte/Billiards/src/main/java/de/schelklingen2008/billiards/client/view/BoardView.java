@@ -239,7 +239,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
-        controller.startBoardProcessThread(this);
+        if (getGameModel().isInMotion())
+        {
+            controller.startBoardProcessThread(this);
+        }
+        repaint();
     }
 
     private GameModel getGameModel()
@@ -276,7 +280,6 @@ public class BoardView extends JPanel implements GameChangeListener
         double angle = distance.getAngle();
 
         gameModel.takeShot(getGameContext().getMyPlayer(), angle, gauge.getValue() * GlobalConstants.MAX_VELOCITY / 100);
-        controller.startBoardProcessThread(this);
     }
 
 }
