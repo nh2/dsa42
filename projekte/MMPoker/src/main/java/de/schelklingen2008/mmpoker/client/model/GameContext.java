@@ -16,6 +16,7 @@ public class GameContext
     private static final Logger sLogger   = LoggerFactory.create();
 
     /** Contains the rules and the state of the game. */
+
     private GameModel           gameModel = null;
 
     /** Is the name of the player playing in this client. */
@@ -36,6 +37,20 @@ public class GameContext
     {
         return gameModel.getSpieler(myName);
     }
+
+    //
+    // public Spieler getMyPlayer()
+    // {
+    // if (myName == null) return null;
+    // for (Spieler spieler : getGameModel().getSpielerliste())
+    // {
+    // if (spieler.getName().equals(myName))
+    // {
+    // return spieler;
+    // }
+    // }
+    // return null;
+    // }
 
     public GameModel getGameModel()
     {

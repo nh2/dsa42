@@ -17,6 +17,7 @@ import de.schelklingen2008.mmpoker.client.model.GameContext;
 import de.schelklingen2008.mmpoker.model.GameModel;
 import de.schelklingen2008.mmpoker.model.Kartentyp;
 import de.schelklingen2008.mmpoker.model.Kartenwert;
+import de.schelklingen2008.mmpoker.model.Spielkarte;
 import de.schelklingen2008.mmpoker.model.Spielstadien;
 
 /**
@@ -85,8 +86,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
         }
 
-        // gfx.drawImage(cardImages[karte.getKartentyp().ordinal()][karte.getKartenwert().ordinal()],
-        // (spielstadium.ordinal() + 1) * 80 + 145, 350, null);
     }
 
     public void handKarten(Graphics g)
@@ -96,16 +95,11 @@ public class BoardView extends JPanel implements GameChangeListener
         if (getGameModel().getAmZug().isNochDabei())
         {
             // zeichne
-            gfx.drawImage(
-                          cardImages[getGameModel().getAmZug().getHandblatt()[0].getKartentyp().ordinal()][getGameModel().getAmZug()
-                                                                                                                         .getHandblatt()[0].getKartenwert()
-                                                                                                                                           .ordinal()],
-                          385, 350, null);
-            gfx.drawImage(
-                          cardImages[getGameModel().getAmZug().getHandblatt()[1].getKartentyp().ordinal()][getGameModel().getAmZug()
-                                                                                                                         .getHandblatt()[1].getKartenwert()
-                                                                                                                                           .ordinal()],
-                          385, 350, null);
+            Spielkarte[] handblatt = getGameContext().getMyPlayer().getHandblatt();
+            gfx.drawImage(cardImages[handblatt[0].getKartentyp().ordinal()][handblatt[0].getKartenwert().ordinal()],
+                          10, 35, null);
+            gfx.drawImage(cardImages[handblatt[1].getKartentyp().ordinal()][handblatt[1].getKartenwert().ordinal()],
+                          50, 50, null);
         }
         else
         {
@@ -117,7 +111,6 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     public void paintComponent(Graphics g)
     {
-
         Graphics2D gfx = (Graphics2D) g;
         g.setColor(Color.GREEN);
         g.fillRect(0, 0, 800, 800);

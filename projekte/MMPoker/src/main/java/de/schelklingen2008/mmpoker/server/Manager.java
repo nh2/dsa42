@@ -33,7 +33,7 @@ public class Manager extends GameManager
         super.gameWillStart();
 
         String[] names = new String[getPlayerCount()];
-        for (int i = 0; i < names.length; i++)
+        for (int i = 0; i < getPlayerCount(); i++)
             names[i] = getPlayer(i).username.toString();
 
         gameModel = new GameModel(names);
@@ -79,7 +79,7 @@ public class Manager extends GameManager
     private Spieler getPlayer(BodyObject client)
     {
         Name username = client.username;
-        for (int i = 1; i < gameModel.getSpielerliste().size(); i++)
+        for (int i = 0; i < gameModel.getSpielerliste().size(); i++)
         {
 
             Spieler spieler = gameModel.getSpielerliste().get(i);

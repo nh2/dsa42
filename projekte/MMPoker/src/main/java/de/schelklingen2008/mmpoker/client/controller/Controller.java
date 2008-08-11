@@ -174,8 +174,4 @@ public class Controller extends GameController
         sharedState.manager.invoke("bet", betFieldWert);
     }
 
-    public void raiseButtonClicked(String betFieldWert)
-    {
-        sharedState.manager.invoke("raise", betFieldWert);
-    }
 }

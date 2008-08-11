@@ -26,17 +26,18 @@ public class GameModel implements Serializable
         }
         spielfeld = new Spielkarte[5];
         spielstadium = Spielstadien.FLOP;
-        Rundenstart();
+        rundenstart();
 
     }
 
-    public void Rundenstart()
+    public void rundenstart()
     { // Initiiert das Spiel.
         // Geld verteilen
 
         for (Iterator<Spieler> iterator = spielerliste.iterator(); iterator.hasNext();)
         {
-            iterator.next().setGeld(5000);
+            Spieler spieler = iterator.next();
+            spieler.setGeld(5000);
         }// Geld verteilen ende
 
         setAmZug(spielerliste.get(0));

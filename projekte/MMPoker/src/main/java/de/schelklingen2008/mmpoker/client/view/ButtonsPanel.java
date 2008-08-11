@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import de.schelklingen2008.mmpoker.client.controller.Controller;
 import de.schelklingen2008.mmpoker.client.controller.GameChangeListener;
+import de.schelklingen2008.mmpoker.model.GameModel;
 
 public class ButtonsPanel extends JPanel implements ActionListener, GameChangeListener
 {
@@ -28,9 +29,10 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
 
     public void actionPerformed(ActionEvent e)
     {
-        betField.setText(controller.getGameContext().getGameModel().autoErgaenzen());
+        GameModel model = controller.getGameContext().getGameModel();
+        if (model == null) return;
+        betField.setText(model.autoErgaenzen());
         controller.betButtonClicked(betField.getText());
-        controller.raiseButtonClicked(betField.getText());
     }
 
     public void gameChanged()

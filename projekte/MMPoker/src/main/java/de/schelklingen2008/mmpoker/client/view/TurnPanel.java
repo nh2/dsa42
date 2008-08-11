@@ -34,10 +34,17 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // <<<<<<< .mine
+        // for (Player player : Player.values())
+        // {
+        // String name = getGameContext().getName(player);
+        // add(new JLabel(name));
+        // =======
         List<Spieler> liste = getGameModel().getSpielerliste();
         for (Spieler spieler : liste)
         {
             add(new JLabel(spieler.getName()));
+
         }
 
         revalidate();
