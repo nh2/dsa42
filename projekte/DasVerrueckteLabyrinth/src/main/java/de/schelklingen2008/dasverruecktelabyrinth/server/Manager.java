@@ -76,12 +76,15 @@ public class Manager extends GameManager
 
     public void insert(BodyObject client, PushButton pPushButton)
     {
-        sLogger.fine("insert: " + pPushButton);
-        if (getPlayerType(client) == gameModel.getTurnHolder())
+        if (gameModel.getTurnHolder() == getPlayerType(client))
         {
-            gameModel.insert(pPushButton);
+            sLogger.fine("insert: " + pPushButton);
+            if (getPlayerType(client) == gameModel.getTurnHolder())
+            {
+                gameModel.insert(pPushButton);
+            }
+            updateSharedState();
         }
-        updateSharedState();
     }
 
     /**
