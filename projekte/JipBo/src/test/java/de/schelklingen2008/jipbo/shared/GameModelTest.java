@@ -8,12 +8,12 @@ import de.schelklingen2008.jipbo.model.GameModel;
 public class GameModelTest extends TestCase
 {
 
-    private GameModel gameModel = new GameModel();
+    private String[]  mPlayerNames = new String[] { "Elitsa", "Fabio" };
+    private GameModel gameModel    = new GameModel(mPlayerNames);
 
     public void testCreateGame() throws Exception
     {
-        String[] playerNames = new String[] { "Elitsa", "Fabio" };
-        gameModel.createGame(playerNames);
+
         assertEquals("Should be Elitsa", "Elitsa", gameModel.getPlayerNameIndexOf(0));
         assertEquals("Should be Fabio", "Fabio", gameModel.getPlayerNameIndexOf(1));
 
