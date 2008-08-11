@@ -150,6 +150,8 @@ public class GameModel implements Serializable
     {
         if (!isTurnHolder(player)) return;
 
+        if (cards.length < Constants.GAME_MIN_STACKSIZE) return;
+
         sLogger.info("Player " + player.getName() + " should make outlay now");
         sLogger.info(Arrays.toString(cards));
 
@@ -164,6 +166,7 @@ public class GameModel implements Serializable
 
         int i = 0;
         for (int score : Constants.GAME_SCORE_LEVEL)
+
         {
             if (player.getScore() < score)
             {

@@ -32,4 +32,6 @@ public final class Constants
     public static final int[]  GAME_MIN_OUTLAY         = { 15, 50, 90, 120 };
     public static final int[]  GAME_SCORE_LEVEL        = { 0, 1500, 3000, 5000 };
 
+    public static final int    GAME_MIN_STACKSIZE      = 3;
+
 }
