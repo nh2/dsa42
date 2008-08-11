@@ -85,6 +85,21 @@ public class PatternTest extends TestCase
 
     }
 
+    public List<Card> fill6(List<Card> cards)
+    {
+
+        cards.add(new Card(3, 1));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(3, 2));
+        cards.add(new Card(1, 5));
+        cards.add(new Card(3, 7));
+
+        return cards;
+
+    }
+
     // public void output(List<Card> list, PatternChecker checker)
     // {
     // list = PatternChecker.sort(list);
@@ -104,6 +119,7 @@ public class PatternTest extends TestCase
 
     public void ueberpruefung(PatternChecker checker)
     {
+
         System.out.println("Paar: " + checker.isPair());
         System.out.println("Driling: " + checker.isThreeOfAKind());
         System.out.println("Straﬂe: " + checker.isStraight());
@@ -111,13 +127,26 @@ public class PatternTest extends TestCase
         System.out.println("Full House: " + checker.isFullHouse());
         System.out.println("Vierling: " + checker.isFourOfAKind());
         System.out.println("Straight Flush: " + checker.isStraightFlush());
+        System.out.println("Royal Flush: " + checker.isRoyalFlush());
     }
 
     public void test2(List<Card> cardList, PatternChecker checker)
     {
+
         cardList.clear();
         fill5(cardList);
+        cardList = PatternChecker.sort(cardList);
         cardList = fill5(cardList);
+        ueberpruefung(checker);
+    }
+
+    public void test3(List<Card> cardList, PatternChecker checker)
+    {
+
+        cardList.clear();
+        fill6(cardList);
+        cardList = PatternChecker.sort(cardList);
+
         ueberpruefung(checker);
     }
 
@@ -134,6 +163,7 @@ public class PatternTest extends TestCase
         // cardList = fill3(cardList);
         // assertTrue(checker.isFlush());
         test2(cardList, checker);
+        test3(cardList, checker);
 
     }
 }

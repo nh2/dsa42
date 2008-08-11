@@ -153,14 +153,6 @@ public class PatternChecker
 
     }
 
-    public boolean isStraight()
-    {
-        if (straight(0, 5)) return true;
-        if (straight(1, 5)) return true;
-        if (straight(2, 5)) return true;
-        return false;
-    }
-
     public boolean straight(int pos, int length)
     {
         if (length == 1)
@@ -174,6 +166,20 @@ public class PatternChecker
                 return false;
         }
 
+    }
+
+    public boolean isStraight()
+    {
+        if (straight(0, 5)) return true;
+        if (straight(1, 5)) return true;
+        if (straight(2, 5)) return true;
+        return false;
+    }
+
+    public boolean is10Straight()
+    {
+        if (straight(8, 5)) return true;
+        return false;
     }
 
     public boolean isFlush()
@@ -205,6 +211,12 @@ public class PatternChecker
     public boolean isStraightFlush()
     {
         if (isStraight() && isFlush()) return true;
+        return false;
+    }
+
+    public boolean isRoyalFlush()
+    {
+        if (isStraightFlush() && is10Straight()) return true;
         return false;
     }
 
