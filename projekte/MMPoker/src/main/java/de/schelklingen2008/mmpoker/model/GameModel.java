@@ -17,6 +17,7 @@ public class GameModel implements Serializable
     private List<Spieler> spielerliste = new ArrayList<Spieler>();
     private Spielstadien  spielstadium;
     private Kartenstapel  kartenStapel = new Kartenstapel();
+    private int           standWettsumme;
 
     public GameModel(String[] names)
     {
@@ -112,7 +113,9 @@ public class GameModel implements Serializable
             iterator.next().setHandblatt(zufallsHandBlatt);
         }
         // Karten ausgeben ende
+        // Flop, Turn, River etc. durchgehen
 
+        // Flop, Turn, River etc. durchgehen ende
     }
 
     public String autoErgaenzen()
@@ -194,7 +197,10 @@ public class GameModel implements Serializable
 
     public void check(Spieler client)
     {
-        // sendet dem Server die Aktion
+        if (client.getWettsumme() == get)
+        {
+
+        }
     }
 
     public void fold(Spieler client)
