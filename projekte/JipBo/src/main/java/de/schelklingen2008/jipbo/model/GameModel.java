@@ -154,37 +154,44 @@ public class GameModel implements Serializable
 
     public void putCard(String pPlayerName, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
     {
-
-        // here comes the joker
-        if (pCard == 0)
-        {
-            if (mBuildPile[pToPlace].getNumber() == -2)
-            {
-                pCard = 1;
-            }
-            else
-            {
-                pCard = mBuildPile[pToPlace].getNumber() + 1;
-            }
-        }
-        // update BuildPile
-        mBuildPile[pToPlace].setNumber(pCard);
-        // remove PlayerPiles
         int playerID = getPlayerIDByName(pPlayerName);
-        if (pFromHand)
+
+        if (pFromHand
+            && mPlayers[playerID].getDrawPile()[pFromPlace].getNumber() == pCard
+            || !pFromHand
+            && mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == pCard)
         {
-            if (pFromPlace < 4)
+            // here comes the joker
+            if (pCard == 0)
             {
-                mPlayers[playerID].removeDrawPileCard(pFromPlace);
+                if (mBuildPile[pToPlace].getNumber() == -2)
+                {
+                    pCard = 1;
+                }
+                else
+                {
+                    pCard = mBuildPile[pToPlace].getNumber() + 1;
+                }
+            }
+            // update BuildPile
+            mBuildPile[pToPlace].setNumber(pCard);
+
+            // remove PlayerPiles
+            if (pFromHand)
+            {
+                if (pFromPlace < 4)
+                {
+                    mPlayers[playerID].removeDrawPileCard(pFromPlace);
+                }
+                else
+                {
+                    mPlayers[playerID].removeLastStockPile();
+                }
             }
             else
             {
-                mPlayers[playerID].removeLastStockPile();
+                mPlayers[playerID].removeDiscardPileCard(pFromPlace);
             }
-        }
-        else
-        {
-            mPlayers[playerID].removeDiscardPileCard(pFromPlace);
         }
     }
 
