@@ -8,7 +8,6 @@ public class Karte implements Serializable, Comparable<Karte>
 
     public Farbe farbe;
     public Bild  bild;
-    int          hierarchie;
 
     public Karte()
     {
@@ -62,7 +61,7 @@ public class Karte implements Serializable, Comparable<Karte>
             if (other.isTrumpf()) return -1;
         }
 
-        // Standard
+        // Standard: nach Reihenfolge der Aufzählung vergleichen
         if (farbe != other.farbe)
         {
             return -farbe.compareTo(other.farbe);
