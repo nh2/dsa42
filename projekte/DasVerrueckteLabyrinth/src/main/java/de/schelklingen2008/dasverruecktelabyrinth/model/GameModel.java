@@ -185,15 +185,17 @@ public class GameModel implements Serializable
             PlayerCards temp2 = new PlayerCards();
             PlayerCards temp3 = new PlayerCards();
 
-            for (int i = 0; i < cardsPerPlayer; i++)
+            for (int i = 0, j = 0; i < cardsPerPlayer; i++, j++)
             {
-                temp2.getHiddenCards().add(i, null);
+
+                temp2.getHiddenCards().add(j, temp.get(i));
             }
             playerCardsMap.put(PlayerType.WHITE, temp2);
 
-            for (int i = cardsPerPlayer; i < 2 * cardsPerPlayer; i++)
+            for (int i = cardsPerPlayer, j = 0; i < 2 * cardsPerPlayer; i++, i++)
             {
-                temp3.getHiddenCards().add(i, null);
+
+                temp3.getHiddenCards().add(j, temp.get(i));
             }
             playerCardsMap.put(PlayerType.BLACK, temp3);
 
@@ -202,18 +204,18 @@ public class GameModel implements Serializable
 
                 PlayerCards temp4 = new PlayerCards();
 
-                for (int i = cardsPerPlayer * 2; i < 3 * cardsPerPlayer; i++)
+                for (int i = cardsPerPlayer * 2, j = 0; i < 3 * cardsPerPlayer; i++, j++)
                 {
-                    temp4.getHiddenCards().add(i, null);
+                    temp4.getHiddenCards().add(j, temp.get(i));
                 }
                 playerCardsMap.put(PlayerType.RED, temp4);
 
                 if (noOfPlayers > 3)
                 {
                     PlayerCards temp5 = new PlayerCards();
-                    for (int i = cardsPerPlayer * 3; i < 4 * cardsPerPlayer; i++)
+                    for (int i = cardsPerPlayer * 3, j = 0; i < 4 * cardsPerPlayer; i++, j++)
                     {
-                        temp5.getHiddenCards().add(i, null);
+                        temp5.getHiddenCards().add(j, temp.get(i));
                     }
                     playerCardsMap.put(PlayerType.GREEN, temp5);
 
