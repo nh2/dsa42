@@ -27,7 +27,7 @@ public class GameModel implements Serializable
             spielerliste.add(new Spieler(names[i]));
         }
         spielfeld = new Spielkarte[5];
-        spielstadium = Spielstadien.FLOP;
+        spielstadium = Spielstadien.NICHTS;
         rundenstart();
 
     }
@@ -73,9 +73,19 @@ public class GameModel implements Serializable
         {
             spielerliste.get(1).setWasfuernBlind(Blind.BIGBLIND);
         }
+        setzePotNeu();
 
         // Blinds Setzen ende
 
+    }
+
+    private void setzePotNeu()
+    {
+        setPot(0);
+        for (Spieler spieler : spielerliste)
+        {
+            setPot(getPot() + spieler.getWettsumme());
+        }
     }
 
     public void neueRunde()
@@ -100,6 +110,7 @@ public class GameModel implements Serializable
             i++;
 
         }
+
         // Blinds verschieben ende
         // Karten ausgeben
         kartenStapel.neuerStapel();
@@ -201,11 +212,12 @@ public class GameModel implements Serializable
     {
         for (Spieler spieler : spielerliste)
         {
-            if (spieler.getLetzteAktion() == LetzteAktion.CALL || spieler.getLetzteAktion() == LetzteAktion.FOLD)
-            {
+            if (spieler.equals(amZug)) continue;
 
-            }
-            else
+            LetzteAktion letzteAktion = spieler.getLetzteAktion();
+            if (letzteAktion != LetzteAktion.CALL
+                && letzteAktion != LetzteAktion.FOLD
+                && letzteAktion != LetzteAktion.CHECKED)
             {
                 return false;
             }
@@ -213,17 +225,30 @@ public class GameModel implements Serializable
         return true;
     }
 
+    private void checkNextRound()
+    {
+        if (rundeBeendet())
+        {
+            setSpielstadium(getSpielstadium().next());
+            setAmZug(spielerliste.get(0));
+            for (Spieler spieler : spielerliste)
+            {
+                spieler.setLetzteAktion(LetzteAktion.NICHTS);
+            }
+        }
+    }
+
     public void call(String wettSummeText, Spieler client)
     {
         Integer wettSumme = new Integer(wettSummeText);
         if (wettSumme + client.getWettsumme() == getStandWettsumme())
         {
-            advanceTurnHolder(client);
+            setPot(getPot() + wettSumme);
             client.setGeld(client.getGeld() - wettSumme);
             client.setWettsumme(getStandWettsumme());
             client.setLetzteAktion(LetzteAktion.CALL);
+            advanceTurnHolder(client);
         }
-        rundeBeendet();
     }
 
     public void raise(String wettSummeText, Spieler spieler)
@@ -237,7 +262,7 @@ public class GameModel implements Serializable
         setPot(getPot() + wettSumme);
         setLetzterRaiser(spieler);
         spieler.setGeld(spieler.getGeld() - wettSumme);
-        spieler.setWettsumme(getStandWettsumme());
+        spieler.setWettsumme(spieler.getWettsumme() + getStandWettsumme());
         spieler.setLetzteAktion(LetzteAktion.RAISE);
 
         advanceTurnHolder(spieler);
@@ -247,23 +272,24 @@ public class GameModel implements Serializable
     {
         int nextIndex = (getSpielerNummer(s) + 1) % 2;
         setAmZug(spielerliste.get(nextIndex));
+        setzePotNeu();
+        checkNextRound();
     }
 
     public void check(Spieler client)
     {
         if (client.getWettsumme() == getStandWettsumme())
         {
-            advanceTurnHolder(client);
             client.setLetzteAktion(LetzteAktion.CHECKED);
+            advanceTurnHolder(client);
         }
     }
 
     public void fold(Spieler client)
     {
-        advanceTurnHolder(client);
-
         client.setLetzteAktion(LetzteAktion.FOLD);
 
+        advanceTurnHolder(client);
     }
 
     public void setAmZug(Spieler amZug)

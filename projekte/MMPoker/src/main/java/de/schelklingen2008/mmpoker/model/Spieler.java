@@ -20,6 +20,7 @@ public class Spieler implements Serializable
         Spielkarte[] handblatt = new Spielkarte[2];
         wettsumme = 0;
         this.name = name;
+        letzteAktion = LetzteAktion.NICHTS;
 
     }
 
@@ -86,6 +87,14 @@ public class Spieler implements Serializable
     public void setWasfuernBlind(Blind wasfuernBlind)
     {
         this.wasfuernBlind = wasfuernBlind;
+        if (this.wasfuernBlind == Blind.SMALLBLIND)
+        {
+            setWettsumme(50);
+        }
+        if (this.wasfuernBlind == Blind.BIGBLIND)
+        {
+            setWettsumme(100);
+        }
     }
 
     public Blind getWasfuernBlind()

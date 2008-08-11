@@ -139,11 +139,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
         String anzeigeName = getGameContext().getMyName();
         gfx.drawString(anzeigeName, 10, 10);
-
-        if (getGameModel().rundeBeendet())
-        {
-            getGameModel().setSpielstadium(getGameModel().getSpielstadium().next());
-        }
     }
 
     @Override
