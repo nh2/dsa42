@@ -138,7 +138,7 @@ public class BoardView extends JPanel implements GameChangeListener
         drawPileLabel.setFont(newFontH);
         drawPileLabel.setAlignmentX(CENTER_ALIGNMENT);
         drawPileLabel.setForeground(Color.WHITE);
-        add(drawPilePanel);
+        add(drawPileLabel);
         BoardPanel drawPile = new BoardPanel(controller,
                                              getGameModel().getPlayerIndexOf(
                                                                              getGameModel().getPlayerIDByName(
