@@ -406,16 +406,16 @@ public class GameModel implements Serializable
         turnHolder = other.turnHolder;
     }
 
-    public Tile rechtsDrehen()
+    public void rechtsDrehen()
     {
         insert.turnRight();
-        return insert;
+
     }
 
-    public Tile linksDrehen()
+    public void linksDrehen()
     {
         insert.turnLeft();
-        return insert;
+
     }
 
     public void insert(PushButton pPushButton)

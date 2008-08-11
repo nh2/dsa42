@@ -136,6 +136,16 @@ public class Controller extends GameController
         sharedState.manager.invoke("insert");
     }
 
+    public void rechtsDrehen()
+    {
+        sharedState.manager.invoke("rechtsDrehen");
+    }
+
+    public void linksDrehen()
+    {
+        sharedState.manager.invoke("linksDrehen");
+    }
+
     public ToyBoxContext getToyBoxContext()
     {
         return toyBoxContext;
@@ -170,13 +180,4 @@ public class Controller extends GameController
         }
     }
 
-    public void rechtsDrehen()
-    {
-        sharedState.manager.invoke("rechtsDrehen");
-    }
-
-    public void linksDrehen()
-    {
-        sharedState.manager.invoke("linksDrehen");
-    }
 }
