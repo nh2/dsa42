@@ -9,3 +9,30 @@ Punkteliste
 
 View:
 Tischplätze der Mitte zuordnen
+
+sarah
+niklas
+dick
+doof
+
+* sarah Kreuz As
+niklas Herz Neun
+dick Kreuz As
+doof Herz As
+
+* sarah Pik Bube
+niklas Karo As
+dick Herz König
+doof Herz Neun
+
+* sarah Herz Bube
+niklas Pik Bube
+dick Karo Neun
+doof Kreuz Zehn
+
+* niklas Herz As
+dick Pik Neun
+doof Herz König
+sarah Kreuz König
+
+* sarah
