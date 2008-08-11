@@ -60,4 +60,17 @@ public class Player implements Serializable
         unitstoset = units;
     }
 
+    public int getCountrys(Country[] co)
+    {
+        int number = 0;
+        for (int i = 0; i < co.length; i++)
+        {
+            if (co[i].getOccupier().equals(this))
+            {
+                number++;
+            }
+        }
+        return number;
+    }
+
 }

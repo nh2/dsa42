@@ -72,9 +72,9 @@ public class TurnPanel extends JPanel implements GameChangeListener
             add(turnHolderLabel, turnHolderConstraints);
 
             String name = player.getPlayerName();
-            int count = player.getPlayerUnits();
+            int countrys = player.getCountrys(controller.getGameContext().getGameModel().getCountryArray());
             Color color = player.getPlayerColor();
-            JLabel nameAndCountLabel = new JLabel(name + ": " + count);
+            JLabel nameAndCountLabel = new JLabel(name + ": " + countrys);
             nameAndCountLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
             add(nameAndCountLabel, nameAndCountConstraints);
         }

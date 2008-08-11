@@ -157,6 +157,7 @@ public class GameModel implements Serializable
         norwegen.add(1, c[7]);// Russland
         norwegen.add(2, c[5]);// Schweden
         norwegen.add(3, c[6]);// Dänemark
+        norwegen.add(4, c[4]);// Finnland
         c[3].setNeighbours(norwegen);
 
         // init neighbours Finnland
