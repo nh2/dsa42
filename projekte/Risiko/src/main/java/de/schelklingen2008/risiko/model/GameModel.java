@@ -3,6 +3,7 @@ package de.schelklingen2008.risiko.model;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Maintains the rules and the state of the game.
@@ -115,8 +116,16 @@ public class GameModel implements Serializable
 
     public boolean isWinner(Player player2)
     {
-        // TODO Auto-generated method stub
-        return false;
+        for (int i = 0; i < c.length; i++)
+        {
+            if (player2.equals(c[i].getOccupier()))
+            {
+
+            }
+            else
+                return false;
+        }
+        return true;
     }
 
     public Country getCountryByColor(Color pc)
@@ -170,9 +179,8 @@ public class GameModel implements Serializable
         throw new IllegalArgumentException();
     }
 
-    public boolean isLegalMove(Player pPlayer, Country country1, Country country2)
+    public boolean isLegalMoveAttack(Player pPlayer, Country country1, Country country2)
     {
-
         if (pPlayer == turnholder)
         {
             if (pPlayer == country1.getOccupier())
@@ -191,8 +199,17 @@ public class GameModel implements Serializable
             return false;
     }
 
-    public double dice()
+    public boolean isLegalMoveSet()
     {
-        return 1.0;
+
+    }
+
+    public int dice()
+    {
+        Random r = new Random();
+        int d = r.nextInt(6);
+        d = d + 1;
+        return d;
+
     }
 }
