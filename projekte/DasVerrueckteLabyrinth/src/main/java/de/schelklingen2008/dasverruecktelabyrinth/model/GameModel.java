@@ -421,7 +421,8 @@ public class GameModel implements Serializable
             board[x][i] = board[x][i - 1];
         }
         board[x][0] = temp;
-        if (player.get(PlayerType.WHITE).getXKoordinate() == x && player.get(PlayerType.WHITE).getYKoordinate() == 6)
+        if (player.get(PlayerType.WHITE).getXKoordinate() == x
+            && player.get(PlayerType.WHITE).getYKoordinate() == board.length - 1)
         {
             placePlayerOutOfBounds(x, 0, PlayerType.WHITE);
         }
