@@ -105,7 +105,9 @@ public class GameModelTest extends TestCase
         }
 
         gameModel.reRaise(1, 200);
-
+        assertEquals(1200, gameModel.getPot());
+        assertEquals(1, gameModel.getHighestBetIndex());
+        assertEquals(600, gameModel.getHighestBet());
     }
 
     public void testSecondMove() throws Exception
@@ -114,8 +116,12 @@ public class GameModelTest extends TestCase
         GameModel gameModel = new GameModel(TEST_NAMES);
 
         gameModel.call(3);
+
         for (int i = 0; i < 4; i++)
         {
+            assertEquals(false, gameModel.mustCallOrReRaise(i));
+            assertEquals(false, gameModel.mustCheckOrRaise(i));
+            assertEquals(false, gameModel.playerIsTurnHolder(i));
             try
             {
                 gameModel.call(i);
@@ -187,8 +193,12 @@ public class GameModelTest extends TestCase
             // erwartet
         }
 
+        assertEquals(true, gameModel.mustCallOrReRaise(4));
+        assertEquals(false, gameModel.mustCheckOrRaise(4));
         gameModel.reRaise(4, 500);
-
+        assertEquals(1900, gameModel.getPot());
+        assertEquals(4, gameModel.getHighestBetIndex());
+        assertEquals(900, gameModel.getHighestBet());
     }
 
 }

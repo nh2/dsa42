@@ -311,14 +311,14 @@ public class GameModel implements Serializable
         stack.clear();
         fillStack();
         dealerIndex = getRisenPlayerIndex(dealerIndex, 1);
-        pot = setPlayerBet(smallBlind, getRisenPlayerIndex(dealerIndex, 1), false);
-        pot += setPlayerBet(2 * smallBlind, getRisenPlayerIndex(dealerIndex, 2), false);
+        setPlayerBet(smallBlind, getRisenPlayerIndex(dealerIndex, 1), false);
+        setPlayerBet(2 * smallBlind, getRisenPlayerIndex(dealerIndex, 2), false);
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         getHighestBetAndBetterIndex();
         giveCardsToPlayers();
     }
 
-    public long setPlayerBet(long betValue, int playerIndex, boolean minMaxBorderCheck)
+    public void setPlayerBet(long betValue, int playerIndex, boolean minMaxBorderCheck)
     {
         Player player = playerList.get(playerIndex);
         if (betValue < 2 * smallBlind && playerList.get(playerIndex).getBalance() < smallBlind)
@@ -326,7 +326,7 @@ public class GameModel implements Serializable
             betValue = player.getBalance();
             player.setOwnBet(betValue);
             player.setBalance(0);
-            return betValue;
+            pot += betValue;
         }
         else
         {
@@ -338,7 +338,7 @@ public class GameModel implements Serializable
             {
                 player.setBalance(player.getBalance() - betValue);
                 player.setOwnBet(betValue);
-                return betValue;
+                pot += betValue;
             }
         }
     }
@@ -377,8 +377,7 @@ public class GameModel implements Serializable
         long callValue = highestBet - player.getOwnBet();
         if (mustCallOrReRaise(playerIndex) == true && player.getBalance() >= callValue)
         {
-            player.setBalance(player.getBalance() - callValue);
-            pot = pot + callValue;
+            setPlayerBet(callValue, playerIndex, true);
             getHighestBetAndBetterIndex();
             nextPlayer();
         }
@@ -401,7 +400,7 @@ public class GameModel implements Serializable
         if (mustCheckOrRaise(playerIndex) == true && getActPlayer().getBalance() >= highestBet)
         {
             getActPlayer().setBalance(getActPlayer().getBalance() - raiseValue);
-            pot = pot + raiseValue;
+            setPlayerBet(raiseValue, playerIndex, true);
             getHighestBetAndBetterIndex();
             nextPlayer();
         }
@@ -417,8 +416,7 @@ public class GameModel implements Serializable
 
         if (mustCallOrReRaise(playerIndex) == true && getActPlayer().getBalance() >= value)
         {
-            getActPlayer().setBalance(getActPlayer().getBalance() - value);
-            pot = pot + reRaiseValue;
+            setPlayerBet(highestBet + reRaiseValue, playerIndex, true);
             getHighestBetAndBetterIndex();
             nextPlayer();
         }
