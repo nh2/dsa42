@@ -40,20 +40,20 @@ import de.schelklingen2008.util.LoggerFactory;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private static final Logger logger           = LoggerFactory.create();
+    private static final Logger logger = LoggerFactory.create();
 
     /**
      * 
      */
-    private static final long   serialVersionUID = -9064861386229239709L;
-    private Controller          controller;
-    private BallGauge           gauge;
-    private Image               bg;
-    private Timer               timer;
-    private int                 cursorPosX;
-    private int                 cursorPosY;
+    private static final long serialVersionUID = -9064861386229239709L;
+    private Controller controller;
+    private BallGauge gauge;
+    private Image bg;
+    private Timer timer;
+    private int cursorPosX;
+    private int cursorPosY;
 
-    private boolean             buttonWasPressed;
+    private boolean buttonWasPressed;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -212,13 +212,9 @@ public class BoardView extends JPanel implements GameChangeListener
                          (int) Math.round(ball.getPosition().getY() + BORDER_HEIGHT - BALL_RADIUS),
                          (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
 
-            final int x = (int) Math.round(Math.sqrt(1
-                                                     - 0.25
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS
-                                                     * STRIPE_HEIGHT
-                                                     / BALL_RADIUS)
-                                           * BALL_RADIUS);
+            final int x =
+                (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
+                                 * BALL_RADIUS);
             final int y = (int) Math.round(0.5 * BALL_RADIUS);
             final int angle = (int) Math.round(Math.atan((double) y / (double) x) * 180 / Math.PI);
 
@@ -243,7 +239,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
-        repaint();
+        controller.startBoardProcessThread(this);
     }
 
     private GameModel getGameModel()
@@ -275,7 +271,8 @@ public class BoardView extends JPanel implements GameChangeListener
         timer.cancel();
 
         Ball whiteBall = gameModel.getWhiteBall();
-        Vector2d distance = new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(whiteBall.getPosition());
+        Vector2d distance =
+            new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(whiteBall.getPosition());
         double angle = distance.getAngle();
 
         gameModel.takeShot(getGameContext().getMyPlayer(), angle, gauge.getValue() * GlobalConstants.MAX_VELOCITY / 100);

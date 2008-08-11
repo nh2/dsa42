@@ -54,6 +54,7 @@ public class Controller extends GameController
 
         toyBoxContext = (ToyBoxContext) crowdContext;
         gameContext.setMyName(toyBoxContext.getUsername().toString());
+
         super.init(crowdContext, placeConfig);
     }
 
@@ -82,6 +83,28 @@ public class Controller extends GameController
         sharedState.addListener(new SharedStateListener());
         updateGameContext();
 
+        super.willEnterPlace(placeObject);
+    }
+
+    public void leaveButtonClicked()
+    {
+        toyBoxContext.getLocationDirector().moveBack();
+    }
+
+    private void updateGameContext()
+    {
+        sLogger.info("Updating game context.");
+
+        if (sharedState == null) return;
+
+        gameContext.setPlayers(sharedState.getPlayerNames());
+
+        if (sharedState.getModel() == null) return;
+
+        sLogger.info("Receiving new game model.");
+
+        gameContext.setGameModel(sharedState.getModel());
+
         gameContext.getGameModel().addGameEventListener(new GameEventAdapter()
         {
 
@@ -93,24 +116,6 @@ public class Controller extends GameController
             }
 
         });
-
-        super.willEnterPlace(placeObject);
-    }
-
-    public void leaveButtonClicked()
-    {
-        toyBoxContext.getLocationDirector().moveBack();
-    }
-
-    private void updateGameContext()
-    {
-        if (sharedState == null) return;
-
-        gameContext.setPlayers(sharedState.getPlayerNames());
-
-        if (sharedState.getModel() == null) return;
-
-        gameContext.setGameModel(sharedState.getModel());
 
         fireGameChange();
     }

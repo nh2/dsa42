@@ -1,5 +1,7 @@
 package de.schelklingen2008.billiards.server;
 
+import java.util.logging.Logger;
+
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
@@ -7,12 +9,15 @@ import com.threerings.parlor.game.server.GameManager;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Player;
 import de.schelklingen2008.billiards.transport.SharedState;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Handles the server side of the game.
  */
 public class Manager extends GameManager
 {
+
+    private Logger logger = LoggerFactory.create();
 
     /** Is the state transmitted to the clients and managed by the server. */
     private SharedState sharedState;
@@ -52,6 +57,8 @@ public class Manager extends GameManager
 
     public void takeShot(BodyObject client, double angle, double velocity)
     {
+
+        logger.info(String.format("Received shot from %s, sending game state to other clients.", client.username));
 
         gameModel.takeShot(getPlayer(client), angle, velocity);
         updateSharedState();
