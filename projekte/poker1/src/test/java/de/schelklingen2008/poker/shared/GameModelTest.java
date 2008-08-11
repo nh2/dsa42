@@ -198,6 +198,7 @@ public class GameModelTest extends TestCase
 
         assertEquals(true, gameModel.mustCallOrReRaise(4));
         assertEquals(false, gameModel.mustCheckOrRaise(4));
+        assertEquals(1000, gameModel.getPot());
         gameModel.reRaise(4, 500);
         assertEquals(1900, gameModel.getPot());
         assertEquals(4, gameModel.getHighestBetIndex());
@@ -310,15 +311,22 @@ public class GameModelTest extends TestCase
         GameModel gameModel = new GameModel(TEST_NAMES);
 
         assertEquals(2, gameModel.getHighestBetIndex());
+        assertEquals(600, gameModel.getPot());
 
         gameModel.call(3);
+        assertEquals(1000, gameModel.getPot());
+
         gameModel.call(4);
+        assertEquals(1400, gameModel.getPot());
         gameModel.call(5);
+        assertEquals(1800, gameModel.getPot());
         gameModel.call(0);
+        assertEquals(2200, gameModel.getPot());
         gameModel.call(1);
+        assertEquals(2400, gameModel.getPot());
         gameModel.check(2);
 
-        assertEquals(2200, gameModel.getPot());
+        assertEquals(2400, gameModel.getPot());
         assertEquals(1, gameModel.getHighestBetIndex());
         assertEquals(0, gameModel.getHighestBet());
         assertEquals(1, gameModel.getActPlayerIndex());

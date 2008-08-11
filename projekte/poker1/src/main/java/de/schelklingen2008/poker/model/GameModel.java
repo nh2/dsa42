@@ -29,6 +29,7 @@ public class GameModel implements Serializable
     private int          actPlayerIndex;
     private int          dealerIndex;
     private long         smallBlind;
+    private boolean      bigBlindNeedsToSet;
 
     public GameModel()
     {
@@ -263,15 +264,18 @@ public class GameModel implements Serializable
     public void nextPlayer()
     {
         actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
-        if (highestBetIndex == actPlayerIndex)
+        if (highestBetIndex == actPlayerIndex && bigBlindNeedsToSet == false)
         {
             nextPhase();
+        }
+        if (highestBetIndex == getRisenPlayerIndex(actPlayerIndex, 1) && bigBlindNeedsToSet == true)
+        {
+            bigBlindNeedsToSet = false;
         }
         if (playerList.get(actPlayerIndex).isStillIn() == false || playerList.get(actPlayerIndex).hasLost() == true)
         {
             nextPlayer();
         }
-
     }
 
     public void nextPhase()
@@ -309,11 +313,13 @@ public class GameModel implements Serializable
         phase = 0;
         stack.clear();
         fillStack();
+        bigBlindNeedsToSet = true;
         dealerIndex = getRisenPlayerIndex(dealerIndex, 1);
+        actPlayerIndex = 0;
         setPlayerBet(smallBlind, getRisenPlayerIndex(dealerIndex, 1), false);
         setPlayerBet(2 * smallBlind, getRisenPlayerIndex(dealerIndex, 2), false);
-        actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         getHighestBetAndBetterIndex();
+        actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         giveCardsToPlayers();
     }
 
@@ -345,13 +351,15 @@ public class GameModel implements Serializable
     public void getHighestBetAndBetterIndex()
     {
         long actHighestBet = 0;
+        int highestBetIndexStart = highestBetIndex;
         for (int i = 0; i < playerList.size(); i++)
         {
-            Player player = playerList.get(i);
+            int risenIndex = getRisenPlayerIndex(highestBetIndexStart, i);
+            Player player = playerList.get(risenIndex);
             if (player.getOwnBet() > actHighestBet)
             {
                 actHighestBet = player.getOwnBet();
-                highestBetIndex = i;
+                highestBetIndex = risenIndex;
                 highestBet = actHighestBet;
             }
         }
@@ -376,7 +384,7 @@ public class GameModel implements Serializable
         long callValue = highestBet - player.getOwnBet();
         if (mustCallOrReRaise(playerIndex) == true && player.getBalance() >= callValue)
         {
-            setPlayerBet(callValue, playerIndex, true);
+            setPlayerBet(callValue, playerIndex, false);
             getHighestBetAndBetterIndex();
             nextPlayer();
         }
@@ -398,7 +406,6 @@ public class GameModel implements Serializable
     {
         if (mustCheckOrRaise(playerIndex) == true && getActPlayer().getBalance() >= highestBet)
         {
-            getActPlayer().setBalance(getActPlayer().getBalance() - raiseValue);
             setPlayerBet(raiseValue, playerIndex, true);
             getHighestBetAndBetterIndex();
             nextPlayer();
@@ -445,7 +452,7 @@ public class GameModel implements Serializable
         initGame();
     }
 
-    public void kartenAusgeben()
+    public void printCards()
     {
         for (Iterator<Card> iterator = cardList.iterator(); iterator.hasNext();)
         {
