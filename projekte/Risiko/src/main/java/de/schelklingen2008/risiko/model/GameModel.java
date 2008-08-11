@@ -109,58 +109,160 @@ public class GameModel implements Serializable
         // TODO f¸llen
         // init neighbours Island
         ArrayList island = new ArrayList<Country>();
-        island.add(0, c[1]); // Irland
-        island.add(1, c[2]); // GB
-        island.add(2, c[3]); // Norwegen
+        island.add(0, c[1]);// Irland
+        island.add(1, c[2]);// GB
+        island.add(2, c[3]);// Norwegen
         c[0].setNeighbours(island);
 
         // init neighbours Irland
         ArrayList irland = new ArrayList<Country>();
-        irland.add(0, c[0]); // Island
-        irland.add(1, c[2]); // GB
+        irland.add(0, c[0]);// Island
+        irland.add(1, c[2]);// GB
         c[1].setNeighbours(irland);
 
         // init neighbours GB
         ArrayList gb = new ArrayList<Country>();
-        gb.add(0, c[1]); // Irland
-        gb.add(1, c[23]); // BeNeLux
-        gb.add(2, c[21]); // Frankreich
-        gb.add(3, c[0]); // Island
+        gb.add(0, c[1]);// Irland
+        gb.add(1, c[23]);// BeNeLux
+        gb.add(2, c[21]);// Frankreich
+        gb.add(3, c[0]);// Island
         c[2].setNeighbours(gb);
 
         // init neighbours Norwegen
+        ArrayList norwegen = new ArrayList<Country>();
+        norwegen.add(0, c[0]);// Island
+        norwegen.add(1, c[7]);// Russland
+        norwegen.add(2, c[5]);// Schweden
+        norwegen.add(3, c[6]);// D‰nemark
+        c[3].setNeighbours(norwegen);
 
         // init neighbours Finnland
+        ArrayList finnland = new ArrayList<Country>();
+        finnland.add(0, c[5]);// Schweden
+        finnland.add(1, c[3]);// Norwegen
+        finnland.add(2, c[7]);// Russland
+        finnland.add(3, c[8]);// Estland
+        c[4].setNeighbours(finnland);
 
         // init neighbours Schweden
+        ArrayList schweden = new ArrayList<Country>();
+        schweden.add(0, c[6]);// D‰nemark
+        schweden.add(1, c[3]);// Norwegen
+        schweden.add(2, c[4]);// Finnland
+        c[5].setNeighbours(schweden);
 
         // init neighbours D‰nemark
+        ArrayList daenemark = new ArrayList<Country>();
+        daenemark.add(0, c[3]);// Norwegen
+        daenemark.add(1, c[5]);// Schweden
+        daenemark.add(2, c[24]);// Deutschland
+        c[6].setNeighbours(daenemark);
 
         // init neighbours Russland
+        ArrayList russland = new ArrayList<Country>();
+        russland.add(0, c[3]);// Norwegen
+        russland.add(1, c[4]);// Finnland
+        russland.add(2, c[8]);// Estland
+        russland.add(3, c[9]);// Lettland
+        russland.add(3, c[11]);// Weiﬂrussland
+        russland.add(4, c[12]);// Ukraine
+        c[7].setNeighbours(russland);
 
         // init neighbours Estland
+        ArrayList estland = new ArrayList<Country>();
+        estland.add(0, c[4]);// Finnland
+        estland.add(1, c[7]);// Russland
+        estland.add(2, c[9]);// Lettland
+        c[8].setNeighbours(estland);
 
         // init neighbours Lettland
+        ArrayList lettland = new ArrayList<Country>();
+        lettland.add(0, c[8]);// Estland
+        lettland.add(1, c[7]);// Russland
+        lettland.add(2, c[11]);// Weiﬂrussland
+        lettland.add(3, c[10]);// Litauen
+        c[9].setNeighbours(lettland);
 
         // init neighbours Litauen
+        ArrayList litauen = new ArrayList<Country>();
+        litauen.add(0, c[9]);// Lettland
+        litauen.add(1, c[11]);// Weiﬂrussland
+        litauen.add(2, c[13]);// Polen
+        c[10].setNeighbours(litauen);
 
-        // init neighbours Weissrussland
+        // init neighbours Weiﬂrussland
+        ArrayList weissrussland = new ArrayList<Country>();
+        weissrussland.add(0, c[10]);// Litauen
+        weissrussland.add(1, c[9]);// Lettland
+        weissrussland.add(2, c[7]);// Russland
+        weissrussland.add(3, c[12]);// Ukraine
+        weissrussland.add(4, c[13]);// Polen
+        c[11].setNeighbours(weissrussland);
 
         // init neighbours Ukraine
+        ArrayList ukraine = new ArrayList<Country>();
+        ukraine.add(0, c[13]);// Polen
+        ukraine.add(1, c[11]);// Weiﬂrussland
+        ukraine.add(2, c[7]);// Russland
+        ukraine.add(3, c[19]);// Rum‰nien
+        ukraine.add(4, c[29]);// Ungarn
+        ukraine.add(5, c[27]);// Slowakei
+        c[12].setNeighbours(ukraine);
 
         // init neighbours Polen
+        ArrayList polen = new ArrayList<Country>();
+        polen.add(0, c[24]);// Deutschland
+        polen.add(1, c[10]);// Litauen
+        polen.add(2, c[11]);// Weiﬂrussland
+        polen.add(3, c[12]);// Ukraine
+        polen.add(4, c[27]);// Slowakei
+        polen.add(4, c[25]);// Tschechien
+        c[13].setNeighbours(polen);
 
         // init neighbours Italien
+        ArrayList italien = new ArrayList<Country>();
+        italien.add(0, c[21]);// Frankreich
+        italien.add(1, c[26]);// Schweiz
+        italien.add(2, c[28]);// ÷sterreich
+        italien.add(3, c[16]);// Jugoslawien
+        italien.add(4, c[17]);// Albanien
+        c[14].setNeighbours(italien);
 
         // init neighbours Griechenland
+        ArrayList griechenland = new ArrayList<Country>();
+        griechenland.add(0, c[17]);// Albanien
+        griechenland.add(1, c[16]);// Jugoslawien
+        griechenland.add(2, c[18]);// Bulgarien
+        c[15].setNeighbours(griechenland);
 
         // init neighbours Jugoslawien
+        ArrayList jugoslawien = new ArrayList<Country>();
+        jugoslawien.add(0, c[14]);// Italien
+        jugoslawien.add(1, c[28]);// ÷sterreich
+        jugoslawien.add(2, c[29]);// Ungarn
+        jugoslawien.add(3, c[19]);// Rum‰nien
+        jugoslawien.add(4, c[18]);// Bulgarien
+        jugoslawien.add(5, c[15]);// Griechenland
+        jugoslawien.add(6, c[17]);// Albanien
+        c[16].setNeighbours(jugoslawien);
 
         // init neighbours Albanien
+        ArrayList albanien = new ArrayList<Country>();
+        albanien.add(0, c[14]);// Italien
+        albanien.add(1, c[16]);// Jugoslawien
+        albanien.add(2, c[15]);// Griechenland
+        c[17].setNeighbours(albanien);
 
         // init neighbours Bulgarien
+        // Jugoslawien
+        // Rum‰nien
+        // Griechenland
 
         // init neighbours Rum‰nien
+        // Ungarn
+        // Ukraine
+        // Bulgarien
+        // Jugoslawien
 
         // init neighbours Portugal
         ArrayList portugal = new ArrayList<Country>();
@@ -213,10 +315,27 @@ public class GameModel implements Serializable
         // Frankreich
 
         // init neighbours Slowakei
+        // Polen
+        // Ukraine
+        // Ungarn
+        // ÷sterreich
+        // Tschechien
 
         // init neighbours ÷sterreich
+        // Deutschland
+        // Tschechien
+        // Slowakei
+        // Ungarn
+        // Jugoslawien
+        // Italien
+        // Schweiz
 
         // init neighbours Ungarn
+        // Slowakei
+        // Ukraine
+        // Rum‰nien
+        // Jugoslawien
+        // ÷sterreich
 
     }
 
