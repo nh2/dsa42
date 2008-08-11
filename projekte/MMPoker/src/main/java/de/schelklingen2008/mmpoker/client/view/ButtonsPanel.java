@@ -32,15 +32,16 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
         GameModel model = controller.getGameContext().getGameModel();
         if (model == null) return;
         betField.setText(model.autoErgaenzen());
-        controller.betButtonClicked(betField.getText());
+        controller.callButtonClicked(betField.getText());
+        controller.raiseButtonClicked(betField.getText());
     }
 
     public void gameChanged()
     {
         removeAll();
 
-        JButton betButton = new JButton("bet");
-        betButton.addActionListener(this);
+        JButton callButton = new JButton("call");
+        callButton.addActionListener(this);
         JButton raiseButton = new JButton("raise");
         raiseButton.addActionListener(this);
         JButton foldButton = new JButton("fold");
@@ -69,7 +70,7 @@ public class ButtonsPanel extends JPanel implements ActionListener, GameChangeLi
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         add(Box.createHorizontalGlue());
-        add(betButton);
+        add(callButton);
         add(Box.createHorizontalStrut(5));
         add(raiseButton);
         add(Box.createHorizontalStrut(5));

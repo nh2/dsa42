@@ -10,9 +10,8 @@ public class Spieler implements Serializable
     private Blind        wasfuernBlind;
     private int          wettsumme;
     private String       name;
-
+    private LetzteAktion letzteAktion;
     private Blatt        handkarten;
-    private boolean      nochDabei;
 
     public Spieler(String name)
     {
@@ -21,7 +20,7 @@ public class Spieler implements Serializable
         Spielkarte[] handblatt = new Spielkarte[2];
         wettsumme = 0;
         this.name = name;
-        nochDabei = true;
+
     }
 
     public int getWettsumme()
@@ -80,14 +79,14 @@ public class Spieler implements Serializable
         return handblatt;
     }
 
-    public void setNochDabei(boolean nochDabei)
+    public void setLetzteAktion(LetzteAktion letzteAktion)
     {
-        this.nochDabei = nochDabei;
+        this.letzteAktion = letzteAktion;
     }
 
-    public boolean isNochDabei()
+    public LetzteAktion getLetzteAktion()
     {
-        return nochDabei;
+        return letzteAktion;
     }
 
 }

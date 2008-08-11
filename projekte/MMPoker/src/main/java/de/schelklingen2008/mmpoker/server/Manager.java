@@ -54,16 +54,16 @@ public class Manager extends GameManager
 
     }
 
-    public void bet(BodyObject client, String wettsumme)
+    public void call(BodyObject client, String wettsumme)
     {
-        gameModel.betraise(wettsumme, getPlayer(client));
+        gameModel.call(wettsumme, getPlayer(client));
         updateSharedState();
 
     }
 
     public void raise(BodyObject client, String wettsumme)
     {
-        gameModel.betraise(wettsumme, getPlayer(client));
+        gameModel.raise(wettsumme, getPlayer(client));
         updateSharedState();
 
     }
