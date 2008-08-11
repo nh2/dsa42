@@ -302,10 +302,15 @@ public class GameModel implements Serializable
                 fillCardList(1);
                 break;
             case 4:
-                // computeWinner();
+                computeWinner();
                 nextRound();
                 break;
         }
+    }
+
+    public void computeWinner()
+    {
+        // TODO Gewinner berechnen, Pot verteilen, Werte resetten, DealerIndex um 1 erhöhen
     }
 
     public void nextRound()
