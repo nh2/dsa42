@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
+import java.util.logging.Logger;
+
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Maintains the rules and the state of the game.
@@ -43,6 +46,8 @@ public class GameModel implements Serializable
     // TODO PlayerCards instanzieren
 
     private static final Random       RAND           = new Random();
+
+    private static final Logger       sLogger        = LoggerFactory.create();
 
     public GameModel(String[] names)
     {
@@ -627,6 +632,8 @@ public class GameModel implements Serializable
 
     public PlayerType getTurnHolder()
     {
+        sLogger.fine("turnHolder: " + turnHolder);
+
         return turnHolder;
     }
 
