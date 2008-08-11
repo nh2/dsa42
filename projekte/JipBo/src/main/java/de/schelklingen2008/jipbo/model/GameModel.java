@@ -17,6 +17,8 @@ public class GameModel implements Serializable
     private List<Card> mStockCards;
     private Player[]   mPlayers;
 
+    // private Player turnHolder;
+
     public GameModel()
     {
         // test initialisation
@@ -47,7 +49,11 @@ public class GameModel implements Serializable
         for (int i = 0; i < pNames.length; i++)
         {
 
-            mPlayers[i] = new Player(pNames[i], shuffleStockPile(), (i > 0 ? null : shuffleDrawPile()), null);
+            mPlayers[i] = new Player(pNames[i], shuffleStockPile(), null);
+            if (i == 0)
+            {
+                refreshDrawPile(mPlayers[i]);
+            }
         }
     }
 
@@ -87,15 +93,27 @@ public class GameModel implements Serializable
         return rStockPile;
     }
 
-    private Card[] shuffleDrawPile()
+    // private Card[] shuffleDrawPile()
+    // {
+    // Card[] rDrawPile = new Card[5];
+    // for (int i = 0; i < rDrawPile.length; i++)
+    // {
+    // rDrawPile[i] = getLastStockCard();
+    // removeLastStockCard();
+    // }
+    // return rDrawPile;
+    // }
+
+    public void refreshDrawPile(Player pPlayer)
     {
-        Card[] rDrawPile = new Card[5];
-        for (int i = 0; i < rDrawPile.length; i++)
+        for (int i = 0; i < pPlayer.getDrawPile().length; i++)
         {
-            rDrawPile[i] = getLastStockCard();
-            removeLastStockCard();
+            if (pPlayer.getDrawPile()[i].getNumber() == -2)
+            {
+                pPlayer.getDrawPile()[i].setNumber(getLastStockCard().getNumber());
+                removeLastStockCard();
+            }
         }
-        return rDrawPile;
     }
 
     public Player[] getPlayers()
@@ -204,7 +222,55 @@ public class GameModel implements Serializable
 
             playerDiscardPile[pToPlace].setNumber(pCard);
             mPlayers[playerID].removeDrawPileCard(pFromPlace);
+
+            // TODO next Player
+
         }
 
     }
+
+    // public Player getTurnHolder()
+    // {
+    // return turnHolder;
+    // }
+    //
+    // public boolean setTurnHolder(Player pTurnHolder)
+    // {
+    // boolean changed = turnHolder != pTurnHolder;
+    // turnHolder = pTurnHolder;
+    // return changed;
+    // }
+    //
+    // public boolean isTurnHolder(Player player)
+    // {
+    // return player == getTurnHolder();
+    // }
+    //
+    // public boolean isFinished()
+    // {
+    // return getTurnHolder() == null;
+    // }
+    //
+    // private void clear()
+    // {
+    // turnHolder = null;
+    // }
+    //
+    // public boolean isWinner(Player player)
+    // {
+    // return getWinner() == player;
+    // }
+    //
+    // public Player getWinner()
+    // {
+    // if (!isFinished()) return null;
+    // for (int i = 0; i < mPlayers.length; i++)
+    // {
+    // if (mPlayers[i].getStockPile().size() == 0)
+    // {
+    // return mPlayers[i];
+    // }
+    // }
+    // return null;
+    // }
 }

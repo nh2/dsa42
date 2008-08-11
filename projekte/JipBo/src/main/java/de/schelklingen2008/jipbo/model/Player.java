@@ -14,18 +14,12 @@ public class Player implements Serializable
     private Card[]     mDrawPile;
     private Card[]     mDiscardPile;
 
-    public Player(String pName, List<Card> pStockPile, Card[] pDrawPile, Card[] pDiscardPile)
+    public Player(String pName, List<Card> pStockPile, Card[] pDiscardPile)
     {
         mName = pName;
         mStockPile = pStockPile;
-        if (pDrawPile != null)
-        {
-            mDrawPile = pDrawPile;
-        }
-        else
-        {
-            mDrawPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
-        }
+        mDrawPile = new Card[] { new Card(-2), new Card(-2), new Card(-2), new Card(-2), new Card(-2) };
+
         if (pDiscardPile != null)
         {
             mDiscardPile = pDiscardPile;
@@ -71,6 +65,11 @@ public class Player implements Serializable
     public Card[] getDrawPile()
     {
         return mDrawPile;
+    }
+
+    public void setDrawPile(Card[] drawPile)
+    {
+        mDrawPile = drawPile;
     }
 
     public void removeDrawPileCard(int pPlace)
