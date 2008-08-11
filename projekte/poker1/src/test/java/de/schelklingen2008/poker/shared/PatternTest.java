@@ -103,7 +103,7 @@ public class PatternTest extends TestCase
         cardList.clear();
         straightList(cardList);
         System.out.println();
-        System.out.println(checker.isStraight());
+        if (checker.isStraight() == true) System.out.println("Straﬂe");
 
     }
 }
