@@ -49,7 +49,6 @@ public class GamePanel extends JPanel implements PlaceView
                                                                                .getGameModel()
                                                                                .getTurnholder()))
                 {
-
                     controller.EndofTurn();
                 }
             }
@@ -106,6 +105,7 @@ public class GamePanel extends JPanel implements PlaceView
         sidePanel.add(j, GroupLayout.FIXED);
         addHistoryLine("Frankreich - Spanien");
         addHistoryLine("Verluste: 2:1");
+
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
 

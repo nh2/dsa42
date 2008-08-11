@@ -80,9 +80,7 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     public Dimension getPreferredSize()
     {
-        // TODO calculate correct dimensions for the board view
         return new Dimension(1200, 1000);
-
     }
 
     @Override

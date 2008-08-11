@@ -44,27 +44,6 @@ public class Controller extends GameController
     private ToyBoxContext            toyBoxContext;
 
     @Override
-    public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
-    {
-        sLogger.finer("trace");
-
-        toyBoxContext = (ToyBoxContext) crowdContext;
-        gameContext.setMyName(toyBoxContext.getUsername().toString());
-        super.init(crowdContext, placeConfig);
-    }
-
-    public void placeUnit(Country c)
-    {
-        sharedState.manager.invoke("placeUnit", c.getIndex());
-    }
-
-    public void EndofTurn()
-    {
-
-        sharedState.manager.invoke("EndofTurn");
-    }
-
-    @Override
     protected PlaceView createPlaceView(CrowdContext crowdContext)
     {
         sLogger.finer("trace");
@@ -80,20 +59,30 @@ public class Controller extends GameController
         sharedState = null;
     }
 
+    public void EndofTurn()
+    {
+
+        sharedState.manager.invoke("EndofTurn");
+    }
+
     @Override
-    public void willEnterPlace(PlaceObject placeObject)
+    public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
     {
         sLogger.finer("trace");
 
-        sharedState = (SharedState) placeObject;
-        sharedState.addListener(new SharedStateListener());
-        updateGameContext();
-        super.willEnterPlace(placeObject);
+        toyBoxContext = (ToyBoxContext) crowdContext;
+        gameContext.setMyName(toyBoxContext.getUsername().toString());
+        super.init(crowdContext, placeConfig);
     }
 
     public void leaveButtonClicked()
     {
         toyBoxContext.getLocationDirector().moveBack();
+    }
+
+    public void placeUnit(Country c)
+    {
+        sharedState.manager.invoke("placeUnit", c.getIndex());
     }
 
     private void updateGameContext()
@@ -104,6 +93,17 @@ public class Controller extends GameController
         gameContext.setGameModel(sharedState.getGameModel());
 
         fireGameChange();
+    }
+
+    @Override
+    public void willEnterPlace(PlaceObject placeObject)
+    {
+        sLogger.finer("trace");
+
+        sharedState = (SharedState) placeObject;
+        sharedState.addListener(new SharedStateListener());
+        updateGameContext();
+        super.willEnterPlace(placeObject);
     }
 
     public void addChangeListener(GameChangeListener listener)

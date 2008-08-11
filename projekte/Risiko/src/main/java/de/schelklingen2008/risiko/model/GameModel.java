@@ -46,7 +46,22 @@ public class GameModel implements Serializable
         p = new Player[names.length];
         for (int i = 0; i < names.length; i++)
         {
-            p[i] = new Player(names[i], i, Color.BLUE);
+            switch (i)
+            {
+                case 0:
+                    p[i] = new Player(names[i], i, Color.BLUE);
+                    break;
+                case 1:
+                    p[i] = new Player(names[i], i, Color.RED);
+                    break;
+                case 2:
+                    p[i] = new Player(names[i], i, Color.YELLOW);
+                    break;
+                case 3:
+                    p[i] = new Player(names[i], i, Color.GREEN);
+                    break;
+
+            }
         }
     }
 
