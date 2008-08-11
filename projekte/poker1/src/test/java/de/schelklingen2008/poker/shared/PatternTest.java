@@ -56,15 +56,15 @@ public class PatternTest extends TestCase
 
     }
 
-    public List<Card> fill4(List<Card> cards)
+    public List<Card> straightList(List<Card> cards)
     {
 
-        cards.add(new Card(0, 8));
-        cards.add(new Card(1, 1));
-        cards.add(new Card(2, 9));
-        cards.add(new Card(3, 6));
+        cards.add(new Card(0, 0));
+        cards.add(new Card(1, 2));
         cards.add(new Card(2, 3));
-        cards.add(new Card(0, 7));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(2, 5));
+        cards.add(new Card(0, 6));
         cards.add(new Card(1, 10));
 
         return cards;
@@ -99,6 +99,11 @@ public class PatternTest extends TestCase
         checker.mehrlinge();
         cardList = fill3(cardList);
         assertTrue(checker.isFlush());
+
+        cardList.clear();
+        straightList(cardList);
+        System.out.println();
+        System.out.println(checker.straight(0, 5));
 
     }
 }
