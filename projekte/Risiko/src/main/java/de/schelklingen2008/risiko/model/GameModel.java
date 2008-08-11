@@ -181,9 +181,9 @@ public class GameModel implements Serializable
 
     public boolean isLegalMoveAttack(Player pPlayer, Country country1, Country country2)
     {
-        if (pPlayer == turnholder)
+        if (pPlayer.equals(turnholder))
         {
-            if (pPlayer == country1.getOccupier())
+            if (pPlayer.equals(country1.getOccupier()))
             {
                 if (country1.isNeighbour(country2))
                 {
@@ -199,9 +199,25 @@ public class GameModel implements Serializable
             return false;
     }
 
-    public boolean isLegalMoveSet()
+    public boolean isLegalMoveSet(Player pPlayer, Country country1)
     {
+        if (pPlayer.equals(turnholder))
+        {
+            if (pPlayer.equals(country1.getOccupier()))
+            {
+                if (pPlayer.getUnitsToSet() > 0)
+                {
+                    return true;
+                }
+                else
+                    return false;
 
+            }
+            else
+                return false;
+        }
+        else
+            return false;
     }
 
     public int dice()
