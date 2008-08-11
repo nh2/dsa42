@@ -1,7 +1,6 @@
 package de.schelklingen2008.poker.shared;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -71,21 +70,55 @@ public class PatternTest extends TestCase
 
     }
 
-    public void output(List<Card> list, PatternChecker checker)
+    public List<Card> fill5(List<Card> cards)
     {
-        list = PatternChecker.sort(list);
-        System.out.println();
-        for (Iterator iterator = list.iterator(); iterator.hasNext();)
-        {
-            Card card = (Card) iterator.next();
-            System.out.println(card.getValue() + " " + card.getSuit());
 
-        }
-        // PatternChecker checker = new PatternChecker(list);
-        System.out.println(checker.numberOfPairs());
-        System.out.println(checker.counter);
-        assertEquals(1, checker.numberOfPairs());
+        cards.add(new Card(3, 9));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(3, 9));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(3, 9));
 
+        return cards;
+
+    }
+
+    // public void output(List<Card> list, PatternChecker checker)
+    // {
+    // list = PatternChecker.sort(list);
+    // System.out.println();
+    // for (Iterator iterator = list.iterator(); iterator.hasNext();)
+    // {
+    // Card card = (Card) iterator.next();
+    // System.out.println(card.getValue() + " " + card.getSuit());
+    //
+    // }
+    // // PatternChecker checker = new PatternChecker(list);
+    // System.out.println(checker.numberOfPairs());
+    // System.out.println(checker.counter);
+    // assertEquals(1, checker.numberOfPairs());
+    //
+    // }
+
+    public void ueberpruefung(PatternChecker checker)
+    {
+        System.out.println("Paar: " + checker.isPair());
+        System.out.println("Driling: " + checker.isThreeOfAKind());
+        System.out.println("Straﬂe: " + checker.isStraight());
+        System.out.println("Flush: " + checker.isFlush());
+        System.out.println("Full House: " + checker.isFullHouse());
+        System.out.println("Vierling: " + checker.isFourOfAKind());
+        System.out.println("Straight Flush: " + checker.isStraightFlush());
+    }
+
+    public void test2(List<Card> cardList, PatternChecker checker)
+    {
+        cardList.clear();
+        fill5(cardList);
+        cardList = fill5(cardList);
+        ueberpruefung(checker);
     }
 
     public void testHaupt()
@@ -95,17 +128,12 @@ public class PatternTest extends TestCase
         // cardList = fill(cardList);
         // checker.mehrlinge();
         // cardList.clear();
-        cardList = fill3(cardList);
-        checker.mehrlinge();
-        System.out.println(checker.isPair());
+        // cardList = fill3(cardList);
+        // checker.mehrlinge();
+        // System.out.println(checker.isPair());
         // cardList = fill3(cardList);
         // assertTrue(checker.isFlush());
-
-        cardList.clear();
-        straightList(cardList);
-        System.out.println(checker.isPair());
-        System.out.println();
-        if (checker.isStraight() == true) System.out.println("Straﬂe");
+        test2(cardList, checker);
 
     }
 }

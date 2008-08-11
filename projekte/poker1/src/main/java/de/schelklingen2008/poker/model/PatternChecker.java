@@ -37,54 +37,28 @@ public class PatternChecker
         return cardList;
     }
 
-    public boolean isFourOfAKind()
-    {
-        return false;
-
-    }
-
-    public int numberOfPairs()
-    {
-        int pairCounter = 0;
-
-        for (int i = 0; i < ANZAHL; i++)
-        {
-            counter = 1;
-            for (int j = i + 1; j < ANZAHL; j++)
-            {
-                if (cards.get(i).getValueInt() == cards.get(j).getValueInt())
-                {
-                    counter++;
-                    pairCounter++;
-
-                }
-            }
-
-        }
-
-        return pairCounter;
-
-    }
-
-    public boolean isFlush()
-    {
-        int[] flushCounter = new int[4];
-        for (int i = 0; i < 4; i++)
-        {
-            // zähle wie viele karten es mit der SuitNr. i gibt
-            for (int j = 0; j < ANZAHL; j++)
-            {
-                if (cards.get(j).getSuitInt() == i) flushCounter[i]++;
-            }
-            if (flushCounter[i] >= 5)
-            {
-                System.out.println("Flush mit der Farbe" + i);
-                return true;
-            }
-
-        }
-        return false;
-    }
+    // public int numberOfPairs()
+    // {
+    // int pairCounter = 0;
+    //
+    // for (int i = 0; i < ANZAHL; i++)
+    // {
+    // counter = 1;
+    // for (int j = i + 1; j < ANZAHL; j++)
+    // {
+    // if (cards.get(i).getValueInt() == cards.get(j).getValueInt())
+    // {
+    // counter++;
+    // pairCounter++;
+    //
+    // }
+    // }
+    //
+    // }
+    //
+    // return pairCounter;
+    //
+    // }
 
     public Pattern mehrlinge()
     {
@@ -118,17 +92,17 @@ public class PatternChecker
         {
             if (cards.get(j).getValueInt() == i) mehrlingsCounter++;
         }
-        if (mehrlingsCounter > 1)
-        {
-            System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter);
-
-        }
+        // if (mehrlingsCounter > 1)
+        // {
+        // System.out.println("Mehrling der Art " + i + " Anzahl: " + mehrlingsCounter);
+        //
+        // }
 
         return mehrlingsCounter;
 
     }
 
-    public boolean isPair()
+    public boolean isPair() // es muss zusätzlich getestet werden, ob isFullHouse auch true ist
     {
         boolean pairFound = false;
         for (int i = 0; i < 13; i++)
@@ -142,6 +116,40 @@ public class PatternChecker
             }
         }
         return pairFound;
+
+    }
+
+    public boolean isThreeOfAKind() // es muss zusätzlich getestet werden, ob isFullHouse auch true ist
+    {
+        boolean toakFound = false; // toak: three of a kind
+        for (int i = 0; i < 13; i++)
+        {
+            if (getCount(i) == 3)
+            {
+                if (toakFound)
+                    return false;
+                else
+                    toakFound = true;
+            }
+        }
+        return toakFound;
+
+    }
+
+    public boolean isFourOfAKind()
+    {
+        boolean foakFound = false; // foak: four of a kind
+        for (int i = 0; i < 13; i++)
+        {
+            if (getCount(i) == 4)
+            {
+                if (foakFound)
+                    return false;
+                else
+                    foakFound = true;
+            }
+        }
+        return foakFound;
 
     }
 
@@ -168,10 +176,42 @@ public class PatternChecker
 
     }
 
+    public boolean isFlush()
+    {
+        int[] flushCounter = new int[4];
+        for (int i = 0; i < 4; i++)
+        {
+            // zähle wie viele karten es mit der SuitNr. i gibt
+            for (int j = 0; j < ANZAHL; j++)
+            {
+                if (cards.get(j).getSuitInt() == i) flushCounter[i]++;
+            }
+            if (flushCounter[i] >= 5)
+            {
+                // System.out.println("Flush mit der Farbe" + i);
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public boolean isFullHouse()
+    {
+        if (isPair() && isThreeOfAKind()) return true;
+        return false;
+    }
+
+    public boolean isStraightFlush()
+    {
+        if (isStraight() && isFlush()) return true;
+        return false;
+    }
+
     public int getHighestPatternValue()
     {
         if (isFourOfAKind()) return FOUR_OF_A_KIND;
-        if (numberOfPairs() == 1) return PAIR;
+
         return 0;
 
     }
