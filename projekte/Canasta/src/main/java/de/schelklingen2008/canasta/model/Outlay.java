@@ -21,6 +21,11 @@ public class Outlay implements Iterable<CardStack>, Serializable
         return cardStacks.add(e);
     }
 
+    public boolean contains(Object o)
+    {
+        return cardStacks.contains(o);
+    }
+
     public CardStack get(int index)
     {
         return cardStacks.get(index);

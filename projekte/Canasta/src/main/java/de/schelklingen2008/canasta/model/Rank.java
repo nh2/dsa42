@@ -9,6 +9,5 @@ public enum Rank
         if (this == JOKER || this == TWO) return true;
 
         return false;
-
     }
 }

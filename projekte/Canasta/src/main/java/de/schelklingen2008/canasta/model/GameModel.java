@@ -197,6 +197,24 @@ public class GameModel implements Serializable
         return cardScore >= minScore;
     }
 
+    public static boolean isMeldLegal(Card[] cards, CardStack cardStack)
+    {
+        if (cards.length <= 0) return false;
+
+        Rank rank = GameModel.getRank(cards);
+        if (!rank.isWildcard() && rank != cardStack.getRank())
+        {
+            return false;
+        }
+
+        if ((Card.getJokerCount(cards) + cardStack.getJokerCount()) * 2 >= cardStack.size() + cards.length)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static Rank getRank(Card[] cards)
     {
         Rank rank = null;

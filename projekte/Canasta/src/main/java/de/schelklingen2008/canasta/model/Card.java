@@ -1,6 +1,7 @@
 package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import com.threerings.io.Streamable;
 
@@ -43,5 +44,26 @@ public class Card implements Serializable, Comparable<Card>, Streamable
     public int compareTo(Card o)
     {
         return getRank().compareTo(o.getRank());
+    }
+
+    public static int getJokerCount(Card[] cards)
+    {
+        int jokerCount = 0;
+
+        for (Card card : cards)
+        {
+            if (card.getRank() == Rank.TWO || card.getRank() == Rank.JOKER)
+            {
+                jokerCount++;
+            }
+        }
+
+        return jokerCount;
+
+    }
+
+    public static int getJokerCount(Collection<Card> cards)
+    {
+        return getJokerCount(cards.toArray(new Card[cards.size()]));
     }
 }

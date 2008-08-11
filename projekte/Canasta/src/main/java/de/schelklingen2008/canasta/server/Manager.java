@@ -91,17 +91,7 @@ public class Manager extends GameManager
 
         Rank handRank = GameModel.getRank(player.getHand().getAll(selectedCardNumbers));
 
-        if (handRank == null)
-        {
-            sLogger.info("melded cards must have the same rank!");
-            return;
-        }
-
-        if (handRank != player.getOutlay().get(whichCardStack).getRank())
-        {
-            sLogger.info("cards, which are melded dont match the cardstack");
-            return;
-        }
+        if (!GameModel.isMeldLegal(player.getHand().getAll(selectedCardNumbers), player.getOutlay().get(whichCardStack))) return;
 
         gameModel.addCardsToStack(player, selectedCardNumbers, whichCardStack);
 

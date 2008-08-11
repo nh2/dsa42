@@ -3,6 +3,7 @@ package de.schelklingen2008.canasta.shared;
 import junit.framework.TestCase;
 import de.schelklingen2008.canasta.client.Constants;
 import de.schelklingen2008.canasta.model.Card;
+import de.schelklingen2008.canasta.model.CardStack;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.model.Rank;
@@ -138,5 +139,60 @@ public class GameModelTest extends TestCase
                                                        new Card(Rank.TEN, Suit.DIAMONDS),
                                                        new Card(Rank.TEN, Suit.DIAMONDS),
                                                        new Card(Rank.TEN, Suit.DIAMONDS) }));
+    }
+
+    public void testMeld()
+    {
+        CardStack stack = new CardStack();
+        Card[] cards;
+
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        assertEquals(3, stack.size());
+
+        cards = new Card[] { new Card(Rank.JACK, Suit.CLUBS) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JACK, Suit.CLUBS), new Card(Rank.JACK, Suit.CLUBS),
+                new Card(Rank.JACK, Suit.CLUBS), new Card(Rank.JACK, Suit.CLUBS), new Card(Rank.JACK, Suit.CLUBS) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JOKER, null) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.TWO, Suit.CLUBS) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JOKER, null), new Card(Rank.JOKER, null), new Card(Rank.JOKER, null) };
+        assertFalse(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.TWO, Suit.CLUBS), new Card(Rank.JOKER, null), new Card(Rank.JOKER, null) };
+        assertFalse(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JACK, null), new Card(Rank.JOKER, null), new Card(Rank.JOKER, null),
+                new Card(Rank.JOKER, null) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.QUEEN, Suit.CLUBS) };
+        assertFalse(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.QUEEN, Suit.CLUBS), new Card(Rank.JOKER, null) };
+        assertFalse(GameModel.isMeldLegal(cards, stack));
+
+        stack.add(new Card(Rank.JOKER, null));
+        assertEquals(4, stack.size());
+
+        cards = new Card[] { new Card(Rank.JOKER, null) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JOKER, null), new Card(Rank.JOKER, null) };
+        assertFalse(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JACK, null), new Card(Rank.JOKER, null), new Card(Rank.JOKER, null) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
+
+        cards = new Card[] { new Card(Rank.JACK, Suit.CLUBS) };
+        assertTrue(GameModel.isMeldLegal(cards, stack));
     }
 }

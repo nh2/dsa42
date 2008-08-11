@@ -26,7 +26,6 @@ import de.schelklingen2008.canasta.client.model.GameContext;
 import de.schelklingen2008.canasta.client.view.GamePanel;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Player;
-import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -131,7 +130,9 @@ public class Controller extends GameController
             return;
         }
 
-        if (!getGameContext().getGameModel().isFirstMeldLegal(player, player.getHand().getAll(selectedCardNumbers)))
+        getGameContext().getGameModel();
+        if (player.getOutlay().size() <= 0
+            && !GameModel.isFirstMeldLegal(player, player.getHand().getAll(selectedCardNumbers)))
         {
             sLogger.info("first meld not enough points!");
             return;
@@ -149,19 +150,8 @@ public class Controller extends GameController
         }
 
         Player player = getGameContext().getMyPlayer();
-        Rank handRank = GameModel.getRank(player.getHand().getAll(selectedCardNumbers));
 
-        if (handRank == null)
-        {
-            sLogger.info("melded cards must have the same rank!");
-            return;
-        }
-
-        if (handRank != player.getOutlay().get(whichCardStack).getRank())
-        {
-            sLogger.info("cards, which are melded dont match the cardstack");
-            return;
-        }
+        if (!GameModel.isMeldLegal(player.getHand().getAll(selectedCardNumbers), player.getOutlay().get(whichCardStack))) return;
 
         sharedState.manager.invoke("addCardsToStack", selectedCardNumbers, whichCardStack);
     }

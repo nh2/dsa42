@@ -62,17 +62,7 @@ public class CardStack extends ArrayList<Card> implements Serializable
 
     public int getJokerCount()
     {
-        int jokerCount = 0;
-
-        for (Card card : cards)
-        {
-            if (card.getRank() == Rank.TWO || card.getRank() == Rank.JOKER)
-            {
-                jokerCount++;
-            }
-        }
-
-        return jokerCount;
+        return Card.getJokerCount(cards);
     }
 
     public boolean isCanasta()
