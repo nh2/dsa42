@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.billiards.client.controller.Controller;
+import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.model.Ball;
 import de.schelklingen2008.billiards.model.BallSunkEvent;
 import de.schelklingen2008.billiards.model.GameEventAdapter;
@@ -22,12 +23,22 @@ public class BallView extends JPanel
      * 
      */
     private static final long serialVersionUID = -8866337375992404949L;
-    Controller                controller       = null;
+    Controller controller = null;
 
     public BallView(Controller controller)
     {
         this.controller = controller;
         setOpaque(false);
+
+        controller.addChangeListener(new GameChangeListener()
+        {
+
+            public void gameChanged()
+            {
+                repaint();
+            }
+
+        });
 
         controller.getGameContext().getGameModel().addGameEventListener(new GameEventAdapter()
         {
@@ -83,13 +94,9 @@ public class BallView extends JPanel
 
                 gfx.fillOval(i * 50 + 10, j * 50 + 10, 40, 40);
 
-                final int x = (int) Math.round(Math.sqrt(1
-                                                         - 0.25
-                                                         * STRIPE_HEIGHT
-                                                         / BALL_RADIUS
-                                                         * STRIPE_HEIGHT
-                                                         / BALL_RADIUS)
-                                               * BALL_RADIUS);
+                final int x =
+                    (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
+                                     * BALL_RADIUS);
 
                 final int y = (int) (0.5 * STRIPE_HEIGHT);
 

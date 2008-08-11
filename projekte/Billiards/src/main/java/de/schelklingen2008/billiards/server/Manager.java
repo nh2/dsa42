@@ -52,8 +52,30 @@ public class Manager extends GameManager
 
     public void takeShot(BodyObject client, double angle, double velocity)
     {
+
         gameModel.takeShot(getPlayer(client), angle, velocity);
         updateSharedState();
+
+        long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
+        while (gameModel.isInMotion())
+        {
+            gameModel.processTimeStep(0.001d);
+            milliSecondsPassed++;
+        }
+
+        long deltaTime = System.currentTimeMillis() - startTick;
+
+        try
+        {
+            Thread.sleep(milliSecondsPassed - deltaTime);
+        }
+        catch (InterruptedException e)
+        {
+
+        }
+
+        updateSharedState();
+
     }
 
 }
