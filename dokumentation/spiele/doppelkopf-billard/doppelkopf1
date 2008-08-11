@@ -13,6 +13,8 @@ Wir haben uns dafür entschieden, jede Karte mit genau einer anderen vergleichba
 
 <Java-Code>                                                                                                   </Java-Code>                                                                                                  <Kasten>
 
+</Java-Code>
+
 Comparable
 Mit dem Comparable-Interface liefert Java eine standardisierte Möglichkeit, Objekte zu vergleichen. Eine Klasse, die Comparable implementiert, muss die compareTo-Methode überschreiben, in der man genau angeben kann, in welchem Verhältnis (größer, kleinder oder gleich) das aufrufende Objekt im gegenüber dem verglichenen Objekt steht. Implementierungen von Comparable ermöglichen nicht nur den einfachen Vergleich zweier Objekte, sondern auch nützliche Operationen in komplexen Datentypen wie z.B. Listen. Wir haben die Methode zur automatischen Listensortierung genutzt, um das Blatt jedes Spielers automatisch zu ordnen.        </Kasten>
 

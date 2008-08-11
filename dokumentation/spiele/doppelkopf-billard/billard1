@@ -1,13 +1,18 @@
 Billard
 Bei der Programmierung von Billard haben wir uns auf eine zwei-Spieler-Variante von 8-Ball konzentriert.
 Auf dem Billardtisch liegen 7 volle, 7 halbe Kugeln sowie eine schwarze 8 Kugel. Jeder Spieler Spieler muss im Spielverlauf entweder alle Halben oder alle Vollen einlochen und zuletzt die schwarze Kugel versenken.
-Welche Kugeln der Spieler zugeteilt bekommt, h�ngt davon ab, welche Kugel er nach dem Er�ffnungssto� einlocht.
-Locht ein Spieler eine Kugel des Gegners oder die wei�e Kugel ein, so gilt dies als Fowl; das hat zur Folge, dass der Gegner die wei�e Kugel f�r seinen n�chsten Sto� beliebig positionieren darf. Dasselbe gilt, wenn ein Spieler mit der wei�en Kugel �berhaupt keine Kugel ber�hrt hat.
+Welche Kugeln der Spieler zugeteilt bekommt, h�ngt davon ab, welche Kugel er nach dem Er�ffnungssto� einlocht.
+Locht ein Spieler eine Kugel des Gegners oder die wei�e Kugel ein, so gilt dies als Fowl; das hat zur Folge, dass der Gegner die wei�e Kugel f�r seinen n�chsten Sto� beliebig positionieren darf. Dasselbe gilt, wenn ein Spieler mit der wei�en Kugel �berhaupt keine Kugel ber�hrt hat.
 Der Spieler, der als erster alle seine farbigen und zuletzt die schwarze Kugel einlocht, geht als Sieger hervor.
 
 <Klassendiagramm />
 
-Die gr��te Schwierigkeit bei der Umsetztung des Billard-Spiels bestand in der Spielphysik. So m�ssen die Kugeln physikalisch korrekt unter Einfluss der Reibung rollen, kollidieren und sich im richtigen Winkel mit richtigen Geschwindigkeit wieder voneienander entfernen.
+Die gr��te Schwierigkeit bei der Umsetztung des Billard-Spiels bestand in der Spielphysik. So m�ssen die Kugeln physikalisch korrekt unter Einfluss der Reibung rollen, kollidieren und sich im richtigen Winkel mit richtigen Geschwindigkeit wieder voneienander entfernen.
+Wie merkt das Spiel, ob sich zwei Kugeln berühren, und vor allem, wann?
+Man könnte zur Lösung dieses Problems die Koordinaten jeder Kugel in sehr kleinen Zeitabständen überprüfen und auf eine Kollision bzw. Überlappung überprüfen. Das hätte jedoch folgende Nachteile: Zum einen müssen sich zur Kollision zwei Bälle erst einmal überschneiden, was nicht der Billard-Logik entspricht und die Berechnung von Ein- und Ausfallwinkel verfälschen würde. Zum anderen müsste die zeitliche Auflösung extrem hoch sein, damit bei hohen Geschwindigkeiten eine Kugelüberschneidung überhaupt registriert würde. Zuletzt wäre die Ballbewegung dadurch von der Geschwindigkeit des ausführenden Systems abhängig - die Kugeln würden sich also auf unterschiedlichen Maschinen unterschiedlich bewegen.
+Eine viel einfachere und zudem elegante Lösung ist die Berechnung der Zeit bis zur nächsten Kollision zwischen zwei Bällen. Ist diese bekannt, kann das Spiel exakt bis zum Kollisionszeitpunkt weiterlaufen, im richtigen Moment Winkel und Geschwindigkeiten berechnen und die Kollision durchführen.
+Die folgende Methode berechnet die Dauer bis zur nächsten Kollision zweier Ball-Objekte. So wird während des Spiels nach jeder Kollision jede Kugel auf den Kollisionszeitpunkt mit jeder anderen Kugel überprüft.
+
 
 <Java-Code>
     double getNextBallCollision(Ball other)
