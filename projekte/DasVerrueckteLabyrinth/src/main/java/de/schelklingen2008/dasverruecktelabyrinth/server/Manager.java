@@ -37,6 +37,7 @@ public class Manager extends GameManager
         gameModel.placePlayer(x, y, getPlayerType(client));
         updateSharedState();
         if (gameModel.isFinished()) endGame();
+        updateSharedState();
     }
 
     @Override
@@ -60,6 +61,7 @@ public class Manager extends GameManager
         {
             gameModel.rechtsDrehen();
         }
+        updateSharedState();
     }
 
     public void linksDrehen(BodyObject client)
@@ -69,6 +71,7 @@ public class Manager extends GameManager
         {
             gameModel.linksDrehen();
         }
+        updateSharedState();
     }
 
     public void insert(BodyObject client, PushButton pPushButton)
@@ -78,6 +81,7 @@ public class Manager extends GameManager
         {
             gameModel.insert(pPushButton);
         }
+        updateSharedState();
     }
 
     /**
