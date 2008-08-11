@@ -96,7 +96,6 @@ public class PatternTest extends TestCase
         cardList = fill(cardList);
         output(cardList, checker);
         cardList.clear();
-        s
 
         // cardList = fill2(cardList);
         // output(cardList);
