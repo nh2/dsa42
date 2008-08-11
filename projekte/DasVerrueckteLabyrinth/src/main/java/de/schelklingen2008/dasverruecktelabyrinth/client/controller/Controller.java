@@ -133,7 +133,7 @@ public class Controller extends GameController
 
     public void insert(PushButton pPushButton)
     {
-        sharedState.manager.invoke("insert");
+        sharedState.manager.invoke("insert", pPushButton);
     }
 
     public void rechtsDrehen()
