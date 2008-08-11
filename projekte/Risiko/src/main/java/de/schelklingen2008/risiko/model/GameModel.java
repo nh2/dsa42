@@ -17,6 +17,7 @@ public class GameModel implements Serializable
     private Player    turnholder;
     private int       turnholderIndex;
     private int       index;
+    private String[]  history;
 
     public GameModel(String[] names)
     {
@@ -25,9 +26,20 @@ public class GameModel implements Serializable
         initNeigbours();
         distributeCountrys();
 
+        history = new String[2];
         turnholderIndex = 0;
         turnholder = p[0];
         p[0].setUnitsToSet(5);
+    }
+
+    public String[] getnewHistory()
+    {
+        return history;
+    }
+
+    public void removenewHistory()
+    {
+        history[0] = null;
     }
 
     public Country getSelectedCountry()
@@ -538,6 +550,8 @@ public class GameModel implements Serializable
     {
         int dicesattacker;
         int dicesdefender;
+        int deflostunits = 0;
+        int attlostunits = 0;
 
         if (attacker.getUnits() > 3)
             dicesattacker = 3;
@@ -599,10 +613,11 @@ public class GameModel implements Serializable
             if (vergleicha > vergleichd)
             {
                 defender.setUnits(defender.getUnits() - 1);
+                deflostunits += 1;
             }
             else
                 attacker.setUnits(attacker.getUnits() - 1);
-
+            attlostunits += 1;
         }
 
         if (defender.getUnits() == 0)
@@ -611,6 +626,8 @@ public class GameModel implements Serializable
             defender.setUnits(attacker.getUnits() / 2);
             attacker.setUnits(attacker.getUnits() - attacker.getUnits() / 2);
         }
+        history[0] = attacker.getName() + " - " + defender.getName();
+        history[1] = "Verluste" + attlostunits + " - " + deflostunits;
 
     }
 }

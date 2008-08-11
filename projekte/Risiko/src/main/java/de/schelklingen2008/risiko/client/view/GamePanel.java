@@ -21,14 +21,16 @@ import com.threerings.toybox.client.ToyBoxUI;
 
 import de.schelklingen2008.risiko.client.Constants;
 import de.schelklingen2008.risiko.client.controller.Controller;
+import de.schelklingen2008.risiko.client.controller.GameChangeListener;
 
 /**
  * Contains the primary client interface for the game.
  */
-public class GamePanel extends JPanel implements PlaceView
+public class GamePanel extends JPanel implements PlaceView, GameChangeListener
 {
 
-    private JTextArea historyDisplay = new JTextArea();
+    private JTextArea  historyDisplay = new JTextArea();
+    private Controller controller;
 
     private class ActionListenerImplementation implements ActionListener
     {
@@ -38,6 +40,7 @@ public class GamePanel extends JPanel implements PlaceView
         private ActionListenerImplementation(Controller controller)
         {
             this.controller = controller;
+
         }
 
         public void actionPerformed(ActionEvent e)
@@ -66,6 +69,9 @@ public class GamePanel extends JPanel implements PlaceView
      */
     public GamePanel(Controller controller)
     {
+        this.controller = controller;
+        controller.addChangeListener(this);
+
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
         setBackground(new Color(0x6699CC));
@@ -103,8 +109,6 @@ public class GamePanel extends JPanel implements PlaceView
         JScrollPane j = new JScrollPane(historyDisplay);
         j.setPreferredSize(new Dimension(250, 400));
         sidePanel.add(j, GroupLayout.FIXED);
-        addHistoryLine("Frankreich - Spanien");
-        addHistoryLine("Verluste: 2:1");
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
@@ -134,5 +138,16 @@ public class GamePanel extends JPanel implements PlaceView
     {
 
         historyDisplay.append(s + "\n");
+    }
+
+    public void gameChanged()
+    {
+        if (controller.getGameContext().getGameModel().getnewHistory()[0] != null)
+        {
+            addHistoryLine(controller.getGameContext().getGameModel().getnewHistory()[0]);
+            addHistoryLine(controller.getGameContext().getGameModel().getnewHistory()[1]);
+            controller.getGameContext().getGameModel().removenewHistory();
+        }
+
     }
 }

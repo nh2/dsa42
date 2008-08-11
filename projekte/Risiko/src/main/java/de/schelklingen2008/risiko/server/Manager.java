@@ -72,6 +72,7 @@ public class Manager extends GameManager
     {
         gameModel.attack(gameModel.getCountry(attindex), gameModel.getCountry(defindex));
         updateSharedState();
+        gameModel.removenewHistory();
     }
 
     private void updateSharedState()

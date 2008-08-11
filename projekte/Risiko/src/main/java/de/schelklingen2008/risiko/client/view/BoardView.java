@@ -66,9 +66,11 @@ public class BoardView extends JPanel implements GameChangeListener
 
         if (e.getButton() == 3 && getGameModel().getSelectedCountry() != null)
         {
-            getGameModel().isLegalMoveMove(getGameContext().getMyPlayer(), getGameModel().getSelectedCountry(),
-                                           getGameModel().getCountryByColor(c));
-            controller.moveUnit(getGameModel().getSelectedCountry(), getGameModel().getCountryByColor(c));
+            if (getGameModel().isLegalMoveMove(getGameContext().getMyPlayer(), getGameModel().getSelectedCountry(),
+                                               getGameModel().getCountryByColor(c)))
+            {
+                controller.moveUnit(getGameModel().getSelectedCountry(), getGameModel().getCountryByColor(c));
+            }
             getGameModel().setAllCountriesUnselected();
         }
         else
@@ -96,6 +98,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
             // else if(getGameModel().isLegalMoveAttack(getGameContext().getMyPlayer(), , null))
         }
+
         repaint();
     }
 
