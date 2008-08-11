@@ -133,6 +133,7 @@ public class Controller extends GameController
 
     public void insert(PushButton pPushButton)
     {
+        sLogger.fine("insert:" + pPushButton);
         sharedState.manager.invoke("insert", pPushButton);
     }
 

@@ -131,4 +131,18 @@ public class Tile implements Serializable
 
         return false;
     }
+
+    @Override
+    public String toString()
+    {
+        if (isCross()) return "+";
+        if (isHorizontal()) return "-";
+        if (isVertikal()) return "|";
+        if (isCurve1()) return "1";
+        if (isCurve2()) return "2";
+        if (isCurve3()) return "3";
+        if (isCurve4()) return "4";
+        return " ";
+    }
+
 }
