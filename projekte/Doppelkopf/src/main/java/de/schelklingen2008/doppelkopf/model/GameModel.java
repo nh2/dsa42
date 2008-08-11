@@ -76,7 +76,9 @@ public class GameModel implements Serializable
         if (spieler != spielerliste.getAnDerReihe())
         {
             zugGueltig = false;
-            logger.log(Level.INFO, "Spieler nicht an der Reihe. ");
+            logger.log(Level.INFO, "Spieler nicht an der Reihe. "
+                                   + spielerliste.getAnDerReihe()
+                                   + " ist an der Reihe. ");
         }
 
         if (mitte.size() == 4)
@@ -101,6 +103,7 @@ public class GameModel implements Serializable
                 Spieler stichsieger = tisch.getMittenspieler().get(position);
                 stichsieger.getGewinnstapel().addAll(mitte);
                 mitte.clear();
+                tisch.getMittenspieler().clear();
                 spielerliste.setAnDerReihe(stichsieger);
             }
 

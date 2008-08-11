@@ -88,7 +88,7 @@ public class Karte implements Serializable, Comparable<Karte>
         {
             if (stapel.get(i + 1).sticht(stapel.get(hoechste))) hoechste = i + 1;
         }
-
+        Karte k = stapel.get(hoechste);
         return stapel.get(hoechste);
     }
 
