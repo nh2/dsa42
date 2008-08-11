@@ -8,7 +8,7 @@ public class PatternChecker
     private static final int PAIR           = 2;
     private static final int FOUR_OF_A_KIND = 8;
     private static final int ANZAHL         = 7;
-
+    public int               counter        = 0;
     private List<Card>       cards;
 
     public PatternChecker(List<Card> cards)
@@ -42,30 +42,32 @@ public class PatternChecker
 
     }
 
-    public boolean isPair()
+    public int numberOfPairs()
     {
         int pairCounter = 0;
+
         for (int i = 0; i < ANZAHL; i++)
         {
+            counter = 1;
             for (int j = i + 1; j < ANZAHL; j++)
             {
                 if (cards.get(i).getValueInt() == cards.get(j).getValueInt())
                 {
-                    pairCounter++;
+                    counter++;
 
                 }
             }
+            pairCounter++;
         }
-        if (pairCounter > 0)
-            return true;
-        else
-            return false;
+
+        return pairCounter;
+
     }
 
     public int getHighestPatternValue()
     {
         if (isFourOfAKind()) return FOUR_OF_A_KIND;
-        if (isPair()) return PAIR;
+        if (numberOfPairs() == 1) return PAIR;
         return 0;
 
     }

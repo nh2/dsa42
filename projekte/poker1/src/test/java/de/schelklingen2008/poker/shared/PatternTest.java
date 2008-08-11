@@ -17,8 +17,8 @@ public class PatternTest extends TestCase
         cards.add(new Card(0, 9));
         cards.add(new Card(1, 1));
         cards.add(new Card(2, 9));
-        cards.add(new Card(3, 7));
-        cards.add(new Card(2, 3));
+        cards.add(new Card(3, 8));
+        cards.add(new Card(2, 5));
         cards.add(new Card(0, 7));
         cards.add(new Card(1, 10));
 
@@ -59,10 +59,10 @@ public class PatternTest extends TestCase
     public List<Card> fill4(List<Card> cards)
     {
 
-        cards.add(new Card(0, 9));
+        cards.add(new Card(0, 8));
         cards.add(new Card(1, 1));
         cards.add(new Card(2, 9));
-        cards.add(new Card(3, 7));
+        cards.add(new Card(3, 6));
         cards.add(new Card(2, 3));
         cards.add(new Card(0, 7));
         cards.add(new Card(1, 10));
@@ -73,7 +73,7 @@ public class PatternTest extends TestCase
 
     public void output(List<Card> list)
     {
-        PatternChecker.sort(list);
+        list = PatternChecker.sort(list);
         System.out.println();
         for (Iterator iterator = list.iterator(); iterator.hasNext();)
         {
@@ -82,7 +82,9 @@ public class PatternTest extends TestCase
 
         }
         PatternChecker checker = new PatternChecker(list);
-        assertTrue(checker.isPair());
+        System.out.println(checker.numberOfPairs());
+        System.out.println(checker.counter);
+        assertEquals(2, checker.numberOfPairs());
 
     }
 
@@ -90,6 +92,19 @@ public class PatternTest extends TestCase
     {
         List<Card> cardList = new ArrayList<Card>();
         cardList = fill(cardList);
+        output(cardList);
+        cardList.clear();
 
+        // cardList = fill2(cardList);
+        // output(cardList);
+        // cardList.clear();
+        //
+        // cardList = fill3(cardList);
+        // output(cardList);
+        // cardList.clear();
+        //
+        // cardList = fill4(cardList);
+        // output(cardList);
+        // cardList.clear();
     }
 }
