@@ -1,0 +1,19 @@
+Dokumentation
+
+Doppelkopf
+Doppelkopf ist ein Kartenspiel für vier Spieler bestehend aus zwei Standard-Kartensets. Es spielen in der Regel zwei Spieler im Team gegen die anderen beiden; welche Spieler das sind, hängt von der Verteilung der Kreuz-Damen ab und wird daher oft erst im Verlauf des Spiels klar, was für viele Spieler der besondere Reiz bei Doppelkopf ist.
+Es wird, analog zum Skat, aufgespielt und anschließend bedient oder gestochen. Die jeweils höchstwertige Karte entscheidet, wer die vier gespielten Karten erhält und die mit ihnen verbundenen Punkte einstreicht. Die Spieler des Teams, das siegt, erhalten Rundenpunkte, die nicht selten über die Bezahlung der Getränke entscheiden.
+Doppelkopf lebt vor allem von seiner großen Vielfalt an Sonderregeln. So gibt es in vielen Varianten Karten, deren Besitz sich direkt auf die Rundenpunkte auswirkt, zum Beispiel das Fangen des "Fuchses" (Karo-As), das Stechen mit dem "Karlchen Müller" (Kreuz Bube) im letzten Stich oder das Erbeuten von mehr als vierzig Punkten in einem Stich ("Doppelkopf"). Außerdem steht es jedem Spieler offen, "solo" gegen die anderen drei zu spielen.
+
+<Bild verwendeter Klassen />
+
+Als bei der Programmierung besonders schwierig zu implementieren haben sich die Sonderregeln sowie Stichhierarchie der Karten erwiesen. Da letztere bei vielen Kartenspielen wichtig und interessant ist, möchten wir ihre Implementierung genauer erläutern.
+Das Problem hierbei ist: Woher soll das Programm wissen, welche Karten andere übertreffen, welche Karten Trumpf sind, bedient werden müssen und so weiter?
+Wir haben uns dafür entschieden, jede Karte mit genau einer anderen vergleichbar zu machen - genauer, die Java-Methode compareTo() zu überschreiben, die eine Zahl zurückliefert, ob die verglichene Karte im Vergleich zur aufrufenden stärker oder schwächer ist.
+
+<Java-Code>                                                                                                   </Java-Code>                                                                                                  <Kasten>
+
+Comparable
+Mit dem Comparable-Interface liefert Java eine standardisierte Möglichkeit, Objekte zu vergleichen. Eine Klasse, die Comparable implementiert, muss die compareTo-Methode überschreiben, in der man genau angeben kann, in welchem Verhältnis (größer, kleinder oder gleich) das aufrufende Objekt im gegenüber dem verglichenen Objekt steht. Implementierungen von Comparable ermöglichen nicht nur den einfachen Vergleich zweier Objekte, sondern auch nützliche Operationen in komplexen Datentypen wie z.B. Listen. Wir haben die Methode zur automatischen Listensortierung genutzt, um das Blatt jedes Spielers automatisch zu ordnen.        </Kasten>
+
+<Screenshot />
