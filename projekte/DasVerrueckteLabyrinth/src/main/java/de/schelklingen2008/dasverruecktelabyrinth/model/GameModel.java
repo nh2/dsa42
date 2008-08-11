@@ -259,7 +259,7 @@ public class GameModel implements Serializable
         return getWinner() == player;
     }
 
-    private void placePlayer(Player pPlayer)
+    private void placePlayerStart(Player pPlayer)
     {
         int x = (int) Math.random() * board.length;
         int y = (int) Math.random() * board.length;
@@ -268,13 +268,13 @@ public class GameModel implements Serializable
         pPlayer.setYKoordinate(y);
     }
 
-    private void placedOnSearchCard()
-    {
-        hiddenCards();
-        List<TreasureCard> hidden = hiddenCards.getHiddenCards();
-        TreasureCard searchThisCard = hidden.get(0);
-
-    }
+    // private void placedOnSearchCard()
+    // {
+    // hiddenCards();
+    // List<TreasureCard> hidden = hiddenCards.getHiddenCards();
+    // TreasureCard searchThisCard = hidden.get(0);
+    //
+    // }
 
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
@@ -286,6 +286,14 @@ public class GameModel implements Serializable
             pPlayer.setYKoordinate(y);
         }
         changeTurnholder();
+    }
+
+    public void placePlayerOutOfBounds(int x, int y, PlayerType pPlayerType)
+    {
+        Player temp = player.get(pPlayerType);
+
+        temp.setXKoordinate(x);
+        temp.setYKoordinate(y);
     }
 
     public List<Position> findWay(Tile[][] pBoard, int sx, int sy, int ex, int ey, int lx, int ly)
@@ -374,6 +382,22 @@ public class GameModel implements Serializable
             board[x][i] = board[x][i - 1];
         }
         board[x][0] = temp;
+        if (player.get(PlayerType.WHITE).getXKoordinate() == x && player.get(PlayerType.WHITE).getYKoordinate() == 6)
+        {
+            placePlayerOutOfBounds(x, 0, PlayerType.WHITE);
+        }
+        if (player.get(PlayerType.BLACK).getXKoordinate() == x && player.get(PlayerType.BLACK).getYKoordinate() == 6)
+        {
+            placePlayerOutOfBounds(x, 0, PlayerType.BLACK);
+        }
+        if (player.get(PlayerType.RED).getXKoordinate() == x && player.get(PlayerType.RED).getYKoordinate() == 6)
+        {
+            placePlayerOutOfBounds(x, 0, PlayerType.RED);
+        }
+        if (player.get(PlayerType.GREEN).getXKoordinate() == x && player.get(PlayerType.GREEN).getYKoordinate() == 6)
+        {
+            placePlayerOutOfBounds(x, 0, PlayerType.GREEN);
+        }
     }
 
     private void einschiebenSued(int x, int y)
@@ -385,6 +409,26 @@ public class GameModel implements Serializable
             board[x][i] = board[x][i + 1];
         }
         board[x][(board.length - 1)] = temp;
+
+        if (player.get(PlayerType.WHITE).getXKoordinate() == x && player.get(PlayerType.WHITE).getYKoordinate() == 0)
+        {
+            placePlayerOutOfBounds(x, 6, PlayerType.WHITE);
+        }
+
+        if (player.get(PlayerType.BLACK).getXKoordinate() == x && player.get(PlayerType.BLACK).getYKoordinate() == 0)
+        {
+            placePlayerOutOfBounds(x, 6, PlayerType.BLACK);
+        }
+
+        if (player.get(PlayerType.RED).getXKoordinate() == x && player.get(PlayerType.RED).getYKoordinate() == 0)
+        {
+            placePlayerOutOfBounds(x, 6, PlayerType.RED);
+        }
+
+        if (player.get(PlayerType.GREEN).getXKoordinate() == x && player.get(PlayerType.GREEN).getYKoordinate() == 0)
+        {
+            placePlayerOutOfBounds(x, 6, PlayerType.GREEN);
+        }
 
     }
 
@@ -398,6 +442,24 @@ public class GameModel implements Serializable
             board[i][y] = board[i - 1][y];
         }
         board[(board.length - 1)][y] = temp;
+
+        if (player.get(PlayerType.WHITE).getXKoordinate() == 0 && player.get(PlayerType.WHITE).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(6, y, PlayerType.WHITE);
+        }
+        if (player.get(PlayerType.BLACK).getXKoordinate() == 0 && player.get(PlayerType.BLACK).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(6, y, PlayerType.BLACK);
+        }
+        if (player.get(PlayerType.RED).getXKoordinate() == 0 && player.get(PlayerType.RED).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(6, y, PlayerType.RED);
+        }
+        if (player.get(PlayerType.GREEN).getXKoordinate() == 0 && player.get(PlayerType.GREEN).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(6, y, PlayerType.GREEN);
+        }
+
     }
 
     private void einschiebenWest(int x, int y)
@@ -409,6 +471,28 @@ public class GameModel implements Serializable
             board[i][y] = board[i - 1][y];
         }
         board[0][y] = temp;
+
+        if (player.get(PlayerType.WHITE).getXKoordinate() == board.length - 1
+            && player.get(PlayerType.WHITE).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(0, y, PlayerType.WHITE);
+        }
+
+        if (player.get(PlayerType.BLACK).getXKoordinate() == board.length - 1
+            && player.get(PlayerType.BLACK).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(0, y, PlayerType.BLACK);
+        }
+        if (player.get(PlayerType.RED).getXKoordinate() == board.length - 1
+            && player.get(PlayerType.RED).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(0, y, PlayerType.RED);
+        }
+        if (player.get(PlayerType.GREEN).getXKoordinate() == board.length - 1
+            && player.get(PlayerType.GREEN).getYKoordinate() == y)
+        {
+            placePlayerOutOfBounds(0, y, PlayerType.GREEN);
+        }
     }
 
     private void advanceTurnHolder()
