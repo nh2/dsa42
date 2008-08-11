@@ -62,9 +62,16 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
+    public void moveUnit(BodyObject client, int fromindex, int toindex)
+    {
+        gameModel.moveUnit(gameModel.getCountry(fromindex), gameModel.getCountry(toindex));
+        updateSharedState();
+    }
+
     public void Attack(BodyObject client, int attindex, int defindex)
     {
         gameModel.attack(gameModel.getCountry(attindex), gameModel.getCountry(defindex));
+        updateSharedState();
     }
 
     private void updateSharedState()

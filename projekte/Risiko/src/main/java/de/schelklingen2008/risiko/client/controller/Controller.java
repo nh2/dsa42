@@ -58,6 +58,11 @@ public class Controller extends GameController
         sharedState.manager.invoke("Attack", att.getIndex(), def.getIndex());
     }
 
+    public void moveUnit(Country from, Country to)
+    {
+        sharedState.manager.invoke("moveUnit", from.getIndex(), to.getIndex());
+    }
+
     public void placeUnit(Country c)
     {
         sharedState.manager.invoke("placeUnit", c.getIndex());

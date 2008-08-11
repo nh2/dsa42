@@ -26,6 +26,7 @@ public class GameModel implements Serializable
 
         turnholderIndex = 0;
         turnholder = p[0];
+        p[0].setUnitsToSet(5);
     }
 
     public Country getSelectedCountry()
@@ -418,6 +419,8 @@ public class GameModel implements Serializable
         turnholderIndex++;
         if (turnholderIndex == getPlayerCount()) turnholderIndex = 0;
         turnholder = p[turnholderIndex];
+
+        turnholder.setUnitsToSet(5);
     }
 
     public Player valueOf(int playerIndex)
@@ -428,6 +431,12 @@ public class GameModel implements Serializable
     private int getPlayerCount()
     {
         return p.length;
+    }
+
+    public void moveUnit(Country from, Country to)
+    {
+        from.setUnits(from.getUnits() - 1);
+        to.setUnits(to.getUnits() + 1);
     }
 
     public Player getPlayerbyName(String name)
@@ -474,6 +483,27 @@ public class GameModel implements Serializable
             if (pPlayer.equals(country1.getOccupier()))
             {
                 if (pPlayer.getUnitsToSet() > 0)
+                {
+                    return true;
+                }
+                else
+                    return false;
+
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    public boolean isLegalMoveMove(Player pPlayer, Country country1, Country country2)
+    {
+        if (pPlayer.equals(turnholder))
+        {
+            if (pPlayer.equals(country1.getOccupier()) && pPlayer.equals(country2.getOccupier()))
+            {
+                if (country1.getUnits() > 1)
                 {
                     return true;
                 }
