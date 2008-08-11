@@ -35,12 +35,15 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     private Controller          controller;
 
-    BufferedImage               curveOne, curveTwo, curveThree, curveFour;
-    BufferedImage               cross, horizontal, vertikal;
-    BufferedImage               eule, krone, flaschengeist, ring, motte, spinne;
-    BufferedImage               fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
-    BufferedImage               troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
-    BufferedImage               schmuckkasten, schluessel, schwert, gespenst;
+    private BufferedImage       curveOne, curveTwo, curveThree, curveFour;
+    private BufferedImage       cross, horizontal, vertikal;
+    private BufferedImage       eule, krone, flaschengeist, ring, motte, spinne;
+    private BufferedImage       fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
+    private BufferedImage       troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
+    private BufferedImage       schmuckkasten, schluessel, schwert, gespenst;
+
+    private JLabel              insertLabel;
+    private JLabel              searchThisCardLabel;
 
     public PlayerPanel(Controller controller)
 
@@ -51,8 +54,6 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         controller.addChangeListener(this);
 
         setBackground(Color.white);
-
-        JPanel drehButtons = new JPanel();
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
@@ -92,11 +93,10 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         }
         catch (IOException e)
         {
-
             throw new RuntimeException("Kann Bild nicht laden.", e);
-
         }
 
+        JPanel drehButtons = new JPanel();
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
 
         JButton right = new JButton("rechts");
@@ -122,36 +122,20 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.add(right);
         drehButtons.add(left);
 
-        JLabel linsert = new JLabel(new ImageIcon(vertikal));
-        linsert.setBorder(BorderFactory.createLineBorder(Color.black));
+        insertLabel = new JLabel(new ImageIcon(vertikal));
+        insertLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        JPanel Cards = new JPanel();
-        Cards.setLayout(new BoxLayout(Cards, BoxLayout.PAGE_AXIS));
+        JPanel cardsPanel = new JPanel();
+        cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.PAGE_AXIS));
 
         JPanel searchThisCardPanel = new JPanel();
         searchThisCardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         searchThisCardPanel.setBackground(Color.white);
-        if (hiddenCards() != null)
-        {
-            JLabel searchThisCardLabel = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
-            searchThisCardPanel.add(searchThisCardLabel);
-        }
-
-        JPanel foundCardPanel = new JPanel();
-        foundCardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        foundCardPanel.setBackground(Color.white);
-        if (openCards() != null)
-        {
-            JLabel foundCardLabel = new JLabel(new ImageIcon(getImageOfTC(openCards())));
-            foundCardPanel.add(foundCardLabel);
-        }
-
-        JLabel textLabel = new JLabel("TEST");
-        foundCardPanel.add(textLabel);
+        searchThisCardLabel = new JLabel(new ImageIcon(eule));
+        searchThisCardPanel.add(searchThisCardLabel);
 
         add(drehButtons);
-        add(linsert);
-        add(foundCardPanel);
+        add(insertLabel);
         add(searchThisCardPanel);
 
     }
@@ -162,7 +146,7 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         return new Dimension(600, 130);
     }
 
-    private TreasureCard openCards()
+    private TreasureCard openCard()
     {
         Map<PlayerType, PlayerCards> mapWtf = getGameModel().getPlayerCardsMap();
 
@@ -211,10 +195,10 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         return temp;
     }
 
-    public TreasureCard hiddenCards()
+    public TreasureCard hiddenCard()
     {
-        Map<PlayerType, PlayerCards> MapWtf = getGameModel().getPlayerCardsMap();
-        PlayerCards hiddenCards = MapWtf.get(getGameContext().getMyPlayerType());
+        Map<PlayerType, PlayerCards> pcMap = getGameModel().getPlayerCardsMap();
+        PlayerCards hiddenCards = pcMap.get(getGameContext().getMyPlayerType());
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
         TreasureCard searchThisCard = hidden.get(0);
         return searchThisCard;
@@ -246,6 +230,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
+        insertLabel.setIcon(new ImageIcon(getInsert()));
+        searchThisCardLabel.setIcon(new ImageIcon(getImageOfTC(hiddenCard())));
         repaint();
 
     }

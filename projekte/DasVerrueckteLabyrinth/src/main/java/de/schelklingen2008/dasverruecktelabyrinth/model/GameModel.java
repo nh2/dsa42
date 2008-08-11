@@ -16,8 +16,8 @@ import java.util.Stack;
 public class GameModel implements Serializable
 {
 
-    private static final PlayerType[] TYPES          = new PlayerType[] { PlayerType.GREEN, PlayerType.WHITE,
-            PlayerType.BLACK, PlayerType.RED        };
+    private static final PlayerType[] TYPES          = new PlayerType[] { PlayerType.WHITE, PlayerType.BLACK,
+            PlayerType.RED, PlayerType.GREEN        };
 
     public static final int           SIZE           = 7;
     public static final PlayerType    PLAYER_START   = PlayerType.WHITE;
@@ -194,7 +194,7 @@ public class GameModel implements Serializable
             }
             playerCardsMap.put(PlayerType.WHITE, temp2);
 
-            for (int i = cardsPerPlayer, j = 0; i < 2 * cardsPerPlayer; i++, i++)
+            for (int i = cardsPerPlayer, j = 0; i < 2 * cardsPerPlayer; i++, j++)
             {
 
                 temp3.getHiddenCards().add(j, temp.get(i));
