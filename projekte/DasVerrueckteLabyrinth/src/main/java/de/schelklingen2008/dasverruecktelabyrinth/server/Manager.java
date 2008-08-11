@@ -1,5 +1,7 @@
 package de.schelklingen2008.dasverruecktelabyrinth.server;
 
+import java.util.logging.Logger;
+
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
@@ -8,6 +10,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PushButton;
 import de.schelklingen2008.dasverruecktelabyrinth.transport.SharedState;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Handles the server side of the game.
@@ -16,10 +19,12 @@ public class Manager extends GameManager
 {
 
     /** Is the state transmitted to the clients and managed by the server. */
-    private SharedState sharedState;
+    private SharedState         sharedState;
 
     /** Implements the game logic with an own internal model. */
-    private GameModel   gameModel;
+    private GameModel           gameModel;
+
+    private static final Logger sLogger = LoggerFactory.create();
 
     @Override
     protected PlaceObject createPlaceObject()
@@ -68,6 +73,7 @@ public class Manager extends GameManager
 
     public void insert(BodyObject client, PushButton pPushButton)
     {
+        sLogger.fine("insert:" + client + " " + pPushButton);
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
             gameModel.insert(pPushButton);
