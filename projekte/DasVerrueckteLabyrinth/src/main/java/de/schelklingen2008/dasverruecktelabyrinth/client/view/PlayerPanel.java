@@ -122,39 +122,37 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.add(right);
         drehButtons.add(left);
 
-        JLabel foundCard = new JLabel();
-        if (openCards() != null) foundCard.add(foundCard, new ImageIcon(getImageOfTC(openCards())));
-
-        JLabel searchThisCard = new JLabel();
-        if (hiddenCards() != null) searchThisCard.add(searchThisCard, new ImageIcon(getImageOfTC(hiddenCards())));
-
         JLabel linsert = new JLabel(new ImageIcon(vertikal));
         linsert.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel Cards = new JPanel();
         Cards.setLayout(new BoxLayout(Cards, BoxLayout.PAGE_AXIS));
 
-        JPanel SearchThisCard = new JPanel();
-        SearchThisCard.setBorder(BorderFactory.createLineBorder(Color.black));
-        SearchThisCard.setBackground(Color.white);
+        JPanel searchThisCardPanel = new JPanel();
+        searchThisCardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        searchThisCardPanel.setBackground(Color.white);
+        if (hiddenCards() != null)
+        {
+            JLabel searchThisCardLabel = new JLabel(new ImageIcon(getImageOfTC(hiddenCards())));
+            searchThisCardPanel.add(searchThisCardLabel);
+        }
 
-        JPanel FoundCard = new JPanel();
-        FoundCard.setBorder(BorderFactory.createLineBorder(Color.black));
-        FoundCard.setBackground(Color.white);
+        JPanel foundCardPanel = new JPanel();
+        foundCardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        foundCardPanel.setBackground(Color.white);
+        if (openCards() != null)
+        {
+            JLabel foundCardLabel = new JLabel(new ImageIcon(getImageOfTC(openCards())));
+            foundCardPanel.add(foundCardLabel);
+        }
 
-        JLabel Text = new JLabel("TEST");
-        FoundCard.add(Text);
-
-        SearchThisCard.add(searchThisCard);
-        FoundCard.add(foundCard);
+        JLabel textLabel = new JLabel("TEST");
+        foundCardPanel.add(textLabel);
 
         add(drehButtons);
-
         add(linsert);
-
-        add(FoundCard);
-
-        add(SearchThisCard);
+        add(foundCardPanel);
+        add(searchThisCardPanel);
 
     }
 
