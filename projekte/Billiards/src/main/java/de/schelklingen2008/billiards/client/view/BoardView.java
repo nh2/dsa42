@@ -17,11 +17,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
@@ -44,14 +47,19 @@ public class BoardView extends JPanel implements GameChangeListener
      */
     private static final long serialVersionUID = -9064861386229239709L;
     private Controller controller;
+    private BallGauge gauge;
     private Image bg;
+    private Timer timer;
+
+    private boolean buttonWasPressed;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
-    public BoardView(Controller controller)
+    public BoardView(Controller controller, BallGauge gauge)
     {
         this.controller = controller;
+        this.gauge = gauge;
         controller.addChangeListener(this);
 
         addMouseMotionListener(new MouseMotionAdapter()
@@ -72,6 +80,13 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 pressed(e);
             }
+
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+                released(e);
+            }
+
         });
 
         try
@@ -92,23 +107,50 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
-        // TODO respond to player´s mouse clicks
-        final GameModel gameModel = getGameModel();
-        Ball ball = gameModel.getWhiteBall();
+        if (e.getButton() != MouseEvent.BUTTON1)
+        {
+            return;
+        }
 
-        // TODO remove this
-        ball.setVelocity(new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(ball.getPosition())
-                                                                                        .scale(1.5d));
-        gameModel.inMotion = true;
+        buttonWasPressed = true;
 
-        controller.startBoardProcessThread(this);
+        if (!getGameModel().isTurnHolder(getGameContext().getMyPlayer()))
+        {
+            return;
+        }
+
+        gauge.setValue(1);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+
+            boolean fallingVelocity = false;
+
+            @Override
+            public void run()
+            {
+                if (gauge.getValue() >= 100 - 1E-4 || gauge.getValue() <= 1E-4)
+                {
+                    fallingVelocity = !fallingVelocity;
+                }
+
+                if (fallingVelocity)
+                {
+                    gauge.setValue(gauge.getValue() - 1);
+                }
+                else
+                {
+                    gauge.setValue(gauge.getValue() + 1);
+                }
+            }
+
+        }, 40, 40);
 
     }
 
     @Override
     public Dimension getPreferredSize()
     {
-        // TODO calculate correct dimensions for the board view
         return new Dimension(860, 497);
     }
 
@@ -117,7 +159,7 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         Graphics2D gfx = (Graphics2D) g;
         gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        // TODO do proper painting of game state
+
         paintBackground(gfx);
         paintBoard(gfx);
     }
@@ -186,4 +228,32 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         return controller.getGameContext();
     }
+
+    private void released(MouseEvent e)
+    {
+        if (e.getButton() != MouseEvent.BUTTON1 || !buttonWasPressed)
+        {
+            return;
+        }
+
+        buttonWasPressed = false;
+
+        final GameModel gameModel = getGameModel();
+
+        if (!gameModel.isTurnHolder(getGameContext().getMyPlayer()))
+        {
+            return;
+        }
+
+        timer.cancel();
+
+        Ball whiteBall = gameModel.getWhiteBall();
+        Vector2d distance =
+            new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(whiteBall.getPosition());
+        double angle = distance.getAngle();
+
+        gameModel.takeShot(getGameContext().getMyPlayer(), angle, gauge.getValue() * GlobalConstants.MAX_VELOCITY / 100);
+        controller.startBoardProcessThread(this);
+    }
+
 }

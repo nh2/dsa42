@@ -128,12 +128,20 @@ public class GameModel
         gameEventListeners.add(listener);
     }
 
-    public void takeShot(double angle, double velocity) throws IllegalStateException
+    public void takeShot(Player player, double angle, double velocity) throws IllegalStateException
     {
         if (isInMotion())
         {
             throw new IllegalStateException("Cannot take a shot while balls are still moving.");
         }
+
+        if (!player.equals(turnHolder))
+        {
+            throw new IllegalStateException("Player is not the turnholder.");
+        }
+
+        whiteBall.setVelocity(Vector2d.getPolarVector(angle, velocity));
+        inMotion = true;
 
         for (GameEventListener listener : gameEventListeners)
         {
@@ -258,8 +266,10 @@ public class GameModel
         }
 
         Iterator<Ball> ballIterator = ballsOnTable.iterator();
-        for (Ball ball = ballIterator.next(); ballIterator.hasNext(); ball = ballIterator.next())
+        for (Ball ball; ballIterator.hasNext();)
         {
+            ball = ballIterator.next();
+
             for (Hole hole : holes)
             {
                 if (hole.ballIsSunk(ball))

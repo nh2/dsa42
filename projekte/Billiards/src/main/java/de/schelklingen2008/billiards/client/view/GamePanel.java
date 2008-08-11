@@ -66,11 +66,16 @@ public class GamePanel extends JPanel implements PlaceView
         JPanel box = GroupLayout.makeHBox();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         box.setOpaque(false);
-        box.add(new BoardView(controller));
-        box.add(new BallView(controller));
+
+        BallGauge ballGauge = new BallGauge();
+        BoardView boardView = new BoardView(controller, ballGauge);
+        BallView ballView = new BallView(controller);
+
+        box.add(boardView);
+        box.add(ballView);
         box2.add(box);
         box2.add(Box.createHorizontalStrut(5));
-        box2.add(new BallGauge(controller));
+        box2.add(ballGauge);
 
         // create a side panel to hold our chat and other extra interfaces
         JPanel sidePanel = GroupLayout.makeVStretchBox(5);

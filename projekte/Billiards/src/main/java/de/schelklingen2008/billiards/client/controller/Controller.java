@@ -24,6 +24,8 @@ import de.schelklingen2008.billiards.client.Constants;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.client.view.BoardView;
 import de.schelklingen2008.billiards.client.view.GamePanel;
+import de.schelklingen2008.billiards.model.GameEventAdapter;
+import de.schelklingen2008.billiards.model.ShotEvent;
 import de.schelklingen2008.billiards.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -33,17 +35,17 @@ import de.schelklingen2008.util.LoggerFactory;
 public class Controller extends GameController
 {
 
-    private static final Logger      sLogger         = LoggerFactory.create();
+    private static final Logger sLogger = LoggerFactory.create();
 
-    private GameContext              gameContext     = new GameContext();
+    private GameContext gameContext = new GameContext();
 
     private List<GameChangeListener> changeListeners = new ArrayList<GameChangeListener>();
 
-    private SharedState              sharedState;
+    private SharedState sharedState;
 
-    private ToyBoxContext            toyBoxContext;
+    private ToyBoxContext toyBoxContext;
 
-    private BoardProcessThread       boardProcessThread;
+    private BoardProcessThread boardProcessThread;
 
     @Override
     public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
@@ -79,6 +81,18 @@ public class Controller extends GameController
         sharedState = (SharedState) placeObject;
         sharedState.addListener(new SharedStateListener());
         updateGameContext();
+
+        gameContext.getGameModel().addGameEventListener(new GameEventAdapter()
+        {
+
+            @Override
+            public void shotTaken(ShotEvent e)
+            {
+
+            }
+
+        });
+
         super.willEnterPlace(placeObject);
     }
 
