@@ -44,13 +44,13 @@ public class PatternTest extends TestCase
     public List<Card> fill3(List<Card> cards)
     {
 
-        cards.add(new Card(0, 9));
+        cards.add(new Card(3, 9));
         cards.add(new Card(1, 1));
-        cards.add(new Card(0, 9));
+        cards.add(new Card(3, 9));
         cards.add(new Card(3, 7));
-        cards.add(new Card(0, 3));
-        cards.add(new Card(0, 7));
-        cards.add(new Card(0, 10));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(1, 7));
+        cards.add(new Card(3, 10));
 
         return cards;
 
@@ -84,7 +84,7 @@ public class PatternTest extends TestCase
         // PatternChecker checker = new PatternChecker(list);
         System.out.println(checker.numberOfPairs());
         System.out.println(checker.counter);
-        assertEquals(2, checker.numberOfPairs());
+        assertEquals(1, checker.numberOfPairs());
 
     }
 
@@ -96,6 +96,7 @@ public class PatternTest extends TestCase
         cardList = fill(cardList);
         output(cardList, checker);
         cardList.clear();
+        s
 
         // cardList = fill2(cardList);
         // output(cardList);
