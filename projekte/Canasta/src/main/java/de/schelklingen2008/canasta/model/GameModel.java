@@ -51,7 +51,7 @@ public class GameModel implements Serializable
         // draw 15 cards for every player
         for (Player player : players)
         {
-            for (int j = 0; j < Constants.GAME_INITIAL_CARD_COUNT; j++)
+            for (int j = 0; j < Constants.GAME_INIT_CARD_COUNT; j++)
             {
                 player.getHand().add(talon.pop());
             }
@@ -153,7 +153,7 @@ public class GameModel implements Serializable
     {
         if (!isTurnHolder(player)) return;
 
-        if (cards.length < Constants.GAME_MIN_STACKSIZE) return;
+        if (cards.length < Constants.GAME_SMALLEST_MELD) return;
 
         sLogger.info("Player " + player.getName() + " should make outlay now");
         sLogger.info(Arrays.toString(cards));
@@ -165,17 +165,17 @@ public class GameModel implements Serializable
 
     public static boolean isFirstMeldLegal(Player player, Card[] cards)
     {
-        int minScore = Constants.GAME_MIN_OUTLAY[0];
+        int minScore = Constants.GAME_FIRST_MELD[0];
 
         int i = 0;
         for (int j = 0; j < Constants.GAME_SCORE_LEVEL.length; j++)
         {
-            if (player.getScore() >= Constants.GAME_SCORE_LEVEL[i])
+            if (player.getTotalScore() >= Constants.GAME_SCORE_LEVEL[i])
             {
 
                 try
                 {
-                    minScore = Constants.GAME_MIN_OUTLAY[i + 1];
+                    minScore = Constants.GAME_FIRST_MELD[i + 1];
                 }
                 catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -243,6 +243,7 @@ public class GameModel implements Serializable
     {
         switch (card.getRank())
         {
+            case THREE:
             case FOUR:
             case FIVE:
             case SIX:

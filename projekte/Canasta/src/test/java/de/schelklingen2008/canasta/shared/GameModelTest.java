@@ -5,6 +5,8 @@ import de.schelklingen2008.canasta.client.Constants;
 import de.schelklingen2008.canasta.model.Card;
 import de.schelklingen2008.canasta.model.CardStack;
 import de.schelklingen2008.canasta.model.GameModel;
+import de.schelklingen2008.canasta.model.Hand;
+import de.schelklingen2008.canasta.model.Outlay;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.model.Suit;
@@ -25,7 +27,7 @@ public class GameModelTest extends TestCase
         {
             // has every player the right card number in hand?
             assertEquals("player " + player.getName() + " has wrong card number in hands",
-                         Constants.GAME_INITIAL_CARD_COUNT, player.getHand().size());
+                         Constants.GAME_INIT_CARD_COUNT, player.getHand().size());
             // is the outlay of every player empty?
             assertEquals("player " + player.getName() + " has outlay", 0, player.getOutlay().size());
         }
@@ -122,14 +124,14 @@ public class GameModelTest extends TestCase
     public void testFirstMeld()
     {
         Player player = new Player("Horst");
-        player.setScore(Constants.GAME_SCORE_LEVEL[0]);
+        player.setTotalScore(Constants.GAME_SCORE_LEVEL[0]);
 
         assertTrue(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.ACE, Suit.DIAMONDS),
                 new Card(Rank.ACE, Suit.DIAMONDS), new Card(Rank.ACE, Suit.DIAMONDS) }));
         assertFalse(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.TEN, Suit.DIAMONDS),
                 new Card(Rank.TEN, Suit.DIAMONDS), new Card(Rank.TEN, Suit.DIAMONDS) }));
 
-        player.setScore(Constants.GAME_SCORE_LEVEL[1]);
+        player.setTotalScore(Constants.GAME_SCORE_LEVEL[1]);
 
         assertTrue(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.ACE, Suit.DIAMONDS),
                 new Card(Rank.ACE, Suit.DIAMONDS), new Card(Rank.ACE, Suit.DIAMONDS),
@@ -194,5 +196,39 @@ public class GameModelTest extends TestCase
 
         cards = new Card[] { new Card(Rank.JACK, Suit.CLUBS) };
         assertTrue(GameModel.isMeldLegal(cards, stack));
+    }
+
+    public void testScoring()
+    {
+        Player player = new Player("Horst");
+        Hand hand = player.getHand();
+        Outlay outlay = player.getOutlay();
+        outlay.clear();
+        assertEquals(0, player.getCurrentScore());
+
+        CardStack stack = new CardStack();
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        outlay.add(stack);
+        assertEquals(30, player.getCurrentScore());
+
+        outlay.clear();
+
+        stack = new CardStack();
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        stack.add(new Card(Rank.JACK, Suit.CLUBS));
+        outlay.add(stack);
+        assertEquals(70 + Constants.SCORE_CANASTA_NATURAL, player.getCurrentScore());
+
+        hand.add(new Card(Rank.KING, Suit.CLUBS));
+        hand.add(new Card(Rank.KING, Suit.CLUBS));
+        hand.add(new Card(Rank.KING, Suit.CLUBS));
+        assertEquals(40 + Constants.SCORE_CANASTA_NATURAL, player.getCurrentScore());
     }
 }
