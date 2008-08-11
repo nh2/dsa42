@@ -23,7 +23,6 @@ public class GameModel implements Serializable
         initPlayers(names);
         initCountrys();
         initNeigbours();
-        initAreas();
         distributeCountrys();
 
         turnholderIndex = 0;
@@ -38,11 +37,6 @@ public class GameModel implements Serializable
             if (c[i].isSelected()) return c[i];
         }
         return null;
-    }
-
-    public Country[] getAreaInseln()
-    {
-        return insel;
     }
 
     private void distributeCountrys()
@@ -100,17 +94,6 @@ public class GameModel implements Serializable
     public Player getTurnholder()
     {
         return turnholder;
-    }
-
-    private void initAreas()
-    {
-        // init Area Inseln
-
-        insel[0] = c[0];
-        insel[1] = c[1];
-        insel[2] = c[2];
-
-        // init Area ...
     }
 
     private void initCountrys()
