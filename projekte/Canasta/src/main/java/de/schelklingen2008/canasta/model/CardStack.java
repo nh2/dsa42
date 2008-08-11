@@ -77,7 +77,7 @@ public class CardStack extends ArrayList<Card> implements Serializable
 
     public boolean isCanasta()
     {
-        return size() >= Constants.CANASTA_MIN_CARDS;
+        return size() >= Constants.GAME_CANASTA_MIN_CARDS;
     }
 
     @Override

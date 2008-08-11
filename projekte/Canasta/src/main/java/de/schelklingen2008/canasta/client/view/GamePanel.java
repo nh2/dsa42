@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
-        setBackground(new Color(Constants.OutlayColor));
+        setBackground(new Color(Constants.COLOR_OUTLAY));
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);

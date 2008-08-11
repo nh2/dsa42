@@ -50,7 +50,7 @@ public class GameModel implements Serializable
         // draw 15 cards for every player
         for (Player player : players)
         {
-            for (int j = 0; j < Constants.CANASTA_INITIAL_CARD_COUNT; j++)
+            for (int j = 0; j < Constants.GAME_INITIAL_CARD_COUNT; j++)
             {
                 player.getHand().add(talon.pop());
             }
@@ -89,11 +89,32 @@ public class GameModel implements Serializable
         player.getHand().add(card);
     }
 
-    public void meldCard()
+    public void addCardsToStack(Player player, int[] whichCards, int whichStack)
     {
-        // TODO player makes outlay
+        Card[] cards = new Card[whichCards.length];
 
-        goOut();
+        for (int i = 0; i < whichCards.length; i++)
+        {
+            cards[i] = player.getHand().get(whichCards[i]);
+        }
+
+        CardStack cardStack = player.getOutlay().get(whichStack);
+
+        addCardsToStack(player, cards, cardStack);
+    }
+
+    public void addCardsToStack(Player player, Card[] cards, CardStack cardStack)
+    {
+        if (!isTurnHolder(player)) return;
+
+        sLogger.info("Player " + player.getName() + " should meld cards now");
+        sLogger.info(Arrays.toString(cards));
+
+        for (Card card : cards)
+        {
+            cardStack.add(card);
+            player.getHand().remove(card);
+        }
     }
 
     public void discardCard(Player player, int whichCard)
@@ -113,7 +134,7 @@ public class GameModel implements Serializable
         endTurn();
     }
 
-    public void makeOutlay(Player player, int[] whichCards)
+    public void meldCards(Player player, int[] whichCards)
     {
         Card[] cards = new Card[whichCards.length];
 
@@ -122,10 +143,10 @@ public class GameModel implements Serializable
             cards[i] = player.getHand().get(whichCards[i]);
         }
 
-        makeOutlay(player, cards);
+        meldCards(player, cards);
     }
 
-    public void makeOutlay(Player player, Card[] cards)
+    public void meldCards(Player player, Card[] cards)
     {
         if (!isTurnHolder(player)) return;
 
@@ -133,12 +154,18 @@ public class GameModel implements Serializable
         sLogger.info(Arrays.toString(cards));
 
         CardStack cardStack = new CardStack();
-        for (Card card : cards)
-        {
-            cardStack.add(card);
-            player.getHand().remove(card);
-        }
+        addCardsToStack(player, cards, cardStack);
         player.getOutlay().add(cardStack);
+    }
+
+    public void firstMeldLegal(Player player, Card[] cards)
+    {
+        int minScore;
+        
+        for (Int score : Constants.GAME_SCORE_LEVEL[])
+        {
+            
+        }
     }
 
     public void goOut()

@@ -75,7 +75,7 @@ public class Manager extends GameManager
 
         sLogger.info("make Outlay on Server: " + Arrays.toString(cardNumbers));
 
-        gameModel.makeOutlay(player, cardNumbers);
+        gameModel.meldCards(player, cardNumbers);
 
         updateSharedState();
     }

@@ -12,13 +12,17 @@ public class GameModelTest extends TestCase
     {
         GameModel logic = new GameModel(new String[] { "Player 1", "Player 2" });
 
+        // how many cards are in the discard pile?
         assertEquals("discard pile has wrong size", 1, logic.getDiscard().size());
+
+        // how many players are there?
         assertEquals("playernumber is not two", 2, logic.getPlayers().length);
         for (Player player : logic.getPlayers())
         {
+            // has every player the right card number in hand?
             assertEquals("player " + player.getName() + " has wrong card number in hands",
-                         Constants.CANASTA_INITIAL_CARD_COUNT, player.getHand().size());
-
+                         Constants.GAME_INITIAL_CARD_COUNT, player.getHand().size());
+            // is the outlay of every player empty?
             assertEquals("player " + player.getName() + " has outlay", 0, player.getOutlay().size());
         }
     }
@@ -65,4 +69,26 @@ public class GameModelTest extends TestCase
         assertEquals(handSizes[1] + 1, players[1].getHand().size());
     }
 
+    public void testMelding()
+    {
+        GameModel logic = new GameModel(new String[] { "Player 1", "Player 2" });
+
+        Player[] players = logic.getPlayers();
+
+        int handSizes[] = new int[logic.getPlayers().length];
+        int i = 0;
+        for (Player player : players)
+        {
+            handSizes[i] = player.getHand().size();
+            i++;
+
+            assertEquals(0, player.getOutlay().size());
+        }
+
+        logic.meldCards(players[0], new int[] { 0, 1, 2, 3, 4, 5, 6 });
+
+        assertEquals(1, players[0].getOutlay().size());
+        assertEquals(7, players[0].getOutlay().get(0).size());
+
+    }
 }
