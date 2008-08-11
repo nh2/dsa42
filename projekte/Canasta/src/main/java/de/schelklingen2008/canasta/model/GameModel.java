@@ -160,19 +160,28 @@ public class GameModel implements Serializable
         player.getOutlay().add(cardStack);
     }
 
-    public boolean isFirstMeldLegal(Player player, Card[] cards)
+    public static boolean isFirstMeldLegal(Player player, Card[] cards)
     {
-        int minScore = 0;
+        int minScore = Constants.GAME_MIN_OUTLAY[0];
 
         int i = 0;
-        for (int score : Constants.GAME_SCORE_LEVEL)
-
+        for (int j = 0; j < Constants.GAME_SCORE_LEVEL.length; j++)
         {
-            if (player.getScore() < score)
+            if (player.getScore() >= Constants.GAME_SCORE_LEVEL[i])
             {
-                minScore = Constants.GAME_SCORE_LEVEL[i];
 
-                i++;
+                try
+                {
+                    minScore = Constants.GAME_MIN_OUTLAY[i + 1];
+                }
+                catch (ArrayIndexOutOfBoundsException e)
+                {
+                    throw new IllegalStateException("The game should already be over, because a player has won", e);
+                }
+            }
+            else
+            {
+                break;
             }
         }
 
@@ -209,7 +218,7 @@ public class GameModel implements Serializable
         return rank;
     }
 
-    public int getCardValue(Card card)
+    public static int getCardValue(Card card)
     {
         switch (card.getRank())
         {

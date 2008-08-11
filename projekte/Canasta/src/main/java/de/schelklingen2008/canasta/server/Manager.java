@@ -9,6 +9,7 @@ import com.threerings.parlor.game.server.GameManager;
 
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Player;
+import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -85,6 +86,22 @@ public class Manager extends GameManager
         Player player = getPlayer(client);
 
         if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
+
+        sLogger.info("add cards on Server: " + Arrays.toString(selectedCardNumbers));
+
+        Rank handRank = GameModel.getRank(player.getHand().getAll(selectedCardNumbers));
+
+        if (handRank == null)
+        {
+            sLogger.info("melded cards must have the same rank!");
+            return;
+        }
+
+        if (handRank != player.getOutlay().get(whichCardStack).getRank())
+        {
+            sLogger.info("cards, which are melded dont match the cardstack");
+            return;
+        }
 
         gameModel.addCardsToStack(player, selectedCardNumbers, whichCardStack);
 

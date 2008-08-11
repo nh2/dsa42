@@ -27,7 +27,6 @@ public final class Constants
     /** rule properties */
     public static final int    GAME_INITIAL_CARD_COUNT = 15;
     public static final int    GAME_CANASTA_MIN_CARDS  = 7;
-    public static final int    GAME_WIN_SCORE          = 5000;
 
     public static final int[]  GAME_MIN_OUTLAY         = { 15, 50, 90, 120 };
     public static final int[]  GAME_SCORE_LEVEL        = { 0, 1500, 3000, 5000 };

@@ -25,6 +25,8 @@ import de.schelklingen2008.canasta.client.Constants;
 import de.schelklingen2008.canasta.client.model.GameContext;
 import de.schelklingen2008.canasta.client.view.GamePanel;
 import de.schelklingen2008.canasta.model.GameModel;
+import de.schelklingen2008.canasta.model.Player;
+import de.schelklingen2008.canasta.model.Rank;
 import de.schelklingen2008.canasta.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -122,11 +124,20 @@ public class Controller extends GameController
             return;
         }
 
-        if (GameModel.getRank(getGameContext().getMyPlayer().getHand().getAll(selectedCardNumbers)) == null)
+        Player player = getGameContext().getMyPlayer();
+        if (GameModel.getRank(player.getHand().getAll(selectedCardNumbers)) == null)
+        {
             sLogger.info("cards in a cardstack must have the same rank!");
+            return;
+        }
 
-        else
-            sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
+        if (!getGameContext().getGameModel().isFirstMeldLegal(player, player.getHand().getAll(selectedCardNumbers)))
+        {
+            sLogger.info("first meld not enough points!");
+            return;
+        }
+
+        sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
     }
 
     public void cardStackClicked(int[] selectedCardNumbers, int whichCardStack)
@@ -136,6 +147,22 @@ public class Controller extends GameController
             sLogger.info("Ich bin nicht dran!");
             return;
         }
+
+        Player player = getGameContext().getMyPlayer();
+        Rank handRank = GameModel.getRank(player.getHand().getAll(selectedCardNumbers));
+
+        if (handRank == null)
+        {
+            sLogger.info("melded cards must have the same rank!");
+            return;
+        }
+
+        if (handRank != player.getOutlay().get(whichCardStack).getRank())
+        {
+            sLogger.info("cards, which are melded dont match the cardstack");
+            return;
+        }
+
         sharedState.manager.invoke("addCardsToStack", selectedCardNumbers, whichCardStack);
     }
 

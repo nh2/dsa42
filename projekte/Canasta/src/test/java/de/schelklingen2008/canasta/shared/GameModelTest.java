@@ -117,4 +117,26 @@ public class GameModelTest extends TestCase
         assertEquals(Rank.QUEEN, GameModel.getRank(testCards2));
         assertEquals(null, GameModel.getRank(testCards3));
     }
+
+    public void testFirstMeld()
+    {
+        Player player = new Player("Horst");
+        player.setScore(Constants.GAME_SCORE_LEVEL[0]);
+
+        assertTrue(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.ACE, Suit.DIAMONDS),
+                new Card(Rank.ACE, Suit.DIAMONDS), new Card(Rank.ACE, Suit.DIAMONDS) }));
+        assertFalse(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.TEN, Suit.DIAMONDS),
+                new Card(Rank.TEN, Suit.DIAMONDS), new Card(Rank.TEN, Suit.DIAMONDS) }));
+
+        player.setScore(Constants.GAME_SCORE_LEVEL[1]);
+
+        assertTrue(GameModel.isFirstMeldLegal(player, new Card[] { new Card(Rank.ACE, Suit.DIAMONDS),
+                new Card(Rank.ACE, Suit.DIAMONDS), new Card(Rank.ACE, Suit.DIAMONDS),
+                new Card(Rank.ACE, Suit.DIAMONDS), new Card(Rank.ACE, Suit.DIAMONDS) }));
+        assertFalse(GameModel.isFirstMeldLegal(player,
+                                               new Card[] { new Card(Rank.TEN, Suit.DIAMONDS),
+                                                       new Card(Rank.TEN, Suit.DIAMONDS),
+                                                       new Card(Rank.TEN, Suit.DIAMONDS),
+                                                       new Card(Rank.TEN, Suit.DIAMONDS) }));
+    }
 }

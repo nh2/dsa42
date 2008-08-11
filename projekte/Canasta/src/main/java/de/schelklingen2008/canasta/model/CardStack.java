@@ -21,7 +21,7 @@ public class CardStack extends ArrayList<Card> implements Serializable
     public Rank getRank()
     {
 
-        return GameModel.getRank((Card[]) cards.toArray());
+        return GameModel.getRank(cards.toArray(new Card[cards.size()]));
     }
 
     @Override
