@@ -184,10 +184,10 @@ public class GameModel implements Serializable
 
     public void giveCardsToPlayers()
     {
-        for (Iterator iterator = playerList.iterator(); iterator.hasNext();)
+        for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext();)
         {
 
-            Player player = (Player) iterator.next();
+            Player player = iterator.next();
             player.setCard1(getRandomCard());
             player.setCard2(getRandomCard());
 
@@ -221,14 +221,10 @@ public class GameModel implements Serializable
     }
 
     public boolean mustCheckOrRaise(int playerIndex)
-
     {
-        if (playerIsTurnHolder(playerIndex))
+        if (playerIsTurnHolder(playerIndex) == true && playerList.get(playerIndex).getOwnBet() == highestBet)
         {
-            if (playerList.get(playerIndex).getOwnBet() == highestBet)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }
@@ -268,10 +264,6 @@ public class GameModel implements Serializable
     public void nextPlayer()
     {
         actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
-        if (actPlayerIndex == playerList.size())
-        {
-            actPlayerIndex = 0;
-        }
         if (highestBetIndex == actPlayerIndex)
         {
             nextPhase();
@@ -280,6 +272,7 @@ public class GameModel implements Serializable
         {
             nextPlayer();
         }
+
     }
 
     public void nextPhase()
@@ -288,9 +281,9 @@ public class GameModel implements Serializable
         highestBet = 0;
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 1);
         highestBetIndex = actPlayerIndex;
-        for (Iterator iterator = playerList.iterator(); iterator.hasNext();)
+        for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext();)
         {
-            Player player = (Player) iterator.next();
+            Player player = iterator.next();
             player.setStillIn(true);
             player.setOwnBet(0);
         }
@@ -318,13 +311,36 @@ public class GameModel implements Serializable
         stack.clear();
         fillStack();
         dealerIndex = getRisenPlayerIndex(dealerIndex, 1);
-        playerList.get(getRisenPlayerIndex(dealerIndex, 1)).setOwnBet(smallBlind);
-        playerList.get(getRisenPlayerIndex(dealerIndex, 2)).setOwnBet(2 * smallBlind);
-        pot = playerList.get(getRisenPlayerIndex(dealerIndex, 1)).getOwnBet();
-        pot += playerList.get(getRisenPlayerIndex(dealerIndex, 2)).getOwnBet();
+        pot = setPlayerBet(smallBlind, getRisenPlayerIndex(dealerIndex, 1), false);
+        pot += setPlayerBet(2 * smallBlind, getRisenPlayerIndex(dealerIndex, 2), false);
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         getHighestBetAndBetterIndex();
         giveCardsToPlayers();
+    }
+
+    public long setPlayerBet(long betValue, int playerIndex, boolean minMaxBorderCheck)
+    {
+        Player player = playerList.get(playerIndex);
+        if (betValue < 2 * smallBlind && playerList.get(playerIndex).getBalance() < smallBlind)
+        {
+            betValue = player.getBalance();
+            player.setOwnBet(betValue);
+            player.setBalance(0);
+            return betValue;
+        }
+        else
+        {
+            if (minMaxBorderCheck == true && (betValue < getMinBet() || betValue > getMaxBet()))
+            {
+                throw new IllegalStateException();
+            }
+            else
+            {
+                player.setBalance(player.getBalance() - betValue);
+                player.setOwnBet(betValue);
+                return betValue;
+            }
+        }
     }
 
     public void getHighestBetAndBetterIndex()
@@ -431,9 +447,9 @@ public class GameModel implements Serializable
 
     public void kartenAusgeben()
     {
-        for (Iterator iterator = cardList.iterator(); iterator.hasNext();)
+        for (Iterator<Card> iterator = cardList.iterator(); iterator.hasNext();)
         {
-            Card card = (Card) iterator.next();
+            Card card = iterator.next();
             System.out.println(card.getSuit());
             System.out.println(card.getValue());
 
