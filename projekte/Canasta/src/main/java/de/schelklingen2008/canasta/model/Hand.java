@@ -30,6 +30,17 @@ public class Hand implements Iterable<Card>, Serializable
         return cards.get(index);
     }
 
+    public Card[] getAll(int[] whichCards)
+    {
+        Card[] cards = new Card[whichCards.length];
+
+        for (int i = 0; i < whichCards.length; i++)
+        {
+            cards[i] = get(whichCards[i]);
+        }
+        return cards;
+    }
+
     public Card remove(int index)
     {
         return cards.remove(index);

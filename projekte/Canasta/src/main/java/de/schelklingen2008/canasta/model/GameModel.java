@@ -160,9 +160,9 @@ public class GameModel implements Serializable
         player.getOutlay().add(cardStack);
     }
 
-    public void firstMeldLegal(Player player, Card[] cards)
+    public boolean isFirstMeldLegal(Player player, Card[] cards)
     {
-        int minScore;
+        int minScore = 0;
 
         int i = 0;
         for (int score : Constants.GAME_SCORE_LEVEL)
@@ -174,6 +174,44 @@ public class GameModel implements Serializable
 
                 i++;
             }
+        }
+
+        int cardScore = 0;
+        for (Card card : cards)
+        {
+            cardScore += getCardValue(card);
+        }
+
+        return cardScore >= minScore;
+    }
+
+    public int getCardValue(Card card)
+    {
+        switch (card.getRank())
+        {
+            case FOUR:
+            case FIVE:
+            case SIX:
+            case SEVEN:
+                return 5;
+
+            case EIGHT:
+            case NINE:
+            case TEN:
+            case JACK:
+            case QUEEN:
+            case KING:
+                return 10;
+
+            case ACE:
+            case TWO:
+                return 20;
+
+            case JOKER:
+                return 50;
+
+            default:
+                return 0;
         }
     }
 
