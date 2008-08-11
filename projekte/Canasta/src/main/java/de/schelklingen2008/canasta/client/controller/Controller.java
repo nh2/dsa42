@@ -129,6 +129,16 @@ public class Controller extends GameController
             sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
     }
 
+    public void cardStackClicked(int[] selectedCardNumbers, int whichCardStack)
+    {
+        if (!gameContext.isMyTurn())
+        {
+            sLogger.info("Ich bin nicht dran!");
+            return;
+        }
+        sharedState.manager.invoke("addCardsToStack", selectedCardNumbers, whichCardStack);
+    }
+
     private void updateGameContext()
     {
         if (sharedState == null) return;
