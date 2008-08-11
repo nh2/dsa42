@@ -62,6 +62,8 @@ public class GameModel implements Serializable
             }
         }
 
+        setUnmoveable(board);
+
         setTurnHolder(PLAYER_START);
         insert = tiles.get(board.length * board.length);
 
@@ -69,7 +71,8 @@ public class GameModel implements Serializable
         {
             int x = RAND.nextInt(board.length);
             int y = RAND.nextInt(board.length);
-            player.put(TYPES[i], new Player(TYPES[i], names[i], x, y));
+            player.put(TYPES[i], new Player(TYPES[i], names[i], x, y)); // TODO brauch ich placePlayerStart
+                                                                        // noch?
         }
 
         generateTreasureCards();
@@ -241,16 +244,24 @@ public class GameModel implements Serializable
         }
     }
 
-    // TODO getWinner()
-
     // TODO hasLegalMoved()
-    // TODO getWinner()
 
     public Player getWinner()
     {
         if (!isFinished()) return null;
 
+        List<TreasureCard> hiddenWhite = playerCardsMap.get(PlayerType.WHITE).getHiddenCards();
+        List<TreasureCard> hiddenBlack = playerCardsMap.get(PlayerType.BLACK).getHiddenCards();
+        List<TreasureCard> hiddenRed = playerCardsMap.get(PlayerType.RED).getHiddenCards();
+        List<TreasureCard> hiddenGreen = playerCardsMap.get(PlayerType.GREEN).getHiddenCards();
+
+        if (hiddenWhite == null) return player.get(PlayerType.WHITE);
+        if (hiddenBlack == null) return player.get(PlayerType.BLACK);
+        if (hiddenRed == null) return player.get(PlayerType.RED);
+        if (hiddenGreen == null) return player.get(PlayerType.GREEN);
+
         return null;
+
     }
 
     public boolean isWinner(Player player)
@@ -258,15 +269,7 @@ public class GameModel implements Serializable
         return getWinner() == player;
     }
 
-    private void placePlayerStart(Player pPlayer)
-    {
-        int x = (int) Math.random() * board.length;
-        int y = (int) Math.random() * board.length;
-
-        pPlayer.setXKoordinate(x);
-        pPlayer.setYKoordinate(y);
-    }
-
+    // fragt ab, ob der Spieler seine TreasurCard gefunden hat und verschiebt sie in den openCards Stapel
     private void placedOnSearchCard(Player pPlayer)
     {
         int x = pPlayer.getXKoordinate();
@@ -282,6 +285,16 @@ public class GameModel implements Serializable
 
     }
 
+    private void placePlayerStart(Player pPlayer)
+    {
+        int x = (int) Math.random() * board.length;
+        int y = (int) Math.random() * board.length;
+
+        pPlayer.setXKoordinate(x);
+        pPlayer.setYKoordinate(y);
+    }
+
+    // setzt den Turnholder im normalen Spiel
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
         Player pPlayer = player.get(pPlayerType);
@@ -291,9 +304,11 @@ public class GameModel implements Serializable
             pPlayer.setYKoordinate(y);
             placedOnSearchCard(pPlayer);
         }
-        changeTurnholder();
+        changeTurnHolder();
     }
 
+    // setzt den herausgeschobenen Player -egal ob turnHolder oder nicht- auf der anderen Seite wieder ins
+    // Spiel
     public void placePlayerOutOfBounds(int x, int y, PlayerType pPlayerType)
     {
         Player temp = player.get(pPlayerType);
@@ -302,6 +317,7 @@ public class GameModel implements Serializable
         temp.setYKoordinate(y);
     }
 
+    // prüft, ob der Weg von start bis ende frei ist
     public List<Position> findWay(int sx, int sy, int ex, int ey)
     {
         List<Position> way = findWay(new Position(sx, sy), new Position(ex, ey), new Stack<Position>());
@@ -372,7 +388,7 @@ public class GameModel implements Serializable
         return temp;
     }
 
-    public void changeTurnholder()
+    public void changeTurnHolder()
     {
         if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
         if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
@@ -616,10 +632,10 @@ public class GameModel implements Serializable
 
     public boolean isFinished()
     {
-        boolean temp = false;
-        if (playerCardsMap.get(turnHolder).getHiddenCards() == null) temp = true;
+
+        if (playerCardsMap.get(turnHolder).getHiddenCards() == null) return true;
         turnHolder = null;
-        return temp;
+        return false;
     }
 
     public Tile getInsertTile()
