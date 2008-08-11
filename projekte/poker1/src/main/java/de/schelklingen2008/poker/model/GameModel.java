@@ -209,7 +209,7 @@ public class GameModel implements Serializable
 
     public boolean mustCallOrReRaise(int playerIndex)
     {
-        if (actPlayerIndex == playerIndex)
+        if (playerIsTurnHolder(playerIndex))
         {
             if (playerList.get(playerIndex).getOwnBet() < highestBet)
             {
@@ -222,7 +222,7 @@ public class GameModel implements Serializable
     public boolean mustCheckOrRaise(int playerIndex)
 
     {
-        if (actPlayerIndex == playerIndex)
+        if (playerIsTurnHolder(playerIndex))
         {
             if (playerList.get(playerIndex).getOwnBet() == highestBet)
             {
@@ -230,6 +230,18 @@ public class GameModel implements Serializable
             }
         }
         return false;
+    }
+
+    public boolean playerIsTurnHolder(int playerIndex)
+    {
+        if (actPlayerIndex == playerIndex)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public long getMinBet()
@@ -339,54 +351,70 @@ public class GameModel implements Serializable
         return playerIndex;
     }
 
-    public void call()
+    public void call(int playerIndex)
     {
-        Player actPlayer = playerList.get(actPlayerIndex);
-        long callValue = highestBet - actPlayer.getOwnBet();
-        if (mustCallOrReRaise(actPlayerIndex) == true && actPlayer.getBalance() >= callValue)
+        Player player = playerList.get(playerIndex);
+        long callValue = highestBet - player.getOwnBet();
+        if (mustCallOrReRaise(playerIndex) == true && player.getBalance() >= callValue)
         {
-            actPlayer.setBalance(actPlayer.getBalance() - callValue);
+            player.setBalance(player.getBalance() - callValue);
             pot = pot + callValue;
             nextPlayer();
         }
+        else
+            throw new IllegalStateException();
     }
 
-    public void check()
+    public void check(int playerIndex)
     {
-        if (mustCheckOrRaise(actPlayerIndex) == true)
+        if (mustCheckOrRaise(playerIndex) == true)
         {
             nextPlayer();
         }
+        else
+            throw new IllegalStateException();
     }
 
-    public void raise(long raiseValue)
+    public void raise(int playerIndex, long raiseValue)
     {
-        if (mustCheckOrRaise(actPlayerIndex) == true && getActPlayer().getBalance() >= highestBet)
+        if (mustCheckOrRaise(playerIndex) == true && getActPlayer().getBalance() >= highestBet)
         {
             getActPlayer().setBalance(getActPlayer().getBalance() - raiseValue);
             pot = pot + raiseValue;
             nextPlayer();
         }
+        else
+            throw new IllegalStateException();
     }
 
-    public void reRaise(long reRaiseValue) // Betrag der noch extra auf den schon vorhandenen Betrag
+    public void reRaise(int playerIndex, long reRaiseValue) // Betrag der noch extra auf den schon vorhandenen
+    // Betrag
     // draufgelegt wurde
     {
         long value = highestBet - getActPlayer().getOwnBet() + reRaiseValue;
+
+        if (mustCallOrReRaise(playerIndex) == true && getActPlayer().getBalance() >= value)
         {
-            if (mustCallOrReRaise(actPlayerIndex) == true && getActPlayer().getBalance() >= value)
-            {
-                getActPlayer().setBalance(getActPlayer().getBalance() - value);
-                pot = pot + value;
-            }
+            getActPlayer().setBalance(getActPlayer().getBalance() - value);
+            pot = pot + value;
+            nextPlayer();
         }
-        nextPlayer();
+        else
+            throw new IllegalStateException();
+
     }
 
-    public void fold()
+    public void fold(int playerIndex)
     {
-        getActPlayer().setStillIn(false);
-        nextPlayer();
+        if (playerIsTurnHolder(playerIndex) == true)
+        {
+            getActPlayer().setStillIn(false);
+            nextPlayer();
+        }
+        else
+        {
+            playerIsTurnHolder(playerIndex);
+        }
     }
 
     public void setPlayers(String[] names)

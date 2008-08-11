@@ -35,7 +35,7 @@ public class GameModelTest extends TestCase
 
         try
         {
-            gameModel.call();
+            gameModel.call(0);
             fail("call ganz am Anfang geht nicht");
         }
         catch (IllegalStateException e)

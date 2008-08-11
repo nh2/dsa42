@@ -49,35 +49,35 @@ public class Manager extends GameManager
     public void call(BodyObject client)
     {
         sLogger.fine("call by " + client);
-        gameModel.call();
+        gameModel.call(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void check(BodyObject client)
     {
         sLogger.fine("check by " + client);
-        gameModel.check();
+        gameModel.check(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void fold(BodyObject client)
     {
         sLogger.fine("fold by " + client);
-        gameModel.fold();
+        gameModel.fold(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void raise(BodyObject client, long bet)
     {
         sLogger.fine("raise by " + client);
-        gameModel.raise(bet);
+        gameModel.raise(getPlayerIndex(client), bet);
         updateSharedState();
     }
 
     public void reRaise(BodyObject client, long bet)
     {
         sLogger.fine("reRaise by " + client);
-        gameModel.reRaise(bet);
+        gameModel.reRaise(getPlayerIndex(client), bet);
         updateSharedState();
     }
 
@@ -99,4 +99,12 @@ public class Manager extends GameManager
         return null;
     }
 
+    private int getPlayerIndex(BodyObject client)
+    {
+        for (int i = 0; i < gameModel.getPlayerList().size(); i++)
+        {
+            if (gameModel.getPlayerList().get(i).getName().equals(client.username)) return i;
+        }
+        return -1;
+    }
 }
