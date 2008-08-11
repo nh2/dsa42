@@ -11,19 +11,34 @@ import java.util.Random;
 public class GameModel implements Serializable
 {
 
-    private Country[] c = new Country[30];
+    private Country[] c = new Country[29];
     private Player[]  p;
     private Player    turnholder;
     private int       turnholderIndex;
+    private int       index;
 
     public GameModel(String[] names)
     {
         initPlayers(names);
         initCountrys();
         initNeigbours();
+        distributeCountrys();
 
         turnholderIndex = 0;
         turnholder = p[0];
+    }
+
+    private void distributeCountrys()
+    {
+        for (int i = 0; i < c.length; i++)
+        {
+            if (index > p.length)
+            {
+                index = 0;
+            }
+            c[i].setOccupier(p[index]);
+            index++;
+        }
     }
 
     private void initPlayers(String[] names)
@@ -187,7 +202,12 @@ public class GameModel implements Serializable
             {
                 if (country1.isNeighbour(country2))
                 {
-                    return true;
+                    if (country1.getUnits() > 1)
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
                 }
                 else
                     return false;
