@@ -1,5 +1,8 @@
 package de.schelklingen2008.canasta.server;
 
+import java.util.Arrays;
+import java.util.logging.Logger;
+
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
@@ -7,6 +10,7 @@ import com.threerings.parlor.game.server.GameManager;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.transport.SharedState;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Handles the server side of the game.
@@ -14,11 +18,13 @@ import de.schelklingen2008.canasta.transport.SharedState;
 public class Manager extends GameManager
 {
 
+    private static final Logger sLogger = LoggerFactory.create();
+
     /** Is the state transmitted to the clients and managed by the server. */
-    private SharedState sharedState;
+    private SharedState         sharedState;
 
     /** Implements the game logic with an own internal model. */
-    private GameModel   gameModel;
+    private GameModel           gameModel;
 
     @Override
     protected PlaceObject createPlaceObject()
@@ -50,13 +56,26 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    public void discardCard(BodyObject client)
+    public void discardCard(BodyObject client, int whichCard)
     {
         Player player = getPlayer(client);
 
         if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
 
-        gameModel.discardCard(player);
+        gameModel.discardCard(player, whichCard);
+
+        updateSharedState();
+    }
+
+    public void makeOutlay(BodyObject client, int[] cardNumbers)
+    {
+        Player player = getPlayer(client);
+
+        if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
+
+        sLogger.info("make Outlay on Server: " + Arrays.toString(cardNumbers));
+
+        gameModel.makeOutlay(player, cardNumbers);
 
         updateSharedState();
     }

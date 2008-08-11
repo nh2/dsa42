@@ -31,6 +31,11 @@ public class Discard implements Serializable
         cards.add(card);
     }
 
+    public int size()
+    {
+        return cards.size();
+    }
+
     public Card peek()
     {
         if (cards.size() <= 0) return null;

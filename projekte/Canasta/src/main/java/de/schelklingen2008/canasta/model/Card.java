@@ -2,7 +2,9 @@ package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
 
-public class Card implements Serializable, Comparable<Card>
+import com.threerings.io.Streamable;
+
+public class Card implements Serializable, Comparable<Card>, Streamable
 {
 
     private final Suit suit;

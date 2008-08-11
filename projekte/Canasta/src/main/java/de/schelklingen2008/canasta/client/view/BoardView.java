@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -53,8 +54,6 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         controller.addChangeListener(this);
-
-        isCardSelected = new boolean[getGameContext().getMyPlayer().getHand().size()];
 
         addMouseMotionListener(new MouseMotionAdapter()
         {
@@ -103,10 +102,16 @@ public class BoardView extends JPanel implements GameChangeListener
                     sLogger.info("pressed CardStack " + area.getAreaNumber());
                     // controller.discardClicked();
                 }
+                else if (area.getName().equals("NewOutlay"))
+                {
+                    sLogger.info("pressed NewOutlay");
+                    controller.makeOutlay(getSelectedCardNumbers());
+                }
                 else if (area.getName().equals("Discard"))
                 {
                     sLogger.info("pressed Discard");
-                    controller.discardClicked();
+
+                    controller.discardClicked(getSelectedCardNumbers());
                 }
                 else
                 {
@@ -311,6 +316,8 @@ public class BoardView extends JPanel implements GameChangeListener
         int outlayHeight;
         int outlayY;
 
+        int localPlayerNumber = controller.getGameContext().getLocalPlayerNumber();
+
         switch (players.length)
         {
             case 2:
@@ -322,7 +329,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                paintOutlay(gfx, players[0], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[localPlayerNumber], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 1
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
@@ -334,7 +341,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.HAND_BORDER;
 
-                paintOutlay(gfx, players[1], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[(localPlayerNumber + 1) % 2], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 break;
             case 4:
@@ -346,7 +353,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                paintOutlay(gfx, players[0], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[localPlayerNumber], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 1
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
@@ -356,7 +363,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                + Constants.SHARED_CARDS_SPACE;
                 outlayY = Constants.HAND_BORDER;
 
-                paintOutlay(gfx, players[1], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[(localPlayerNumber + 1) % 4], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 2
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE)
@@ -368,7 +375,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 outlayHeight = (Constants.BOARD_HEIGHT - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
                 outlayY = Constants.HAND_BORDER;
 
-                paintOutlay(gfx, players[2], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[(localPlayerNumber + 2) % 4], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 // Player 3
                 outlayWidth = (Constants.BOARD_WIDTH - 2 * Constants.HAND_BORDER - Constants.SHARED_CARDS_SPACE) / 2;
@@ -381,7 +388,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                + Constants.SHARED_CARDS_SPACE;
                 outlayY = Constants.BOARD_HEIGHT - Constants.HAND_BORDER - outlayHeight;
 
-                paintOutlay(gfx, players[3], outlayX, outlayY, outlayWidth, outlayHeight);
+                paintOutlay(gfx, players[(localPlayerNumber + 3) % 4], outlayX, outlayY, outlayWidth, outlayHeight);
 
                 break;
             default:
@@ -448,6 +455,13 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 return;
             }
+        }
+
+        if (getGameContext().getMyPlayer() == player)
+        {
+            areas.add(new SensitiveArea("NewOutlay", x, y, 5, 5));
+            gfx.setPaint(new Color(0xFF00FF));
+            gfx.drawRect(x, y, 5, 5);
         }
 
         // some debugging
@@ -517,6 +531,46 @@ public class BoardView extends JPanel implements GameChangeListener
     public boolean isCardSelected(int cardNumber)
     {
         return isCardSelected[cardNumber];
+    }
+
+    public int[] getSelectedCardNumbers()
+    {
+        List<Integer> list = new LinkedList<Integer>();
+        for (int i = 0; i < isCardSelected.length; i++)
+        {
+            if (isCardSelected[i]) list.add(i);
+        }
+
+        int[] cardNumbers = new int[list.size()];
+
+        int i = 0;
+        for (int cardNumber : list)
+        {
+            cardNumbers[i] = cardNumber;
+            i++;
+        }
+
+        return cardNumbers;
+    }
+
+    public Card[] getSelectedCards()
+    {
+        List<Card> list = new LinkedList<Card>();
+        for (int i = 0; i < isCardSelected.length; i++)
+        {
+            list.add(controller.getGameContext().getMyPlayer().getHand().get(i));
+        }
+
+        Card[] cards = new Card[list.size()];
+
+        int i = 0;
+        for (Card card : list)
+        {
+            cards[i] = card;
+            i++;
+        }
+
+        return cards;
     }
 
     public void handCardClicked(int cardNumber)

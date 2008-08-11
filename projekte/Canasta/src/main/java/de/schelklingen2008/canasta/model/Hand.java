@@ -35,6 +35,16 @@ public class Hand implements Iterable<Card>, Serializable
         return cards.remove(index);
     }
 
+    public boolean remove(Object o)
+    {
+        return cards.remove(o);
+    }
+
+    public boolean contains(Object o)
+    {
+        return cards.contains(o);
+    }
+
     public int size()
     {
         return cards.size();
@@ -55,20 +65,5 @@ public class Hand implements Iterable<Card>, Serializable
     {
         Collections.sort(cards);
     }
-
-    // public int findCard(Card lookupCard)
-    // {
-    // int i = 0;
-    // for (Card card : cards)
-    // {
-    // if (card == lookupCard)
-    // {
-    // return i;
-    //
-    // }
-    // i++;
-    // }
-    // throw new RuntimeException(new IllegalArgumentException("Card not in Hand"));
-    // }
 
 }

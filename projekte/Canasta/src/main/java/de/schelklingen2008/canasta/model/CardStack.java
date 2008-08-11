@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import de.schelklingen2008.canasta.client.Constants;
+
 public class CardStack extends ArrayList<Card> implements Serializable
 {
 
@@ -60,8 +62,22 @@ public class CardStack extends ArrayList<Card> implements Serializable
 
     public int getJokerCount()
     {
-        // TODO getJokerCount() STUB
-        return 0;
+        int jokerCount = 0;
+
+        for (Card card : cards)
+        {
+            if (card.getRank() == Rank.TWO || card.getRank() == Rank.JOKER)
+            {
+                jokerCount++;
+            }
+        }
+
+        return jokerCount;
+    }
+
+    public boolean isCanasta()
+    {
+        return size() >= Constants.CANASTA_MIN_CARDS;
     }
 
     @Override

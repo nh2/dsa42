@@ -1,6 +1,7 @@
 package de.schelklingen2008.canasta.client.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -94,14 +95,32 @@ public class Controller extends GameController
         sharedState.manager.invoke("drawCard");
     }
 
-    public void discardClicked()
+    public void discardClicked(int[] selectedCardNumbers)
     {
         if (!gameContext.isMyTurn())
         {
             sLogger.info("Ich bin nicht dran!");
             return;
         }
-        sharedState.manager.invoke("discardCard");
+
+        if (selectedCardNumbers.length != 1)
+        {
+            sLogger.info("selectedCards contains multiple cards!");
+            sLogger.info(Arrays.toString(selectedCardNumbers));
+            return;
+        }
+
+        sharedState.manager.invoke("discardCard", selectedCardNumbers[0]);
+    }
+
+    public void makeOutlay(int[] selectedCardNumbers)
+    {
+        if (!gameContext.isMyTurn())
+        {
+            sLogger.info("Ich bin nicht dran!");
+            return;
+        }
+        sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
     }
 
     private void updateGameContext()

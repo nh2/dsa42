@@ -9,6 +9,11 @@ import java.util.List;
 public class Talon implements Serializable
 {
 
+    public int size()
+    {
+        return cards.size();
+    }
+
     private List<Card> cards;
 
     public Talon()

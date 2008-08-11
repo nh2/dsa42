@@ -1,6 +1,11 @@
 package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
+import de.schelklingen2008.canasta.client.Constants;
+import de.schelklingen2008.util.LoggerFactory;
 
 /**
  * Maintains the rules and the state of the game.
@@ -8,15 +13,12 @@ import java.io.Serializable;
 public class GameModel implements Serializable
 {
 
-    private int      turnHolder;
-    private Player[] players;
-    private Talon    talon;
-    private Discard  discard;
+    private static final Logger sLogger = LoggerFactory.create();
 
-    /**
-     * TODO export constant to Constants.java
-     */
-    public final int initialCardNumber = 15;
+    private int                 turnHolder;
+    private Player[]            players;
+    private Talon               talon;
+    private Discard             discard;
 
     public GameModel(String[] playerNames)
     {
@@ -48,7 +50,7 @@ public class GameModel implements Serializable
         // draw 15 cards for every player
         for (Player player : players)
         {
-            for (int j = 0; j < initialCardNumber; j++)
+            for (int j = 0; j < Constants.CANASTA_INITIAL_CARD_COUNT; j++)
             {
                 player.getHand().add(talon.pop());
             }
@@ -59,23 +61,29 @@ public class GameModel implements Serializable
 
         // create outlays
 
-        for (Player player : players)
-        {
-            Outlay outlay = player.getOutlay();
-            for (int j = 0; j < 10; j++)
-            {
-                CardStack cardStack = new CardStack();
-                for (int k = 0; k < 10; k++)
-                {
-                    cardStack.add(new Card(Rank.QUEEN, Suit.HEARTS));
-                }
-                outlay.add(cardStack);
-            }
-        }
+        // for (Player player : players)
+        // {
+        // Outlay outlay = player.getOutlay();
+        // for (int j = 0; j < 10; j++)
+        // {
+        // CardStack cardStack = new CardStack();
+        // for (int k = 0; k < 10; k++)
+        // {
+        // cardStack.add(new Card(Rank.QUEEN, Suit.HEARTS));
+        // }
+        // outlay.add(cardStack);
+        // }
+        // }
+    }
+
+    public boolean isTurnHolder(Player player)
+    {
+        return players[getTurnHolder()] == player;
     }
 
     public void drawCard(Player player)
     {
+        if (!isTurnHolder(player)) return;
         Card card = talon.pop();
 
         player.getHand().add(card);
@@ -88,15 +96,49 @@ public class GameModel implements Serializable
         goOut();
     }
 
-    public void discardCard(Player player)
+    public void discardCard(Player player, int whichCard)
     {
-        // TODO player discards card
-        // if (players[getPlayerIndex(player.getName())].hasCanasta() &&
-        // players[getPlayerIndex(player.getName())].getHand().size() == 0)
-        // {
-        // goOut();
-        // }
+        discardCard(player, player.getHand().get(whichCard));
+    }
+
+    public void discardCard(Player player, Card card)
+    {
+        if (!isTurnHolder(player)) return;
+        player.getHand().remove(card);
+        discard.push(card);
+        if (player.hasCanasta() && player.getHand().size() == 0)
+        {
+            goOut();
+        }
         endTurn();
+    }
+
+    public void makeOutlay(Player player, int[] whichCards)
+    {
+        Card[] cards = new Card[whichCards.length];
+
+        for (int i = 0; i < whichCards.length; i++)
+        {
+            cards[i] = player.getHand().get(whichCards[i]);
+        }
+
+        makeOutlay(player, cards);
+    }
+
+    public void makeOutlay(Player player, Card[] cards)
+    {
+        if (!isTurnHolder(player)) return;
+
+        sLogger.info("Player " + player.getName() + " should make outlay now");
+        sLogger.info(Arrays.toString(cards));
+
+        CardStack cardStack = new CardStack();
+        for (Card card : cards)
+        {
+            cardStack.add(card);
+            player.getHand().remove(card);
+        }
+        player.getOutlay().add(cardStack);
     }
 
     public void goOut()
@@ -163,4 +205,5 @@ public class GameModel implements Serializable
         }
         throw new RuntimeException(new IllegalArgumentException("Playername " + string + " not found in game model"));
     }
+
 }

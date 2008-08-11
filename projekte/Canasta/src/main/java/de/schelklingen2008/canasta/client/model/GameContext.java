@@ -31,7 +31,7 @@ public class GameContext
 
     public Player getMyPlayer()
     {
-        return gameModel.getPlayer(myName);
+        return gameModel == null ? null : gameModel.getPlayer(myName);
     }
 
     public GameModel getGameModel()
