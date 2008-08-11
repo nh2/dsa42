@@ -158,7 +158,7 @@ public class Ball
 
         if (deltaX * deltaX + deltaY * deltaY < 4 * BALL_RADIUS * BALL_RADIUS)
         {
-            double factor = 400 / new Vector2d(deltaX, deltaY).getLength();
+            double factor = 2 * BALL_RADIUS / new Vector2d(deltaX, deltaY).getLength();
             deltaX *= factor;
             deltaY *= factor;
         }

@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
 /**
@@ -68,11 +67,11 @@ public class GameModel
         balls.add(whiteBall);
         balls.add(blackBall);
 
-        for (Color color : Ball.BALL_COLORS)
-        {
-            balls.add(new Ball(Ball.BallType.SOLID, color));
-            balls.add(new Ball(Ball.BallType.STRIPED, color));
-        }
+        // for (Color color : Ball.BALL_COLORS)
+        // {
+        // balls.add(new Ball(Ball.BallType.SOLID, color));
+        // balls.add(new Ball(Ball.BallType.STRIPED, color));
+        // }
     }
 
     private void addWalls()
@@ -199,29 +198,30 @@ public class GameModel
         whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
         blackBall.setPosition(new Vector2d(0.75d * MAX_X, 0.5d * MAX_Y));
 
-        if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
-        {
-            BallType ball2Type =
-                tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
-            for (int i = 0; i < tmpBalls.size(); i++)
-            {
-                if (tmpBalls.get(i).getType() == ball2Type)
-                {
-                    Collections.swap(tmpBalls, i, tmpBalls.size() - 1);
-                    break;
-                }
-            }
-        }
-
-        int i = 0;
-        for (Ball ball : tmpBalls)
-        {
-            if (ball == whiteBall || ball == blackBall)
-            {
-                continue;
-            }
-            ball.setPosition(Ball.INITIAL_BALL_POSITIONS[i++]);
-        }
+        // if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() -
+        // 5).getType()))
+        // {
+        // BallType ball2Type =
+        // tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
+        // for (int i = 0; i < tmpBalls.size(); i++)
+        // {
+        // if (tmpBalls.get(i).getType() == ball2Type)
+        // {
+        // Collections.swap(tmpBalls, i, tmpBalls.size() - 1);
+        // break;
+        // }
+        // }
+        // }
+        //
+        // int i = 0;
+        // for (Ball ball : tmpBalls)
+        // {
+        // if (ball == whiteBall || ball == blackBall)
+        // {
+        // continue;
+        // }
+        // ball.setPosition(Ball.INITIAL_BALL_POSITIONS[i++]);
+        // }
 
     }
 
