@@ -44,6 +44,26 @@ public class Controller extends GameController
     private ToyBoxContext            toyBoxContext;
 
     @Override
+    public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
+    {
+        sLogger.finer("trace");
+
+        toyBoxContext = (ToyBoxContext) crowdContext;
+        gameContext.setMyName(toyBoxContext.getUsername().toString());
+        super.init(crowdContext, placeConfig);
+    }
+
+    public void Attack(Country att, Country def)
+    {
+        sharedState.manager.invoke("Attack", att.getIndex(), def.getIndex());
+    }
+
+    public void placeUnit(Country c)
+    {
+        sharedState.manager.invoke("placeUnit", c.getIndex());
+    }
+
+    @Override
     protected PlaceView createPlaceView(CrowdContext crowdContext)
     {
         sLogger.finer("trace");
@@ -65,24 +85,9 @@ public class Controller extends GameController
         sharedState.manager.invoke("EndofTurn");
     }
 
-    @Override
-    public void init(CrowdContext crowdContext, PlaceConfig placeConfig)
-    {
-        sLogger.finer("trace");
-
-        toyBoxContext = (ToyBoxContext) crowdContext;
-        gameContext.setMyName(toyBoxContext.getUsername().toString());
-        super.init(crowdContext, placeConfig);
-    }
-
     public void leaveButtonClicked()
     {
         toyBoxContext.getLocationDirector().moveBack();
-    }
-
-    public void placeUnit(Country c)
-    {
-        sharedState.manager.invoke("placeUnit", c.getIndex());
     }
 
     private void updateGameContext()

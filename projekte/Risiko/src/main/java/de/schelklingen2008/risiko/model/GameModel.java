@@ -28,6 +28,15 @@ public class GameModel implements Serializable
         turnholder = p[0];
     }
 
+    public Country getSelectedCountry()
+    {
+        for (int i = 0; i < c.length; i++)
+        {
+            if (c[i].isSelected()) return c[i];
+        }
+        return null;
+    }
+
     private void distributeCountrys()
     {
         for (int i = 0; i < c.length; i++)

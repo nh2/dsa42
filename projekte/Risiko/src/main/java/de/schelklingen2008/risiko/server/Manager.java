@@ -57,7 +57,14 @@ public class Manager extends GameManager
 
     public void EndofTurn(BodyObject client)
     {
+
         gameModel.setNextTurnholder();
+        updateSharedState();
+    }
+
+    public void Attack(BodyObject client, int attindex, int defindex)
+    {
+        gameModel.attack(gameModel.getCountry(attindex), gameModel.getCountry(defindex));
     }
 
     private void updateSharedState()

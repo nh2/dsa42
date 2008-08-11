@@ -62,7 +62,6 @@ public class BoardView extends JPanel implements GameChangeListener
     private void pressed(MouseEvent e)
     {
 
-        // getGameModel().setAllCountriesUnselected();
         // getGameModel().getCountrybyColor(c).setSelected(true);
 
         Color c = new Color(map.getRGB(e.getX(), e.getY()));
@@ -70,6 +69,20 @@ public class BoardView extends JPanel implements GameChangeListener
         if (getGameModel().isLegalMoveSet(getGameContext().getMyPlayer(), getGameModel().getCountryByColor(c)))
         {
             controller.placeUnit(getGameModel().getCountryByColor(c));
+        }
+
+        else if (getGameModel().getSelectedCountry() != null)
+        {
+            if (getGameModel().isLegalMoveAttack(getGameContext().getMyPlayer(), getGameModel().getSelectedCountry(),
+                                                 getGameModel().getCountryByColor(c)))
+            {
+                controller.Attack(getGameModel().getSelectedCountry(), getGameModel().getCountryByColor(c));
+                getGameModel().setAllCountriesUnselected();
+            }
+        }
+        else
+        {
+            getGameModel().getCountryByColor(c).setSelected(true);
         }
 
         // else if(getGameModel().isLegalMoveAttack(getGameContext().getMyPlayer(), , null))
