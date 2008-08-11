@@ -13,12 +13,13 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameModel implements Serializable
 {
 
-    private static final Logger sLogger = LoggerFactory.create();
+    private static final Logger sLogger  = LoggerFactory.create();
 
     private int                 turnHolder;
     private Player[]            players;
     private Talon               talon;
     private Discard             discard;
+    private boolean             hasDrawn = false;
 
     public GameModel(String[] playerNames)
     {
@@ -84,6 +85,8 @@ public class GameModel implements Serializable
     public void drawCard(Player player)
     {
         if (!isTurnHolder(player)) return;
+
+        hasDrawn = true;
         Card card = talon.pop();
 
         player.getHand().add(card);
@@ -250,11 +253,13 @@ public class GameModel implements Serializable
 
     public void goOut()
     {
+
         // TODO round is finished, deal new cards, evaluate score, etc
     }
 
     public void endTurn()
     {
+        hasDrawn = false;
         turnHolder++;
         turnHolder %= players.length;
     }
@@ -313,4 +318,8 @@ public class GameModel implements Serializable
         throw new RuntimeException(new IllegalArgumentException("Playername " + string + " not found in game model"));
     }
 
+    public boolean hasDrawn()
+    {
+        return hasDrawn;
+    }
 }

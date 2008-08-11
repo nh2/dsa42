@@ -89,8 +89,13 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 if (area.getName().equals("Talon"))
                 {
-                    sLogger.info("pressed Talon");
-                    controller.talonClicked();
+                    if (!getGameModel().hasDrawn())
+                    {
+                        sLogger.info("pressed Talon");
+                        controller.talonClicked();
+                    }
+                    else
+                        sLogger.info("only one card from talon each turn");
                 }
                 else if (area.getName().equals("HandCard"))
                 {
