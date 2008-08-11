@@ -44,14 +44,18 @@ public class Controller extends GameController
 
     private int                      selectedOwnCardIndex;
     private boolean                  selectedOwnCardIsInHand;
+    private int                      selectedOwnCardPlace;
 
     private int                      selectedPublicCardIndex;
+    private int                      selectedPublicCardPlace;
 
     public Controller()
     {
         selectedOwnCardIndex = -2;
         selectedOwnCardIsInHand = false;
+        selectedOwnCardPlace = 0;
         selectedPublicCardIndex = -2;
+        selectedPublicCardPlace = 0;
     }
 
     @Override
@@ -171,40 +175,46 @@ public class Controller extends GameController
         }
     }
 
-    public void setOwnSelectedCard(boolean pSelectedCardIsInHand, int pSelectedCardIndex)
+    public void setOwnSelectedCard(int pPlace, boolean pSelectedCardIsInHand, int pSelectedCardIndex)
     {
-        if (selectedOwnCardIndex == pSelectedCardIndex && selectedOwnCardIsInHand == pSelectedCardIsInHand)
+        if (pPlace >= 0)
         {
-            selectedOwnCardIndex = -2;
-            selectedOwnCardIsInHand = false;
-        }
-        else if (pSelectedCardIndex == -2
-                 && selectedOwnCardIndex != -2
-                 || pSelectedCardIndex == selectedOwnCardIndex
-                 && !pSelectedCardIsInHand)
-        {
-            // sharedState.manager.invoke("placeCardInDiscardPile", 1, 2);
-            sLogger.info("Karte ablegen");
-        }
-        else
-        {
-            selectedOwnCardIndex = pSelectedCardIndex;
-            selectedOwnCardIsInHand = pSelectedCardIsInHand;
+            if (selectedOwnCardIndex == pSelectedCardIndex && selectedOwnCardIsInHand == pSelectedCardIsInHand)
+            {
+                selectedOwnCardIndex = -2;
+                selectedOwnCardIsInHand = false;
+                selectedOwnCardPlace = 0;
+            }
+            else if (pSelectedCardIndex == -2
+                     && selectedOwnCardIndex != -2
+                     || pSelectedCardIndex == selectedOwnCardIndex
+                     && !pSelectedCardIsInHand)
+            {
+                sharedState.manager.invoke("placeCardInDiscardPile", selectedOwnCardPlace, selectedOwnCardIndex, pPlace);
+                sLogger.info("placed card");
+            }
+            else
+            {
+                selectedOwnCardIndex = pSelectedCardIndex;
+                selectedOwnCardIsInHand = pSelectedCardIsInHand;
+                selectedOwnCardPlace = pPlace;
+            }
         }
     }
 
-    public void setPublicSelectedCard(int pSelectedPublicCardIndex)
+    public void setPublicSelectedCard(int pPlace, int pSelectedPublicCardIndex)
     {
         if (selectedOwnCardIndex != -2)
         {
             selectedPublicCardIndex = pSelectedPublicCardIndex;
+            selectedPublicCardPlace = pPlace;
             if (selectedPublicCardIndex == -2
                 && selectedOwnCardIndex == 1
                 || selectedPublicCardIndex == selectedOwnCardIndex - 1
                 || selectedOwnCardIndex == 0)// defensive programming
             {
-                sharedState.manager.invoke("putCard", selectedOwnCardIndex, selectedOwnCardIsInHand,
-                                           selectedPublicCardIndex);
+                sharedState.manager.invoke("putCard", selectedOwnCardPlace, selectedOwnCardIndex,
+                                           selectedOwnCardIsInHand, selectedPublicCardPlace);
                 sLogger.info("send data to server");
             }
         }

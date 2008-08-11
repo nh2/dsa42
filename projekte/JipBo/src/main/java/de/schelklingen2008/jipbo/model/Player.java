@@ -73,15 +73,9 @@ public class Player implements Serializable
         return mDrawPile;
     }
 
-    public void removeDrawPileCard(int pN)
+    public void removeDrawPileCard(int pPlace)
     {
-        for (int i = 0; i < mDrawPile.length; i++)
-        {
-            if (mDrawPile[i].getNumber() == pN)
-            {
-                mDrawPile[i].setNumber(-2);// -2 <=> no card
-            }
-        }
+        mDrawPile[pPlace].setNumber(-2);// -2 <=> no card
     }
 
     public Card[] getDiscardPile()
@@ -89,15 +83,9 @@ public class Player implements Serializable
         return mDiscardPile;
     }
 
-    public void removeDiscardPileCard(int pN)
+    public void removeDiscardPileCard(int pPlace)
     {
-        for (int i = 0; i < mDiscardPile.length; i++)
-        {
-            if (mDiscardPile[i].getNumber() == pN)
-            {
-                mDiscardPile[i].setNumber(-2);// -2 <=> no card
-            }
-        }
+        mDiscardPile[pPlace].setNumber(-2);// -2 <=> no card
     }
 
 }

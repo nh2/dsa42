@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.schelklingen2008.jipbo.client.Constants;
+
 /**
  * Maintains the rules and the state of the game.
  */
@@ -74,7 +76,7 @@ public class GameModel implements Serializable
     {
         List<Card> rStockPile = new ArrayList<Card>();
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= Constants.DURATION; i++)
         {
             rStockPile.add(mStockCards.get(i));
             mStockCards.remove(i);
@@ -142,7 +144,7 @@ public class GameModel implements Serializable
         {
             if (mPlayers[i].getName().equals(pName)) return i;
         }
-        throw new IllegalStateException("Kein Spieler gefunden.");
+        throw new IllegalStateException("no player found.");
     }
 
     public Player getPlayerByName(String pName)
@@ -150,32 +152,52 @@ public class GameModel implements Serializable
         return mPlayers[getPlayerIDByName(pName)];
     }
 
-    public void putCard(String pPlayerName, int pCard, boolean pFromHand, int pToCard)
+    public void putCard(String pPlayerName, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
     {
-        // update BuildPile
-        for (int i = 0; i < mBuildPile.length; i++)
+
+        // here comes the joker
+        if (pCard == 0)
         {
-            if (mBuildPile[i].getNumber() == pToCard)
+            if (mBuildPile[pToPlace].getNumber() == -2)
             {
-                mBuildPile[i].setNumber(pCard);
-                break;
+                pCard = 1;
+            }
+            else
+            {
+                pCard = mBuildPile[pToPlace].getNumber() + 1;
             }
         }
+        // update BuildPile
+        mBuildPile[pToPlace].setNumber(pCard);
         // remove PlayerPiles
+        int playerID = getPlayerIDByName(pPlayerName);
         if (pFromHand)
         {
-            mPlayers[getPlayerIDByName(pPlayerName)].getDiscardPile();
+            if (pFromPlace < 4)
+            {
+                mPlayers[playerID].removeDrawPileCard(pFromPlace);
+            }
+            else
+            {
+                mPlayers[playerID].removeLastStockPile();
+            }
         }
         else
         {
-            mPlayers[getPlayerIDByName(pPlayerName)].getDrawPile();
-
+            mPlayers[playerID].removeDiscardPileCard(pFromPlace);
         }
     }
 
-    public void placeCardInDiscardPile(int pCard, boolean pFromHand, int pToCard)
+    public void placeCardInDiscardPile(String pPlayerName, int pFromPlace, int pCard, int pToPlace)
     {
-        // TODO Auto-generated method stub
+        if (pCard >= 0)// must be a normal card
+        {
+            int playerID = getPlayerIDByName(pPlayerName);
+            Card[] playerDiscardPile = mPlayers[playerID].getDiscardPile();
+
+            playerDiscardPile[pToPlace].setNumber(pCard);
+            mPlayers[playerID].removeDrawPileCard(pFromPlace);
+        }
 
     }
 }

@@ -61,14 +61,18 @@ public class BoardPanel extends JPanel
                             }
                             kBoardPanel.repaint();
                         }
-
+                        int cardPlace = 0;
                         for (int j = 0; j < mCardPanel.length; j++)
                         {
                             mCardPanel[j].setBorder(false);
+                            if (mCardPanel[j].equals(cardPanel))
+                            {
+                                cardPlace = j;
+                            }
                         }
                         if (!isPublicCards())
                         {
-                            mController.setOwnSelectedCard(isDrawPile(), cardPanel.getValue());
+                            mController.setOwnSelectedCard(cardPlace, isDrawPile(), cardPanel.getValue());
 
                             cardPanel.setBorder(mController.getSelectedOwnCardIndex() == cardPanel.getValue());
 
@@ -76,9 +80,11 @@ public class BoardPanel extends JPanel
                         else
                         {
                             if (mController.getSelectedOwnCardIndex() != -2
-                                && (mController.getSelectedOwnCardIndex() == 0 || mController.getSelectedOwnCardIndex() - 1 == cardPanel.getValue()))
+                                && (mController.getSelectedPublicCardIndex() == -2
+                                    && mController.getSelectedOwnCardIndex() == 1
+                                    || mController.getSelectedPublicCardIndex() == mController.getSelectedOwnCardIndex() - 1 || mController.getSelectedOwnCardIndex() == 0))
                             {
-                                mController.setPublicSelectedCard(cardPanel.getValue());
+                                mController.setPublicSelectedCard(cardPlace, cardPanel.getValue());
                                 cardPanel.setBorder(mController.getSelectedPublicCardIndex() == cardPanel.getValue());
                             }
                         }
