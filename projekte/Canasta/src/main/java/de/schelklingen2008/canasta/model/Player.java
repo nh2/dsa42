@@ -91,9 +91,13 @@ public class Player implements Serializable
 
     public boolean hasCanasta()
     {
-        /**
-         * TODO implement hasCanasta()
-         */
-        return true;
+        for (CardStack stack : getOutlay())
+        {
+            if (stack.isCanasta())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

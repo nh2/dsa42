@@ -16,8 +16,7 @@ public class GameContext
     private static final Logger sLogger   = LoggerFactory.create();
 
     /**
-     * Contains the rules and the state of the game. TODO correct player count (should be optained from
-     * controller)
+     * Contains the rules and the state of the game.
      */
     private GameModel           gameModel = null;
 

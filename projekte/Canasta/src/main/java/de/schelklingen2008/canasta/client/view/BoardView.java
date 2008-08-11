@@ -78,7 +78,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        // TODO respond to player´s mouse movements
+        // not neccessary
     }
 
     private void pressed(MouseEvent e)
@@ -114,6 +114,9 @@ public class BoardView extends JPanel implements GameChangeListener
                 }
                 else if (area.getName().equals("Discard"))
                 {
+                    /**
+                     * TODO the discard pile cannot be picked up
+                     */
                     sLogger.info("pressed Discard");
 
                     controller.discardClicked(getSelectedCardNumbers());
@@ -129,7 +132,6 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     public Dimension getPreferredSize()
     {
-        // TODO calculate correct dimensions for the board view
         return new Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
     }
 
@@ -523,7 +525,6 @@ public class BoardView extends JPanel implements GameChangeListener
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }

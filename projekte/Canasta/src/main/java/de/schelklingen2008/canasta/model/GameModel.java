@@ -29,9 +29,6 @@ public class GameModel implements Serializable
             throw new IllegalArgumentException("Only 2 or 4 players allowed for now!");
         }
 
-        /**
-         * TODO Feature: any player order allowed
-         */
         // create the player objects
         players = new Player[playerNames.length];
         int i = 0;
@@ -47,15 +44,11 @@ public class GameModel implements Serializable
         initialize();
     }
 
+    /**
+     * TODO when going out, the last stack put onto the board stays even after initializing
+     */
     private void initialize()
     {
-        // clear hands and outlays (keep score and name!)
-        for (Player player : players)
-        {
-            player.getHand().clear();
-            player.getOutlay().clear();
-        }
-
         // create a full 110 card talon
         talon = Talon.getInstance();
         talon.shuffle();
@@ -66,6 +59,9 @@ public class GameModel implements Serializable
         // draw 15 cards for every player
         for (Player player : players)
         {
+            // clear hands and outlays (keep score and name!) and then deal new cards
+            player.getHand().clear();
+            player.getOutlay().clear();
             for (int j = 0; j < Constants.GAME_INIT_CARD_COUNT; j++)
             {
                 player.getHand().add(talon.pop());
@@ -271,6 +267,9 @@ public class GameModel implements Serializable
         }
     }
 
+    /**
+     * TODO the game can't end
+     */
     public void goOut()
     {
         Player winner = null;
