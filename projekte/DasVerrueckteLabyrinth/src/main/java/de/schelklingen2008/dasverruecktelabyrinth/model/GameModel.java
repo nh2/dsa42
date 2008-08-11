@@ -72,7 +72,7 @@ public class GameModel implements Serializable
             int x = RAND.nextInt(board.length);
             int y = RAND.nextInt(board.length);
             player.put(TYPES[i], new Player(TYPES[i], names[i], x, y)); // TODO brauch ich placePlayerStart
-                                                                        // noch?
+            // noch?
         }
 
         generateTreasureCards();
@@ -297,14 +297,17 @@ public class GameModel implements Serializable
     // setzt den Turnholder im normalen Spiel
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
-        Player pPlayer = player.get(pPlayerType);
-        if (isLegalMove(x, y, pPlayer))
+        if (walk)
         {
-            pPlayer.setXKoordinate(x);
-            pPlayer.setYKoordinate(y);
-            placedOnSearchCard(pPlayer);
+            Player pPlayer = player.get(pPlayerType);
+            if (isLegalMove(x, y, pPlayer))
+            {
+                pPlayer.setXKoordinate(x);
+                pPlayer.setYKoordinate(y);
+                placedOnSearchCard(pPlayer);
+            }
+            changeTurnHolder();
         }
-        changeTurnHolder();
     }
 
     // setzt den herausgeschobenen Player -egal ob turnHolder oder nicht- auf der anderen Seite wieder ins
@@ -432,6 +435,7 @@ public class GameModel implements Serializable
             if (pPushButton == PushButton.WestMitte) einschiebenWest(0, 3);
             if (pPushButton == PushButton.WestOben) einschiebenWest(0, 1);
         }
+        walk = true;
     }
 
     private void einschiebenNord(int x, int y)
@@ -557,13 +561,6 @@ public class GameModel implements Serializable
         }
     }
 
-    private void advanceTurnHolder()
-    {
-        // setTurnHolder(getTurnHolder().other());
-        // if (!hasLegalMoves()) setTurnHolder(getTurnHolder().other());
-        // if (!hasLegalMoves()) setTurnHolder(null); // finishes the game
-    }
-
     public boolean hasLegalMoves()
     {
         for (int y = 0; y < SIZE; y++)
@@ -589,6 +586,7 @@ public class GameModel implements Serializable
         return playerCardsMap;
     }
 
+    // Methoden, die das board betreffen
     private static Tile[][] copyBoard(Tile[][] s)
     {
         Tile[][] copy = new Tile[SIZE][SIZE];
@@ -610,6 +608,12 @@ public class GameModel implements Serializable
         return changed;
     }
 
+    public PlayerType getTurnHolder()
+    {
+        return turnHolder;
+    }
+
+    // legale züge
     private boolean isInBounds(int x, int y)
     {
         return x >= 0 && y >= 0 && x < SIZE && y < SIZE;
@@ -623,11 +627,6 @@ public class GameModel implements Serializable
             for (int y = 0; y < SIZE; y++)
                 result[x][y] = isLegalMove(x, y, this.player.get(player));
         return result;
-    }
-
-    public PlayerType getTurnHolder()
-    {
-        return turnHolder;
     }
 
     public boolean isFinished()
