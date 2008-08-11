@@ -17,7 +17,7 @@ public class GameModel implements Serializable
     private List<Card> mStockCards;
     private Player[]   mPlayers;
 
-    // private Player turnHolder;
+    private Player     turnHolder;
 
     public GameModel()
     {
@@ -106,6 +106,9 @@ public class GameModel implements Serializable
 
     public void refreshDrawPile(Player pPlayer)
     {
+        if (!pPlayer.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
+                                                                         + pPlayer
+                                                                         + " (rDP)");
         for (int i = 0; i < pPlayer.getDrawPile().length; i++)
         {
             if (pPlayer.getDrawPile()[i].getNumber() == -2)
@@ -173,6 +176,10 @@ public class GameModel implements Serializable
     public void putCard(String pPlayerName, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
     {
         int playerID = getPlayerIDByName(pPlayerName);
+        Player player = mPlayers[playerID];
+        if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
+                                                                        + player
+                                                                        + " (pC)");
 
         if (pFromHand
             && mPlayers[playerID].getDrawPile()[pFromPlace].getNumber() == pCard
@@ -218,59 +225,62 @@ public class GameModel implements Serializable
         if (pCard >= 0)// must be a normal card
         {
             int playerID = getPlayerIDByName(pPlayerName);
-            Card[] playerDiscardPile = mPlayers[playerID].getDiscardPile();
+            Player player = mPlayers[playerID];
+            if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
+                                                                            + player
+                                                                            + " (pCIDP)");
+            Card[] playerDiscardPile = player.getDiscardPile();
 
             playerDiscardPile[pToPlace].setNumber(pCard);
-            mPlayers[playerID].removeDrawPileCard(pFromPlace);
+            player.removeDrawPileCard(pFromPlace);
 
-            // TODO next Player
+            setTurnHolder(getPlayerIndexOf(getPlayerSize() == playerID ? 0 : playerID));
 
         }
-
     }
 
-    // public Player getTurnHolder()
-    // {
-    // return turnHolder;
-    // }
-    //
-    // public boolean setTurnHolder(Player pTurnHolder)
-    // {
-    // boolean changed = turnHolder != pTurnHolder;
-    // turnHolder = pTurnHolder;
-    // return changed;
-    // }
-    //
-    // public boolean isTurnHolder(Player player)
-    // {
-    // return player == getTurnHolder();
-    // }
-    //
-    // public boolean isFinished()
-    // {
-    // return getTurnHolder() == null;
-    // }
-    //
-    // private void clear()
-    // {
-    // turnHolder = null;
-    // }
-    //
-    // public boolean isWinner(Player player)
-    // {
-    // return getWinner() == player;
-    // }
-    //
-    // public Player getWinner()
-    // {
-    // if (!isFinished()) return null;
-    // for (int i = 0; i < mPlayers.length; i++)
-    // {
-    // if (mPlayers[i].getStockPile().size() == 0)
-    // {
-    // return mPlayers[i];
-    // }
-    // }
-    // return null;
-    // }
+    public Player getTurnHolder()
+    {
+        return turnHolder;
+    }
+
+    public boolean setTurnHolder(Player pTurnHolder)
+    {
+        boolean changed = turnHolder != pTurnHolder;
+        turnHolder = pTurnHolder;
+        return changed;
+    }
+
+    public boolean isTurnHolder(Player player)
+    {
+        return player == getTurnHolder();
+    }
+
+    public boolean isFinished()
+    {
+        return getTurnHolder() == null;
+    }
+
+    private void clear()
+    {
+        turnHolder = null;
+    }
+
+    public boolean isWinner(Player player)
+    {
+        return getWinner() == player;
+    }
+
+    public Player getWinner()
+    {
+        if (!isFinished()) return null;
+        for (int i = 0; i < mPlayers.length; i++)
+        {
+            if (mPlayers[i].getStockPile().size() == 0)
+            {
+                return mPlayers[i];
+            }
+        }
+        return null;
+    }
 }
