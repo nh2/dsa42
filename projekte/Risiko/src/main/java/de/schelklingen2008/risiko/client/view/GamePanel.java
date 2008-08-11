@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements PlaceView
                                                                                .getGameModel()
                                                                                .getTurnholder()))
                 {
+
                     controller.EndofTurn();
                 }
             }

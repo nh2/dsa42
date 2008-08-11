@@ -62,21 +62,18 @@ public class BoardView extends JPanel implements GameChangeListener
     private void pressed(MouseEvent e)
     {
 
-        if (getGameContext().getMyPlayer().equals(getGameModel().getTurnholder()))
+        // getGameModel().setAllCountriesUnselected();
+        // getGameModel().getCountrybyColor(c).setSelected(true);
+
+        Color c = new Color(map.getRGB(e.getX(), e.getY()));
+
+        if (getGameModel().isLegalMoveSet(getGameContext().getMyPlayer(), getGameModel().getCountryByColor(c)))
         {
-            // getGameModel().setAllCountriesUnselected();
-            // getGameModel().getCountrybyColor(c).setSelected(true);
-
-            Color c = new Color(map.getRGB(e.getX(), e.getY()));
-            if (getGameContext().getMyPlayer().getUnitsToSet() != 0)
-            {
-                if (getGameModel().isLegalMoveSet(getGameContext().getMyPlayer(), getGameModel().getCountryByColor(c)))
-                {
-                    controller.placeUnit(getGameModel().getCountryByColor(c));
-                }
-            }
-
+            controller.placeUnit(getGameModel().getCountryByColor(c));
         }
+
+        // else if(getGameModel().isLegalMoveAttack(getGameContext().getMyPlayer(), , null))
+
         repaint();
     }
 
