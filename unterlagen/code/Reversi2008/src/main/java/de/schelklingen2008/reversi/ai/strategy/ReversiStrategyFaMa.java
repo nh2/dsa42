@@ -19,7 +19,7 @@ public class ReversiStrategyFaMa implements ReversiStrategy
         {
             Piece move = iterator.next();
             GameModel clone = new GameModel(gameModel); // erzeugt ein Klon des aktuellen Spielstands
-            clone.placePiece(move.getX(), move.getY(), move.getPlayer());
+            clone.placePiece(move);
             int value = mmvalue(clone, 5, false);
             if (value > best)
             {

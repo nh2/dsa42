@@ -97,6 +97,11 @@ public class GameModel implements Serializable
         return getTurnHolder() == null;
     }
 
+    public void placePiece(Piece piece)
+    {
+        placePiece(piece.getX(), piece.getY(), piece.getPlayer());
+    }
+
     /**
      * Places a piece at the given position and flips the captured pieces.
      */
