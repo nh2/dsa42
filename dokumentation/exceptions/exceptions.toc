@@ -2,15 +2,12 @@
 \contentsline {section}{\numberline {1}Wozu Exceptions?}{2}
 \contentsline {section}{\numberline {2}Exceptions und Errors in Java}{2}
 \contentsline {subsection}{\numberline {2.1}Throwables}{2}
-\contentsline {subsection}{\numberline {2.2}Checked und unchecked Exceptions}{3}
+\contentsline {subsection}{\numberline {2.2}Checked und unchecked Exceptions}{2}
 \contentsline {subsection}{\numberline {2.3}Syntax in Bezug auf Throwables in Java}{3}
-\contentsline {subsubsection}{\numberline {2.3.1}Ausl\"osen eines Throwables}{3}
-\contentsline {subsubsection}{\numberline {2.3.2}Behandeln von Throwables}{3}
-\contentsline {subsubsection}{\numberline {2.3.3}Weiterreichen von Exceptions}{4}
-\contentsline {subsection}{\numberline {2.4}Exceptions}{4}
+\contentsline {subsubsection}{\numberline {2.3.1}Behandeln von Throwables}{3}
+\contentsline {subsubsection}{\numberline {2.3.2}Weiterreichen von Exceptions}{3}
+\contentsline {subsection}{\numberline {2.4}Exceptions}{3}
 \contentsline {subsection}{\numberline {2.5}Errors}{4}
-\contentsline {subsection}{\numberline {2.6}RuntimeExceptions}{4}
-\contentsline {subsection}{\numberline {2.7}Verschachteln von Exceptions}{4}
-\contentsline {subsection}{\numberline {2.8}Vor- und Nachteile des Exceptionmodells in Java}{5}
-\contentsline {section}{\numberline {3}Logging}{5}
-\contentsline {section}{\numberline {A}Literaturverzeichnis}{6}
+\contentsline {subsection}{\numberline {2.6}Vor- und Nachteile des Exceptionmodells in Java}{4}
+\contentsline {section}{\numberline {3}Logging}{4}
+\contentsline {section}{\numberline {A}Literaturverzeichnis}{5}
