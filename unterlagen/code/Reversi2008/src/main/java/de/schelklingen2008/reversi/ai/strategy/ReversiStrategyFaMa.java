@@ -15,9 +15,9 @@ public class ReversiStrategyFaMa implements ReversiStrategy
     {
         int best = Integer.MIN_VALUE;
         Piece bestMove = null;
-        for (Iterator iterator = gameModel.getLegalMovesSet(gameModel.getTurnHolder()).iterator(); iterator.hasNext();)
+        for (Iterator<Piece> iterator = gameModel.getLegalMovesSet(gameModel.getTurnHolder()).iterator(); iterator.hasNext();)
         {
-            Piece move = (Piece) iterator.next();
+            Piece move = iterator.next();
             GameModel clone = new GameModel(gameModel); // erzeugt ein Klon des aktuellen Spielstands
             clone.placePiece(move.getX(), move.getY(), move.getPlayer());
             int value = mmvalue(clone, 5, false);
@@ -36,7 +36,27 @@ public class ReversiStrategyFaMa implements ReversiStrategy
         int best = 0;
         if (isMax)
         {
+            best = Integer.MIN_VALUE;
         }
+        else
+        {
+            best = Integer.MAX_VALUE;
+        }
+
+        for (Iterator<Piece> iterator = gameModel.getLegalMovesSet(gameModel.getTurnHolder()).iterator(); iterator.hasNext();)
+        {
+            iterator.next();
+            int value = mmvalue(new GameModel(gameModel), depth - 1, (isMax ? false : true));
+            if (isMax)
+            {
+                if (best > value) best = value;
+            }
+            else
+            {
+                if (best < value) best = value;
+            }
+        }
+
         return best;
     }
 
