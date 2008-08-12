@@ -110,4 +110,9 @@ public class HorstStrategy implements ReversiStrategy
     // }
     // return legalMoves;
     // }
+    @Override
+    public String toString()
+    {
+        return "Horst";
+    }
 }
