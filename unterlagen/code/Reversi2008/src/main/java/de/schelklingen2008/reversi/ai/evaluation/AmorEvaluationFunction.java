@@ -6,11 +6,11 @@ import de.schelklingen2008.reversi.model.Player;
 public class AmorEvaluationFunction implements EvaluationFunction
 {
 
-    private int[][] spielfeldbewertung = { { 1600, 100, 800, 800, 800, 800, 100, 1600 },
-            { 100, 50, 200, 200, 200, 200, 50, 100 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
-            { 800, 200, 200, 200, 200, 200, 200, 800 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
-            { 800, 200, 200, 200, 200, 200, 200, 800 }, { 100, 50, 200, 200, 200, 200, 50, 100 },
-            { 1600, 100, 800, 800, 800, 800, 100, 1600 }, };
+    private int[][] spielfeldbewertung = { { 1200, 100, 400, 400, 400, 400, 100, 1200 },
+            { 100, 50, 200, 200, 200, 200, 50, 100 }, { 400, 200, 200, 200, 200, 200, 200, 400 },
+            { 400, 200, 200, 200, 200, 200, 200, 400 }, { 400, 200, 200, 200, 200, 200, 200, 400 },
+            { 400, 200, 200, 200, 200, 200, 200, 400 }, { 100, 50, 200, 200, 200, 200, 50, 100 },
+            { 1200, 100, 400, 400, 400, 400, 100, 1200 }, };
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
@@ -19,29 +19,29 @@ public class AmorEvaluationFunction implements EvaluationFunction
 
     private void bewertungAnpassen(GameModel gameModel, Player player)
     {
-        if (gameModel.getPlayer(1, 1) == player)
+        if (gameModel.getPlayer(0, 0) == player)
         {
-            getSpielfeldbewertung()[1][2] = 800;
-            getSpielfeldbewertung()[2][2] = 800;
-            getSpielfeldbewertung()[2][1] = 800;
+            getSpielfeldbewertung()[0][1] = 400;
+            getSpielfeldbewertung()[1][1] = 400;
+            getSpielfeldbewertung()[1][0] = 400;
         }
-        if (gameModel.getPlayer(8, 8) == player)
+        if (gameModel.getPlayer(7, 7) == player)
         {
-            getSpielfeldbewertung()[7][8] = 800;
-            getSpielfeldbewertung()[7][7] = 800;
-            getSpielfeldbewertung()[8][7] = 800;
+            getSpielfeldbewertung()[6][7] = 400;
+            getSpielfeldbewertung()[6][6] = 400;
+            getSpielfeldbewertung()[7][6] = 400;
         }
-        if (gameModel.getPlayer(8, 1) == player)
+        if (gameModel.getPlayer(7, 0) == player)
         {
-            getSpielfeldbewertung()[7][1] = 800;
-            getSpielfeldbewertung()[7][2] = 800;
-            getSpielfeldbewertung()[8][2] = 800;
+            getSpielfeldbewertung()[6][0] = 400;
+            getSpielfeldbewertung()[6][1] = 400;
+            getSpielfeldbewertung()[7][1] = 400;
         }
-        if (gameModel.getPlayer(1, 8) == player)
+        if (gameModel.getPlayer(0, 7) == player)
         {
-            getSpielfeldbewertung()[1][7] = 800;
-            getSpielfeldbewertung()[2][7] = 800;
-            getSpielfeldbewertung()[2][8] = 800;
+            getSpielfeldbewertung()[0][6] = 400;
+            getSpielfeldbewertung()[1][6] = 400;
+            getSpielfeldbewertung()[1][7] = 400;
         }
 
     }
@@ -49,8 +49,8 @@ public class AmorEvaluationFunction implements EvaluationFunction
     private int spielSteinBewertung(GameModel gameModel, Player player)
     {
 
-        int playerSteinBewertung = 0;
-
+        int playerSteinBewertung = 64;
+        bewertungAnpassen(gameModel, player);
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
@@ -58,6 +58,14 @@ public class AmorEvaluationFunction implements EvaluationFunction
                 if (gameModel.getBoard()[i][j] == player)
                 {
                     playerSteinBewertung = playerSteinBewertung + getSpielfeldbewertung()[i][j];
+                }
+                else
+                {
+                    if (gameModel.getBoard()[i][j] == player.other())
+                    {
+                        playerSteinBewertung = (playerSteinBewertung - getSpielfeldbewertung()[i][j]) / 2;
+
+                    }
                 }
             }
 
