@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Reversi2008"/>
@@ -11,7 +11,15 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.threerings.toybox.client.ToyBoxApp"/>
+<<<<<<< .mine
+<<<<<<< .mine
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="niklash 47624"/>
+=======
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="elitsa 47624"/>
+=======
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="localhost 47624"/>
+>>>>>>> .r748
+>>>>>>> .r743
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Reversi2008"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dno_log_redir=true -Djava.util.logging.config.file=src/main/resources/logging.properties"/>
 </launchConfiguration>
