@@ -1,7 +1,6 @@
 package de.schelklingen2008.reversi.ai.strategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import de.schelklingen2008.reversi.ai.evaluation.EvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
@@ -20,7 +19,38 @@ public class TobiasStrategy implements ReversiStrategy
         this.depth = depth;
     }
 
-    private int minimaxvalue(GameModel model, int depth, Player me)
+    public Piece move(GameModel model)
+    {
+
+        int best = Integer.MIN_VALUE;
+        Piece bestMove = null;
+        Player me = model.getTurnHolder();
+        Set<Piece> legalMoves = model.getLegalMovesSet(me);
+
+        for (Piece piece : legalMoves)
+        {
+            GameModel clone = new GameModel(model);
+            clone.placePiece(piece);
+            int value = minimaxValue(model, depth, me);
+            if (value > best)
+            {
+                best = value;
+                bestMove = piece;
+            }
+            else if (value == best)
+            {
+                if (Math.random() < 0.5)
+                {
+                    best = value;
+                    bestMove = piece;
+                }
+            }
+        }
+
+        return bestMove;
+    }
+
+    private int minimaxValue(GameModel model, int depth, Player me)
     {
         if (depth == 0)
         {
@@ -29,9 +59,6 @@ public class TobiasStrategy implements ReversiStrategy
 
         int best;
         Player turnHolder = model.getTurnHolder();
-        boolean[][] legalMovesArray = model.getLegalMoves(turnHolder);
-        List<Piece> legalMovesList = new ArrayList<Piece>();
-        int val;
 
         if (me == turnHolder)
         {
@@ -42,33 +69,22 @@ public class TobiasStrategy implements ReversiStrategy
             best = Integer.MAX_VALUE;
         }
 
-        for (int i = 0; i < legalMovesArray.length; i++)
-        {
-            for (int j = 0; j < legalMovesArray[i].length; j++)
-            {
-                if (legalMovesArray[i][j])
-                {
-                    legalMovesList.add(new Piece(i, j, turnHolder));
-                }
-            }
-        }
-
-        for (int i = 0; i < legalMovesList.size(); i++)
+        Set<Piece> legalMoves = model.getLegalMovesSet(turnHolder);
+        for (Piece piece : legalMoves)
         {
             GameModel clone = new GameModel(model);
-            Piece piece = legalMovesList.get(i);
-            clone.placePiece(piece.getX(), piece.getY(), piece.getPlayer());
-            val = minimaxvalue(clone, depth - 1, me);
-            if (me == turnHolder)
+            clone.placePiece(piece);
+            int val = minimaxValue(clone, depth - 1, me);
+            if (me == turnHolder) // MAX ist dran
             {
-                if (val < best)
+                if (val > best)
                 {
                     best = val;
                 }
             }
             else
             {
-                if (val > best)
+                if (val < best)
                 {
                     best = val;
                 }
@@ -80,42 +96,6 @@ public class TobiasStrategy implements ReversiStrategy
     public int getCount()
     {
         return depth;
-    }
-
-    public Piece move(GameModel model)
-    {
-
-        int best = Integer.MIN_VALUE;
-        int value;
-        Piece bestMove = null;
-        Player me = model.getTurnHolder();
-        boolean[][] legalMovesArray = model.getLegalMoves(me);
-        List<Piece> legalMovesList = new ArrayList<Piece>();
-
-        for (int i = 0; i < legalMovesArray.length; i++)
-        {
-            for (int j = 0; j < legalMovesArray[i].length; j++)
-            {
-                if (legalMovesArray[i][j])
-                {
-                    legalMovesList.add(new Piece(i, j, me));
-                }
-            }
-        }
-
-        for (int i = 0; i < legalMovesList.size(); i++)
-        {
-            GameModel clone = new GameModel(model);
-            Piece piece = legalMovesList.get(i);
-            clone.placePiece(piece.getX(), piece.getY(), piece.getPlayer());
-            value = minimaxvalue(model, depth, me);
-            if (value > best)
-            {
-                best = value;
-                bestMove = piece;
-            }
-        }
-        return bestMove;
     }
 
 }
