@@ -11,14 +11,17 @@ public class Main
     public static void main(String[] args)
     {
         Tournament t = new Tournament();
+
         t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Jo", new SimpleStrategy()));
 
         t.prepare();
+        long startzeit = System.currentTimeMillis();
         t.run();
+        System.out.println("Vergangene Zeit: " + (System.currentTimeMillis() - startzeit) + " ms");
 
-        int matchPerPlayer = 2 * Tournament.MATCH_COUNT * (t.getStrategyCount() - 1);
+        int matchPerPlayer = Tournament.MATCH_COUNT * (t.getStrategyCount() - 1);
         int matchCount = matchPerPlayer * t.getStrategyCount() / 2;
         System.out.println("Number of matches: " + matchCount);
         System.out.println("Number of matches for each player: " + matchPerPlayer);
