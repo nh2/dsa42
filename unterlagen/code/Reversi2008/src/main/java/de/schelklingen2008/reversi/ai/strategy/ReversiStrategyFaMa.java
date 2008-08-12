@@ -27,12 +27,16 @@ public class ReversiStrategyFaMa implements ReversiStrategy
                 bestMove = move;
             }
         }
+        if (bestMove == null) throw new IllegalArgumentException("bestMove is null");
         return bestMove;
     }
 
     public int mmvalue(GameModel gameModel, int depth, boolean isMax)
     {
-        if (depth == 0) return evalFunction.evaluatePosition(gameModel, gameModel.getTurnHolder());
+        if (depth == 0 || !gameModel.hasLegalMoves())
+        {
+            return evalFunction.evaluatePosition(gameModel, gameModel.getTurnHolder());
+        }
         int best = 0;
         if (isMax)
         {
