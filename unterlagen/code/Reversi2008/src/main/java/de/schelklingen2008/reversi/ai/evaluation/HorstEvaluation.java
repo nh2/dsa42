@@ -67,52 +67,5 @@ public class HorstEvaluation implements EvaluationFunction
 
         return result;
 
-        // for (int i = 0; i < xbreite; i++)
-        // {
-        // for (int k = 0; k < ybreite; k++)
-        // {
-        // Player besetzt = game.getPlayer(i, k);
-        // if (besetzt == null) continue;
-        // if (besetzt == player)
-        // {
-        // ichSteine++;
-        // if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) ichRandSteine++;
-        // if (i == 0 && k == 0 || // Oben links
-        // k == 0
-        // && i == xbreite - 1
-        // || // Oben rechts
-        // i == 0 - 1
-        // && k == ybreite - 1
-        // || // Unten links
-        // i == xbreite - 1
-        // && k == ybreite - 1 // Unten rechts
-        // ) ichEckenSteine++;
-        // }
-        // else
-        // {
-        // otherSteine++;
-        // if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) otherRandSteine++;
-        // if (i == 0 && k == 0 || // Oben links
-        // k == 0
-        // && i == xbreite - 1
-        // || // Oben rechts
-        // i == 0 - 1
-        // && k == ybreite - 1
-        // || // Unten links
-        // i == xbreite - 1
-        // && k == ybreite - 1 // Unten rechts
-        // ) otherEckenSteine++;
-        // }
-        // }
-        // }
-        //
-        // result2 += ichSteine;
-        // result2 += ichRandSteine * 4;
-        // result2 += ichEckenSteine * 5;
-        //
-        // result2 -= otherRandSteine * 3;
-        // result2 -= otherEckenSteine * 8;
-        //
-        // return result2;
     }
 }
