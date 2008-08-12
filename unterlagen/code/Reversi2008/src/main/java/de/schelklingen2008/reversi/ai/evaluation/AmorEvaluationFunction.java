@@ -6,8 +6,6 @@ import de.schelklingen2008.reversi.model.Player;
 public class AmorEvaluationFunction implements EvaluationFunction
 {
 
-    AmorEvaluationFunction amorEvaluationFunction = new AmorEvaluationFunction();
-
     public int evaluatePosition(GameModel gameModel, Player player)
     {
         int x = 0;

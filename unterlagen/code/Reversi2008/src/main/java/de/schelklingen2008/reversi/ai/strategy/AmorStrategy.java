@@ -4,6 +4,7 @@ import org.apache.tools.ant.taskdefs.Move;
 
 import com.threerings.ezgame.Game;
 
+import de.schelklingen2008.reversi.ai.evaluation.AmorEvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
@@ -56,6 +57,7 @@ public class AmorStrategy implements ReversiStrategy
     public int mmVal(GameModel gameModel, int depth)
     {
         Player hilf = gameModel.getTurnHolder();
+        AmorEvaluationFunction amorEvaluationFunction = new AmorEvaluationFunction();
         if (depth == 0) return amorEvaluationFunction.evaluatePosition(gameModel, hilf);
         int best;
         int value;
