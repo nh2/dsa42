@@ -9,21 +9,21 @@ public class AmorEvaluationFunction implements EvaluationFunction
     public int evaluatePosition(GameModel gameModel, Player player)
     {
         int x = 0;
-        x = 64 - gameModel.countPieces(player);
+        x = 3;
 
         return 0;
     }
 
-    private void spielSteinBewertung(GameModel gameModel, Player player)
+    private int spielSteinBewertung(GameModel gameModel, Player player)
     {
-        int[][] spielfeldbewertung = { { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                       { 200, 50, 200, 200, 200, 200, 50, 200 },
-                                       { 200, 200, 200, 200, 200, 200, 200, 200 },
-                                       { 200, 200, 200, 200, 200, 200, 200, 200 },
-                                       { 200, 200, 200, 200, 200, 200, 200, 200 },
-                                       { 200, 200, 200, 200, 200, 200, 200, 200 },
-                                       { 200, 50, 200, 200, 200, 200, 50, 200 },
-                                       { 800, 200, 200, 200, 200, 200, 200, 800 }, };
+        int[][] spielfeldbewertung = { { 800, 100, 300, 300, 300, 300, 100, 800 },
+                                       { 100, 50, 200, 200, 200, 200, 50, 100 },
+                                       { 300, 200, 200, 200, 200, 200, 200, 300 },
+                                       { 300, 200, 200, 200, 200, 200, 200, 300 },
+                                       { 300, 200, 200, 200, 200, 200, 200, 300 },
+                                       { 300, 200, 200, 200, 200, 200, 200, 300 },
+                                       { 100, 50, 200, 200, 200, 200, 50, 100 },
+                                       { 800, 100, 300, 300, 300, 300, 100, 800 }, };
 
         int playerSteinBewertung = 0;
         for (int i = 0; i < 8; i++)
@@ -37,5 +37,6 @@ public class AmorEvaluationFunction implements EvaluationFunction
             }
 
         }
+        return playerSteinBewertung;
     }
 }
