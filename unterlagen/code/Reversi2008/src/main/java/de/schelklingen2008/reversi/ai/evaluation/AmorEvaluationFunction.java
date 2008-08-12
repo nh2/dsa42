@@ -7,13 +7,11 @@ public class AmorEvaluationFunction implements EvaluationFunction
 {
 
     private int[][] spielfeldbewertung = { { 1600, 100, 800, 800, 800, 800, 100, 1600 },
-                                           { 100, 50, 200, 200, 200, 200, 50, 100 },
-                                           { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                           { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                           { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                           { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                           { 100, 50, 200, 200, 200, 200, 50, 100 },
+                                           { 100, 50, 200, 200, 200, 200, 50, 100 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
+                                           { 800, 200, 200, 200, 200, 200, 200, 800 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
+                                           { 800, 200, 200, 200, 200, 200, 200, 800 }, { 100, 50, 200, 200, 200, 200, 50, 100 },
                                            { 1600, 100, 800, 800, 800, 800, 100, 1600 }, };
+
     public int evaluatePosition(GameModel gameModel, Player player)
     {
         return spielSteinBewertung(gameModel, player);
@@ -47,13 +45,11 @@ public class AmorEvaluationFunction implements EvaluationFunction
         }
 
     }
+
     private int spielSteinBewertung(GameModel gameModel, Player player)
     {
 
         int playerSteinBewertung = 0;
-
-
-
 
         for (int i = 0; i < 8; i++)
         {
