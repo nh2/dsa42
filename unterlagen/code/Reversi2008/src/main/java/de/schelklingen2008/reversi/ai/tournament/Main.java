@@ -3,11 +3,6 @@ package de.schelklingen2008.reversi.ai.tournament;
 import java.util.Collections;
 import java.util.List;
 
-<<<<<<< .mine
-import de.schelklingen2008.reversi.ai.strategy.HorstStrategy;
-=======
-import de.schelklingen2008.reversi.ai.strategy.AmorStrategy;
->>>>>>> .r785
 import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
 
 public class Main
@@ -16,15 +11,9 @@ public class Main
     public static void main(String[] args)
     {
         Tournament t = new Tournament();
-<<<<<<< .mine
-        t.addStrategy(new TournamentStrategy("Niklas und Sarah", new HorstStrategy(11)));
-        t.addStrategy(new TournamentStrategy("Ben und Georg", new SimpleStrategy()));
-        // t.addStrategy(new TournamentStrategy("Jo", new SimpleStrategy()));
-=======
-        t.addStrategy(new TournamentStrategy("Ben", new AmorStrategy()));
+        t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Jo", new SimpleStrategy()));
->>>>>>> .r785
 
         t.prepare();
         t.run();
