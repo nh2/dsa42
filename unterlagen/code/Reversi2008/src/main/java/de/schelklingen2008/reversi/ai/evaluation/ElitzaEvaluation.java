@@ -9,10 +9,6 @@ public class ElitzaEvaluation implements EvaluationFunction
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
-        // TODO Auto-generated method stub
-        
-        int mnval(GameModel, int depth) {
-        
         return 0;
     }
 
