@@ -1,8 +1,8 @@
-Bedienregel
-Ermitteln, wem der Stich gehört
-zuteilen, rauskommen
-Tisch leeren
-Kartenwertigkeit
+Bedienregel OK
+Ermitteln, wem der Stich gehört OK
+zuteilen, rauskommen OK
+Tisch leeren OK
+Kartenwertigkeit OK
 Wer zusammen spielt
 Spiel beendet / Neues Spiel
 Punkteliste
