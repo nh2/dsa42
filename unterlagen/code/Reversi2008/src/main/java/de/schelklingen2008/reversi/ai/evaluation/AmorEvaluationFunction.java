@@ -6,11 +6,14 @@ import de.schelklingen2008.reversi.model.Player;
 public class AmorEvaluationFunction implements EvaluationFunction
 {
 
-    private int[][] spielfeldbewertung = { { 1200, 100, 400, 400, 400, 400, 100, 1200 },
-            { 100, 50, 200, 200, 200, 200, 50, 100 }, { 400, 200, 200, 200, 200, 200, 200, 400 },
-            { 400, 200, 200, 200, 200, 200, 200, 400 }, { 400, 200, 200, 200, 200, 200, 200, 400 },
-            { 400, 200, 200, 200, 200, 200, 200, 400 }, { 100, 50, 200, 200, 200, 200, 50, 100 },
-            { 1200, 100, 400, 400, 400, 400, 100, 1200 }, };
+    private int[][] spielfeldbewertung = { { 3000, 100, 400, 400, 400, 400, 100, 3000 },
+                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
+                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
+                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
+                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
+                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
+                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
+                                           { 3000, 100, 400, 400, 400, 400, 100, 3000 }, };
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
@@ -50,7 +53,7 @@ public class AmorEvaluationFunction implements EvaluationFunction
     {
 
         int playerSteinBewertung = 64;
-        bewertungAnpassen(gameModel, player);
+
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
@@ -63,7 +66,7 @@ public class AmorEvaluationFunction implements EvaluationFunction
                 {
                     if (gameModel.getBoard()[i][j] == player.other())
                     {
-                        playerSteinBewertung = (playerSteinBewertung - getSpielfeldbewertung()[i][j]) / 2;
+                        playerSteinBewertung = playerSteinBewertung - getSpielfeldbewertung()[i][j];
 
                     }
                 }
