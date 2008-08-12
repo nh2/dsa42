@@ -26,6 +26,13 @@ public class AmorEvaluationFunction implements EvaluationFunction
                 { 1600, 100, 800, 800, 800, 800, 100, 1600 }, };
 
         int playerSteinBewertung = 0;
+        if (gameModel.getPlayer(1, 1) == player)
+        {
+            spielfeldbewertung[1][2] = 800;
+            spielfeldbewertung[2][2] = 800;
+            spielfeldbewertung[2][1] = 800;
+        }
+
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
