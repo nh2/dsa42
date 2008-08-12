@@ -9,7 +9,14 @@ import de.schelklingen2008.reversi.model.Piece;
 public class ReversiStrategyFaMa implements ReversiStrategy
 {
 
-    private EvaluationFunctionFaMa evalFunction;
+    private final EvaluationFunctionFaMa mEvalFunction;
+    private final int                    mDepth;
+
+    public ReversiStrategyFaMa(EvaluationFunctionFaMa pEvalFunction, int pDepth)
+    {
+        mEvalFunction = pEvalFunction;
+        mDepth = pDepth;
+    }
 
     public Piece move(GameModel gameModel)
     {
@@ -20,7 +27,7 @@ public class ReversiStrategyFaMa implements ReversiStrategy
             Piece move = iterator.next();
             GameModel clone = new GameModel(gameModel); // erzeugt ein Klon des aktuellen Spielstands
             clone.placePiece(move);
-            int value = mmvalue(clone, 5, false);
+            int value = mmvalue(clone, mDepth, false);
             if (value > best)
             {
                 best = value;
@@ -35,7 +42,7 @@ public class ReversiStrategyFaMa implements ReversiStrategy
     {
         if (depth == 0 || !gameModel.hasLegalMoves())
         {
-            return evalFunction.evaluatePosition(gameModel, gameModel.getTurnHolder());
+            return mEvalFunction.evaluatePosition(gameModel, gameModel.getTurnHolder());
         }
         int best = 0;
         if (isMax)
@@ -49,8 +56,10 @@ public class ReversiStrategyFaMa implements ReversiStrategy
 
         for (Iterator<Piece> iterator = gameModel.getLegalMovesSet(gameModel.getTurnHolder()).iterator(); iterator.hasNext();)
         {
-            iterator.next();
-            int value = mmvalue(new GameModel(gameModel), depth - 1, (isMax ? false : true));
+            Piece move = iterator.next();
+            GameModel clone = new GameModel(gameModel); // erzeugt ein Klon des aktuellen Spielstands
+            clone.placePiece(move);
+            int value = mmvalue(clone, depth - 1, (isMax ? false : true));
             if (isMax)
             {
                 if (best > value) best = value;
