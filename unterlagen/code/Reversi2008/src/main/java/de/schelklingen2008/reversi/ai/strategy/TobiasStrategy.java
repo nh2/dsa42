@@ -3,54 +3,28 @@ package de.schelklingen2008.reversi.ai.strategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.schelklingen2008.reversi.ai.evaluation.TobiasEvaluation;
+import de.schelklingen2008.reversi.ai.evaluation.EvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
 
-public class TobiasStrategy
+public class TobiasStrategy implements ReversiStrategy
 {
 
-    public Piece minimax(GameModel model, int depth)
+    private final EvaluationFunction evaluationFunction;
+    private final int                depth;
+
+    public TobiasStrategy(EvaluationFunction eval, int depth)
     {
-        int best = Integer.MIN_VALUE;
-        int value;
-        Piece bestMove = null;
-        Player me = model.getTurnHolder();
-        boolean[][] legalMovesArray = model.getLegalMoves(me);
-        List<Piece> legalMovesList = new ArrayList<Piece>();
-
-        for (int i = 0; i < legalMovesArray.length; i++)
-        {
-            for (int j = 0; j < legalMovesArray[i].length; j++)
-            {
-                if (legalMovesArray[i][j])
-                {
-                    legalMovesList.add(new Piece(i, j, me));
-                }
-            }
-        }
-
-        for (int i = 0; i < legalMovesList.size(); i++)
-        {
-            GameModel clone = new GameModel(model);
-            Piece piece = legalMovesList.get(i);
-            clone.placePiece(piece.getX(), piece.getY(), piece.getPlayer());
-            value = minimaxvalue(model, depth, me);
-            if (value > best)
-            {
-                best = value;
-                bestMove = piece;
-            }
-        }
-        return bestMove;
+        evaluationFunction = eval;
+        this.depth = depth;
     }
 
     private int minimaxvalue(GameModel model, int depth, Player me)
     {
         if (depth == 0)
         {
-            return TobiasEvaluation.eval(model);
+            return evaluationFunction.evaluatePosition(model, me);
         }
 
         int best;
@@ -102,4 +76,46 @@ public class TobiasStrategy
         }
         return best;
     }
+
+    public int getCount()
+    {
+        return depth;
+    }
+
+    public Piece move(GameModel model)
+    {
+
+        int best = Integer.MIN_VALUE;
+        int value;
+        Piece bestMove = null;
+        Player me = model.getTurnHolder();
+        boolean[][] legalMovesArray = model.getLegalMoves(me);
+        List<Piece> legalMovesList = new ArrayList<Piece>();
+
+        for (int i = 0; i < legalMovesArray.length; i++)
+        {
+            for (int j = 0; j < legalMovesArray[i].length; j++)
+            {
+                if (legalMovesArray[i][j])
+                {
+                    legalMovesList.add(new Piece(i, j, me));
+                }
+            }
+        }
+
+        for (int i = 0; i < legalMovesList.size(); i++)
+        {
+            GameModel clone = new GameModel(model);
+            Piece piece = legalMovesList.get(i);
+            clone.placePiece(piece.getX(), piece.getY(), piece.getPlayer());
+            value = minimaxvalue(model, depth, me);
+            if (value > best)
+            {
+                best = value;
+                bestMove = piece;
+            }
+        }
+        return bestMove;
+    }
+
 }

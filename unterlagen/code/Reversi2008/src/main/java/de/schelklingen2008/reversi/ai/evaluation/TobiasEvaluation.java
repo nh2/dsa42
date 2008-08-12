@@ -1,12 +1,25 @@
 package de.schelklingen2008.reversi.ai.evaluation;
 
 import de.schelklingen2008.reversi.model.GameModel;
+import de.schelklingen2008.reversi.model.Player;
 
-public class TobiasEvaluation
+public class TobiasEvaluation implements EvaluationFunction
 {
 
-    public static int eval(GameModel model)
+    public int evaluatePosition(GameModel model, Player me)
     {
-        return 0;
+        int retVal;
+        Player opp;
+        if (me == Player.BLACK)
+        {
+            opp = Player.WHITE;
+        }
+        else
+        {
+            opp = Player.BLACK;
+        }
+        retVal = model.countPieces(me) - model.countPieces(opp);
+        return retVal;
     }
+
 }
