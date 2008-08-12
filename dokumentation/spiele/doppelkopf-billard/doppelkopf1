@@ -46,7 +46,7 @@ public class Karte implements Comparable<Karte>
             if (other.isTrumpf()) return -1;
         }
 
-        // Standard: nach Reihenfolge der Aufzählung vergleichen
+        // Standard: nach Reihenfolge der AufzÃ¤hlung vergleichen
         if (farbe != other.farbe)
         {
             return -farbe.compareTo(other.farbe);	
