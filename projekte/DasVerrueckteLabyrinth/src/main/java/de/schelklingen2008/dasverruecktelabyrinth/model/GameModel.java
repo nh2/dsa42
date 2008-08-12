@@ -302,7 +302,7 @@ public class GameModel implements Serializable
     // setzt den Turnholder im normalen Spiel
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
-        while (walk)
+        if (walk)
         {
             Player pPlayer = player.get(pPlayerType);
             if (isLegalMove(x, y, pPlayer))
@@ -314,8 +314,11 @@ public class GameModel implements Serializable
             }
 
         }
+        if (walk == false)
+        {
+            changeTurnHolder();
+        }
 
-        changeTurnHolder();
     }
 
     // setzt den herausgeschobenen Player -egal ob turnHolder oder nicht- auf der anderen Seite wieder ins
@@ -336,7 +339,7 @@ public class GameModel implements Serializable
         return way;
     }
 
-    private List<Position> findWay(Position start, Position end, Stack<Position> last)
+    public List<Position> findWay(Position start, Position end, Stack<Position> last)
     {
         List<Position> result = null;
 
@@ -656,8 +659,12 @@ public class GameModel implements Serializable
     public boolean isFinished()
     {
 
-        if (playerCardsMap.get(turnHolder).getHiddenCards() == null) return true;
-        turnHolder = null;
+        if (playerCardsMap.get(turnHolder).getHiddenCards() == null)
+        {
+            turnHolder = null;
+            return true;
+        }
+
         return false;
     }
 
@@ -763,5 +770,10 @@ public class GameModel implements Serializable
             result += "\n";
         }
         return result;
+    }
+
+    public void setWalk(boolean p)
+    {
+        walk = p;
     }
 }

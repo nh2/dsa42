@@ -87,4 +87,32 @@ public class GameModelTest extends TestCase
         assertEquals(boardZeile[0], model.getInsertTile());
 
     }
+
+    public void testPlacePlayer() throws Exception
+    {
+        GameModel model = new GameModel(new String[] { "Dick", "Doof" });
+        Tile[][] board = model.getBoard();
+        board = model.getBoard();
+
+        board[0][0] = Tile.CROSS;
+        board[1][0] = Tile.HORIZONTAL;
+        board[2][0] = Tile.CURVE1;
+        board[2][1] = Tile.VERTICAL;
+        board[3][1] = Tile.CROSS;
+
+        model.player.get(model.getTurnHolder()).setXKoordinate(0);
+        model.player.get(model.getTurnHolder()).setYKoordinate(0);
+
+        assertEquals(0, model.player.get(model.getTurnHolder()).getXKoordinate());
+        assertEquals(0, model.player.get(model.getTurnHolder()).getYKoordinate());
+
+        PlayerType turnHolder = model.getTurnHolder();
+        model.setWalk(true);
+
+        model.placePlayer(3, 1, model.getTurnHolder());
+
+        assertEquals(3, model.player.get(turnHolder).getXKoordinate());
+        assertEquals(1, model.player.get(turnHolder).getYKoordinate());
+
+    }
 }
