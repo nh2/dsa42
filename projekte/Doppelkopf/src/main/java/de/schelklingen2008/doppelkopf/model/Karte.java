@@ -91,6 +91,11 @@ public class Karte implements Serializable, Comparable<Karte>
         return stapel.get(hoechste);
     }
 
+    public boolean istKarte(Farbe f, Bild b)
+    {
+        if (farbe == f && bild == b) return true;
+        return false;
+    }
     // public boolean bedient(Karte other)
     // {
     // if()

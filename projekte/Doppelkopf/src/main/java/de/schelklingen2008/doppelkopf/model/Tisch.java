@@ -17,6 +17,7 @@ public class Tisch implements Serializable
     private int           stichAnzahl;
     private SpielerListe  spielerliste;
     private Set<Spieler>  re, contra;
+    public int            zusatzpunkte;
 
     public Tisch(SpielerListe spielerliste)
     {

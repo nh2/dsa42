@@ -125,17 +125,31 @@ public class GameModel implements Serializable
 
             if (mitte.size() == 4)
             {
-                int position = mitte.indexOf(Karte.gibtHoechsteAusStapel(mitte));
+                Karte hoechsteKarte = Karte.gibtHoechsteAusStapel(mitte);
+                int position = mitte.indexOf(hoechsteKarte);
                 Spieler stichsieger = tisch.getMittenspieler().get(position);
                 stichsieger.getGewinnstapel().addAll(mitte);
 
                 tisch.stichGespielt();
                 spielerliste.setAnDerReihe(stichsieger);
+
+                if (tisch.getStichAnzahl() == 11) // letzter Stich
+                {
+                    if (hoechsteKarte.istKarte(Farbe.Kreuz, Bild.Bube))
+                    {
+                        if (tisch.getTeamRe().contains(stichsieger))
+                            tisch.zusatzpunkte++;
+                        else
+                            tisch.zusatzpunkte--;
+                    }
+
+                }
             }
 
             if (tisch.getStichAnzahl() == 12)
             {
                 int rundenpunkte = berechneRundenpunkte(tisch.getRePunkte(), tisch.getContraPunkte());
+                rundenpunkte += tisch.zusatzpunkte;
 
                 if (tisch.getTeamRe().size() == 1) // Solo
                     for (Spieler p : tisch.getTeamRe())
