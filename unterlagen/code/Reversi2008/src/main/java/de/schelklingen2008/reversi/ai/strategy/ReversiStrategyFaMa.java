@@ -27,7 +27,7 @@ public class ReversiStrategyFaMa implements ReversiStrategy
                 bestMove = move;
             }
         }
-        return null;
+        return bestMove;
     }
 
     public int mmvalue(GameModel gameModel, int depth, boolean isMax)
