@@ -25,12 +25,7 @@ public class AmorStrategy implements ReversiStrategy
         return 0;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException
-    {
-        // TODO Auto-generated method stub
-        return super.clone();
-    }
+
 
     public Piece move(GameModel gameModel)
     {
@@ -46,7 +41,7 @@ public class AmorStrategy implements ReversiStrategy
             GameModel clone;
             clone = new GameModel(gameModel);
             clone.placePiece(piece);
-            value = mmVal(depth, clone);
+            value = mmVal(1, clone);
 
             if (value > best)
             {
@@ -82,8 +77,11 @@ public class AmorStrategy implements ReversiStrategy
 
         if (gameModel.isTurnHolder(player))
         {
-            if (value > best) best = value;
-
+            best = Math.max(value, best);
+        }
+        else
+        {
+            if (value < best) best = value;
         }
         return best;
 
