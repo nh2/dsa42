@@ -8,7 +8,7 @@ public class AmorEvaluationFunction implements EvaluationFunction
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
-        // TODO Auto-generated method stub
+        // TODO Adwuto-generated method stub
         return 0;
     }
 
