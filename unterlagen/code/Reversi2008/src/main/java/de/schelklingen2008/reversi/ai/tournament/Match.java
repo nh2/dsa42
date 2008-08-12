@@ -8,7 +8,9 @@ import de.schelklingen2008.reversi.model.Player;
 public class Match
 {
 
-    private GameModel       model = new GameModel();
+    public static final int POINTS_DRAW = 1;
+    public static final int POINTS_WIN  = 2;
+    private GameModel       model       = new GameModel();
     private ReversiStrategy white;
     private ReversiStrategy black;
     private Player          winner;
@@ -49,6 +51,20 @@ public class Match
     public int getCountBlack()
     {
         return countBlack;
+    }
+
+    public int getPointsWhite()
+    {
+        if (winner == Player.WHITE) return POINTS_WIN;
+        if (winner == null) return POINTS_DRAW;
+        return 0;
+    }
+
+    public int getPointsBlack()
+    {
+        if (winner == Player.BLACK) return POINTS_WIN;
+        if (winner == null) return POINTS_DRAW;
+        return 0;
     }
 
     private void move(Player player)

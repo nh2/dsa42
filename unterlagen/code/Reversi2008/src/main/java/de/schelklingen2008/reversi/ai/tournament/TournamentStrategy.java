@@ -2,7 +2,7 @@ package de.schelklingen2008.reversi.ai.tournament;
 
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
 
-public class TournamentStrategy
+public class TournamentStrategy implements Comparable<TournamentStrategy>
 {
 
     private ReversiStrategy strategy;
@@ -63,5 +63,17 @@ public class TournamentStrategy
     public String toString()
     {
         return getCreator() + " (" + getStrategy().getClass().getName() + "): " + getPoints();
+    }
+
+    public String getType()
+    {
+        String longType = getStrategy().getClass().getName();
+        int dot = longType.lastIndexOf(".");
+        return longType.substring(dot + 1, longType.length());
+    }
+
+    public int compareTo(TournamentStrategy o)
+    {
+        return getPoints() - o.getPoints();
     }
 }

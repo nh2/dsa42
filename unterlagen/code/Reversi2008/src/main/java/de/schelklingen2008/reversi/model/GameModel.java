@@ -1,6 +1,8 @@
 package de.schelklingen2008.reversi.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Maintains the rules and the state of the game.
@@ -239,5 +241,15 @@ public class GameModel implements Serializable
     {
         board = new Player[SIZE][SIZE];
         turnHolder = null;
+    }
+
+    public Set<Piece> getLegalMovesSet(Player player)
+    {
+        Set<Piece> legalMoves = new HashSet<Piece>();
+        for (int x = 0; x < GameModel.SIZE; x++)
+            for (int y = 0; y < GameModel.SIZE; y++)
+                if (isLegalMove(x, y, player)) legalMoves.add(new Piece(x, y, player));
+
+        return legalMoves;
     }
 }

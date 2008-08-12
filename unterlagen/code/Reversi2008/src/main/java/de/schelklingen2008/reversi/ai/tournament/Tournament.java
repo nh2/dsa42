@@ -5,23 +5,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.schelklingen2008.reversi.model.Player;
-
 public class Tournament
 {
 
     private static final int         POINTS_DRAW            = 1;
     private static final int         POINTS_WIN             = 2;
-    private static final int         MATCH_COUNT            = 1;
+    public static final int          MATCH_COUNT            = 1;
     private static final long        TIME_LIMIT_PER_MOVE_MS = 1000;
 
     private List<TournamentStrategy> strategies             = new ArrayList<TournamentStrategy>();
 
-    private Map<String, Match>       matches                = new HashMap<String, Match>();
+    private Map<String, List<Match>> matches                = new HashMap<String, List<Match>>();
 
     public void addStrategy(TournamentStrategy strategy)
     {
         strategies.add(strategy);
+    }
+
+    public void prepare()
+    {
+        List<TournamentStrategy> whitePlayers = new ArrayList<TournamentStrategy>(strategies);
+        List<TournamentStrategy> blackPlayers = new ArrayList<TournamentStrategy>(strategies);
+
+        for (TournamentStrategy white : whitePlayers)
+        {
+            for (TournamentStrategy black : blackPlayers)
+            {
+                if (white.equals(black)) continue;
+
+                ArrayList<Match> matchList = new ArrayList<Match>();
+                matches.put(matchKey(white, black), matchList);
+
+                for (int i = 0; i < MATCH_COUNT; i++)
+                {
+                    Match match = new Match(white.getStrategy(), black.getStrategy());
+                    matchList.add(match);
+                }
+            }
+        }
     }
 
     public void run()
@@ -31,34 +52,17 @@ public class Tournament
 
         for (TournamentStrategy white : whitePlayers)
         {
-            System.out.print(white.getCreator());
             for (TournamentStrategy black : blackPlayers)
             {
-                System.out.print(";");
-                if (white.equals(black)) continue;
-
-                int whitePointsBefore = white.getPoints();
-                int blackPointsBefore = black.getPoints();
-                for (int i = 0; i < MATCH_COUNT; i++)
+                List<Match> matchList = matches.get(matchKey(white, black));
+                if (matchList == null) continue;
+                for (Match match : matchList)
                 {
-                    Match match = new Match(white.getStrategy(), black.getStrategy());
-                    matches.put(matchKey(white, black), match);
                     match.execute();
-
-                    Player winner = match.getWinner();
-                    if (null == winner)
-                    {
-                        white.addPoints(POINTS_DRAW);
-                        black.addPoints(POINTS_DRAW);
-                    }
-                    if (Player.WHITE == winner) white.addPoints(POINTS_WIN);
-                    if (Player.BLACK == winner) black.addPoints(POINTS_WIN);
+                    white.addPoints(match.getPointsWhite());
+                    black.addPoints(match.getPointsBlack());
                 }
-                int whitePointsDiff = white.getPoints() - whitePointsBefore;
-                int blackPointsDiff = black.getPoints() - blackPointsBefore;
-                System.out.print(whitePointsDiff + ":" + blackPointsDiff);
             }
-            System.out.println();
         }
     }
 
@@ -72,8 +76,13 @@ public class Tournament
         return new ArrayList<TournamentStrategy>(strategies);
     }
 
-    public Match getMatch(TournamentStrategy s1, TournamentStrategy s2)
+    public List<Match> getMatches(TournamentStrategy s1, TournamentStrategy s2)
     {
-        return null;
+        return matches.get(matchKey(s1, s2));
+    }
+
+    public int getStrategyCount()
+    {
+        return strategies.size();
     }
 }
