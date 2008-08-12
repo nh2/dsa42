@@ -6,12 +6,11 @@ import de.schelklingen2008.reversi.model.Player;
 public class EvaluationFunctionFaMa implements EvaluationFunction
 {
 
-    private int mReturn = 0;
-
     public int evaluatePosition(GameModel gameModel, Player player)
     {
-        if (gameModel.isFinished() && gameModel.isWinner(player)) return Integer.MAX_VALUE;
-        if (gameModel.isFinished() && !gameModel.isWinner(player)) return Integer.MIN_VALUE;
+        int mReturn = 0;
+        if (gameModel.isFinished() && gameModel.isWinner(player)) return 10000;
+        if (gameModel.isFinished() && !gameModel.isWinner(player)) return -10000;
 
         int countPieces = gameModel.countPieces(player);
 
