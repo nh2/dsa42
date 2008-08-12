@@ -17,10 +17,16 @@ public class ReversiStrategyFaMa implements ReversiStrategy
                 if (gameModel.getLegalMoves(gameModel.getTurnHolder())[i][j])
                 {
                     GameModel clone = new GameModel(gameModel); // erzeugt ein Klon des aktuellen Spielstands
+                    int value = mmvalue(clone, 5);
                 }
             }
         }
         return null;
+    }
+
+    public int mmvalue(GameModel gameModel, int depth)
+    {
+        return 0;
     }
 
     public int getCount()
