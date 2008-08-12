@@ -10,6 +10,7 @@ import com.threerings.presents.net.UsernamePasswordCreds;
 import com.threerings.util.Name;
 
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
+import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
 
 /**
  * The launcher application for all ToyBox games.
@@ -17,18 +18,14 @@ import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
 public class AIToyBoxApp
 {
 
-    // public static final ReversiStrategy REVERSI_STRATEGY = new MinimaxStrategy(new
-    // CornerEvaluationFunction(), 6, false);
-    public static final ReversiStrategy REVERSI_STRATEGY = null;
-
-    // public static final ReversiStrategy REVERSI_STRATEGY = new SimpleStrategy();
+    public static final ReversiStrategy REVERSI_STRATEGY = new SimpleStrategy();
 
     public static void main(final String[] args) throws Exception
     {
         InputStream logCfg = AIToyBoxApp.class.getClassLoader().getResourceAsStream("logging.properties");
         LogManager.getLogManager().readConfiguration(logCfg);
         String strategyName = REVERSI_STRATEGY.toString();
-        String username = "cc" + strategyName + System.currentTimeMillis() % 100;
+        String username = "cc" + strategyName + System.nanoTime() % 1000;
         String server = "localhost";
         int port = 47624;
         String password = "none";
