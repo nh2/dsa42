@@ -55,10 +55,10 @@ public class AmorStrategy implements ReversiStrategy
 
     public int mmVal(GameModel gameModel, int depth)
     {
-        if (depth == 0) return eval(gameModel);
+        Player hilf = gameModel.getTurnHolder();
+        if (depth == 0) return amorEvaluationFunction.evaluatePosition(gameModel, hilf);
         int best;
         int value;
-        Player hilf = gameModel.getTurnHolder();
         if (gameModel.isTurnHolder(player))
             best = Integer.MIN_VALUE;
         else
@@ -69,7 +69,7 @@ public class AmorStrategy implements ReversiStrategy
 
             for (int j = 0; j < gameModel.getLegalMoves(hilf)[0].length; j++)
             {
-                Game clone = game.copy();
+                Game clone = (Game) gameModel.clone();
                 value = mmVal(clone.move(move), depth - 1);
             }
         }

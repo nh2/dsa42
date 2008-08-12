@@ -6,6 +6,8 @@ import de.schelklingen2008.reversi.model.Player;
 public class AmorEvaluationFunction implements EvaluationFunction
 {
 
+    AmorEvaluationFunction amorEvaluationFunction = new AmorEvaluationFunction();
+
     public int evaluatePosition(GameModel gameModel, Player player)
     {
         int x = 0;
@@ -17,13 +19,11 @@ public class AmorEvaluationFunction implements EvaluationFunction
     private int spielSteinBewertung(GameModel gameModel, Player player)
     {
         int[][] spielfeldbewertung = { { 1600, 100, 800, 800, 800, 800, 100, 1600 },
-                                       { 100, 50, 200, 200, 200, 200, 50, 100 },
-                                       { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                       { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                       { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                       { 800, 200, 200, 200, 200, 200, 200, 800 },
-                                       { 100, 50, 200, 200, 200, 200, 50, 100 },
-                                       { 1600, 100, 800, 800, 800, 800, 100, 1600 }, };
+
+        { 100, 50, 200, 200, 200, 200, 50, 100 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
+                { 800, 200, 200, 200, 200, 200, 200, 800 }, { 800, 200, 200, 200, 200, 200, 200, 800 },
+                { 800, 200, 200, 200, 200, 200, 200, 800 }, { 100, 50, 200, 200, 200, 200, 50, 100 },
+                { 1600, 100, 800, 800, 800, 800, 100, 1600 }, };
 
         int playerSteinBewertung = 0;
         for (int i = 0; i < 8; i++)
