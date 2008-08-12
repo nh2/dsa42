@@ -1,7 +1,5 @@
 package de.schelklingen2008.reversi.ai.strategy;
 
-import org.apache.tools.ant.taskdefs.Move;
-
 import de.schelklingen2008.reversi.ai.evaluation.AmorEvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
@@ -30,14 +28,17 @@ public class AmorStrategy implements ReversiStrategy
         player = gameModel.getTurnHolder();
         int best = Integer.MAX_VALUE;
         Piece bestMove = null;
+
         int value = 0;
         // Piece piece = (Piece) gameModel.getLegalMovesSet(gameModel.getTurnHolder())
+
         Player hilf = gameModel.getTurnHolder();
         for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
         {
 
             // Game clone = (Game) clone();
             // value = mmVal(clone.move(piece), 5);
+
             if (value > best)
             {
                 best = value;
@@ -79,14 +80,14 @@ public class AmorStrategy implements ReversiStrategy
     //
     // }
 
-    public int mmVal(GameModel gameModel, int depth)
+    public int mmVal(Piece piece, int depth, GameModel gameModel) throws CloneNotSupportedException
     {
         Player hilf = gameModel.getTurnHolder();
         AmorEvaluationFunction amorEvaluationFunction = new AmorEvaluationFunction();
         if (depth == 0) return amorEvaluationFunction.evaluatePosition(gameModel, hilf);
         int best;
         int value = 0;
-        Move move;
+
         if (gameModel.isTurnHolder(player))
             best = Integer.MIN_VALUE;
         else
@@ -97,8 +98,9 @@ public class AmorStrategy implements ReversiStrategy
 
             for (int j = 0; j < gameModel.getLegalMoves(hilf)[0].length; j++)
             {
-                // Game clone = (Game) clone();
-                // value = mmVal(clone.move(move), depth - 1);
+                GameModel clone = (GameModel) clone();
+                value = mmVal(piece, depth - 1, clone);
+
             }
         }
         if (gameModel.isTurnHolder(player))
