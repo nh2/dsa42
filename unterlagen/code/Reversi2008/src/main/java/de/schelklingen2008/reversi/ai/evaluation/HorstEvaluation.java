@@ -6,13 +6,49 @@ import de.schelklingen2008.reversi.model.Player;
 public class HorstEvaluation implements EvaluationFunction
 {
 
-    int ichSteine, otherSteine;
-    int ichRandSteine, otherRandSteine;
-    int ichEckenSteine, otherEckenSteine;
+    int[][] values;
+
+    public HorstEvaluation(GameModel game)
+    {
+        // values = new int[][] { { 10, 5, 5, 5, 5, 5, 5, 10 }, { 5, 1, 1, 1, 1, 1, 1, 5 }, { 5, 1, 1, 1, 1,
+        // 1, 1, 5 },
+        // { 5, 1, 1, 1, 1, 1, 1, 5 }, { 5, 1, 1, 1, 1, 1, 1, 5 }, { 5, 1, 1, 1, 1, 1, 1, 5 },
+        // { 5, 1, 1, 1, 1, 1, 1, 5 }, { 10, 5, 5, 5, 5, 5, 5, 10 } };
+
+        int xbreite = game.getBoard().length;
+        int ybreite = game.getBoard()[0].length;
+
+        values = new int[xbreite][ybreite];
+
+        for (int i = 0; i < xbreite; i++)
+        {
+            for (int k = 0; k < ybreite; k++)
+            {
+                values[i][k]++;
+                if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) values[i][k] += 10;
+                if (i == 0 && k == 0 || // Oben links
+                    k == 0
+                    && i == xbreite - 1
+                    || // Oben rechts
+                    i == 0 - 1
+                    && k == ybreite - 1
+                    || // Unten links
+                    i == xbreite - 1
+                    && k == ybreite - 1 // Unten rechts
+                ) values[i][k] += 20;
+            }
+
+        }
+    }
 
     public int evaluatePosition(GameModel game, Player player)
     {
         int result = 0;
+        // int result2 = 0;
+        //
+        // int ichSteine = 0, otherSteine = 0;
+        // int ichRandSteine = 0, otherRandSteine = 0;
+        // int ichEckenSteine = 0, otherEckenSteine = 0;
 
         int xbreite = game.getBoard().length;
         int ybreite = game.getBoard()[0].length;
@@ -23,46 +59,60 @@ public class HorstEvaluation implements EvaluationFunction
             {
                 Player besetzt = game.getPlayer(i, k);
                 if (besetzt == null) continue;
-                if (besetzt == player)
-                {
-                    ichSteine++;
-                    if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) ichRandSteine++;
-                    if (i == 0 && k == 0 || // Oben links
-                        k == 0
-                        && i == xbreite - 1
-                        || // Oben rechts
-                        i == 0 - 1
-                        && k == ybreite - 1
-                        || // Unten links
-                        i == xbreite - 1
-                        && k == ybreite - 1 // Unten rechts
-                    ) ichEckenSteine++;
-                }
-                else
-                {
-                    otherSteine++;
-                    if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) otherRandSteine++;
-                    if (i == 0 && k == 0 || // Oben links
-                        k == 0
-                        && i == xbreite - 1
-                        || // Oben rechts
-                        i == 0 - 1
-                        && k == ybreite - 1
-                        || // Unten links
-                        i == xbreite - 1
-                        && k == ybreite - 1 // Unten rechts
-                    ) otherEckenSteine++;
-                }
+                if (besetzt == player) result += values[i][k];
+                // else
+                // result += values[i][k];
             }
         }
 
-        result += ichSteine;
-        result += ichRandSteine * 3;
-        result += ichEckenSteine * 8;
-
-        result -= otherRandSteine * 3;
-        result -= otherEckenSteine * 8;
-
         return result;
+
+        // for (int i = 0; i < xbreite; i++)
+        // {
+        // for (int k = 0; k < ybreite; k++)
+        // {
+        // Player besetzt = game.getPlayer(i, k);
+        // if (besetzt == null) continue;
+        // if (besetzt == player)
+        // {
+        // ichSteine++;
+        // if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) ichRandSteine++;
+        // if (i == 0 && k == 0 || // Oben links
+        // k == 0
+        // && i == xbreite - 1
+        // || // Oben rechts
+        // i == 0 - 1
+        // && k == ybreite - 1
+        // || // Unten links
+        // i == xbreite - 1
+        // && k == ybreite - 1 // Unten rechts
+        // ) ichEckenSteine++;
+        // }
+        // else
+        // {
+        // otherSteine++;
+        // if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) otherRandSteine++;
+        // if (i == 0 && k == 0 || // Oben links
+        // k == 0
+        // && i == xbreite - 1
+        // || // Oben rechts
+        // i == 0 - 1
+        // && k == ybreite - 1
+        // || // Unten links
+        // i == xbreite - 1
+        // && k == ybreite - 1 // Unten rechts
+        // ) otherEckenSteine++;
+        // }
+        // }
+        // }
+        //
+        // result2 += ichSteine;
+        // result2 += ichRandSteine * 4;
+        // result2 += ichEckenSteine * 5;
+        //
+        // result2 -= otherRandSteine * 3;
+        // result2 -= otherEckenSteine * 8;
+        //
+        // return result2;
     }
 }
