@@ -155,17 +155,20 @@ public class PatternChecker
 
     public boolean straight(int pos, int length)
     {
-        if (length == 1)
-            return true;
-        else
-        {
-            if (straight(pos + 1, length - 1) == true
-                && cards.get(pos + 1).getValueInt() == cards.get(pos).getValueInt() + 1)
-                return true;
-            else
-                return false;
-        }
+        if (pos + length - 1 > 7) return false;
+        if (length == 1) return true;
 
+        // falls zwei aufeinanderfolgende Karten die gleiche Zahl haben
+        int thisValue = cards.get(pos).getValueInt();
+        int nextValue = cards.get(pos + 1).getValueInt();
+        // schauen ob die Straße danach weitergeht
+        if (nextValue == thisValue && straight(pos + 1, length)) return true;
+
+        // falls die aufeinanderfolgenden karten nicht die gleiche Zahl haben
+        if (nextValue != thisValue + 1) return false;
+        if (straight(pos + 1, length - 1)) return true;
+        return false;
+        // falls die nächste Karte genau um eins höher ist und es danach mit der Straße weitergeht
     }
 
     public boolean isStraight()

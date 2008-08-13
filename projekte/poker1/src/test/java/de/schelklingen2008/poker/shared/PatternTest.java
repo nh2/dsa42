@@ -93,9 +93,9 @@ public class PatternTest extends TestCase
         cards.add(new Card(1, 2));
         cards.add(new Card(3, 3));
         cards.add(new Card(3, 4));
-        cards.add(new Card(3, 2));
+        cards.add(new Card(3, 4));
         cards.add(new Card(1, 5));
-        cards.add(new Card(3, 7));
+        cards.add(new Card(3, 6));
 
         return cards;
 
@@ -137,7 +137,6 @@ public class PatternTest extends TestCase
         cardList.clear();
         fill5(cardList);
         cardList = PatternChecker.sort(cardList);
-        cardList = fill5(cardList);
         ueberpruefung(checker);
     }
 
