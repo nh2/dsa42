@@ -63,7 +63,7 @@ public class BoardView extends JPanel implements GameChangeListener
     private BallGauge gauge;
     private Image bg;
     private Timer timer;
-    private int cursorPosX;
+    private int cursorPosX = -1;
     private int cursorPosY;
 
     private boolean buttonWasPressed;
@@ -95,6 +95,13 @@ public class BoardView extends JPanel implements GameChangeListener
 
         addMouseListener(new MouseAdapter()
         {
+
+            @Override
+            public void mouseExited(MouseEvent e)
+            {
+                cursorPosX = -1;
+                repaint();
+            }
 
             @Override
             public void mousePressed(MouseEvent e)
@@ -136,17 +143,13 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void pressed(MouseEvent e)
     {
-        if (e.getButton() != MouseEvent.BUTTON1)
+        if (e.getButton() != MouseEvent.BUTTON1 || !getGameModel().isTurnHolder(getGameContext().getMyPlayer())
+            || getGameModel().isInMotion())
         {
             return;
         }
 
         buttonWasPressed = true;
-
-        if (!getGameModel().isTurnHolder(getGameContext().getMyPlayer()))
-        {
-            return;
-        }
 
         gauge.setValue(1);
         timer = new Timer();
@@ -204,7 +207,8 @@ public class BoardView extends JPanel implements GameChangeListener
         GameModel gameModel = getGameModel();
 
         Ball whiteBall = gameModel.getWhiteBall();
-        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion() && !whiteBall.isSunk())
+        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion() && !whiteBall.isSunk()
+            && !gameModel.isInMotion() && cursorPosX != -1)
         {
             gfx.drawLine((int) Math.round(whiteBall.getPosition().getX() + BORDER_WIDTH),
                          (int) Math.round(whiteBall.getPosition().getY() + BORDER_HEIGHT), cursorPosX, cursorPosY);
@@ -282,7 +286,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         final GameModel gameModel = getGameModel();
 
-        if (!gameModel.isTurnHolder(getGameContext().getMyPlayer()))
+        if (!gameModel.isTurnHolder(getGameContext().getMyPlayer()) || gameModel.isInMotion())
         {
             return;
         }

@@ -24,6 +24,173 @@ import de.schelklingen2008.billiards.util.Vector2d;
 public class GameModel implements Serializable
 {
 
+    protected class RuleManager implements GameEventListener, CollisionListener, Serializable
+    {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1327349770200883433L;
+
+        private boolean foul, resetWhiteBall, doNotChangeTurnholder;
+
+        private void reset()
+        {
+            foul = false;
+            resetWhiteBall = false;
+            doNotChangeTurnholder = false;
+        }
+
+        public void ballCollisionHappened(BallCollisionEvent e)
+        {
+
+        }
+
+        public void ballCollisionImminent(BallCollisionEvent e)
+        {
+
+        }
+
+        public void wallCollisionHappened(WallCollisionEvent e)
+        {
+
+        }
+
+        public void wallCollisionImminent(WallCollisionEvent e)
+        {
+
+        }
+
+        public void ballSunk(BallSunkEvent e)
+        {
+            Player player = e.getPlayer();
+            Ball.BallType playersBallType = getPlayersBallType(player);
+            int ballsOfPlayer;
+
+            if (ballMappingFixed())
+            {
+                ballsOfPlayer = 0;
+                for (Ball ball : getBallsOnTable())
+                {
+                    if (ball.getType().equals(playersBallType))
+                    {
+                        ballsOfPlayer++;
+                    }
+                }
+            }
+            else
+            {
+                ballsOfPlayer = -1;
+            }
+
+            if (e.getBall().getType() == Ball.BallType.BLACK)
+            {
+
+                if (!ballMappingFixed())
+                {
+                    setWinner(getOtherPlayer(player));
+                }
+                else if (ballsOfPlayer == 0)
+                {
+                    setWinner(player);
+                }
+                else
+                {
+                    setWinner(getOtherPlayer(player));
+                }
+
+            }
+            else if (e.getBall().getType() == Ball.BallType.WHITE)
+            {
+                if (ballsOfPlayer == 0)
+                {
+                    setWinner(getOtherPlayer(player));
+                }
+                else
+                {
+                    foul = true;
+                }
+            }
+            else if (!breakHasHappened() && !ballMappingFixed())
+            {
+
+            }
+            else
+            {
+                if (!e.getBall().getType().equals(getPlayersBallType(player)))
+                {
+                    if (ballsOfPlayer == 0)
+                    {
+                        setWinner(getOtherPlayer(player));
+                    }
+                    else
+                    {
+                        foul = true;
+                    }
+                }
+                else
+                {
+                    doNotChangeTurnholder = true;
+                }
+            }
+
+            if (getWhiteBall().isSunk())
+            {
+                resetWhiteBall = true;
+            }
+
+            if (foul)
+            {
+                // TODO Handle fouls
+            }
+
+            if (resetWhiteBall)
+            {
+                resetWhiteBall();
+            }
+
+        }
+
+        public void gameStarted()
+        {
+
+        }
+
+        public void shotTaken(ShotEvent e)
+        {
+            reset();
+        }
+
+        public void ballSet(BallSetEvent e)
+        {
+
+        }
+
+        public void gameEnded(GameEndEvent e)
+        {
+
+        }
+
+        public void turnHolderChanged(TurnHolderChangeEvent e)
+        {
+
+        }
+
+        public void boardStoppedMoving()
+        {
+            if (resetWhiteBall)
+            {
+                resetWhiteBall();
+            }
+
+            if (!doNotChangeTurnholder)
+            {
+                changeTurnHolder();
+            }
+        }
+
+    }
+
     /**
      * 
      */
@@ -188,7 +355,9 @@ public class GameModel implements Serializable
 
     private void addRuleManager()
     {
-        ruleManager = new RuleManager(this);
+        ruleManager = new RuleManager();
+        addCollisionListener(ruleManager);
+        addGameEventListener(ruleManager);
     }
 
     public void setUpGame()
@@ -289,7 +458,6 @@ public class GameModel implements Serializable
     private void sinkBall(Ball ball)
     {
         ball.setSunk(true);
-        ballsOnTable.remove(ball);
         for (GameEventListener listener : gameEventListeners)
         {
             listener.ballSunk(new BallSunkEvent(ball, turnHolder));
@@ -347,6 +515,7 @@ public class GameModel implements Serializable
                 if (hole.ballIsSunk(ball))
                 {
                     sinkBall(ball);
+                    ballIterator.remove();
                     break;
                 }
             }

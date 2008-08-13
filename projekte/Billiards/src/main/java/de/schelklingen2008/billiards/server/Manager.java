@@ -23,25 +23,27 @@ public class Manager extends GameManager
         @Override
         public void run()
         {
-            long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
+
+            // long startTick = System.currentTimeMillis(), milliSecondsPassed = 0;
+
             while (gameModel.isInMotion())
             {
                 gameModel.processTimeStep(0.01d);
-                milliSecondsPassed += 10;
+                // milliSecondsPassed += 10;
             }
 
-            long deltaTime = System.currentTimeMillis() - startTick;
+            // long deltaTime = System.currentTimeMillis() - startTick;
 
-            try
-            {
-                Thread.sleep(milliSecondsPassed - deltaTime);
-            }
-            catch (InterruptedException e)
-            {
+            // try
+            // {
+            // Thread.sleep(milliSecondsPassed - deltaTime);
+            // }
+            // catch (InterruptedException e)
+            // {
+            //
+            // }
 
-            }
-
-            updateSharedState();
+            // updateSharedState();
         }
 
     }
