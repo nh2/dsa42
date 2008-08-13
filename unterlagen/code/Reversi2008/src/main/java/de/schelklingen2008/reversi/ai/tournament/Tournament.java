@@ -58,7 +58,9 @@ public class Tournament
                 if (matchList == null) continue;
                 for (Match match : matchList)
                 {
+                    long s = System.currentTimeMillis();
                     match.execute();
+                    long e = System.currentTimeMillis();
                     white.addPoints(match.getPointsWhite());
                     black.addPoints(match.getPointsBlack());
                     System.out.println("Match played "
@@ -68,7 +70,10 @@ public class Tournament
                                        + " "
                                        + match.getPointsWhite()
                                        + ":"
-                                       + match.getPointsBlack());
+                                       + match.getPointsBlack()
+                                       + " in "
+                                       + (e - s)
+                                       + " ms");
                 }
             }
         }
