@@ -17,6 +17,7 @@ public class Tile implements Serializable
     private boolean          unmoveable = false;
     private boolean          up, down, right, left;
     private TreasureCard     tc         = null;
+    private boolean          isMoved    = false;
 
     public Tile(boolean pUp, boolean pDown, boolean pRight, boolean pLeft, TreasureCard pTc)
     {
@@ -83,6 +84,12 @@ public class Tile implements Serializable
         unmoveable = pboolean;
     }
 
+    public void setMoved(boolean moved)
+    {
+
+        isMoved = moved;
+    }
+
     public boolean isCurve1()
     {
         if (getLeft() == true && getDown() == true && getRight() == false && getUp() == false) return true;
@@ -130,6 +137,11 @@ public class Tile implements Serializable
         if (getLeft() == true && getDown() == true && getRight() == true && getUp() == true) return true;
 
         return false;
+    }
+
+    public boolean isMoved()
+    {
+        return isMoved;
     }
 
     @Override

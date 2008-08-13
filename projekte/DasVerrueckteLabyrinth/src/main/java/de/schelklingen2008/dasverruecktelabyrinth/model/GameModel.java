@@ -310,11 +310,13 @@ public class GameModel implements Serializable
                 pPlayer.setXKoordinate(x);
                 pPlayer.setYKoordinate(y);
                 placedOnSearchCard(pPlayer);
+                pPlayer.Moved(true);
                 walk = false;
             }
-            if (walk == false)
+            if (walk == false && pPlayer.hasMoved() == true)
             {
                 changeTurnHolder();
+                pPlayer.Moved(false);
             }
 
         }
@@ -392,6 +394,12 @@ public class GameModel implements Serializable
         if (way == null) return false;
 
         return true;
+    }
+
+    public boolean hasLegalMoved(Player player)
+    {
+        boolean hasMoved = player.hasMoved();
+        return hasMoved;
     }
 
     private boolean isTurnHolder(Player player2)
@@ -508,6 +516,7 @@ public class GameModel implements Serializable
                 einschiebenWest(0, 1);
                 walk = true;
             }
+
         }
 
     }
@@ -518,19 +527,20 @@ public class GameModel implements Serializable
         insert = board[x][board.length - 1];
         for (int i = board.length - 1; i >= 1; i--)
         {
+            board[x][i].setMoved(true);
             board[x][i] = board[x][i - 1];
+
             for (PlayerType pt : PlayerType.values())
             {
                 Player playerTemp = player.get(pt);
 
                 if (playerTemp == null) continue;
-                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == i)
-                {
-                    playerTemp.setXKoordinate(x);
-                    playerTemp.setYKoordinate(i - 1);
-                }
-                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == 6) placePlayerOutOfBounds(x, 0,
-                                                                                                                 pt);
+
+                int pX = playerTemp.getXKoordinate();
+                int pY = playerTemp.getYKoordinate();
+
+                if (pX == x && pY == 6) placePlayerOutOfBounds(x, 0, pt);
+                if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(i - 1);
             }
         }
         board[x][0] = temp;
@@ -543,6 +553,7 @@ public class GameModel implements Serializable
         insert = board[x][0];
         for (int i = 0; i < board.length - 1; i++)
         {
+            board[x][i].setMoved(true);
             board[x][i] = board[x][i + 1];
 
             for (PlayerType pt : PlayerType.values())
@@ -550,13 +561,12 @@ public class GameModel implements Serializable
                 Player playerTemp = player.get(pt);
 
                 if (playerTemp == null) continue;
-                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == i)
-                {
-                    playerTemp.setXKoordinate(x);
-                    playerTemp.setYKoordinate(i + 1);
-                }
-                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == 0) placePlayerOutOfBounds(x, 6,
-                                                                                                                 pt);
+
+                int pX = playerTemp.getXKoordinate();
+                int pY = playerTemp.getYKoordinate();
+
+                if (pX == x && pY == 0) placePlayerOutOfBounds(x, 6, pt);
+                if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(i + 1);
             }
         }
         board[x][(board.length - 1)] = temp;
@@ -570,6 +580,7 @@ public class GameModel implements Serializable
         insert = board[0][y];
         for (int i = 0; i < board.length - 1; i++)
         {
+            board[i][y].setMoved(true);
             board[i][y] = board[i + 1][y];
 
             for (PlayerType pt : PlayerType.values())
@@ -577,13 +588,12 @@ public class GameModel implements Serializable
                 Player playerTemp = player.get(pt);
 
                 if (playerTemp == null) continue;
-                if (playerTemp.getXKoordinate() == i && playerTemp.getYKoordinate() == y)
-                {
-                    playerTemp.setXKoordinate(i + 1);
-                    playerTemp.setYKoordinate(y);
-                }
-                if (playerTemp.getXKoordinate() == 0 && playerTemp.getYKoordinate() == y) placePlayerOutOfBounds(6, 6,
-                                                                                                                 pt);
+
+                int pX = playerTemp.getXKoordinate();
+                int pY = playerTemp.getYKoordinate();
+
+                if (pX == 0 && pY == y) placePlayerOutOfBounds(6, 6, pt);
+                if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(i + 1);
             }
         }
         board[(board.length - 1)][y] = temp;
@@ -596,6 +606,7 @@ public class GameModel implements Serializable
         insert = board[board.length - 1][y];
         for (int i = board.length - 1; i >= 1; i--)
         {
+            board[i][y].setMoved(true);
             board[i][y] = board[i - 1][y];
 
             for (PlayerType pt : PlayerType.values())
@@ -603,13 +614,13 @@ public class GameModel implements Serializable
                 Player playerTemp = player.get(pt);
 
                 if (playerTemp == null) continue;
-                if (playerTemp.getXKoordinate() == i && playerTemp.getYKoordinate() == y)
-                {
-                    playerTemp.setXKoordinate(i - 1);
-                    playerTemp.setYKoordinate(y);
-                }
-                if (playerTemp.getXKoordinate() == 6 && playerTemp.getYKoordinate() == y) placePlayerOutOfBounds(0, y,
-                                                                                                                 pt);
+
+                int pX = playerTemp.getXKoordinate();
+                int pY = playerTemp.getYKoordinate();
+
+                if (pX == 6 && pY == y) placePlayerOutOfBounds(0, y, pt);
+
+                if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(i - 1);
             }
         }
         board[0][y] = temp;
