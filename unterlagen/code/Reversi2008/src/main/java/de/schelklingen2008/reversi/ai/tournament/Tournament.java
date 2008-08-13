@@ -10,7 +10,7 @@ public class Tournament
 
     private static final int         POINTS_DRAW            = 1;
     private static final int         POINTS_WIN             = 2;
-    public static final int          MATCH_COUNT            = 1;
+    public static final int          MATCH_COUNT            = 10;
     private static final long        TIME_LIMIT_PER_MOVE_MS = 1000;
 
     private List<TournamentStrategy> strategies             = new ArrayList<TournamentStrategy>();
@@ -61,6 +61,14 @@ public class Tournament
                     match.execute();
                     white.addPoints(match.getPointsWhite());
                     black.addPoints(match.getPointsBlack());
+                    System.out.println("Match played "
+                                       + white.getCreator()
+                                       + ":"
+                                       + black.getCreator()
+                                       + " "
+                                       + match.getPointsWhite()
+                                       + ":"
+                                       + match.getPointsBlack());
                 }
             }
         }
