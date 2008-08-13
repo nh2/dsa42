@@ -6,14 +6,14 @@ import de.schelklingen2008.reversi.model.Player;
 public class AmorEvaluationFunction implements EvaluationFunction
 {
 
-    private int[][] spielfeldbewertung = { { 3000, 100, 400, 400, 400, 400, 100, 3000 },
-                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
-                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
-                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
-                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
-                                           { 400, 100, 200, 200, 200, 200, 100, 400 },
-                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
-                                           { 3000, 100, 400, 400, 400, 400, 100, 3000 }, };
+    private int[][] spielfeldbewertung = { { 5000, 100, 2000, 2000, 2000, 2000, 100, 5000 },
+                                           { 100, 50, 200, 200, 200, 200, 50, 100 },
+                                           { 2000, 200, 200, 200, 200, 200, 200, 2000 },
+                                           { 2000, 200, 200, 200, 200, 200, 200, 2000 },
+                                           { 2000, 200, 200, 200, 200, 200, 200, 2000 },
+                                           { 2000, 200, 200, 200, 200, 200, 200, 2000 },
+                                           { 100, 50, 200, 200, 200, 200, 50, 100 },
+                                           { 5000, 100, 2000, 2000, 2000, 2000, 100, 5000 }, };
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
@@ -52,7 +52,7 @@ public class AmorEvaluationFunction implements EvaluationFunction
     private int spielSteinBewertung(GameModel gameModel, Player player)
     {
 
-        int playerSteinBewertung = 64;
+        int playerSteinBewertung = 0;
 
         for (int i = 0; i < 8; i++)
         {
@@ -60,7 +60,7 @@ public class AmorEvaluationFunction implements EvaluationFunction
             {
                 if (gameModel.getBoard()[i][j] == player)
                 {
-                    playerSteinBewertung = playerSteinBewertung + getSpielfeldbewertung()[i][j];
+                    playerSteinBewertung = playerSteinBewertung + getSpielfeldbewertung()[i][j]*2;
                 }
                 else
                 {
