@@ -108,7 +108,27 @@ public class BoardView extends JPanel implements GameChangeListener
         paintBackground(gfx);
         paintBoard(gfx);
         paintPieces(gfx);
+        paintPossibleMoves(gfx);
         paintCursor(gfx);
+    }
+
+    private void paintPossibleMoves(Graphics2D gfx)
+    {
+        if (getGameContext().getMyPlayer() != getGameModel().getTurnHolder()) return;
+
+        boolean[][] legalMoves = getGameModel().getLegalMoves(getGameModel().getTurnHolder());
+        for (int y = 0; y < GameModel.SIZE; y++)
+        {
+            for (int x = 0; x < GameModel.SIZE; x++)
+            {
+                if (legalMoves[x][y])
+                {
+                    Color myColor = Color.LIGHT_GRAY;
+                    paintPiece(gfx, x, y, myColor, true);
+                }
+            }
+        }
+
     }
 
     private void paintBackground(Graphics2D gfx)
