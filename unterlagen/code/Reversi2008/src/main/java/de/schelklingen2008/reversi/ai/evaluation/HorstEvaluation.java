@@ -25,7 +25,7 @@ public class HorstEvaluation implements EvaluationFunction
             for (int k = 0; k < ybreite; k++)
             {
                 values[i][k]++;
-                if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) values[i][k] += 10;
+                if (i == 0 || k == 0 || i == xbreite - 1 || k == ybreite - 1) values[i][k] += 20;
                 if (i == 0 && k == 0 || // Oben links
                     k == 0
                     && i == xbreite - 1
@@ -35,7 +35,7 @@ public class HorstEvaluation implements EvaluationFunction
                     || // Unten links
                     i == xbreite - 1
                     && k == ybreite - 1 // Unten rechts
-                ) values[i][k] += 20;
+                ) values[i][k] += 40;
             }
 
         }
