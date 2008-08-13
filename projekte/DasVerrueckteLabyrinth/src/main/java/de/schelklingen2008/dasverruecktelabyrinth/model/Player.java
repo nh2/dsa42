@@ -9,7 +9,6 @@ public class Player implements Serializable
     private String     name;
     private int        x;
     private int        y;
-    private boolean    hasMoved = false;
 
     public Player(PlayerType pPlayer, String pName, int pX, int pY)
     {
@@ -44,18 +43,9 @@ public class Player implements Serializable
         y = pY;
     }
 
-    public void Moved(boolean moved)
-    {
-        hasMoved = moved;
-    }
-
     public String getName()
     {
         return name;
     }
 
-    public boolean hasMoved()
-    {
-        return hasMoved;
-    }
 }

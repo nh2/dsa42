@@ -36,14 +36,8 @@ public class GameModel implements Serializable
     private Tile                      insert         = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
 
-    // DummyList
-
-    private PlayerCards               dummie         = new PlayerCards();
-
     Map<PlayerType, Player>           player         = new HashMap<PlayerType, Player>();
     Map<PlayerType, PlayerCards>      playerCardsMap = new HashMap<PlayerType, PlayerCards>();
-
-    // TODO PlayerCards instanzieren
 
     private static final Random       RAND           = new Random();
 
