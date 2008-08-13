@@ -52,7 +52,7 @@ public class HorstStrategy implements ReversiStrategy
         Set<Piece> legalMoves = game.getLegalMovesSet(max);
 
         List<Integer> valuesList = new ArrayList<Integer>(10);
-        List<Piece> movesList = new ArrayList<Piece>(10);
+        List<Piece> intelligentMovesList = new ArrayList<Piece>(10);
         // Jeden Zug bewerten
         {
             GameModel clone;
@@ -60,8 +60,8 @@ public class HorstStrategy implements ReversiStrategy
             {
                 clone = new GameModel(game);
                 clone.placePiece(move.getX(), move.getY(), game.getTurnHolder());
-                valuesList.add(evalfunc.evaluatePosition(game, max));
-                movesList.add(move);
+                valuesList.add(evalfunc.evaluatePosition(clone, max));
+                intelligentMovesList.add(move);
             }
         }
         // Die schlechten Züge aussortieren
@@ -69,30 +69,36 @@ public class HorstStrategy implements ReversiStrategy
         while (valuesList.size() > anzahlBesteVerfolgen)
         {
             int kleinster = 0;
-            if (game.getTurnHolder() == max)
-                kleinster = Integer.MAX_VALUE;
-            else
-                kleinster = Integer.MIN_VALUE;
             int kleinsterPos = 0;
-            for (int i = 0; i < valuesList.size(); i++)
+            if (game.getTurnHolder() == max)
             {
-                if (valuesList.get(i) < kleinster)
-                {
-                    kleinster = valuesList.get(i);
-                    kleinsterPos = i;
-                }
-                if (valuesList.get(i) > kleinster)
-                {
-                    kleinster = valuesList.get(i);
-                    kleinsterPos = i;
-                }
+                kleinster = Integer.MAX_VALUE;
+                for (int i = 0; i < valuesList.size(); i++)
+                    if (valuesList.get(i) < kleinster)
+                    {
+                        kleinster = valuesList.get(i);
+                        kleinsterPos = i;
+                    }
             }
+
+            else
+            {
+                kleinster = Integer.MIN_VALUE;
+                for (int i = 0; i < valuesList.size(); i++)
+                    if (valuesList.get(i) > kleinster)
+                    {
+                        kleinster = valuesList.get(i);
+                        kleinsterPos = i;
+                    }
+            }
+
             valuesList.remove(kleinsterPos);
-            ;
-            movesList.remove(kleinsterPos);
+
+            intelligentMovesList.remove(kleinsterPos);
         }
 
-        for (Piece move : movesList)
+        // Rechnen
+        for (Piece move : intelligentMovesList)
         {
             GameModel clone = new GameModel(game);
             // cloneList.add(new GameModel(game));
@@ -122,7 +128,7 @@ public class HorstStrategy implements ReversiStrategy
 
         Set<Piece> legalMoves = game.getLegalMovesSet(game.getTurnHolder());
         List<Integer> valuesList = new ArrayList<Integer>(10);
-        List<Piece> movesList = new ArrayList<Piece>(10);
+        List<Piece> intelligentMovesList = new ArrayList<Piece>(10);
         // Jeden Zug bewerten
 
         {
@@ -131,8 +137,8 @@ public class HorstStrategy implements ReversiStrategy
             {
                 clone = new GameModel(game);
                 clone.placePiece(move.getX(), move.getY(), game.getTurnHolder());
-                valuesList.add(evalfunc.evaluatePosition(game, max));
-                movesList.add(move);
+                valuesList.add(evalfunc.evaluatePosition(clone, max));
+                intelligentMovesList.add(move);
             }
         }
 
@@ -141,30 +147,36 @@ public class HorstStrategy implements ReversiStrategy
         while (valuesList.size() > anzahlBesteVerfolgen)
         {
             int kleinster = 0;
-            if (game.getTurnHolder() == max)
-                kleinster = Integer.MAX_VALUE;
-            else
-                kleinster = Integer.MIN_VALUE;
             int kleinsterPos = 0;
-            for (int i = 0; i < valuesList.size(); i++)
+            if (game.getTurnHolder() == max)
             {
-                if (valuesList.get(i) < kleinster)
-                {
-                    kleinster = valuesList.get(i);
-                    kleinsterPos = i;
-                }
-                if (valuesList.get(i) > kleinster)
-                {
-                    kleinster = valuesList.get(i);
-                    kleinsterPos = i;
-                }
+                kleinster = Integer.MAX_VALUE;
+                for (int i = 0; i < valuesList.size(); i++)
+                    if (valuesList.get(i) < kleinster)
+                    {
+                        kleinster = valuesList.get(i);
+                        kleinsterPos = i;
+                    }
             }
+
+            else
+            {
+                kleinster = Integer.MIN_VALUE;
+                for (int i = 0; i < valuesList.size(); i++)
+                    if (valuesList.get(i) > kleinster)
+                    {
+                        kleinster = valuesList.get(i);
+                        kleinsterPos = i;
+                    }
+            }
+
             valuesList.remove(kleinsterPos);
 
-            movesList.remove(kleinsterPos);
+            intelligentMovesList.remove(kleinsterPos);
         }
 
-        for (Piece move : movesList)
+        // Rechnen
+        for (Piece move : intelligentMovesList)
         {
             GameModel clone = new GameModel(game);
             // cloneList2.add(new GameModel(game));
