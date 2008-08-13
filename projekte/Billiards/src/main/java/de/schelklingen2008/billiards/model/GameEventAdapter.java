@@ -18,4 +18,10 @@ public class GameEventAdapter implements GameEventListener
 
     }
 
+    public void ballSet(BallSetEvent e)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
 }

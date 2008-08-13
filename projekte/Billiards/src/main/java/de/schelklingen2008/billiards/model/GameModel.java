@@ -8,9 +8,11 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 import de.schelklingen2008.billiards.model.Ball.BallType;
@@ -31,15 +33,24 @@ public class GameModel implements Serializable
     private Player turnHolder = null;
     private boolean inMotion = false;
 
+    private boolean breakHasHappened;
+
     private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> ballsOnTable = new ArrayList<Ball>();
 
     private List<Wall> walls = new ArrayList<Wall>();
     private List<Hole> holes = new ArrayList<Hole>();
 
+    private Map<Player, BallType> playersBallTypes = new HashMap<Player, BallType>();
+
     private List<GameEventListener> gameEventListeners = new LinkedList<GameEventListener>();
 
     private Ball whiteBall, blackBall;
+
+    private List<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
+    private RuleManager ruleManager;
+
+    private Player winner;
 
     public boolean isInMotion()
     {
@@ -132,6 +143,11 @@ public class GameModel implements Serializable
         gameEventListeners.add(listener);
     }
 
+    public void addCollisionListener(CollisionListener listener)
+    {
+        collisionListeners.add(listener);
+    }
+
     public void takeShot(Player player, double angle, double velocity) throws IllegalStateException
     {
         if (isInMotion())
@@ -143,6 +159,8 @@ public class GameModel implements Serializable
         {
             throw new IllegalStateException("Player is not the turnholder.");
         }
+
+        breakHasHappened = true;
 
         whiteBall.setVelocity(Vector2d.getPolarVector(angle, velocity));
         inMotion = true;
@@ -162,8 +180,15 @@ public class GameModel implements Serializable
         addWalls();
         addHoles();
 
+        addRuleManager();
+
         setUpGame();
 
+    }
+
+    private void addRuleManager()
+    {
+        ruleManager = new RuleManager(this);
     }
 
     public void setUpGame()
@@ -175,8 +200,11 @@ public class GameModel implements Serializable
         }
 
         turnHolder = players[0];
+        winner = null;
 
         inMotion = false;
+        breakHasHappened = false;
+        playersBallTypes = null;
 
         for (Ball ball : balls)
         {
@@ -184,7 +212,6 @@ public class GameModel implements Serializable
         }
 
         ballsOnTable.clear();
-
         ballsOnTable.addAll(balls);
 
         resetBalls();
@@ -208,7 +235,6 @@ public class GameModel implements Serializable
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
         Collections.shuffle(tmpBalls);
 
-        whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
         blackBall.setPosition(new Vector2d(0.75d * MAX_X, 0.5d * MAX_Y));
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
@@ -237,6 +263,16 @@ public class GameModel implements Serializable
 
     }
 
+    public boolean breakHasHappened()
+    {
+        return breakHasHappened;
+    }
+
+    public boolean ballMappingFixed()
+    {
+        return playersBallTypes != null;
+    }
+
     public Player getPlayer(int id)
     {
 
@@ -258,6 +294,28 @@ public class GameModel implements Serializable
     public boolean isTurnHolder(int player)
     {
         return turnHolder.getId() == player;
+    }
+
+    public Player getTurnHolder()
+    {
+        return turnHolder;
+    }
+
+    void changeTurnHolder()
+    {
+        turnHolder = players[1 - turnHolder.getId()];
+    }
+
+    public Ball.BallType getPlayersBallType(Player player)
+    {
+        if (playersBallTypes == null)
+        {
+            return null;
+        }
+        else
+        {
+            return playersBallTypes.get(player);
+        }
     }
 
     public void processTimeStep(double deltaT)
@@ -342,7 +400,7 @@ public class GameModel implements Serializable
 
                 do
                 {
-                    collision.handle();
+                    handleCollision(collision);
                     collision = collisions.poll();
                 } while (!collisions.isEmpty() && collision.getTime() - firstCollisionTime < EPSILON);
             }
@@ -354,6 +412,45 @@ public class GameModel implements Serializable
 
         } while (remainingTime > 0);
 
+    }
+
+    private void handleCollision(Collision collision)
+    {
+        if (collision.isWallCollision())
+        {
+            WallCollisionEvent e = new WallCollisionEvent(collision.getBall(), collision.getWall());
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.wallCollisionImminent(e);
+            }
+
+            collision.handle();
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.wallCollisionHappened(e);
+            }
+
+        }
+        else
+        {
+
+            BallCollisionEvent e = new BallCollisionEvent(collision.getBall1(), collision.getBall2());
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.ballCollisionImminent(e);
+            }
+
+            collision.handle();
+
+            for (CollisionListener listener : collisionListeners)
+            {
+                listener.ballCollisionHappened(e);
+            }
+
+        }
     }
 
     private void moveBalls(double deltaT)
@@ -377,6 +474,33 @@ public class GameModel implements Serializable
     public Ball getWhiteBall()
     {
         return whiteBall;
+    }
+
+    void setWinner(Player player)
+    {
+        winner = player;
+    }
+
+    public boolean isFinished()
+    {
+        return winner != null;
+    }
+
+    public Player getOtherPlayer(Player player)
+    {
+        return players[1 - player.getId()];
+    }
+
+    public void resetWhiteBall()
+    {
+        if (!whiteBall.isSunk())
+        {
+            return;
+        }
+
+        whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
+        whiteBall.setSunk(false);
+        ballsOnTable.add(whiteBall);
     }
 
 }

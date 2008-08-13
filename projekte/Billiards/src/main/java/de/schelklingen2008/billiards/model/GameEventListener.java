@@ -9,4 +9,6 @@ public interface GameEventListener
 
     public void ballSunk(BallSunkEvent e);
 
+    public void ballSet(BallSetEvent e);
+
 }
