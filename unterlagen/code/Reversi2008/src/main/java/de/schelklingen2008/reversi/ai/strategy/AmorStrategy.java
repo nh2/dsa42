@@ -12,6 +12,7 @@ public class AmorStrategy implements ReversiStrategy
     private final int                depth;
     private int alpha = Integer.MIN_VALUE;
     private int beta = Integer.MAX_VALUE;
+    private int durschnitt[] = new int[3];
 
 
     Player                           player;
@@ -73,37 +74,49 @@ public class AmorStrategy implements ReversiStrategy
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece.getX(), piece.getY(), gameModel.getTurnHolder());
             value = mmVal(depth - 1, alpha, beta, clone);
+            durschnitt[0]=durschnitt[0] + value;
+            durschnitt[1]++;
+            durschnitt[2] = durschnitt[0]/durschnitt[1];
             if (gameModel.isTurnHolder(player))
             {
                 if ( value > alpha )
                     alpha = value;
-                if (alpha >= beta)
-                    return alpha;
+                if (value >= beta)
+                    return beta;
 
 
             }
             else {
-                if ( value < beta)
-                    beta = value;
-                if (alpha >= beta)
-                    return beta;
 
-                return beta;
+
+                if (value <= alpha)
+                    return alpha;
+                if (value < beta)
+                    beta = value;
+
+
+
             }
 
 
-
         }
-
         if (gameModel.isTurnHolder(player))
         {
-            best = Math.max(value, best);
+            return alpha;
         }
-        else
-        {
-            if (value < best) best = value;
+        else {
+            return beta;
         }
-        return best;
+
+        //        if (gameModel.isTurnHolder(player))
+        //        {
+        //            best = Math.max(value, best);
+        //        }
+        //        else
+        //        {
+        //            if (value < best) best = value;
+        //        }
+        //        return best;
 
     }
 }
