@@ -471,7 +471,7 @@ public class GameModel implements Serializable
         {
             if (c[i].getColor().equals(pc)) return c[i];
         }
-        throw new IllegalArgumentException();
+        return null;
     }
 
     public void setAllCountriesUnselected()
