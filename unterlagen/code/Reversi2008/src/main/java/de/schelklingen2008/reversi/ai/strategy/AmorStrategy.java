@@ -74,9 +74,9 @@ public class AmorStrategy implements ReversiStrategy
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece.getX(), piece.getY(), gameModel.getTurnHolder());
             value = mmVal(depth - 1, alpha, beta, clone);
-            durschnitt[0]=durschnitt[0] + value;
-            durschnitt[1]++;
-            durschnitt[2] = durschnitt[0]/durschnitt[1];
+            //            durschnitt[0]=durschnitt[0] + value;
+            //            durschnitt[1]++;
+            //            durschnitt[2] = durschnitt[0]/durschnitt[1];
             if (gameModel.isTurnHolder(player))
             {
                 if ( value > alpha )
