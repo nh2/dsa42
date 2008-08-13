@@ -7,7 +7,7 @@ import com.threerings.toybox.util.ToyBoxContext;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
 import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
-import de.schelklingen2008.dasverruecktelabyrinth.client.view.LabyPlusPlayerPanel;
+import de.schelklingen2008.dasverruecktelabyrinth.client.view.PlayerPanel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
 /**
@@ -31,7 +31,7 @@ public class BoardViewTest extends GameViewTest
         ctx.setGameModel(new GameModel(new String[] { "dick", "doof", "Hassel", "Hoff" }));
         ctx.setMyName("dick");
 
-        return new LabyPlusPlayerPanel(controller);
+        return new PlayerPanel(controller);
 
     }
 }

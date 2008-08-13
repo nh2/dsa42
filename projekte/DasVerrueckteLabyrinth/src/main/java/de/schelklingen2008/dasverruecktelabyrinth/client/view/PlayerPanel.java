@@ -4,14 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,6 +21,7 @@ import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
 import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerCards;
 import de.schelklingen2008.dasverruecktelabyrinth.model.PlayerType;
+import de.schelklingen2008.dasverruecktelabyrinth.model.Tile;
 import de.schelklingen2008.dasverruecktelabyrinth.model.TreasureCard;
 import de.schelklingen2008.util.LoggerFactory;
 
@@ -35,66 +32,20 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     private Controller          controller;
 
-    private BufferedImage       curveOne, curveTwo, curveThree, curveFour;
-    private BufferedImage       cross, horizontal, vertikal;
-    private BufferedImage       eule, krone, flaschengeist, ring, motte, spinne;
-    private BufferedImage       fee, karte, drache, bibel, eidechse, geldbeutel, fledermaus;
-    private BufferedImage       troll, scarabaeus, maus, smaragd, totenkopf, helm, leuchter;
-    private BufferedImage       schmuckkasten, schluessel, schwert, gespenst;
-
-    private JLabel              insertLabel;
+    private TilePanel           insertTilePanel;
     private JLabel              searchThisCardLabel;
 
     public PlayerPanel(Controller controller)
 
     {
+        setPreferredSize(new Dimension(600, 130));
 
-        JPanel PlayerPanel = new JPanel();
         this.controller = controller;
         controller.addChangeListener(this);
 
         setBackground(Color.white);
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-
-        try
-        {
-            curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/curveOne.png"));
-            curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            curveThree = ImageIO.read(new File("src/main/resources/TilesBilder/curveThree.png"));
-            curveFour = ImageIO.read(new File("src/main/resources/TilesBilder/curveFour.png"));
-            horizontal = ImageIO.read(new File("src/main/resources/TilesBilder/horizontal.png"));
-            vertikal = ImageIO.read(new File("src/main/resources/TilesBilder/vertikal.png"));
-            cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
-            eule = ImageIO.read(new File("src/main/resources/Bilder/80/eule.png"));
-            krone = ImageIO.read(new File("src/main/resources/Bilder/80/krone.png"));
-            flaschengeist = ImageIO.read(new File("src/main/resources/Bilder/80/flaschengeist.png"));
-            ring = ImageIO.read(new File("src/main/resources/Bilder/80/ring.png"));
-            spinne = ImageIO.read(new File("src/main/resources/Bilder/80/spinne.png"));
-            fee = ImageIO.read(new File("src/main/resources/Bilder/80/fee.png"));
-            karte = ImageIO.read(new File("src/main/resources/Bilder/80/karte.png"));
-            drache = ImageIO.read(new File("src/main/resources/Bilder/80/Drache.png"));
-            bibel = ImageIO.read(new File("src/main/resources/Bilder/80/bibel.png"));
-            eidechse = ImageIO.read(new File("src/main/resources/Bilder/80/eidechse.png"));
-            geldbeutel = ImageIO.read(new File("src/main/resources/Bilder/80/geldbeutel.png"));
-            fledermaus = ImageIO.read(new File("src/main/resources/Bilder/80/fledermaus.png"));
-            troll = ImageIO.read(new File("src/main/resources/Bilder/80/troll.png"));
-            scarabaeus = ImageIO.read(new File("src/main/resources/Bilder/80/scarabaeus.png"));
-            maus = ImageIO.read(new File("src/main/resources/Bilder/80/maus.png"));
-            smaragd = ImageIO.read(new File("src/main/resources/Bilder/80/smaragd.png"));
-            totenkopf = ImageIO.read(new File("src/main/resources/Bilder/80/totenkopf.png"));
-            helm = ImageIO.read(new File("src/main/resources/Bilder/80/helm.png"));
-            leuchter = ImageIO.read(new File("src/main/resources/Bilder/80/leuchter.png"));
-            schmuckkasten = ImageIO.read(new File("src/main/resources/Bilder/80/schmuckkasten.png"));
-            schluessel = ImageIO.read(new File("src/main/resources/Bilder/80/schluessel.png"));
-            schwert = ImageIO.read(new File("src/main/resources/Bilder/80/schwert.png"));
-            gespenst = ImageIO.read(new File("src/main/resources/Bilder/80/gespenst.png"));
-
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException("Kann Bild nicht laden.", e);
-        }
 
         JPanel drehButtons = new JPanel();
         drehButtons.setLayout(new BoxLayout(drehButtons, BoxLayout.PAGE_AXIS));
@@ -122,8 +73,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         drehButtons.add(right);
         drehButtons.add(left);
 
-        insertLabel = new JLabel(new ImageIcon(vertikal));
-        insertLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        insertTilePanel = new TilePanel(new Tile(true, true, true, true, TreasureCard.BIBEL));
+        insertTilePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel cardsPanel = new JPanel();
         cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.PAGE_AXIS));
@@ -131,98 +82,21 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         JPanel searchThisCardPanel = new JPanel();
         searchThisCardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         searchThisCardPanel.setBackground(Color.white);
-        searchThisCardLabel = new JLabel(new ImageIcon(eule));
+        searchThisCardLabel = new JLabel(new ImageIcon(Images.getBigTcImage(TreasureCard.EULE)));
         searchThisCardPanel.add(searchThisCardLabel);
 
         add(drehButtons);
-        add(insertLabel);
+        add(insertTilePanel);
         add(searchThisCardPanel);
-
     }
 
-    @Override
-    public Dimension getPreferredSize()
-    {
-        return new Dimension(600, 130);
-    }
-
-    private TreasureCard openCard()
-    {
-        Map<PlayerType, PlayerCards> mapWtf = getGameModel().getPlayerCardsMap();
-
-        PlayerCards openCards = mapWtf.get(getGameContext().getMyPlayerType());
-        List<TreasureCard> open = openCards.getOpenCards();
-
-        if (open != null && open.size() > 0) return open.get(0);
-
-        return null;
-
-    }
-
-    private BufferedImage getImageOfTC(TreasureCard tC)
-    {
-
-        sLogger.info("getImageOfTC() aufgerufen");
-
-        BufferedImage temp = null;
-        if (tC == TreasureCard.EULE) temp = eule;
-
-        if (tC == TreasureCard.KRONE) temp = krone;
-        if (tC == TreasureCard.FLASCHENGEIST) temp = flaschengeist;
-        if (tC == TreasureCard.RING) temp = ring;
-        if (tC == TreasureCard.MOTTE) temp = motte;
-        if (tC == TreasureCard.SPINNE) temp = spinne;
-        if (tC == TreasureCard.FEE) temp = fee;
-        if (tC == TreasureCard.KARTE) temp = karte;
-        if (tC == TreasureCard.DRACHE) temp = drache;
-        if (tC == TreasureCard.BIBEL) temp = bibel;
-        if (tC == TreasureCard.EIDECHSE) temp = eidechse;
-        if (tC == TreasureCard.GELDBEUTEL) temp = geldbeutel;
-        if (tC == TreasureCard.FLEDERMAUS) temp = fledermaus;
-        if (tC == TreasureCard.TROLL) temp = troll;
-        if (tC == TreasureCard.SCARABAEUS) temp = scarabaeus;
-        if (tC == TreasureCard.MAUS) temp = maus;
-        if (tC == TreasureCard.SMARAGD) temp = smaragd;
-        if (tC == TreasureCard.TOTENKOPF) temp = totenkopf;
-        if (tC == TreasureCard.HELM) temp = helm;
-        if (tC == TreasureCard.LEUCHTER) temp = leuchter;
-        if (tC == TreasureCard.SCHMUCKKASTEN) temp = schmuckkasten;
-        if (tC == TreasureCard.SCHLÜSSEL) temp = schluessel;
-        if (tC == TreasureCard.SCHWERT) temp = schwert;
-        if (tC == TreasureCard.GESPENST) temp = gespenst;
-
-        if (temp == null) sLogger.info("card not found for: " + tC);
-        return temp;
-    }
-
-    public TreasureCard hiddenCard()
+    public TreasureCard getHiddenCard()
     {
         Map<PlayerType, PlayerCards> pcMap = getGameModel().getPlayerCardsMap();
         PlayerCards hiddenCards = pcMap.get(getGameContext().getMyPlayerType());
         List<TreasureCard> hidden = hiddenCards.getHiddenCards();
         TreasureCard searchThisCard = hidden.get(0);
         return searchThisCard;
-    }
-
-    private BufferedImage getInsert()
-    {
-        BufferedImage temp = null;
-        if (getGameModel().getInsertTile().isCross() == true) temp = cross;
-        if (getGameModel().getInsertTile().isCurve1() == true) temp = curveOne;
-        if (getGameModel().getInsertTile().isCurve2() == true) temp = curveTwo;
-        if (getGameModel().getInsertTile().isCurve3() == true) temp = curveThree;
-        if (getGameModel().getInsertTile().isCurve4() == true) temp = curveFour;
-        if (getGameModel().getInsertTile().isHorizontal() == true) temp = horizontal;
-        if (getGameModel().getInsertTile().isVertikal() == true) temp = vertikal;
-
-        return temp;
-    }
-
-    private TreasureCard getTCardOnInsert()
-    {
-        TreasureCard tCInsert = getGameModel().getInsertTile().getTC();
-        return tCInsert;
-
     }
 
     private GameModel getGameModel()
@@ -237,10 +111,9 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
-        if (getInsert() != null) insertLabel.setIcon(new ImageIcon(getInsert()));
+        insertTilePanel.setTile(getGameModel().getInsertTile());
+        searchThisCardLabel.setIcon(new ImageIcon(Images.getBigTcImage(getHiddenCard())));
 
-        searchThisCardLabel.setIcon(new ImageIcon(getImageOfTC(hiddenCard())));
         repaint();
-
     }
 }
