@@ -65,8 +65,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void moved(MouseEvent e)
     {
-        int mx = e.getX();
-        int my = e.getY();
 
     }
 

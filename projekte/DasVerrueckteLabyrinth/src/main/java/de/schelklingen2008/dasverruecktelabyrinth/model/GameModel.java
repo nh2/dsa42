@@ -313,7 +313,7 @@ public class GameModel implements Serializable
                 pPlayer.Moved(true);
                 walk = false;
             }
-            if (walk == false && pPlayer.hasMoved() == true)
+            if (walk == false && hasLegalMoved(pPlayer) == true)
             {
                 changeTurnHolder();
                 pPlayer.Moved(false);
@@ -527,23 +527,23 @@ public class GameModel implements Serializable
         insert = board[x][board.length - 1];
         for (int i = board.length - 1; i >= 1; i--)
         {
-            board[x][i].setMoved(true);
+            // board[x][i].setMoved(true);
             board[x][i] = board[x][i - 1];
 
-            for (PlayerType pt : PlayerType.values())
-            {
-                Player playerTemp = player.get(pt);
-
-                if (playerTemp == null) continue;
-
-                int pX = playerTemp.getXKoordinate();
-                int pY = playerTemp.getYKoordinate();
-
-                if (pX == x && pY == 6) placePlayerOutOfBounds(x, 0, pt);
-                if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(i - 1);
-            }
         }
         board[x][0] = temp;
+        for (PlayerType pt : PlayerType.values())
+        {
+            Player playerTemp = player.get(pt);
+
+            if (playerTemp == null) continue;
+
+            int pX = playerTemp.getXKoordinate();
+            int pY = playerTemp.getYKoordinate();
+
+            if (pX == x && pY == 6) placePlayerOutOfBounds(x, 0, pt);
+            // if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(pY - 1);
+        }
 
     }
 
@@ -553,23 +553,23 @@ public class GameModel implements Serializable
         insert = board[x][0];
         for (int i = 0; i < board.length - 1; i++)
         {
-            board[x][i].setMoved(true);
+            // board[x][i].setMoved(true);
             board[x][i] = board[x][i + 1];
 
-            for (PlayerType pt : PlayerType.values())
-            {
-                Player playerTemp = player.get(pt);
-
-                if (playerTemp == null) continue;
-
-                int pX = playerTemp.getXKoordinate();
-                int pY = playerTemp.getYKoordinate();
-
-                if (pX == x && pY == 0) placePlayerOutOfBounds(x, 6, pt);
-                if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(i + 1);
-            }
         }
         board[x][(board.length - 1)] = temp;
+        for (PlayerType pt : PlayerType.values())
+        {
+            Player playerTemp = player.get(pt);
+
+            if (playerTemp == null) continue;
+
+            int pX = playerTemp.getXKoordinate();
+            int pY = playerTemp.getYKoordinate();
+
+            if (pX == x && pY == 0) placePlayerOutOfBounds(x, 6, pt);
+            // if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(pY + 1);
+        }
 
     }
 
@@ -580,23 +580,23 @@ public class GameModel implements Serializable
         insert = board[0][y];
         for (int i = 0; i < board.length - 1; i++)
         {
-            board[i][y].setMoved(true);
+            // board[i][y].setMoved(true);
             board[i][y] = board[i + 1][y];
 
-            for (PlayerType pt : PlayerType.values())
-            {
-                Player playerTemp = player.get(pt);
-
-                if (playerTemp == null) continue;
-
-                int pX = playerTemp.getXKoordinate();
-                int pY = playerTemp.getYKoordinate();
-
-                if (pX == 0 && pY == y) placePlayerOutOfBounds(6, 6, pt);
-                if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(i + 1);
-            }
         }
         board[(board.length - 1)][y] = temp;
+        for (PlayerType pt : PlayerType.values())
+        {
+            Player playerTemp = player.get(pt);
+
+            if (playerTemp == null) continue;
+
+            int pX = playerTemp.getXKoordinate();
+            int pY = playerTemp.getYKoordinate();
+
+            if (pX == 0 && pY == y) placePlayerOutOfBounds(6, 6, pt);
+            // if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(pX + 1);
+        }
 
     }
 
@@ -606,24 +606,24 @@ public class GameModel implements Serializable
         insert = board[board.length - 1][y];
         for (int i = board.length - 1; i >= 1; i--)
         {
-            board[i][y].setMoved(true);
+            // board[i][y].setMoved(true);
             board[i][y] = board[i - 1][y];
 
-            for (PlayerType pt : PlayerType.values())
-            {
-                Player playerTemp = player.get(pt);
-
-                if (playerTemp == null) continue;
-
-                int pX = playerTemp.getXKoordinate();
-                int pY = playerTemp.getYKoordinate();
-
-                if (pX == 6 && pY == y) placePlayerOutOfBounds(0, y, pt);
-
-                if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(i - 1);
-            }
         }
         board[0][y] = temp;
+        for (PlayerType pt : PlayerType.values())
+        {
+            Player playerTemp = player.get(pt);
+
+            if (playerTemp == null) continue;
+
+            int pX = playerTemp.getXKoordinate();
+            int pY = playerTemp.getYKoordinate();
+
+            if (pX == 6 && pY == y) placePlayerOutOfBounds(0, y, pt);
+
+            // if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(pX - 1);
+        }
 
     }
 
