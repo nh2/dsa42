@@ -316,6 +316,14 @@ public class GameModel implements Serializable
         stack.clear();
         cardList.clear();
         fillStack();
+        for (Player player : playerList)
+        {
+            player.setOwnBet(0);
+            player.setAllIn(false);
+            player.setCard1(null);
+            player.setCard2(null);
+            player.setStillIn(true);
+        }
         bigBlindNeedsToSet = true;
         dealerIndex = getRisenPlayerIndex(dealerIndex, 1);
         actPlayerIndex = 0;
@@ -324,6 +332,7 @@ public class GameModel implements Serializable
         setHighestBetAndBetterIndex();
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 3);
         giveCardsToPlayers();
+
     }
 
     public void setPlayerBet(long betValue, int playerIndex, boolean minMaxBorderCheck)

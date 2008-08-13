@@ -486,8 +486,9 @@ public class GameModelTest extends TestCase
         assertEquals(3, gameModel.getPhase());
         assertEquals(5, gameModel.getCardList().size());
 
-        gameModel.check(1);
-        gameModel.check(0);
+        gameModel.raise(1, 1000);
+        gameModel.reRaise(0, 1500);
+        gameModel.fold(1);
 
         assertEquals(0, gameModel.getPhase());
         assertEquals(0, gameModel.getCardList().size());
