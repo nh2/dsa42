@@ -174,7 +174,7 @@ public class GameModel implements Serializable
         c[7] = new Country("Russland", 7, 822, 336, 0, 255, 128);
         c[8] = new Country("Estland", 8, 607, 351, 0, 255, 0);
         c[9] = new Country("Lettland", 9, 598, 403, 0, 64, 0);
-        c[10] = new Country("Litauen", 10, 595, 444, 18, 180, 20);
+        c[10] = new Country("Litauen", 10, 595, 444, 18, 180, 22);
         c[11] = new Country("Weiﬂrussland", 11, 660, 485, 128, 255, 0);
         c[12] = new Country("Ukraine", 12, 710, 562, 0, 136, 45);
         c[13] = new Country("Polen", 13, 527, 528, 1, 41, 12);
