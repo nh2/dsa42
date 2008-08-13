@@ -248,6 +248,11 @@ public class GameModel implements Serializable
         turnHolder = null;
     }
 
+    public Set<Piece> getLegalMovesSet()
+    {
+        return getLegalMovesSet(getTurnHolder());
+    }
+
     public Set<Piece> getLegalMovesSet(Player player)
     {
         Set<Piece> legalMoves = new HashSet<Piece>();
@@ -256,5 +261,14 @@ public class GameModel implements Serializable
                 if (isLegalMove(x, y, player)) legalMoves.add(new Piece(x, y, player));
 
         return legalMoves;
+    }
+
+    public int countFree()
+    {
+        int count = 0;
+        for (int y = 0; y < SIZE; y++)
+            for (int x = 0; x < SIZE; x++)
+                if (board[x][y] == null) count++;
+        return count;
     }
 }
