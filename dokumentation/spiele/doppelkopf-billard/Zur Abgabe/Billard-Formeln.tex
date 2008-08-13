@@ -1,0 +1,34 @@
+\documentclass{article}
+
+\usepackage[ansinew,latin1]{inputenc}
+\usepackage[ngerman]{babel}
+
+\begin{document}
+
+\noindent
+Es seien $(x_1|y_1)$ und $(x_2|y_2)$ die Mittelpunkte der Bälle, ${v_{x2}\choose v_{y1}}$ und ${v_{x1}\choose v_{y2}}$ ihre Geschwindigkeitsvektoren, $r$ ihre Radien und $t$ die Zeit, wobei $t=0$ die momentane Situation ist. Gesucht wird $t$, sodass sich die beiden Bälle berühren, das heißt dass ihr Abstand genau $2r$ ist. Folgende Gleichung ergibt sich aus dem Satz des Pythagoras und der Bewegungsgleichung bei konstanter Geschwindigkeit ($x=x_0+vt$):\\
+$(x_1+v_{x1}-x_2-v_{x2}^2)^2+(y_1+v_{y1}-y_2-v_{y2})^2=(2r)^2$\\
+
+\noindent
+Die Gleichung wird nach $t$ aufgelöst und ergibt dabei ein Polynom vom Grad 2:\\
+$(\Delta x+\Delta v_x)^2+(\Delta y+\Delta v_y)^2-4r^2=0$\\
+$\Delta x^2+2\Delta x\Delta v_xt+\Delta v_x^2t^2+\Delta y^2+2\Delta y\Delta v_yt+\Delta v_y^2t^2-4r^2=0$\\
+$(\Delta v_x^2+\Delta v_y^2)t^2+2(\Delta x\Delta v_x+\Delta y\Delta v_y)t+\Delta x^2+\Delta y^2-4r^2=0$\\
+
+\noindent
+$t$ kann nun mithilfe der Lösungsformel bestimmt werden. Dabei ergeben sich bis zu zwei Lösungen, wobei nur die kleinere verwendet wird, da die größere nur korrekt wäre, wenn die Bälle sich nicht abstoßen würden.\\
+$t=\frac{-b-\sqrt{b^2-4ac}}{2a}$\\
+
+\noindent
+$a$, $b$ und $c$ lassen sich direkt aus der obigen Gleichung ablesen:\\
+$a=\Delta v_x^2+\Delta v_y^2$\\
+$b=2(\Delta x\Delta v_x+\Delta y\Delta v_y)$\\
+$c=\Delta x^2+\Delta y^2-4r^2$\\
+
+\noindent
+Mithilfe der Diskriminante $b^2-4ac$ lässt sich bestimmen, ob überhaupt eine Kollision stattfindet. Ist sie nichtnegativ, so kollidieren die Bälle (bei konstanter Geschwindigkeit), ist sie negativ, so kann das Ergebnis verworfen werden.\\
+
+\noindent
+Im Spiel bewegen sich die Bälle jedoch mit Reibung. Die Reibung hat jedoch keinen Einfluss auf die Punkte, an denen die Bälle kollidieren (falls sie kollidieren). Um herauszufinden, ob und wann die Bälle mit Reibung kollidieren, wird die Position zum Zeitpunkt $t$ berechnet. Dies ist die Position, an der die Bälle - mit oder ohne Reibung - kollidieren. Um nun die Zeit $t'$ zu berechnen, zu der diese Position mit Reibung erreicht wird, wird die Funktion $adjustCollisionTime$ verwendet, die hier jedoch nicht weiter erläutert wird.
+
+\end{document}
