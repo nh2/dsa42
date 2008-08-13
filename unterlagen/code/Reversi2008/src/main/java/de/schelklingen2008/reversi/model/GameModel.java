@@ -181,6 +181,15 @@ public class GameModel implements Serializable
         return count;
     }
 
+    public int countFree()
+    {
+        int count = 0;
+        for (int y = 0; y < SIZE; y++)
+            for (int x = 0; x < SIZE; x++)
+                if (board[x][y] == null) count++;
+        return count;
+    }
+
     private void flip(int x, int y)
     {
         if (!isInBounds(x, y)) throw new IllegalArgumentException("out of bounds");
@@ -261,14 +270,5 @@ public class GameModel implements Serializable
                 if (isLegalMove(x, y, player)) legalMoves.add(new Piece(x, y, player));
 
         return legalMoves;
-    }
-
-    public int countFree()
-    {
-        int count = 0;
-        for (int y = 0; y < SIZE; y++)
-            for (int x = 0; x < SIZE; x++)
-                if (board[x][y] == null) count++;
-        return count;
     }
 }
