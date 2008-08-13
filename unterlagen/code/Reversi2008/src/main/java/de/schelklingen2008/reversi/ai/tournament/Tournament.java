@@ -1,6 +1,7 @@
 package de.schelklingen2008.reversi.ai.tournament;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,18 +9,42 @@ import java.util.Map;
 public class Tournament
 {
 
-    private static final int         POINTS_DRAW            = 1;
-    private static final int         POINTS_WIN             = 2;
-    public static final int          MATCH_COUNT            = 10;
-    private static final long        TIME_LIMIT_PER_MOVE_MS = 1000;
+    public static final int          MATCH_COUNT_DEFAULT = 30;
 
-    private List<TournamentStrategy> strategies             = new ArrayList<TournamentStrategy>();
+    private int                      matchCount          = MATCH_COUNT_DEFAULT;
 
-    private Map<String, List<Match>> matches                = new HashMap<String, List<Match>>();
+    private List<TournamentStrategy> strategies          = new ArrayList<TournamentStrategy>();
+
+    private Map<String, List<Match>> matches             = new HashMap<String, List<Match>>();
+
+    public Tournament()
+    {
+    }
+
+    public Tournament(int matchCount)
+    {
+        this.matchCount = matchCount;
+    }
+
+    public Tournament(int matchCount, Collection<TournamentStrategy> manyStrategies)
+    {
+        this.matchCount = matchCount;
+        addStrategies(manyStrategies);
+    }
+
+    public Tournament(Collection<TournamentStrategy> manyStrategies)
+    {
+        addStrategies(manyStrategies);
+    }
 
     public void addStrategy(TournamentStrategy strategy)
     {
         strategies.add(strategy);
+    }
+
+    public void addStrategies(Collection<TournamentStrategy> manyStrategies)
+    {
+        strategies.addAll(manyStrategies);
     }
 
     public void prepare()
@@ -36,7 +61,7 @@ public class Tournament
                 ArrayList<Match> matchList = new ArrayList<Match>();
                 matches.put(matchKey(white, black), matchList);
 
-                for (int i = 0; i < MATCH_COUNT; i++)
+                for (int i = 0; i < matchCount; i++)
                 {
                     Match match = new Match(white.getStrategy(), black.getStrategy());
                     matchList.add(match);
@@ -97,5 +122,10 @@ public class Tournament
     public int getStrategyCount()
     {
         return strategies.size();
+    }
+
+    public int getMatchCount()
+    {
+        return matchCount;
     }
 }

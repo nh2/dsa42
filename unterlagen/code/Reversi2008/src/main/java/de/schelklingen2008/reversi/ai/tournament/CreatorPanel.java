@@ -7,27 +7,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
 import javax.swing.JPanel;
 
-public class MatchPanel extends JPanel implements MatchObserver
+public class CreatorPanel extends JPanel
 {
 
-    private static final Color COL_BACKGROUND = new Color(0, 100, 0);
+    private static final Color COL_BACKGROUND = new Color(200, 200, 200);
     private static final Color COL_RESULT     = Color.WHITE;
     private static final Color COL_BLANK      = Color.GRAY;
-    public static final int    WIDTH          = 100;
-    public static final int    HEIGHT         = 60;
+    public static final int    WIDTH          = MatchPanel.WIDTH;
+    public static final int    HEIGHT         = MatchPanel.HEIGHT;
 
-    private List<Match>        matchList;
+    private String             creator;
 
-    public MatchPanel(List<Match> matches)
+    public CreatorPanel(String creator)
     {
-        matchList = matches;
-        if (matchList == null) return;
-        for (Match match : matchList)
-            match.addObserver(this);
+        this.creator = creator;
     }
 
     @Override
@@ -48,24 +44,16 @@ public class MatchPanel extends JPanel implements MatchObserver
     {
         gfx.setColor(COL_RESULT);
 
-        int white = 0;
-        int black = 0;
-        for (Match match : matchList)
-        {
-            white += match.getPointsWhite();
-            black += match.getPointsBlack();
-        }
         Font boldFont = gfx.getFont().deriveFont(Font.BOLD);
         gfx.setFont(boldFont);
-        String text = white + " : " + black;
-        Rectangle2D bounds = boldFont.getStringBounds(text, gfx.getFontRenderContext());
-        LineMetrics lm = boldFont.getLineMetrics(text, gfx.getFontRenderContext());
-        gfx.drawString(text, (int) (WIDTH - bounds.getWidth()) / 2, HEIGHT / 2 - lm.getStrikethroughOffset());
+        Rectangle2D bounds = boldFont.getStringBounds(creator, gfx.getFontRenderContext());
+        LineMetrics lm = boldFont.getLineMetrics(creator, gfx.getFontRenderContext());
+        gfx.drawString(creator, (int) (WIDTH - bounds.getWidth()) / 2, HEIGHT / 2 - lm.getStrikethroughOffset());
     }
 
     private boolean isBlank()
     {
-        return matchList == null;
+        return creator == null;
     }
 
     private void paintBackground(Graphics2D gfx)
@@ -74,10 +62,5 @@ public class MatchPanel extends JPanel implements MatchObserver
         gfx.fillRect(0, 0, WIDTH, HEIGHT);
         gfx.setColor(Color.BLACK);
         gfx.drawRect(0, 0, WIDTH - 1, HEIGHT - 1);
-    }
-
-    public void matchFinished()
-    {
-        repaint();
     }
 }

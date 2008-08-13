@@ -9,17 +9,15 @@ public class MainFrame
 
     public static void main(String[] args)
     {
-        Tournament t = new Tournament();
+        Tournament t = new Tournament(500);
         t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Daniel", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Manuel", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Sarah", new SimpleStrategy()));
         t.prepare();
 
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new TournamentPanel(t));
+        final TournamentPanel tPanel = new TournamentPanel(t);
+        frame.getContentPane().add(tPanel);
         frame.pack();
         frame.setVisible(true);
 

@@ -10,18 +10,16 @@ public class Main
 
     public static void main(String[] args)
     {
-        Tournament t = new Tournament();
-
+        Tournament t = new Tournament(20);
         t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Jo", new SimpleStrategy()));
 
         t.prepare();
         long startzeit = System.currentTimeMillis();
         t.run();
         System.out.println("Vergangene Zeit: " + (System.currentTimeMillis() - startzeit) + " ms");
 
-        int matchPerPlayer = Tournament.MATCH_COUNT * (t.getStrategyCount() - 1);
+        int matchPerPlayer = 2 * t.getMatchCount() * (t.getStrategyCount() - 1);
         int matchCount = matchPerPlayer * t.getStrategyCount() / 2;
         System.out.println("Number of matches: " + matchCount);
         System.out.println("Number of matches for each player: " + matchPerPlayer);
@@ -31,9 +29,16 @@ public class Main
         List<TournamentStrategy> strategies = t.getStrategies();
         Collections.sort(strategies);
         Collections.reverse(strategies);
+        int sum = 0;
         for (TournamentStrategy strategy : strategies)
         {
-            System.out.println(strategy.getCreator() + " (" + strategy.getType() + "): " + strategy.getPoints());
+            sum += strategy.getPoints();
+        }
+        for (TournamentStrategy strategy : strategies)
+        {
+            int pts = strategy.getPoints();
+            String type = strategy.getType();
+            System.out.println(strategy.getCreator() + " (" + type + "): " + pts + " " + (double) pts / sum);
         }
     }
 }

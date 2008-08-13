@@ -1,5 +1,8 @@
 package de.schelklingen2008.reversi.ai.tournament;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
@@ -8,16 +11,17 @@ import de.schelklingen2008.reversi.model.Player;
 public class Match
 {
 
-    public static final int POINTS_DRAW = 1;
-    public static final int POINTS_WIN  = 2;
-    private GameModel       model       = new GameModel();
-    private ReversiStrategy white;
-    private ReversiStrategy black;
-    private Player          winner;
-    private int             countWhite;
-    private int             countBlack;
-    private long            maxConsiderationTimeWhite;
-    private long            maxConsiderationTimeBlack;
+    public static final int     POINTS_DRAW = 1;
+    public static final int     POINTS_WIN  = 2;
+    private GameModel           model       = new GameModel();
+    private ReversiStrategy     white;
+    private ReversiStrategy     black;
+    private Player              winner;
+    private int                 countWhite;
+    private int                 countBlack;
+    private long                maxConsiderationTimeWhite;
+    private long                maxConsiderationTimeBlack;
+    private List<MatchObserver> observers   = new ArrayList<MatchObserver>();
 
     public Match(ReversiStrategy white, ReversiStrategy black)
     {
@@ -36,6 +40,7 @@ public class Match
         countWhite = model.countPieces(Player.WHITE);
         countBlack = model.countPieces(Player.BLACK);
         model = null;
+        notifyFinished();
     }
 
     public Player getWinner()
@@ -55,6 +60,7 @@ public class Match
 
     public int getPointsWhite()
     {
+        if (!isFinished()) return 0;
         if (winner == Player.WHITE) return POINTS_WIN;
         if (winner == null) return POINTS_DRAW;
         return 0;
@@ -62,6 +68,7 @@ public class Match
 
     public int getPointsBlack()
     {
+        if (!isFinished()) return 0;
         if (winner == Player.BLACK) return POINTS_WIN;
         if (winner == null) return POINTS_DRAW;
         return 0;
@@ -95,5 +102,21 @@ public class Match
         if (Player.WHITE == player) return maxConsiderationTimeWhite;
         if (Player.BLACK == player) return maxConsiderationTimeBlack;
         return -1;
+    }
+
+    public boolean isFinished()
+    {
+        return model == null;
+    }
+
+    public void addObserver(MatchObserver observer)
+    {
+        observers.add(observer);
+    }
+
+    private void notifyFinished()
+    {
+        for (MatchObserver observer : observers)
+            observer.matchFinished();
     }
 }
