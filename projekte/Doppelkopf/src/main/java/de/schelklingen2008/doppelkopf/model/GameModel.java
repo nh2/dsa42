@@ -1,6 +1,7 @@
 package de.schelklingen2008.doppelkopf.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,9 +22,20 @@ public class GameModel implements Serializable
     private Spieler             kommtRaus;
     private boolean             rundeBeendet;
     private boolean             pause        = false;
+    private List<String>        nachrichten  = new ArrayList<String>();
 
     public GameModel()
     {
+    }
+
+    public List<String> getNachrichten()
+    {
+        return nachrichten;
+    }
+
+    public void addNachricht(String nachricht)
+    {
+        nachrichten.add(nachricht);
     }
 
     public GameModel(String[] spielerNamen)
@@ -36,6 +48,8 @@ public class GameModel implements Serializable
 
         logger.log(Level.INFO, spielerliste.toString());
 
+        addNachricht("Neues Spiel.");
+
         // Spiel starten
         neuesSpiel();
     }
@@ -43,7 +57,7 @@ public class GameModel implements Serializable
     private void neuesSpiel()
     {
         logger.log(Level.INFO, "Starte neues Spiel.");
-        kommtRaus = spielerliste.next(); // TODO testen
+        kommtRaus = spielerliste.next();
         tisch = new Tisch(spielerliste);
         tisch.gibKarten();
 
@@ -64,7 +78,7 @@ public class GameModel implements Serializable
 
     public SpielerListe getSpieler()
     {
-        return spielerliste;
+        return spielerliste; // TODO readonly
     }
 
     public Tisch getTisch()
@@ -118,15 +132,13 @@ public class GameModel implements Serializable
         {
 
             // Zug ausführen
+            addNachricht(spieler.toString() + " legte Karte " + karte.toString() + ".");
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
             tisch.getMittenspieler().add(spieler);
 
             getSpieler().next();
-
-            // if (mitte.size() == 4)
-            // stichFertigAktion();
 
             return;
         }
@@ -142,8 +154,20 @@ public class GameModel implements Serializable
         Spieler stichsieger = tisch.getMittenspieler().get(position);
         stichsieger.getGewinnstapel().addAll(mitte);
 
+        // Doppelkopf
+        int punkte = 0;
+        for (Karte k : mitte)
+            punkte += k.bild.getWertigkeit();
+        if (punkte >= 40) // Doppelkopf erreicht
+        {
+            if (tisch.getTeamRe().contains(stichsieger))
+                tisch.zusatzpunkte++;
+            else
+                tisch.zusatzpunkte--;
+            addNachricht(stichsieger.toString() + " erzielte einen Doppelkopf!");
+        }
+
         tisch.stichGespielt();
-        pause = true;
         spielerliste.setAnDerReihe(stichsieger);
 
         if (tisch.getStichAnzahl() == 12) // letzter Stich gespielt
@@ -158,6 +182,7 @@ public class GameModel implements Serializable
                     tisch.zusatzpunkte++;
                 else
                     tisch.zusatzpunkte--;
+                addNachricht(stichsieger.toString() + " hat sich das Karlchen geschnappt!");
             }
 
             if (tisch.getTeamRe().size() == 1) // Solo

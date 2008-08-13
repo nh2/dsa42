@@ -74,8 +74,6 @@ public class Manager extends GameManager
                     catch (InterruptedException e)
                     {
                     }
-                    // Spiel fortsetzen
-                    // gameModel.pause = false;
                     gameModel.stichFertigAktion();
                     updateSharedState();
                 }

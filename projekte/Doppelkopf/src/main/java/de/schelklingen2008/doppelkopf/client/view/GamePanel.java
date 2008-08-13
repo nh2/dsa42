@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements PlaceView
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
         centerPanel.add(new BoardView(controller));
 
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new ButtonPanel(controller);
         centerPanel.add(buttonPanel);
 
         add(centerPanel, BorderLayout.CENTER);
