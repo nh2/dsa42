@@ -24,7 +24,12 @@ public class HorstStrategy implements ReversiStrategy
     {
         searchDepth = depth;
         anzahlBesteVerfolgen = width;
+    }
 
+    public HorstStrategy(int depth, int width, EvaluationFunction evalfunc)
+    {
+        this(depth, width);
+        this.evalfunc = evalfunc;
     }
 
     public int getCount()
