@@ -11,9 +11,16 @@ import java.util.Random;
 public class GameModel implements Serializable
 {
 
-    private Country[] c = new Country[30];
+    private Country[] c            = new Country[30];
     private Player[]  p;
-    private Country[] insel;
+
+    private Country[] insel        = new Country[3];
+    private Country[] skandinavien = new Country[4];
+    private Country[] nordOst      = new Country[7];
+    private Country[] suedOst      = new Country[6];
+    private Country[] west         = new Country[3];
+    private Country[] mittel       = new Country[7];
+
     private Player    turnholder;
     private int       turnholderIndex;
     private int       index;
@@ -24,12 +31,59 @@ public class GameModel implements Serializable
         initPlayers(names);
         initCountrys();
         initNeigbours();
+        initAreas();
         distributeCountrys();
 
         history = new String[2];
         turnholderIndex = 0;
         turnholder = p[0];
         p[0].setUnitsToSet(5);
+    }
+
+    private void initAreas()
+    {
+        // init Inseln
+        insel[0] = c[2];// Großbritanien
+        insel[1] = c[1]; // Irland
+        insel[2] = c[0]; // Island
+
+        // init Skandinavien
+        skandinavien[0] = c[3];// Norwegen
+        skandinavien[1] = c[4];// Finnland
+        skandinavien[2] = c[5];// Schweden
+        skandinavien[3] = c[6];// Dänemark
+
+        // init Nord-Ost
+        nordOst[0] = c[7];// Russland
+        nordOst[1] = c[8];// Estland
+        nordOst[2] = c[9];// Lettland
+        nordOst[3] = c[10];// Litauen
+        nordOst[4] = c[11];// Weißrussland
+        nordOst[5] = c[12];// Ukraine
+        nordOst[6] = c[13];// Polen
+
+        // init Süd-Ost
+        suedOst[0] = c[14];// Italien
+        suedOst[1] = c[15];// Griechenland
+        suedOst[2] = c[16];// Jugoslawien
+        suedOst[3] = c[17];// Albanien
+        suedOst[4] = c[18];// Bulgarien
+        suedOst[5] = c[19];// Rumänien
+
+        // init West
+        west[0] = c[20]; // Portugal
+        west[1] = c[21]; // Frankreich
+        west[2] = c[22]; // Spanien
+
+        // init Mittel
+        mittel[0] = c[23];// BeNeLux
+        mittel[1] = c[24];// Deutschland
+        mittel[2] = c[25];// Tschechien
+        mittel[3] = c[26];// Schweiz
+        mittel[4] = c[27];// Slowakei
+        mittel[5] = c[29];// Ungarn
+        mittel[6] = c[28];// Österreich
+
     }
 
     public String[] getnewHistory()
@@ -631,5 +685,35 @@ public class GameModel implements Serializable
         history[0] = attacker.getName() + "  -  " + defender.getName();
         history[1] = "Verluste  " + attlostunits + "  -  " + deflostunits;
 
+    }
+
+    public Country[] getAreaInsel()
+    {
+        return insel;
+    }
+
+    public Country[] getAreaSkandinavien()
+    {
+        return skandinavien;
+    }
+
+    public Country[] getAreaNordOst()
+    {
+        return nordOst;
+    }
+
+    public Country[] getAreaSuedOst()
+    {
+        return suedOst;
+    }
+
+    public Country[] getAreaWest()
+    {
+        return west;
+    }
+
+    public Country[] getAreaMittel()
+    {
+        return mittel;
     }
 }
