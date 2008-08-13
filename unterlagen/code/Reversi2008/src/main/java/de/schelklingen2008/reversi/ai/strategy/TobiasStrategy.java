@@ -93,6 +93,23 @@ public class TobiasStrategy implements ReversiStrategy
         return best;
     }
 
+    int NegaMax(GameModel model, int depth, int alpha, int beta)
+    {
+        if (depth == 0) return evaluationFunction.evaluatePosition(model, model.getTurnHolder());
+        Set<Piece> legalMoves = model.getLegalMovesSet(model.getTurnHolder());
+
+        for (Piece piece : legalMoves)
+        {
+            int value;
+            GameModel clone = new GameModel(model);
+            clone.placePiece(piece);
+            value = -NegaMax(clone, depth - 1, -beta, -alpha);
+            if (value >= beta) return beta;
+            if (value > alpha) alpha = value;
+        }
+        return alpha;
+    }
+
     public int getCount()
     {
         return depth;
