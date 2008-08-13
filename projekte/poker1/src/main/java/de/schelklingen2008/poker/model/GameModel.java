@@ -306,7 +306,7 @@ public class GameModel implements Serializable
 
     public void computeWinner()
     {
-        // TODO Gewinner berechnen, Pot verteilen, Werte resetten, DealerIndex um 1 erhöhen
+
     }
 
     public void nextRound()

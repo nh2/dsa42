@@ -119,6 +119,30 @@ public class PatternChecker
 
     }
 
+    // funktioniert noch nicht
+    // public boolean isTwoPair()
+    // {
+    // boolean pairFound1 = false;
+    // boolean pairFound2 = false;
+    // for (int i = 0; i < 13; i++)
+    // {
+    // if (getCount(i) == 2)
+    // {
+    // if (pairFound)
+    // return false;
+    // else
+    // pairFound = true;
+    // }
+    // }
+    // return pairFound;
+    //
+    // }
+
+    public boolean isTwoPair()
+    {
+        return false;
+    }
+
     public boolean isThreeOfAKind() // es muss zusätzlich getestet werden, ob isFullHouse auch true ist
     {
         boolean toakFound = false; // toak: three of a kind
@@ -225,10 +249,18 @@ public class PatternChecker
 
     public int getHighestPatternValue()
     {
-        if (isFourOfAKind()) return FOUR_OF_A_KIND;
+        int i = 0;
+        if (isPair()) i = 1;
+        if (isTwoPair()) i = 2;
+        if (isThreeOfAKind()) i = 3;
+        if (isStraight()) i = 4;
+        if (isFlush()) i = 5;
+        if (isFullHouse()) i = 6;
+        if (isFourOfAKind()) i = 7;
+        if (isStraightFlush()) i = 8;
+        if (isRoyalFlush()) i = 9;
 
-        return 0;
+        return i;
 
     }
-
 }
