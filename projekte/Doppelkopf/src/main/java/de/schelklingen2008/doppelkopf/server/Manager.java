@@ -60,6 +60,30 @@ public class Manager extends GameManager
         // String name2 = player.name();
         // String name = getPlayer(client).name().toString();
         gameModel.karteAusspielen(spieler, spieler.getBlatt().getKarte(farbe, bild));
+        if (gameModel.getTisch().getMitte().size() == 4)
+        {
+            Runnable runnable = new Runnable()
+            {
+
+                public void run()
+                {
+                    try
+                    {
+                        Thread.sleep(5000);
+                    }
+                    catch (InterruptedException e)
+                    {
+                    }
+                    // Spiel fortsetzen
+                    // gameModel.pause = false;
+                    gameModel.stichFertigAktion();
+                    updateSharedState();
+                }
+
+            };
+            new Thread(runnable).start();
+        }
+
         updateSharedState();
     }
 

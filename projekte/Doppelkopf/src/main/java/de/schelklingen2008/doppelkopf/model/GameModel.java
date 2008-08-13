@@ -20,6 +20,7 @@ public class GameModel implements Serializable
     private SpielerListe        spielerliste = new SpielerListe();
     private Spieler             kommtRaus;
     private boolean             rundeBeendet;
+    private boolean             pause        = false;
 
     public GameModel()
     {
@@ -115,6 +116,7 @@ public class GameModel implements Serializable
 
         if (zugGueltig)
         {
+
             // Zug ausführen
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
@@ -123,51 +125,54 @@ public class GameModel implements Serializable
 
             getSpieler().next();
 
-            if (mitte.size() == 4)
-            {
-                Karte hoechsteKarte = Karte.gibtHoechsteAusStapel(mitte);
-                int position = mitte.indexOf(hoechsteKarte);
-                Spieler stichsieger = tisch.getMittenspieler().get(position);
-                stichsieger.getGewinnstapel().addAll(mitte);
-
-                tisch.stichGespielt();
-                spielerliste.setAnDerReihe(stichsieger);
-
-                if (tisch.getStichAnzahl() == 11) // letzter Stich
-                {
-                    if (hoechsteKarte.istKarte(Farbe.Kreuz, Bild.Bube))
-                    {
-                        if (tisch.getTeamRe().contains(stichsieger))
-                            tisch.zusatzpunkte++;
-                        else
-                            tisch.zusatzpunkte--;
-                    }
-
-                }
-            }
-
-            if (tisch.getStichAnzahl() == 12)
-            {
-                int rundenpunkte = berechneRundenpunkte(tisch.getRePunkte(), tisch.getContraPunkte());
-                rundenpunkte += tisch.zusatzpunkte;
-
-                if (tisch.getTeamRe().size() == 1) // Solo
-                    for (Spieler p : tisch.getTeamRe())
-                        p.rundenpunkte.add(rundenpunkte * 3);
-                else
-                    // kein Solo
-                    for (Spieler p : tisch.getTeamRe())
-                        p.rundenpunkte.add(rundenpunkte);
-
-                for (Spieler p : tisch.getTeamContra())
-                    p.rundenpunkte.add(-rundenpunkte);
-
-                neuesSpiel();
-            }
+            // if (mitte.size() == 4)
+            // stichFertigAktion();
 
             return;
         }
         logger.log(Level.INFO, "Ungültiger Zug. ");
+    }
+
+    public void stichFertigAktion()
+    {
+        List<Karte> mitte = tisch.getMitte();
+
+        Karte hoechsteKarte = Karte.gibtHoechsteAusStapel(mitte);
+        int position = mitte.indexOf(hoechsteKarte);
+        Spieler stichsieger = tisch.getMittenspieler().get(position);
+        stichsieger.getGewinnstapel().addAll(mitte);
+
+        tisch.stichGespielt();
+        pause = true;
+        spielerliste.setAnDerReihe(stichsieger);
+
+        if (tisch.getStichAnzahl() == 12) // letzter Stich gespielt
+        {
+            int rundenpunkte = berechneRundenpunkte(tisch.getRePunkte(), tisch.getContraPunkte());
+            rundenpunkte += tisch.zusatzpunkte;
+
+            // Karlchen
+            if (hoechsteKarte.istKarte(Farbe.Kreuz, Bild.Bube))
+            {
+                if (tisch.getTeamRe().contains(stichsieger))
+                    tisch.zusatzpunkte++;
+                else
+                    tisch.zusatzpunkte--;
+            }
+
+            if (tisch.getTeamRe().size() == 1) // Solo
+                for (Spieler p : tisch.getTeamRe())
+                    p.rundenpunkte.add(rundenpunkte * 3);
+            else
+                // kein Solo
+                for (Spieler p : tisch.getTeamRe())
+                    p.rundenpunkte.add(rundenpunkte);
+
+            for (Spieler p : tisch.getTeamContra())
+                p.rundenpunkte.add(-rundenpunkte);
+
+            neuesSpiel();
+        }
     }
 
     public int berechneRundenpunkte(int repunkte, int contrapunkte)
@@ -187,5 +192,10 @@ public class GameModel implements Serializable
 
         // TODO Modifiers implementieren
         return rundenpunkte;
+    }
+
+    public boolean isPause()
+    {
+        return pause;
     }
 }
