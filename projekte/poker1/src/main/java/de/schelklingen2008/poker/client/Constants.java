@@ -1,5 +1,7 @@
 package de.schelklingen2008.poker.client;
 
+import java.awt.Color;
+
 /**
  * Keeps all constant values that are of global interest for the client.
  */
@@ -17,4 +19,6 @@ public final class Constants
 
     public static final long   START_BALANCE     = 10000;
     public static final long   SMALL_BLIND       = 200;
+
+    public static final Color  BACK_GREEN        = new Color(0x115511);
 }

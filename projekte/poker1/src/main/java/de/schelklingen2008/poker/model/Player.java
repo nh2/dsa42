@@ -21,9 +21,9 @@ public class Player implements Serializable
 
     // verloren hat
 
-    public Player(String Name)
+    public Player(String name)
     {
-        name = Name;
+        this.name = name;
         balance = Constants.START_BALANCE;
         // potNumber = 0;
         card1 = null;

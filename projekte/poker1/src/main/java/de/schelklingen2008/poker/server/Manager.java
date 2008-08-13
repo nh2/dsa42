@@ -1,6 +1,7 @@
 package de.schelklingen2008.poker.server;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.threerings.crowd.data.BodyObject;
@@ -40,7 +41,10 @@ public class Manager extends GameManager
         int playerCount = getPlayerCount();
         String[] names = new String[playerCount];
         for (int i = 0; i < names.length; i++)
+        {
             names[i] = getPlayer(i).username.toString();
+            sLogger.finer("gameWillStart name: " + names[i]);
+        }
 
         gameModel = new GameModel(names);
         updateSharedState();
@@ -48,35 +52,35 @@ public class Manager extends GameManager
 
     public void call(BodyObject client)
     {
-        sLogger.fine("call by " + client);
+        sLogger.fine("call by " + client.username);
         gameModel.call(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void check(BodyObject client)
     {
-        sLogger.fine("check by " + client);
+        sLogger.fine("check by " + client.username);
         gameModel.check(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void fold(BodyObject client)
     {
-        sLogger.fine("fold by " + client);
+        sLogger.fine("fold by " + client.username);
         gameModel.fold(getPlayerIndex(client));
         updateSharedState();
     }
 
     public void raise(BodyObject client, long bet)
     {
-        sLogger.fine("raise by " + client);
+        sLogger.fine("raise by " + client.username);
         gameModel.raise(getPlayerIndex(client), bet);
         updateSharedState();
     }
 
     public void reRaise(BodyObject client, long bet)
     {
-        sLogger.fine("reRaise by " + client);
+        sLogger.fine("reRaise by " + client.username);
         gameModel.reRaise(getPlayerIndex(client), bet);
         updateSharedState();
     }
@@ -91,20 +95,23 @@ public class Manager extends GameManager
 
     private Player getPlayer(BodyObject client)
     {
+        String clientName = client.username.toString();
         for (Iterator iterator = gameModel.getPlayerList().iterator(); iterator.hasNext();)
         {
             Player player = (Player) iterator.next();
-            if (player.getName().equals(client.username)) return player;
+            if (player.getName().equals(clientName)) return player;
         }
-        return null;
+        throw new IllegalStateException("did not find player: " + clientName);
     }
 
     private int getPlayerIndex(BodyObject client)
     {
-        for (int i = 0; i < gameModel.getPlayerList().size(); i++)
+        List<Player> players = gameModel.getPlayerList();
+        String clientName = client.username.toString();
+        for (int i = 0; i < players.size(); i++)
         {
-            if (gameModel.getPlayerList().get(i).getName().equals(client.username)) return i;
+            if (players.get(i).getName().equals(clientName)) return i;
         }
-        return -1;
+        throw new IllegalStateException("did not find player: " + clientName);
     }
 }

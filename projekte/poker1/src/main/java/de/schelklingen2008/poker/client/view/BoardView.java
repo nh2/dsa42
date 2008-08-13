@@ -1,10 +1,9 @@
 package de.schelklingen2008.poker.client.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import de.schelklingen2008.poker.client.Constants;
 import de.schelklingen2008.poker.client.controller.Controller;
 import de.schelklingen2008.poker.client.controller.GameChangeListener;
 import de.schelklingen2008.poker.client.model.GameContext;
@@ -29,6 +29,7 @@ public class BoardView extends JPanel implements GameChangeListener
     private Controller    controller;
 
     private ImageIcon[][] iconBuffer = new ImageIcon[4][13];
+    private ImageIcon     iconBack   = null;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -39,13 +40,6 @@ public class BoardView extends JPanel implements GameChangeListener
         controller.addChangeListener(this);
         fillImageArray();
         paintBoard();
-    }
-
-    @Override
-    public Dimension getPreferredSize()
-    {
-        // TODO calculate correct dimensions for the board view
-        return new Dimension(1000, 700);
     }
 
     public static String getFileName(Card card)
@@ -62,11 +56,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 iconBuffer[i][j] = new ImageIcon("src/main/resources/cards/" + getFileName(new Card(i, j)));
             }
         }
-    }
-
-    private void bg(JPanel panel) // Hintergrund einstellen
-    {
-        panel.setBackground(new Color(0x44FF44));
+        iconBack = new ImageIcon("src/main/resources/cards/back-blue-150-1.png");
     }
 
     private void paintBoard()
@@ -86,7 +76,6 @@ public class BoardView extends JPanel implements GameChangeListener
         JPanel twoCardsPanel = new JPanel();
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.LINE_AXIS));
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.LINE_AXIS));
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.LINE_AXIS));
@@ -98,59 +87,79 @@ public class BoardView extends JPanel implements GameChangeListener
         twoCardsPanel.setLayout(new BoxLayout(twoCardsPanel, BoxLayout.LINE_AXIS));
         myButtonPanel.setLayout(new BoxLayout(myButtonPanel, BoxLayout.LINE_AXIS));
 
-        add(Box.createHorizontalStrut(5));
+        setOpaque(false);
+        playerPanel.setOpaque(false);
+        middlePanel.setOpaque(false);
+        cardPanel.setOpaque(false);
+        potPanel.setOpaque(false);
+        myPanel.setOpaque(false);
+        myCardPanel.setOpaque(false);
+        myInfoPanel.setOpaque(false);
+        middlePanel.setOpaque(false);
+        twoCardsPanel.setOpaque(false);
+        myButtonPanel.setOpaque(false);
+
+        add(Box.createVerticalStrut(10));
         add(playerPanel);
-        add(Box.createHorizontalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(middlePanel);
-        add(Box.createHorizontalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(myPanel);
-        add(Box.createHorizontalStrut(5));
+        add(Box.createVerticalStrut(10));
 
         GameModel model = getGameModel();
 
-        playerPanel.add(Box.createVerticalStrut(5));
+        playerPanel.add(Box.createHorizontalStrut(5));
         for (int i = 0; i < getGameModel().getPlayerList().size(); i++)
         {
             JPanel actPlayerPanel = new JPanel();
             actPlayerPanel.setLayout(new BoxLayout(actPlayerPanel, BoxLayout.PAGE_AXIS));
-            actPlayerPanel.add(new JLabel(i + 1 + ": " + model.getPlayerList().get(i).getName()));
-            actPlayerPanel.add(new JLabel("Kontostand: " + model.getPlayerList().get(i).getBalance()));
+            actPlayerPanel.setOpaque(false);
+            actPlayerPanel.add(createLabel(i + 1 + ": " + model.getPlayerList().get(i).getName()));
+            actPlayerPanel.add(createLabel("Kontostand: " + model.getPlayerList().get(i).getBalance()));
             if (getGameModel().getPlayerList().get(i).isStillIn() == false)
             {
-                actPlayerPanel.add(new JLabel("Folded"));
+                actPlayerPanel.add(createLabel("Folded"));
             }
             if (getGameModel().getPlayerList().get(i).isStillIn() == true
                 && model.getPlayerList().get(i).getBalance() == 0)
             {
-                actPlayerPanel.add(new JLabel("All-in"));
+                actPlayerPanel.add(createLabel("All-in"));
             }
             if (model.getPlayerList().get(i).hasLost() == true)
             {
-                actPlayerPanel.add(new JLabel("VERLOREN!"));
+                actPlayerPanel.add(createLabel("VERLOREN!"));
             }
 
             playerPanel.add(actPlayerPanel);
-            playerPanel.add(Box.createVerticalStrut(5));
+            playerPanel.add(Box.createHorizontalStrut(5));
         }
 
-        middlePanel.add(Box.createVerticalStrut(5));
+        middlePanel.add(Box.createHorizontalStrut(5));
         middlePanel.add(cardPanel);
-        middlePanel.add(Box.createVerticalStrut(5));
+        middlePanel.add(Box.createHorizontalStrut(5));
         middlePanel.add(potPanel);
-        middlePanel.add(Box.createVerticalStrut(5));
+        middlePanel.add(Box.createHorizontalStrut(5));
 
-        cardPanel.add(Box.createVerticalStrut(5));
-        for (Iterator iterator = model.getCardList().iterator(); iterator.hasNext();)
+        cardPanel.add(Box.createHorizontalStrut(5));
+        List<Card> cardList = model.getCardList();
+        for (Card card : cardList)
         {
-            Card card = (Card) iterator.next();
-            JLabel cardLabel = new JLabel("");
+            JLabel cardLabel = createLabel("");
             cardLabel.setIcon(iconBuffer[card.getSuitInt()][card.getValueInt()]);
             cardPanel.add(cardLabel);
-            cardPanel.add(Box.createVerticalStrut(5));
+            cardPanel.add(Box.createHorizontalStrut(5));
+        }
+        for (int i = cardList.size(); i < 5; i++)
+        {
+            JLabel cardLabel = createLabel("");
+            cardLabel.setIcon(iconBack);
+            cardPanel.add(cardLabel);
+            cardPanel.add(Box.createHorizontalStrut(5));
         }
 
         potPanel.add(Box.createVerticalStrut(30));
-        potPanel.add(new JLabel("Es sind " + model.getPot() + " Euro im Pot"));
+        potPanel.add(createLabel("Es sind " + model.getPot() + " Euro im Pot"));
         potPanel.add(Box.createVerticalStrut(30));
 
         myPanel.add(Box.createVerticalStrut(5));
@@ -160,29 +169,29 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(new JLabel(getMyPlayer().getName() + ": Ihre Karten:"));
+        myCardPanel.add(createLabel(getMyPlayer().getName() + ": Ihre Karten:"));
         myCardPanel.add(Box.createVerticalStrut(5));
         myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
 
-        JLabel myCard1 = new JLabel("");
+        JLabel myCard1 = createLabel("");
         myCard1.setIcon(iconBuffer[getMyPlayer().getCard1().getSuitInt()][getMyPlayer().getCard1().getValueInt()]);
-        JLabel myCard2 = new JLabel("");
+        JLabel myCard2 = createLabel("");
         myCard2.setIcon(iconBuffer[getMyPlayer().getCard2().getSuitInt()][getMyPlayer().getCard2().getValueInt()]);
 
-        twoCardsPanel.add(Box.createVerticalStrut(5));
+        twoCardsPanel.add(Box.createHorizontalStrut(5));
         twoCardsPanel.add(myCard1);
-        twoCardsPanel.add(Box.createVerticalStrut(5));
+        twoCardsPanel.add(Box.createHorizontalStrut(5));
         twoCardsPanel.add(myCard2);
-        twoCardsPanel.add(Box.createVerticalStrut(5));
+        twoCardsPanel.add(Box.createHorizontalStrut(5));
 
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        myInfoPanel.add(new JLabel("Ihr Kontostand:"));
+        myInfoPanel.add(createLabel("Ihr Kontostand:"));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         long myBal = getMyPlayer().getBalance();
-        myInfoPanel.add(new JLabel("" + myBal));
+        myInfoPanel.add(createLabel("" + myBal));
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        myInfoPanel.add(new JLabel("Sie müssen " + model.getHighestBet() + " Euro setzen"));
+        myInfoPanel.add(createLabel("Sie müssen " + model.getHighestBet() + " Euro setzen"));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(myButtonPanel);
         myInfoPanel.add(Box.createHorizontalStrut(5));
@@ -217,8 +226,6 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + " Euro)");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
-                System.out.print(getActPlayer().getName());
-                System.out.println(" hat geraist.");
                 controller.raiseButtonClicked(longBetrag);
             }
         };
@@ -228,8 +235,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                System.out.print(getActPlayer().getName());
-                System.out.println(" hat gefoldet.");
                 controller.foldButtonClicked();
 
             }
@@ -239,8 +244,6 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                System.out.print(getActPlayer().getName());
-                System.out.println("hat gecheckt.");
                 controller.checkButtonClicked();
 
             }
@@ -263,8 +266,6 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + " Euro)");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
-                System.out.print(getActPlayer().getName());
-                System.out.println("hat geReRaised.");
                 controller.reRaiseButtonClicked(longBetrag);
 
             }
@@ -296,20 +297,26 @@ public class BoardView extends JPanel implements GameChangeListener
             foldButton.setEnabled(true);
         }
 
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
         myButtonPanel.add(checkButton);
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
         myButtonPanel.add(callButton);
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
         myButtonPanel.add(raiseButton);
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
         myButtonPanel.add(reRaiseButton);
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
         myButtonPanel.add(foldButton);
-        myButtonPanel.add(Box.createVerticalStrut(5));
+        myButtonPanel.add(Box.createHorizontalStrut(5));
+    }
 
-        setBackground(new Color(0x44FF44));
-
+    private JLabel createLabel(String text)
+    {
+        JLabel label = new JLabel(text);
+        label.setOpaque(false);
+        label.setForeground(Color.WHITE);
+        label.setBackground(Constants.BACK_GREEN);
+        return label;
     }
 
     private int getMyIndex()

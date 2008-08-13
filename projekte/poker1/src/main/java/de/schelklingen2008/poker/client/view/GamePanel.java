@@ -1,7 +1,6 @@
 package de.schelklingen2008.poker.client.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -49,7 +48,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
-        setBackground(new Color(0x6699CC));
+        setBackground(Constants.BACK_GREEN);
 
         JPanel box = GroupLayout.makeHBox();
         box.setOpaque(false);

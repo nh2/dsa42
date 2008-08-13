@@ -324,12 +324,19 @@ public class GameModelTest extends TestCase
         assertEquals(2200, gameModel.getPot());
         gameModel.call(1);
         assertEquals(2400, gameModel.getPot());
+
+        assertEquals(400, gameModel.getHighestBet());
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+
         gameModel.check(2);
 
         assertEquals(2400, gameModel.getPot());
         assertEquals(1, gameModel.getHighestBetIndex());
         assertEquals(0, gameModel.getHighestBet());
+        assertEquals(1, gameModel.getPhase());
         assertEquals(1, gameModel.getActPlayerIndex());
+        assertEquals(3, gameModel.getCardList().size());
 
         for (int i = 0; i < 6; i++)
         {
@@ -409,12 +416,81 @@ public class GameModelTest extends TestCase
         {
             // erwartet
         }
-
-        assertEquals(true, gameModel.mustCallOrReRaise(5));
-        assertEquals(false, gameModel.mustCheckOrRaise(5));
-        gameModel.raise(5, 500);
-        assertEquals(2300, gameModel.getPot());
-        assertEquals(2, gameModel.getHighestBetIndex());
-        assertEquals(400, gameModel.getHighestBet());
     }
+
+    public void testCompleteCheckerGame() throws Exception
+    {
+        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+
+        gameModel.call(0);
+        gameModel.call(1);
+        gameModel.check(2);
+
+        assertEquals(1, gameModel.getPhase());
+        assertEquals(3, gameModel.getCardList().size());
+
+        gameModel.check(1);
+        gameModel.check(2);
+        gameModel.check(0);
+
+        assertEquals(2, gameModel.getPhase());
+        assertEquals(4, gameModel.getCardList().size());
+
+        gameModel.check(1);
+        gameModel.check(2);
+        gameModel.check(0);
+
+        assertEquals(3, gameModel.getPhase());
+        assertEquals(5, gameModel.getCardList().size());
+
+        gameModel.check(1);
+        gameModel.check(2);
+        gameModel.check(0);
+
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+    }
+
+    public void testCompleteGame() throws Exception
+    {
+        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+
+        gameModel.call(0);
+        gameModel.call(1);
+        gameModel.check(2);
+
+        assertEquals(1, gameModel.getPhase());
+        assertEquals(3, gameModel.getCardList().size());
+
+        gameModel.raise(1, 500);
+        gameModel.call(2);
+        gameModel.reRaise(0, 200);
+        gameModel.call(1);
+        gameModel.fold(2);
+
+        assertEquals(2, gameModel.getPhase());
+        assertEquals(4, gameModel.getCardList().size());
+
+        gameModel.check(1);
+        gameModel.raise(0, 700);
+        gameModel.call(1);
+
+        assertEquals(3, gameModel.getPhase());
+        assertEquals(5, gameModel.getCardList().size());
+
+        gameModel.check(1);
+        gameModel.check(0);
+
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+    }
+
 }
