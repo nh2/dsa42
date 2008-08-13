@@ -111,9 +111,10 @@ public class GameModel implements Serializable
                     foul = true;
                 }
             }
-            else if (!breakHasHappened() && !ballMappingFixed())
+            else if (breakHasHappened() && !ballMappingFixed())
             {
-
+                setBallMapping(e.getPlayer(), e.getBall().getType());
+                doNotChangeTurnholder = true;
             }
             else
             {
@@ -383,6 +384,8 @@ public class GameModel implements Serializable
         ballsOnTable.clear();
         ballsOnTable.addAll(balls);
 
+        playersBallTypes = null;
+
         resetBalls();
 
         for (GameEventListener listener : gameEventListeners)
@@ -431,6 +434,25 @@ public class GameModel implements Serializable
             ball.setPosition(Ball.INITIAL_BALL_POSITIONS[i++]);
         }
 
+    }
+
+    void setBallMapping(Player player, Ball.BallType ballType)
+    {
+        playersBallTypes = new HashMap<Player, BallType>();
+        playersBallTypes.put(player, ballType);
+        if (ballType == Ball.BallType.SOLID)
+        {
+            playersBallTypes.put(getOtherPlayer(player), Ball.BallType.STRIPED);
+        }
+        else
+        {
+            playersBallTypes.put(getOtherPlayer(player), Ball.BallType.SOLID);
+        }
+
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.ballMappingSet(new BallMappingSetEvent(player, ballType));
+        }
     }
 
     public boolean breakHasHappened()
