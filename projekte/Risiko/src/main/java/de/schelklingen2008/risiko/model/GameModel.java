@@ -493,7 +493,7 @@ public class GameModel implements Serializable
         if (turnholderIndex == getPlayerCount()) turnholderIndex = 0;
         turnholder = p[turnholderIndex];
 
-        turnholder.setUnitsToSet(5);
+        turnholder.setUnitsToSet(getUnitsforPlayer(turnholder));
     }
 
     public Player valueOf(int playerIndex)
@@ -731,10 +731,30 @@ public class GameModel implements Serializable
         return mittel;
     }
 
+    public boolean AreaisOwned(Country[] c, Player p)
+    {
+        for (int i = 0; i < c.length; i++)
+        {
+            if (!p.equals(c[i].getOccupier()))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getUnitsforPlayer(Player p)
     {
         int units = p.getCountrys(c) / 3;
-        return 1;
-        // return
+        if (units < 3) units = 3;
+        if (AreaisOwned(getAreaInsel(), p)) units += 2;
+        if (AreaisOwned(getAreaSkandinavien(), p)) units += 3;
+        if (AreaisOwned(getAreaMittel(), p)) units += 5;
+        if (AreaisOwned(getAreaWest(), p)) units += 2;
+        if (AreaisOwned(getAreaSuedOst(), p)) units += 5;
+        if (AreaisOwned(getAreaNordOst(), p)) units += 5;
+
+        return units;
+
     }
 }

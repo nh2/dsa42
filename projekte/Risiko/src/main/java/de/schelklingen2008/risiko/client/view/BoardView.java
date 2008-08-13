@@ -96,7 +96,6 @@ public class BoardView extends JPanel implements GameChangeListener
                 getGameModel().getCountryByColor(c).setSelected(true);
             }
 
-            // else if(getGameModel().isLegalMoveAttack(getGameContext().getMyPlayer(), , null))
         }
 
         repaint();
