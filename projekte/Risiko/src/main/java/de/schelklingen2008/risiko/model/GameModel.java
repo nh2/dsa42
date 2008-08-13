@@ -299,6 +299,7 @@ public class GameModel implements Serializable
         ukraine.add(3, c[19]);// Rumänien
         ukraine.add(4, c[29]);// Ungarn
         ukraine.add(5, c[27]);// Slowakei
+        ukraine.add(6, c[18]);// Bulgarien
         c[12].setNeighbours(ukraine);
 
         // init neighbours Polen
@@ -325,6 +326,7 @@ public class GameModel implements Serializable
         griechenland.add(0, c[17]);// Albanien
         griechenland.add(1, c[16]);// Jugoslawien
         griechenland.add(2, c[18]);// Bulgarien
+        griechenland.add(3, c[19]);// Rumänien
         c[15].setNeighbours(griechenland);
 
         // init neighbours Jugoslawien
@@ -350,6 +352,8 @@ public class GameModel implements Serializable
         bulgarien.add(0, c[16]);// Jugoslawien
         bulgarien.add(1, c[19]);// Rumänien
         bulgarien.add(2, c[15]);// Griechenland
+        bulgarien.add(3, c[12]);// Ukraine
+        bulgarien.add(4, c[29]);// Ungarn
         c[18].setNeighbours(bulgarien);
 
         // init neighbours Rumänien
@@ -358,6 +362,7 @@ public class GameModel implements Serializable
         rumaenien.add(1, c[12]);// Ukraine
         rumaenien.add(2, c[18]);// Bulgarien
         rumaenien.add(3, c[16]);// Jugoslawien
+        rumaenien.add(4, c[15]);// Griechenland
         c[19].setNeighbours(rumaenien);
 
         // init neighbours Portugal
@@ -373,7 +378,7 @@ public class GameModel implements Serializable
         frankreich.add(3, c[26]); // Schweiz
         frankreich.add(4, c[14]); // Italien
         frankreich.add(5, c[22]); // Spanien
-
+        c[21].setNeighbours(frankreich);
         // init neighbours Spanien
         ArrayList<Country> spanien = new ArrayList<Country>();
         spanien.add(0, c[20]); // Portugal
@@ -441,6 +446,7 @@ public class GameModel implements Serializable
         ungarn.add(2, c[19]);// Rumänien
         ungarn.add(3, c[16]);// Jugoslawien
         ungarn.add(4, c[28]);// Österreich
+        ungarn.add(5, c[18]);// Bulgarien
         c[29].setNeighbours(ungarn);
 
     }
@@ -524,11 +530,16 @@ public class GameModel implements Serializable
         {
             if (pPlayer.equals(country1.getOccupier()))
             {
-                if (country1.isNeighbour(country2))
+                if (!pPlayer.equals(country2.getOccupier()))
                 {
-                    if (country1.getUnits() > 1)
+                    if (country1.isNeighbour(country2))
                     {
-                        return true;
+                        if (country1.getUnits() > 1)
+                        {
+                            return true;
+                        }
+                        else
+                            return false;
                     }
                     else
                         return false;
@@ -570,19 +581,22 @@ public class GameModel implements Serializable
         {
             if (pPlayer.equals(country1.getOccupier()) && pPlayer.equals(country2.getOccupier()))
             {
-                if (country1.getUnits() > 1)
+                if (country1.isNeighbour(country2))
                 {
-                    return true;
+                    if (country1.getUnits() > 1)
+                    {
+                        return true;
+                    }
                 }
                 else
                     return false;
-
             }
             else
                 return false;
+
         }
-        else
-            return false;
+        return false;
+
     }
 
     public int dice()
@@ -682,7 +696,7 @@ public class GameModel implements Serializable
             defender.setUnits(attacker.getUnits() / 2);
             attacker.setUnits(attacker.getUnits() - attacker.getUnits() / 2);
         }
-        history[0] = attacker.getName() + "  -  " + defender.getName();
+        history[0] = "   " + attacker.getName() + "  -  " + defender.getName();
         history[1] = "Verluste  " + attlostunits + "  -  " + deflostunits;
 
     }
