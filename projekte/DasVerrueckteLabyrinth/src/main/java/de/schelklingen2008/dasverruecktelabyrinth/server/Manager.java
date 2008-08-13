@@ -35,7 +35,7 @@ public class Manager extends GameManager
     public void placePlayer(BodyObject client, int x, int y)
     {
         gameModel.placePlayer(x, y, getPlayerType(client));
-        updateSharedState();
+        // updateSharedState();
         if (gameModel.isFinished()) endGame();
         updateSharedState();
     }

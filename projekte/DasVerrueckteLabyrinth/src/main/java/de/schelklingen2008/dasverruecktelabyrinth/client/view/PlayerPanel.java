@@ -237,7 +237,8 @@ public class PlayerPanel extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
-        insertLabel.setIcon(new ImageIcon(getInsert()));
+        if (getInsert() != null) insertLabel.setIcon(new ImageIcon(getInsert()));
+
         searchThisCardLabel.setIcon(new ImageIcon(getImageOfTC(hiddenCard())));
         repaint();
 

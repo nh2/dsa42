@@ -519,15 +519,22 @@ public class GameModel implements Serializable
         for (int i = board.length - 1; i >= 1; i--)
         {
             board[x][i] = board[x][i - 1];
+            for (PlayerType pt : PlayerType.values())
+            {
+                Player playerTemp = player.get(pt);
+
+                if (playerTemp == null) continue;
+                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == i)
+                {
+                    playerTemp.setXKoordinate(x);
+                    playerTemp.setYKoordinate(i - 1);
+                }
+                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == 6) placePlayerOutOfBounds(x, 0,
+                                                                                                                 pt);
+            }
         }
         board[x][0] = temp;
 
-        for (PlayerType pt : PlayerType.values())
-        {
-            Player p = player.get(pt);
-            if (p == null) continue;
-            if (p.getXKoordinate() == x && p.getYKoordinate() == 6) placePlayerOutOfBounds(x, 0, pt);
-        }
     }
 
     private void einschiebenSued(int x, int y)
@@ -537,15 +544,22 @@ public class GameModel implements Serializable
         for (int i = 0; i < board.length - 1; i++)
         {
             board[x][i] = board[x][i + 1];
+
+            for (PlayerType pt : PlayerType.values())
+            {
+                Player playerTemp = player.get(pt);
+
+                if (playerTemp == null) continue;
+                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == i)
+                {
+                    playerTemp.setXKoordinate(x);
+                    playerTemp.setYKoordinate(i + 1);
+                }
+                if (playerTemp.getXKoordinate() == x && playerTemp.getYKoordinate() == 0) placePlayerOutOfBounds(x, 6,
+                                                                                                                 pt);
+            }
         }
         board[x][(board.length - 1)] = temp;
-
-        for (PlayerType pt : PlayerType.values())
-        {
-            Player p = player.get(pt);
-            if (p == null) continue;
-            if (p.getXKoordinate() == x && p.getYKoordinate() == 0) placePlayerOutOfBounds(x, 6, pt);
-        }
 
     }
 
@@ -557,15 +571,22 @@ public class GameModel implements Serializable
         for (int i = 0; i < board.length - 1; i++)
         {
             board[i][y] = board[i + 1][y];
+
+            for (PlayerType pt : PlayerType.values())
+            {
+                Player playerTemp = player.get(pt);
+
+                if (playerTemp == null) continue;
+                if (playerTemp.getXKoordinate() == i && playerTemp.getYKoordinate() == y)
+                {
+                    playerTemp.setXKoordinate(i + 1);
+                    playerTemp.setYKoordinate(y);
+                }
+                if (playerTemp.getXKoordinate() == 0 && playerTemp.getYKoordinate() == y) placePlayerOutOfBounds(6, 6,
+                                                                                                                 pt);
+            }
         }
         board[(board.length - 1)][y] = temp;
-
-        for (PlayerType pt : PlayerType.values())
-        {
-            Player p = player.get(pt);
-            if (p == null) continue;
-            if (p.getXKoordinate() == 0 && p.getYKoordinate() == y) placePlayerOutOfBounds(6, y, pt);
-        }
 
     }
 
@@ -576,15 +597,23 @@ public class GameModel implements Serializable
         for (int i = board.length - 1; i >= 1; i--)
         {
             board[i][y] = board[i - 1][y];
+
+            for (PlayerType pt : PlayerType.values())
+            {
+                Player playerTemp = player.get(pt);
+
+                if (playerTemp == null) continue;
+                if (playerTemp.getXKoordinate() == i && playerTemp.getYKoordinate() == y)
+                {
+                    playerTemp.setXKoordinate(i - 1);
+                    playerTemp.setYKoordinate(y);
+                }
+                if (playerTemp.getXKoordinate() == 6 && playerTemp.getYKoordinate() == y) placePlayerOutOfBounds(0, y,
+                                                                                                                 pt);
+            }
         }
         board[0][y] = temp;
 
-        for (PlayerType pt : PlayerType.values())
-        {
-            Player p = player.get(pt);
-            if (p == null) continue;
-            if (p.getXKoordinate() == 6 && p.getYKoordinate() == y) placePlayerOutOfBounds(0, y, pt);
-        }
     }
 
     public boolean hasLegalMoves()
