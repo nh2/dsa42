@@ -93,15 +93,12 @@ public class Controller extends GameController
 
     private void updateGameContext()
     {
-        sLogger.info("Updating game context.");
 
         if (sharedState == null) return;
 
         gameContext.setPlayers(sharedState.getPlayerNames());
 
         if (sharedState.getModel() == null) return;
-
-        sLogger.info("Receiving new game model.");
 
         gameContext.setGameModel(sharedState.getModel());
 

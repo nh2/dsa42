@@ -29,28 +29,28 @@ public class GameModel implements Serializable
      */
     private static final long serialVersionUID = -1305594069915531267L;
 
-    private Player[] players = new Player[2];
-    private Player turnHolder = null;
-    private boolean inMotion = false;
+    protected Player[] players = new Player[2];
+    protected Player turnHolder = null;
+    protected boolean inMotion = false;
 
-    private boolean breakHasHappened;
+    protected boolean breakHasHappened;
 
-    private List<Ball> balls = new ArrayList<Ball>();
-    private List<Ball> ballsOnTable = new ArrayList<Ball>();
+    protected List<Ball> balls = new ArrayList<Ball>();
+    protected List<Ball> ballsOnTable = new ArrayList<Ball>();
 
-    private List<Wall> walls = new ArrayList<Wall>();
-    private List<Hole> holes = new ArrayList<Hole>();
+    protected List<Wall> walls = new ArrayList<Wall>();
+    protected List<Hole> holes = new ArrayList<Hole>();
 
-    private Map<Player, BallType> playersBallTypes = new HashMap<Player, BallType>();
+    protected Map<Player, BallType> playersBallTypes = new HashMap<Player, BallType>();
 
-    private List<GameEventListener> gameEventListeners = new LinkedList<GameEventListener>();
+    protected List<GameEventListener> gameEventListeners = new LinkedList<GameEventListener>();
 
-    private Ball whiteBall, blackBall;
+    protected Ball whiteBall, blackBall;
 
-    private List<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
-    private RuleManager ruleManager;
+    protected List<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
+    protected RuleManager ruleManager;
 
-    private Player winner;
+    protected Player winner;
 
     public boolean isInMotion()
     {
@@ -235,6 +235,7 @@ public class GameModel implements Serializable
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
         Collections.shuffle(tmpBalls);
 
+        whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
         blackBall.setPosition(new Vector2d(0.75d * MAX_X, 0.5d * MAX_Y));
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
@@ -285,10 +286,14 @@ public class GameModel implements Serializable
         return player.equals(turnHolder);
     }
 
-    public void sinkBall(Ball ball)
+    private void sinkBall(Ball ball)
     {
         ball.setSunk(true);
         ballsOnTable.remove(ball);
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.ballSunk(new BallSunkEvent(ball, turnHolder));
+        }
     }
 
     public boolean isTurnHolder(int player)
@@ -303,7 +308,12 @@ public class GameModel implements Serializable
 
     void changeTurnHolder()
     {
+        Player oldTurnHolder = turnHolder;
         turnHolder = players[1 - turnHolder.getId()];
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.turnHolderChanged(new TurnHolderChangeEvent(oldTurnHolder, turnHolder));
+        }
     }
 
     public Ball.BallType getPlayersBallType(Player player)
@@ -336,12 +346,7 @@ public class GameModel implements Serializable
             {
                 if (hole.ballIsSunk(ball))
                 {
-                    ball.setSunk(true);
-                    ballIterator.remove();
-                    for (GameEventListener listener : gameEventListeners)
-                    {
-                        listener.ballSunk(new BallSunkEvent(ball, turnHolder));
-                    }
+                    sinkBall(ball);
                     break;
                 }
             }
@@ -467,6 +472,10 @@ public class GameModel implements Serializable
         if (!tmpInMotion)
         {
             inMotion = false;
+            for (GameEventListener listener : gameEventListeners)
+            {
+                listener.boardStoppedMoving();
+            }
         }
 
     }
@@ -479,6 +488,10 @@ public class GameModel implements Serializable
     void setWinner(Player player)
     {
         winner = player;
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.gameEnded(new GameEndEvent(winner));
+        }
     }
 
     public boolean isFinished()
@@ -491,7 +504,7 @@ public class GameModel implements Serializable
         return players[1 - player.getId()];
     }
 
-    public void resetWhiteBall()
+    void resetWhiteBall()
     {
         if (!whiteBall.isSunk())
         {
@@ -501,6 +514,12 @@ public class GameModel implements Serializable
         whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
         whiteBall.setSunk(false);
         ballsOnTable.add(whiteBall);
+
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.ballSet(new BallSetEvent(whiteBall));
+        }
+
     }
 
 }

@@ -29,6 +29,8 @@ import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.model.Ball;
+import de.schelklingen2008.billiards.model.BallSetEvent;
+import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
@@ -39,6 +41,17 @@ import de.schelklingen2008.util.LoggerFactory;
  */
 public class BoardView extends JPanel implements GameChangeListener
 {
+
+    private class BoardViewGameEventAdapter extends GameEventAdapter
+    {
+
+        @Override
+        public void ballSet(BallSetEvent e)
+        {
+            repaint();
+        }
+
+    }
 
     private static final Logger logger = LoggerFactory.create();
 
@@ -239,6 +252,8 @@ public class BoardView extends JPanel implements GameChangeListener
 
     public void gameChanged()
     {
+        getGameModel().addGameEventListener(new BoardViewGameEventAdapter());
+
         if (getGameModel().isInMotion())
         {
             controller.startBoardProcessThread(this);

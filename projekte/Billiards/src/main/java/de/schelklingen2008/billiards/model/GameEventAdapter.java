@@ -20,7 +20,21 @@ public class GameEventAdapter implements GameEventListener
 
     public void ballSet(BallSetEvent e)
     {
-        // TODO Auto-generated method stub
+
+    }
+
+    public void gameEnded(GameEndEvent e)
+    {
+
+    }
+
+    public void turnHolderChanged(TurnHolderChangeEvent e)
+    {
+
+    }
+
+    public void boardStoppedMoving()
+    {
 
     }
 

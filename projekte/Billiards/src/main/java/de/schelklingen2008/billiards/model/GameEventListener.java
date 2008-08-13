@@ -11,4 +11,10 @@ public interface GameEventListener
 
     public void ballSet(BallSetEvent e);
 
+    public void gameEnded(GameEndEvent e);
+
+    public void turnHolderChanged(TurnHolderChangeEvent e);
+
+    public void boardStoppedMoving();
+
 }

@@ -12,12 +12,21 @@ public class RuleManager implements CollisionListener, GameEventListener, Serial
 
     private GameModel gameModel;
 
+    private boolean foul, resetWhiteBall, doNotChangeTurnholder;
+
     public RuleManager(GameModel gameModel)
     {
         this.gameModel = gameModel;
 
         gameModel.addCollisionListener(this);
         gameModel.addGameEventListener(this);
+    }
+
+    private void reset()
+    {
+        foul = false;
+        resetWhiteBall = false;
+        doNotChangeTurnholder = false;
     }
 
     public void ballCollisionHappened(BallCollisionEvent e)
@@ -45,7 +54,6 @@ public class RuleManager implements CollisionListener, GameEventListener, Serial
         Player player = e.getPlayer();
         Ball.BallType playersBallType = gameModel.getPlayersBallType(player);
         int ballsOfPlayer;
-        boolean doNotSwitchTurnholder = false, foul = false;
 
         if (gameModel.ballMappingFixed())
         {
@@ -110,23 +118,23 @@ public class RuleManager implements CollisionListener, GameEventListener, Serial
             }
             else
             {
-                doNotSwitchTurnholder = true;
+                doNotChangeTurnholder = true;
             }
-        }
-
-        if (!doNotSwitchTurnholder)
-        {
-            gameModel.changeTurnHolder();
         }
 
         if (gameModel.getWhiteBall().isSunk())
         {
-            gameModel.resetWhiteBall();
+            resetWhiteBall = true;
         }
 
         if (foul)
         {
-            // TODO Add fouls
+            // TODO Handle fouls
+        }
+
+        if (resetWhiteBall)
+        {
+            gameModel.resetWhiteBall();
         }
 
     }
@@ -138,12 +146,35 @@ public class RuleManager implements CollisionListener, GameEventListener, Serial
 
     public void shotTaken(ShotEvent e)
     {
-
+        reset();
     }
 
     public void ballSet(BallSetEvent e)
     {
 
+    }
+
+    public void gameEnded(GameEndEvent e)
+    {
+
+    }
+
+    public void turnHolderChanged(TurnHolderChangeEvent e)
+    {
+
+    }
+
+    public void boardStoppedMoving()
+    {
+        if (resetWhiteBall)
+        {
+            gameModel.resetWhiteBall();
+        }
+
+        if (!doNotChangeTurnholder)
+        {
+            gameModel.changeTurnHolder();
+        }
     }
 
 }
