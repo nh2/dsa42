@@ -1,8 +1,17 @@
 package de.schelklingen2008.reversi.ai.strategy;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import org.apache.commons.collections.map.FixedSizeSortedMap;
+import org.apache.commons.collections.map.LazySortedMap;
+import org.junit.matchers.SubstringMatcher;
 
 import de.schelklingen2008.reversi.ai.evaluation.EvaluationFunction;
 import de.schelklingen2008.reversi.ai.evaluation.HorstEvaluation;
@@ -46,7 +55,39 @@ public class HorstStrategy implements ReversiStrategy
         Piece bestMove = null;
 
         Set<Piece> legalMoves = game.getLegalMovesSet(max);
-        for (Piece move : legalMoves)
+        
+        List<Integer> valuesList = new ArrayList<Integer>();
+        List<Piece> movesList = new ArrayList<Piece>();
+        // Jeden Zug bewerten
+        for(Piece move : legalMoves)
+        {
+        	GameModel clone = new GameModel(game);
+            clone.placePiece(move.getX(), move.getY(), game.getTurnHolder());
+            valuesList.add(evalfunc.evaluatePosition(game, max));
+            movesList.add(move);
+        }
+        // Die schlechten Züge aussortieren
+        
+        while(valuesList.size()>2){
+        	int kleinster = 0;
+	        if(game.getTurnHolder() == max) kleinster = Integer.MAX_VALUE;
+	        else kleinster = Integer.MIN_VALUE;
+	        int kleinsterPos = 0;
+	        for(int i=0; i< valuesList.size(); i++){
+	        	if(valuesList.get(i)<kleinster){
+	        		kleinster=valuesList.get(i);
+	        		kleinsterPos = i;
+	        	}
+	        	if(valuesList.get(i)>kleinster){
+	        		kleinster=valuesList.get(i);
+	        		kleinsterPos = i;
+	        	}
+	        }
+	        valuesList.remove(kleinsterPos);;
+	        movesList.remove(kleinsterPos);
+        }
+        
+        for (Piece move : movesList)
         {
             GameModel clone = new GameModel(game);
             // cloneList.add(new GameModel(game));
@@ -75,7 +116,38 @@ public class HorstStrategy implements ReversiStrategy
             best = Integer.MAX_VALUE;
 
         Set<Piece> legalMoves = game.getLegalMovesSet(game.getTurnHolder());
-        for (Piece move : legalMoves)
+        List<Integer> valuesList = new ArrayList<Integer>();
+        List<Piece> movesList = new ArrayList<Piece>();
+        // Jeden Zug bewerten
+        for(Piece move : legalMoves)
+        {
+        	GameModel clone = new GameModel(game);
+            clone.placePiece(move.getX(), move.getY(), game.getTurnHolder());
+            valuesList.add(evalfunc.evaluatePosition(game, max));
+            movesList.add(move);
+        }
+        // Die schlechten Züge aussortieren
+        
+        while(valuesList.size()>2){
+        	int kleinster = 0;
+	        if(game.getTurnHolder() == max) kleinster = Integer.MAX_VALUE;
+	        else kleinster = Integer.MIN_VALUE;
+	        int kleinsterPos = 0;
+	        for(int i=0; i< valuesList.size(); i++){
+	        	if(valuesList.get(i)<kleinster){
+	        		kleinster=valuesList.get(i);
+	        		kleinsterPos = i;
+	        	}
+	        	if(valuesList.get(i)>kleinster){
+	        		kleinster=valuesList.get(i);
+	        		kleinsterPos = i;
+	        	}
+	        }
+	        valuesList.remove(kleinsterPos);;
+	        movesList.remove(kleinsterPos);
+        }
+        
+        for (Piece move : movesList)
         {
             GameModel clone = new GameModel(game);
             // cloneList2.add(new GameModel(game));
