@@ -730,4 +730,11 @@ public class GameModel implements Serializable
     {
         return mittel;
     }
+
+    public int getUnitsforPlayer(Player p)
+    {
+        int units = p.getCountrys(c) / 3;
+        return 1;
+        // return
+    }
 }
