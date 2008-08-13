@@ -312,11 +312,11 @@ public class GameModel implements Serializable
                 placedOnSearchCard(pPlayer);
                 walk = false;
             }
+            if (walk == false)
+            {
+                changeTurnHolder();
+            }
 
-        }
-        if (walk == false)
-        {
-            changeTurnHolder();
         }
 
     }

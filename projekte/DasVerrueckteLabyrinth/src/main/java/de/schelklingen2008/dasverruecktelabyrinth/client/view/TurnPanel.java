@@ -27,7 +27,7 @@ public class TurnPanel extends JPanel implements GameChangeListener
     private Controller             controller;
     private static final Polygon   TRIANGLE  = new Polygon(new int[] { 0, 12, 0 }, new int[] { 0, 6, 12 }, 3);
     private static final Ellipse2D CIRCLE    = new Ellipse2D.Float(0, 0, 12, 12);
-    private static final ShapeIcon ICON_TURN = new ShapeIcon(TRIANGLE, Color.YELLOW, null);
+    private static final ShapeIcon ICON_TURN = new ShapeIcon(TRIANGLE, Color.PINK, null);
 
     public TurnPanel(Controller controller)
     {

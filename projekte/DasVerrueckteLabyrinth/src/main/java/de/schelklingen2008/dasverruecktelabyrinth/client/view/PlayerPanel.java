@@ -218,6 +218,13 @@ public class PlayerPanel extends JPanel implements GameChangeListener
         return temp;
     }
 
+    private TreasureCard getTCardOnInsert()
+    {
+        TreasureCard tCInsert = getGameModel().getInsertTile().getTC();
+        return tCInsert;
+
+    }
+
     private GameModel getGameModel()
     {
         return getGameContext().getGameModel();
