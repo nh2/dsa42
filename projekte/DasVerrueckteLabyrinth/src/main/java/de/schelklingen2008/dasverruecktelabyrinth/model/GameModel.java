@@ -73,6 +73,8 @@ public class GameModel implements Serializable
             // noch?
         }
 
+        setCorners(board);
+
         generateTreasureCards();
     }
 
@@ -166,6 +168,62 @@ public class GameModel implements Serializable
                 playerCardsMap.put(playerType, playerCards);
             }
             playerCards.getHiddenCards().add(tc);
+        }
+    }
+
+    public void setCorners(Tile[][] pBoard)
+    {
+        boolean rechtsOben = false;
+        boolean linksOben = false;
+        boolean rechtsUnten = false;
+        boolean linksUnten = false;
+
+        for (int x = 0; x < pBoard.length; x++)
+        {
+            for (int y = 0; y < pBoard.length; y++)
+            {
+                if (linksOben == false)
+                {
+                    if (pBoard[x][y].isCurve2())
+                    {
+                        Tile bufferTile = pBoard[0][0];
+                        pBoard[0][0] = pBoard[x][y];
+                        pBoard[x][y] = bufferTile;
+                        linksOben = true;
+                    }
+                }
+                if (rechtsOben == false)
+                {
+                    if (pBoard[x][y].isCurve1())
+                    {
+                        Tile bufferTile = pBoard[6][0];
+                        pBoard[6][0] = pBoard[x][y];
+                        pBoard[x][y] = bufferTile;
+                        rechtsOben = true;
+                    }
+                }
+                if (rechtsUnten == false)
+                {
+                    if (pBoard[x][y].isCurve4())
+                    {
+                        Tile bufferTile = pBoard[6][6];
+                        pBoard[6][6] = pBoard[x][y];
+                        pBoard[x][y] = bufferTile;
+                        rechtsUnten = true;
+                    }
+                }
+                if (linksUnten == false)
+                {
+                    if (pBoard[x][y].isCurve3())
+                    {
+                        Tile bufferTile = pBoard[0][6];
+                        pBoard[0][6] = pBoard[x][y];
+                        pBoard[x][y] = bufferTile;
+                        linksUnten = true;
+                    }
+                }
+
+            }
         }
     }
 

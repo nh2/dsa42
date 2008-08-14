@@ -36,6 +36,14 @@ public class Images
             vertikal = ImageIO.read(new File("src/main/resources/TilesBilder/vertikal.png"));
             cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
 
+            // curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/Curve1.tif"));
+            // curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/Curve2.tif"));
+            // curveThree = ImageIO.read(new File("src/main/resources/TilesBilder/Curve3.tif"));
+            // curveFour = ImageIO.read(new File("src/main/resources/TilesBilder/Curve4.tif"));
+            // horizontal = ImageIO.read(new File("src/main/resources/TilesBilder/Horizontal.tif"));
+            // vertikal = ImageIO.read(new File("src/main/resources/TilesBilder/Vertikal.tif"));
+            // cross = ImageIO.read(new File("src/main/resources/TilesBilder/Crossing.tif"));
+
             eule = ImageIO.read(new File("src/main/resources/Bilder/eule.png"));
             krone = ImageIO.read(new File("src/main/resources/Bilder/krone.png"));
             flaschengeist = ImageIO.read(new File("src/main/resources/Bilder/flaschengeist.png"));
