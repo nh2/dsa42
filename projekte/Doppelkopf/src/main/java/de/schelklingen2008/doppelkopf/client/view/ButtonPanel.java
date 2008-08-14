@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import de.schelklingen2008.doppelkopf.client.controller.Controller;
@@ -19,6 +20,7 @@ public class ButtonPanel extends JPanel implements GameChangeListener
     GameModel          spiel;
     private Controller controller;
     JButton            hochzeitButton;
+    JScrollPane        scroller;
     JTextArea          nachrichtenBox = new JTextArea();
     Spieler            ich;
 
@@ -27,6 +29,8 @@ public class ButtonPanel extends JPanel implements GameChangeListener
 
         controller = pController;
         pController.addChangeListener(this);
+
+        scroller = new JScrollPane(nachrichtenBox);
 
         hochzeitButton = new JButton("Der erste Fremde");
         hochzeitButton.addActionListener(new ActionListener()
@@ -37,7 +41,7 @@ public class ButtonPanel extends JPanel implements GameChangeListener
                 controller.ersterFremderButtonClicked();
             }
         });
-        add(nachrichtenBox);
+        add(scroller);
 
     }
 
