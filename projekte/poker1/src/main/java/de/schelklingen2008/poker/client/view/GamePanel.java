@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import com.samskivert.swing.GroupLayout;
 import com.samskivert.swing.MultiLineLabel;
@@ -67,6 +68,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
+        sidePanel.add(new JTextArea("Hallo"));
 
         // add a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
