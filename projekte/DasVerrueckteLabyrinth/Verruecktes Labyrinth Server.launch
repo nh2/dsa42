@@ -11,6 +11,7 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.threerings.toybox.server.ToyBoxServer"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="niklasr 47624"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="DasVerrueckteLabyrinth"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dgame_conf=src/main/resources/DasVerrueckteLabyrinth.xml -Djava.util.logging.config.file=src/main/resources/logging.properties"/>
 </launchConfiguration>

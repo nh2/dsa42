@@ -61,30 +61,30 @@ public class Images
             schwert = ImageIO.read(new File("src/main/resources/Bilder/schwert.png"));
             gespenst = ImageIO.read(new File("src/main/resources/Bilder/gespenst.png"));
 
-            eule80 = ImageIO.read(new File("src/main/resources/Bilder/80/eule.png"));
-            krone80 = ImageIO.read(new File("src/main/resources/Bilder/80/krone.png"));
-            flaschengeist80 = ImageIO.read(new File("src/main/resources/Bilder/80/flaschengeist.png"));
-            ring80 = ImageIO.read(new File("src/main/resources/Bilder/80/ring.png"));
-            spinne80 = ImageIO.read(new File("src/main/resources/Bilder/80/spinne.png"));
-            fee80 = ImageIO.read(new File("src/main/resources/Bilder/80/fee.png"));
-            karte80 = ImageIO.read(new File("src/main/resources/Bilder/80/karte.png"));
-            drache80 = ImageIO.read(new File("src/main/resources/Bilder/80/Drache.png"));
-            bibel80 = ImageIO.read(new File("src/main/resources/Bilder/80/bibel.png"));
-            eidechse80 = ImageIO.read(new File("src/main/resources/Bilder/80/eidechse.png"));
-            geldbeutel80 = ImageIO.read(new File("src/main/resources/Bilder/80/geldbeutel.png"));
-            fledermaus80 = ImageIO.read(new File("src/main/resources/Bilder/80/fledermaus.png"));
-            troll80 = ImageIO.read(new File("src/main/resources/Bilder/80/troll.png"));
-            scarabaeus80 = ImageIO.read(new File("src/main/resources/Bilder/80/scarabaeus.png"));
-            maus80 = ImageIO.read(new File("src/main/resources/Bilder/80/maus.png"));
-            motte80 = ImageIO.read(new File("src/main/resources/Bilder/80/motte.png"));
-            smaragd80 = ImageIO.read(new File("src/main/resources/Bilder/80/smaragd.png"));
-            totenkopf80 = ImageIO.read(new File("src/main/resources/Bilder/80/totenkopf.png"));
-            helm80 = ImageIO.read(new File("src/main/resources/Bilder/80/helm.png"));
-            leuchter80 = ImageIO.read(new File("src/main/resources/Bilder/80/leuchter.png"));
-            schmuckkasten80 = ImageIO.read(new File("src/main/resources/Bilder/80/schmuckkasten.png"));
-            schluessel80 = ImageIO.read(new File("src/main/resources/Bilder/80/schluessel.png"));
-            schwert80 = ImageIO.read(new File("src/main/resources/Bilder/80/schwert.png"));
-            gespenst80 = ImageIO.read(new File("src/main/resources/Bilder/80/gespenst.png"));
+            eule80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/eule80.png"));
+            krone80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/krone80.png"));
+            flaschengeist80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/flaschengeist80.png"));
+            ring80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/ring80.png"));
+            spinne80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/spinne80.png"));
+            fee80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/fee80.png"));
+            karte80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/karte80.png"));
+            drache80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/drache80.png"));
+            bibel80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/bibel80.png"));
+            eidechse80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/eidechse80.png"));
+            geldbeutel80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/geldbeutel80.png"));
+            fledermaus80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/fledermaus80.png"));
+            troll80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/troll80.png"));
+            scarabaeus80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/scarabaeus80.png"));
+            maus80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/maus80.png"));
+            motte80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/motte80.png"));
+            smaragd80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/smaragd80.png"));
+            totenkopf80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/totenkopf80.png"));
+            helm80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/helm80.png"));
+            leuchter80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/leuchter80.png"));
+            schmuckkasten80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/schmuckkasten80.png"));
+            schluessel80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/schluessel80.png"));
+            schwert80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/schwert80.png"));
+            gespenst80 = ImageIO.read(new File("src/main/resources/BilderGross/tcBIG/gespenst80.png"));
         }
         catch (IOException e)
         {
