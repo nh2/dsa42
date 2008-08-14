@@ -124,7 +124,7 @@ public class Images
         if (tc == TreasureCard.SCHL‹SSEL) return schluessel;
         if (tc == TreasureCard.SCHWERT) return schwert;
         if (tc == TreasureCard.GESPENST) return gespenst;
-        throw new IllegalStateException("Unbekanntes Bild");
+        throw new IllegalStateException("Unbekanntes Bild " + tc);
     }
 
     public static BufferedImage getBigTcImage(TreasureCard tc)
@@ -154,7 +154,7 @@ public class Images
         if (tc == TreasureCard.SCHL‹SSEL) return schluessel80;
         if (tc == TreasureCard.SCHWERT) return schwert80;
         if (tc == TreasureCard.GESPENST) return gespenst80;
-        throw new IllegalStateException("Unbekanntes Bild");
+        throw new IllegalStateException("Unbekanntes kleines Bild " + tc);
     }
 
     public static final BufferedImage getTileImage(Tile tile)
@@ -166,6 +166,6 @@ public class Images
         if (tile.isCurve2() == true) return Images.curveTwo;
         if (tile.isCurve3() == true) return Images.curveThree;
         if (tile.isCurve4() == true) return Images.curveFour;
-        throw new IllegalStateException("Unbekanntes Tile");
+        throw new IllegalStateException("Unbekanntes groﬂes Tile" + tile);
     }
 }
