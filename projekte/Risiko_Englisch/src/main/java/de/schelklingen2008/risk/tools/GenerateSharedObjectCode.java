@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.tools;
+package de.schelklingen2008.risk.tools;
 
 import java.io.File;
 import java.io.IOException;

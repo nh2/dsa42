@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client.controller;
+package de.schelklingen2008.risk.client.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,11 @@ import com.threerings.presents.dobj.SetListener;
 import com.threerings.toybox.util.ToyBoxContext;
 import com.threerings.util.MessageBundle;
 
-import de.schelklingen2008.risiko.client.Constants;
-import de.schelklingen2008.risiko.client.model.GameContext;
-import de.schelklingen2008.risiko.client.view.GamePanel;
-import de.schelklingen2008.risiko.model.Country;
-import de.schelklingen2008.risiko.transport.SharedState;
+import de.schelklingen2008.risk.client.Constants;
+import de.schelklingen2008.risk.client.model.GameContext;
+import de.schelklingen2008.risk.client.view.GamePanel;
+import de.schelklingen2008.risk.model.Country;
+import de.schelklingen2008.risk.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**

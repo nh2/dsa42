@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client.view;
+package de.schelklingen2008.risk.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,9 +19,9 @@ import com.threerings.crowd.data.PlaceObject;
 import com.threerings.toybox.client.ChatPanel;
 import com.threerings.toybox.client.ToyBoxUI;
 
-import de.schelklingen2008.risiko.client.Constants;
-import de.schelklingen2008.risiko.client.controller.Controller;
-import de.schelklingen2008.risiko.client.controller.GameChangeListener;
+import de.schelklingen2008.risk.client.Constants;
+import de.schelklingen2008.risk.client.controller.Controller;
+import de.schelklingen2008.risk.client.controller.GameChangeListener;
 
 /**
  * Contains the primary client interface for the game.

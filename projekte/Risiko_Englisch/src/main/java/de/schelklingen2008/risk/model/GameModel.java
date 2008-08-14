@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.model;
+package de.schelklingen2008.risk.model;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -358,7 +358,6 @@ public class GameModel implements Serializable
         bulgarien.add(1, c[19]);// Rumänien
         bulgarien.add(2, c[15]);// Griechenland
         bulgarien.add(3, c[12]);// Ukraine
-        bulgarien.add(4, c[29]);// Ungarn
         c[18].setNeighbours(bulgarien);
 
         // init neighbours Rumänien
@@ -384,6 +383,7 @@ public class GameModel implements Serializable
         frankreich.add(4, c[14]); // Italien
         frankreich.add(5, c[22]); // Spanien
         c[21].setNeighbours(frankreich);
+
         // init neighbours Spanien
         ArrayList<Country> spanien = new ArrayList<Country>();
         spanien.add(0, c[20]); // Portugal
@@ -451,7 +451,6 @@ public class GameModel implements Serializable
         ungarn.add(2, c[19]);// Rumänien
         ungarn.add(3, c[16]);// Jugoslawien
         ungarn.add(4, c[28]);// Österreich
-        ungarn.add(5, c[18]);// Bulgarien
         c[29].setNeighbours(ungarn);
 
     }

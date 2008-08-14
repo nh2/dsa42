@@ -1,12 +1,12 @@
-package de.schelklingen2008.risiko.server;
+package de.schelklingen2008.risk.server;
 
 import com.threerings.crowd.data.BodyObject;
 import com.threerings.crowd.data.PlaceObject;
 import com.threerings.parlor.game.server.GameManager;
 
-import de.schelklingen2008.risiko.model.GameModel;
-import de.schelklingen2008.risiko.model.Player;
-import de.schelklingen2008.risiko.transport.SharedState;
+import de.schelklingen2008.risk.model.GameModel;
+import de.schelklingen2008.risk.model.Player;
+import de.schelklingen2008.risk.transport.SharedState;
 
 /**
  * Handles the server side of the game.

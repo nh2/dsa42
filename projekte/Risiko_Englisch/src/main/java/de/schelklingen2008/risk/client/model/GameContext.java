@@ -1,9 +1,9 @@
-package de.schelklingen2008.risiko.client.model;
+package de.schelklingen2008.risk.client.model;
 
 import java.util.logging.Logger;
 
-import de.schelklingen2008.risiko.model.GameModel;
-import de.schelklingen2008.risiko.model.Player;
+import de.schelklingen2008.risk.model.GameModel;
+import de.schelklingen2008.risk.model.Player;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
