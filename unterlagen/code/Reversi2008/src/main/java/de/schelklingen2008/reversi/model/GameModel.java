@@ -107,7 +107,6 @@ public class GameModel implements Serializable
      */
     public void placePiece(int x, int y, Player player)
     {
-        if (!isLegalMove(x, y, player)) throw new IllegalArgumentException("illegal move");
 
         setPiece(x, y, player);
 

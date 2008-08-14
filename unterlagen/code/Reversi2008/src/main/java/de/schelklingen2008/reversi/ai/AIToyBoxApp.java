@@ -9,8 +9,9 @@ import com.threerings.presents.net.Credentials;
 import com.threerings.presents.net.UsernamePasswordCreds;
 import com.threerings.util.Name;
 
+import de.schelklingen2008.reversi.ai.evaluation.GeorgEvaluationFunction;
+import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategy;
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
-import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
 
 /**
  * The launcher application for all ToyBox games.
@@ -18,7 +19,11 @@ import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
 public class AIToyBoxApp
 {
 
-    public static final ReversiStrategy REVERSI_STRATEGY = new ReversiStrategyDadaLena();
+    public static final ReversiStrategy REVERSI_STRATEGY = new AlphaBetaStrategy(new GeorgEvaluationFunction(),
+                                                                                 5,
+                                                                                 15,
+                                                                                 true,
+                                                                                 false);
 
     public static void main(final String[] args) throws Exception
     {

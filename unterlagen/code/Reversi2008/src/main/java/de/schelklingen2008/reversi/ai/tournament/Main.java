@@ -3,18 +3,27 @@ package de.schelklingen2008.reversi.ai.tournament;
 import java.util.Collections;
 import java.util.List;
 
-import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
-import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
+import de.schelklingen2008.reversi.ai.evaluation.GeorgEvaluationFunction;
+import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategyMultiThread;
 
 public class Main
 {
 
     public static void main(String[] args)
     {
-        Tournament t = new Tournament(20);
-        t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
-        // t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Daniel", new ReversiStrategyDadaLena()));
+        Tournament t = new Tournament(10);
+        t.addStrategy(new TournamentStrategy("Georg5", new AlphaBetaStrategyMultiThread(new GeorgEvaluationFunction(),
+                                                                                        5,
+                                                                                        1,
+                                                                                        2,
+                                                                                        true,
+                                                                                        true)));
+        t.addStrategy(new TournamentStrategy("Multi5", new AlphaBetaStrategyMultiThread(new GeorgEvaluationFunction(),
+                                                                                        7,
+                                                                                        1,
+                                                                                        2,
+                                                                                        true,
+                                                                                        true)));
 
         t.prepare();
         long startzeit = System.currentTimeMillis();
