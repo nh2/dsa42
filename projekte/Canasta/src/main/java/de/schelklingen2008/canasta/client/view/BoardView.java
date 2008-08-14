@@ -106,7 +106,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 else if (area.getName().equals("CardStack"))
                 {
                     sLogger.info("pressed CardStack " + area.getAreaNumber());
-                    controller.cardStackClicked(getSelectedCardNumbers(), area.getAreaNumber());
+                    controller.cardStackClicked(getSelectedCardNumbers(), isDiscardSelected, area.getAreaNumber());
                 }
                 else if (area.getName().equals("NewOutlay"))
                 {

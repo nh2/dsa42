@@ -202,16 +202,26 @@ public class GameModel implements Serializable
         }
     }
 
+    public void takeDiscard(Player player, int[] cardNumbers, int whichCardStack)
+    {
+        Card[] cards = player.getHand().getAll(cardNumbers);
+        CardStack cardStack = player.getOutlay().get(whichCardStack);
+
+        takeDiscard(player, cards, cardStack);
+    }
+
     public void takeDiscard(Player player, Card[] cards, CardStack cardStack)
     {
         if (!isTurnHolder(player)) return;
         if (hasDrawn) return;
 
-        Arrays.copyOf(cards, cards.length + 1);
+        cards = Arrays.copyOf(cards, cards.length + 1);
         cards[cards.length - 1] = discard.peek();
 
-        if (isMeldLegal(cards, cardStack))
+        if (isMeldLegal(cards))
         {
+            sLogger.info("Badaboom!");
+
             for (Card card : cards)
             {
                 cardStack.add(card);
@@ -219,13 +229,18 @@ public class GameModel implements Serializable
             }
             discard.pop();
 
-            player.getHand().addAll(cardStack);
+            while (discard.size() > 0)
+            {
+                player.getHand().add(discard.pop());
+            }
+
             discard.clear();
 
+            hasDrawn = true;
         }
         else
         {
-            sLogger.info("Illegal Outly!");
+            sLogger.info("Illegal Outlay!");
         }
     }
 

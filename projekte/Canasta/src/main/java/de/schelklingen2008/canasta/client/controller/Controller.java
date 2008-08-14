@@ -185,7 +185,7 @@ public class Controller extends GameController
         }
     }
 
-    public void cardStackClicked(int[] selectedCardNumbers, int whichCardStack)
+    public void cardStackClicked(int[] selectedCardNumbers, boolean isDiscardSelected, int whichCardStack)
     {
         if (!gameContext.isMyTurn())
         {
@@ -194,10 +194,36 @@ public class Controller extends GameController
         }
 
         Player player = getGameContext().getMyPlayer();
+        Card[] cards = player.getHand().getAll(selectedCardNumbers);
 
-        if (!GameModel.isMeldLegal(player.getHand().getAll(selectedCardNumbers), player.getOutlay().get(whichCardStack))) return;
+        if (getGameContext().getGameModel().hasDrawn())
+        {
+            // make outlay
+            if (!GameModel.isMeldLegal(player.getHand().getAll(selectedCardNumbers), player.getOutlay()
+                                                                                           .get(whichCardStack))) return;
 
-        sharedState.manager.invoke("addCardsToStack", selectedCardNumbers, whichCardStack);
+            sharedState.manager.invoke("addCardsToStack", selectedCardNumbers, whichCardStack);
+        }
+        else
+        {
+            // take discard
+            if (!isDiscardSelected)
+            {
+                sLogger.info("draw card first!");
+                return;
+            }
+            cards = Arrays.copyOf(cards, cards.length + 1);
+            cards[cards.length - 1] = getGameContext().getGameModel().getDiscard().peek();
+
+            if (!GameModel.isMeldLegal(cards))
+            {
+                sLogger.info("impossible!");
+                return;
+            }
+
+            sharedState.manager.invoke("takeDiscardToStack", selectedCardNumbers, whichCardStack);
+
+        }
     }
 
     private void updateGameContext()
