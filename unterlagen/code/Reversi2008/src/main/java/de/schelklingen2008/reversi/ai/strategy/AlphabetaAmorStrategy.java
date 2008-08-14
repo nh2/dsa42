@@ -220,7 +220,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
         List<pieceInt> liste = new weightListe(true);
 
-        if (depth == 0)
+        if (depth == 0 || gameModel.isFinished())
         {
             return evalFunction.evaluatePosition(gameModel, player);
         }
