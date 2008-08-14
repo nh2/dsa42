@@ -36,81 +36,102 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         int value = 0;
 
         List<Piece> legalMoves = new ArrayList<Piece>(gameModel.getLegalMovesSet(gameModel.getTurnHolder()));
-        int[] values= new int[legalMoves.size()];
+        Integer[] values = new Integer[legalMoves.size()];
         List<SecondRunner> threads = new ArrayList<SecondRunner>(legalMoves.size());
-
-        for(int i = 0; i < legalMoves.size(); i++)
-            threads.add(new SecondRunner(gameModel, legalMoves.get(i), values, i));
 
         for (int i = 0; i < legalMoves.size(); i++)
         {
-
-
-            FirstRunner t1 = null, t2 = null;
-            Piece bestPiece;
-            // GameModel clone;
-            // clone = new GameModel(gameModel);
-            // Piece toPlace = legalMoves.get(i);
-            // clone.placePiece(toPlace);
-            // value = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone, true);
-
-            t1 = new FirstRunner(gameModel, legalMoves.get(i));
-            t1.start();
-            if (i + 1 < legalMoves.size())
-            {
-                t2 = new FirstRunner(gameModel, legalMoves.get(i + 1));
-                t2.start();
-
-            }
-            try
-            {
-                t1.join();
-            }
-            catch (InterruptedException e)
-            {
-            }
-            if (i + 1 < legalMoves.size()) try
-            {
-                t2.join();
-
-            }
-            catch (InterruptedException e)
-            {
-            }
-
-            int value1=0, value2=0;
-
-            value1 = t1.getResult();
-            if (i + 1 < legalMoves.size()) value2 = t2.getResult();
-
-            if (i + 1 < legalMoves.size())
-            {
-                if (value1 >= value2)
-                {
-                    value = value1;
-                    bestPiece = t1.piece;
-                }
-                else
-                {
-                    value = value2;
-                    bestPiece = t2.piece;
-                }
-            }
-            else
-            {
-                value = value1;
-                bestPiece = t1.piece;
-            }
-
-            if (value >= best)
-            {
-
-                best = value;
-                bestMove = bestPiece;
-            }
-            if (i + 1 < legalMoves.size()) i++;
-
+            threads.add(new SecondRunner(gameModel, legalMoves.get(i), values, i));
+            threads.get(i).start();
         }
+
+        try
+        {
+            for (SecondRunner sr : threads)
+                sr.join();
+        }
+        catch (InterruptedException e)
+        {
+        }
+
+        int bester = Integer.MIN_VALUE;
+        int pos = 0;
+        for (int i = 0; i < values.length; i++)
+            if (values[i] > bester)
+            {
+                bester = values[i];
+                pos = i;
+            }
+
+        bestMove = legalMoves.get(pos);
+        // for (int i = 0; i < legalMoves.size(); i++)
+        // {
+        //
+        // FirstRunner t1 = null, t2 = null;
+        // Piece bestPiece;
+        // // GameModel clone;
+        // // clone = new GameModel(gameModel);
+        // // Piece toPlace = legalMoves.get(i);
+        // // clone.placePiece(toPlace);
+        // // value = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone, true);
+        //
+        // t1 = new FirstRunner(gameModel, legalMoves.get(i));
+        // t1.start();
+        // if (i + 1 < legalMoves.size())
+        // {
+        // t2 = new FirstRunner(gameModel, legalMoves.get(i + 1));
+        // t2.start();
+        //
+        // }
+        // try
+        // {
+        // t1.join();
+        // }
+        // catch (InterruptedException e)
+        // {
+        // }
+        // if (i + 1 < legalMoves.size()) try
+        // {
+        // t2.join();
+        //
+        // }
+        // catch (InterruptedException e)
+        // {
+        // }
+        //
+        // int value1 = 0, value2 = 0;
+        //
+        // value1 = t1.getResult();
+        // if (i + 1 < legalMoves.size()) value2 = t2.getResult();
+        //
+        // if (i + 1 < legalMoves.size())
+        // {
+        // if (value1 >= value2)
+        // {
+        // value = value1;
+        // bestPiece = t1.piece;
+        // }
+        // else
+        // {
+        // value = value2;
+        // bestPiece = t2.piece;
+        // }
+        // }
+        // else
+        // {
+        // value = value1;
+        // bestPiece = t1.piece;
+        // }
+        //
+        // if (value >= best)
+        // {
+        //
+        // best = value;
+        // bestMove = bestPiece;
+        // }
+        // if (i + 1 < legalMoves.size()) i++;
+        //
+        // }
 
         return bestMove;
 
@@ -147,14 +168,17 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
     class SecondRunner extends Thread
     {
 
-        GameModel   game;
-        Piece       piece;
-        private int result = 0;
+        GameModel         game;
+        Piece             piece;
+        private Integer[] values;
+        private int       pos;
 
-        public SecondRunner(GameModel game, Piece piece, int[] values, int pos)
+        public SecondRunner(GameModel game, Piece piece, Integer[] values, int pos)
         {
             this.game = game;
             this.piece = piece;
+            this.values = values;
+            this.pos = pos;
         }
 
         @Override
@@ -163,12 +187,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
             GameModel clone;
             clone = new GameModel(game);
             clone.placePiece(piece);
-            result = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone);
-        }
-
-        public int getResult()
-        {
-            return result;
+            values[pos] = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone);
         }
     };
 
@@ -180,7 +199,8 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
         }
 
-        for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder())){
+        for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
+        {
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
         }
@@ -208,7 +228,6 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         {
             return evalFunction.evaluatePosition(gameModel, player);
 
-
         }
 
         for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
@@ -228,7 +247,24 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
     }
 
+    class Tupel implements Comparable<Tupel>
+    {
 
+        public Piece piece;
+        public int   value;
 
+        public Tupel(Piece piece, int value)
+        {
+            this.piece = piece;
+            this.value = value;
+        }
+
+        public int compareTo(Tupel otherTupel)
+        {
+            return value - otherTupel.value;
+        }
+    }
+
+    // final java.util.Set<Tupel> tupelSet = new java.util.TreeSet<Tupel>();
 
 }
