@@ -12,6 +12,9 @@ public class PatternChecker
     public int               counter = 0;
     private List<Card>       cards;
 
+    private int              value1  = -1;
+    private int              value2  = -1;
+
     public PatternChecker(List<Card> cards)
     {
         this.cards = cards;
@@ -112,35 +115,31 @@ public class PatternChecker
                 if (pairFound)
                     return false;
                 else
-                    pairFound = true;
+                    value1 = i;
+                pairFound = true;
             }
         }
         return pairFound;
 
     }
 
-    // funktioniert noch nicht
-    // public boolean isTwoPair()
-    // {
-    // boolean pairFound1 = false;
-    // boolean pairFound2 = false;
-    // for (int i = 0; i < 13; i++)
-    // {
-    // if (getCount(i) == 2)
-    // {
-    // if (pairFound)
-    // return false;
-    // else
-    // pairFound = true;
-    // }
-    // }
-    // return pairFound;
-    //
-    // }
-
     public boolean isTwoPair()
     {
+        int pairCounter = 0;
+        for (int i = 0; i < 13; i++)
+        {
+            if (getCount(i) == 2)
+            {
+                pairCounter++;
+                if (value1 == -1)
+                    value1 = i;
+                else
+                    value2 = i;
+            }
+        }
+        if (pairCounter == 2) return true; // falls es genau zwei Pärchen gibt
         return false;
+
     }
 
     public boolean isThreeOfAKind() // es muss zusätzlich getestet werden, ob isFullHouse auch true ist
