@@ -40,7 +40,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         try
         {
-            map = ImageIO.read(new File("./src/main/resources/europa_karte_EnglischS_de.png"));
+            map = ImageIO.read(new File("./src/main/resources/europa_karte_Englisch_de.png"));
         }
         catch (IOException e)
         {
