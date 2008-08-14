@@ -66,16 +66,13 @@ public class GamePanel extends JPanel implements PlaceView
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
-        // HistoryPanel historyPanel = new HistoryPanel(controller);
-
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
-        // sidePanel.add(historyPanel);
 
-        // add a standard turn display
-        TurnPanel turnDisplay = new TurnPanel(controller);
-        turnDisplay.setOpaque(false);
-        sidePanel.add(turnDisplay, GroupLayout.FIXED);
+        // add a history panel
+        HistoryPanel historyDisplay = new HistoryPanel(controller);
+        historyDisplay.setOpaque(false);
+        sidePanel.add(historyDisplay, GroupLayout.FIXED);
 
         // add a "back to lobby" button
         JButton back = new JButton();
