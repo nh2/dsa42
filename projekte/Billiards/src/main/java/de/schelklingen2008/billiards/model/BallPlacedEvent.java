@@ -1,11 +1,11 @@
 package de.schelklingen2008.billiards.model;
 
-public class BallSetEvent
+public class BallPlacedEvent
 {
 
     private final Ball ball;
 
-    public BallSetEvent(Ball ball)
+    public BallPlacedEvent(Ball ball)
     {
         this.ball = ball;
     }

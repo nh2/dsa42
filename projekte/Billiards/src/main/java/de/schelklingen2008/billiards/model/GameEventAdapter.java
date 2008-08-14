@@ -18,7 +18,7 @@ public class GameEventAdapter implements GameEventListener
 
     }
 
-    public void ballSet(BallSetEvent e)
+    public void ballPlaced(BallPlacedEvent e)
     {
 
     }
@@ -39,6 +39,11 @@ public class GameEventAdapter implements GameEventListener
     }
 
     public void ballMappingSet(BallMappingSetEvent e)
+    {
+
+    }
+
+    public void gameRestarted()
     {
 
     }

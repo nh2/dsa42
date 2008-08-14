@@ -22,16 +22,21 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.schelklingen2008.billiards.GlobalConstants;
+import de.schelklingen2008.billiards.client.Constants;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.model.Ball;
-import de.schelklingen2008.billiards.model.BallSetEvent;
+import de.schelklingen2008.billiards.model.BallPlacedEvent;
+import de.schelklingen2008.billiards.model.BallPlacementConstraints;
+import de.schelklingen2008.billiards.model.GameEndEvent;
 import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.GameModel;
+import de.schelklingen2008.billiards.model.WhiteBallPlacementHandler;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 import de.schelklingen2008.util.LoggerFactory;
@@ -39,16 +44,29 @@ import de.schelklingen2008.util.LoggerFactory;
 /**
  * Displays the main game interface (the board).
  */
-public class BoardView extends JPanel implements GameChangeListener
+public class BoardView extends JPanel implements GameChangeListener, WhiteBallPlacementHandler
 {
 
     private class BoardViewGameEventAdapter extends GameEventAdapter
     {
 
         @Override
-        public void ballSet(BallSetEvent e)
+        public void gameRestarted()
+        {
+            JOptionPane.showMessageDialog(null, Constants.MSG_BLACK_BALL_POCKETED_IN_BREAK);
+        }
+
+        @Override
+        public void ballPlaced(BallPlacedEvent e)
         {
             repaint();
+        }
+
+        @Override
+        public void gameEnded(GameEndEvent e)
+        {
+            JOptionPane.showMessageDialog(null, String.format(Constants.MSG_PLAYER_WON,
+                                                              getGameContext().getName(e.getWinner().getId())));
         }
 
     }
@@ -68,6 +86,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private boolean buttonWasPressed;
 
+    private boolean placingWhiteBall;
+
+    private BallPlacementConstraints whiteBallPlacementConstraints;
+
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */
@@ -75,6 +97,8 @@ public class BoardView extends JPanel implements GameChangeListener
     {
         this.controller = controller;
         this.gauge = gauge;
+        setOpaque(false);
+
         controller.addChangeListener(this);
 
         addMouseMotionListener(new MouseMotionAdapter()
@@ -151,32 +175,37 @@ public class BoardView extends JPanel implements GameChangeListener
 
         buttonWasPressed = true;
 
-        gauge.setValue(1);
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
+        if (!placingWhiteBall)
         {
 
-            boolean fallingVelocity = false;
-
-            @Override
-            public void run()
+            gauge.setValue(1);
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask()
             {
-                if (gauge.getValue() >= 100 - 1E-4 || gauge.getValue() <= 1E-4)
+
+                boolean fallingVelocity = false;
+
+                @Override
+                public void run()
                 {
-                    fallingVelocity = !fallingVelocity;
+                    if (gauge.getValue() >= 100 - 1E-4 || gauge.getValue() <= 1E-4)
+                    {
+                        fallingVelocity = !fallingVelocity;
+                    }
+
+                    if (fallingVelocity)
+                    {
+                        gauge.setValue(gauge.getValue() - 1);
+                    }
+                    else
+                    {
+                        gauge.setValue(gauge.getValue() + 1);
+                    }
                 }
 
-                if (fallingVelocity)
-                {
-                    gauge.setValue(gauge.getValue() - 1);
-                }
-                else
-                {
-                    gauge.setValue(gauge.getValue() + 1);
-                }
-            }
+            }, 40, 40);
 
-        }, 40, 40);
+        }
 
     }
 
@@ -189,6 +218,7 @@ public class BoardView extends JPanel implements GameChangeListener
     @Override
     protected void paintComponent(Graphics g)
     {
+        super.paintComponent(g);
         Graphics2D gfx = (Graphics2D) g;
         gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -198,7 +228,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private void paintBackground(Graphics2D gfx)
     {
-        gfx.drawImage(bg, 0, 0, null);
+        gfx.drawImage(bg, 0, 0, getBackground(), null);
     }
 
     private void paintBoard(Graphics2D gfx)
@@ -207,8 +237,8 @@ public class BoardView extends JPanel implements GameChangeListener
         GameModel gameModel = getGameModel();
 
         Ball whiteBall = gameModel.getWhiteBall();
-        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion() && !whiteBall.isPocketed()
-            && !gameModel.isInMotion() && cursorPosX != -1)
+        if (!placingWhiteBall && gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion()
+            && !whiteBall.isPocketed() && !gameModel.isInMotion() && cursorPosX != -1)
         {
             gfx.drawLine((int) Math.round(whiteBall.getPosition().getX() + BORDER_WIDTH),
                          (int) Math.round(whiteBall.getPosition().getY() + BORDER_HEIGHT), cursorPosX, cursorPosY);
@@ -252,11 +282,31 @@ public class BoardView extends JPanel implements GameChangeListener
             }
         }
 
+        if (placingWhiteBall)
+        {
+            if (cursorPosX != -1)
+            {
+                gfx.setColor(Color.WHITE);
+                gfx.fillOval((int) Math.round(cursorPosX - BALL_RADIUS), (int) Math.round(cursorPosY - BALL_RADIUS),
+                             (int) Math.round(2 * BALL_RADIUS), (int) Math.round(2 * BALL_RADIUS));
+            }
+
+            int leftX = (int) Math.round(whiteBallPlacementConstraints.getMinX() + BORDER_WIDTH - BALL_RADIUS);
+            int topY = (int) Math.round(whiteBallPlacementConstraints.getMinY() + BORDER_HEIGHT - BALL_RADIUS);
+            int rightX = (int) Math.round(whiteBallPlacementConstraints.getMaxX() + BORDER_WIDTH + BALL_RADIUS);
+            int bottomY = (int) Math.round(whiteBallPlacementConstraints.getMaxY() + BORDER_HEIGHT + BALL_RADIUS);
+
+            gfx.setColor(Color.RED);
+            gfx.drawRect(leftX, topY, rightX - leftX, bottomY - topY);
+
+        }
+
     }
 
     public void gameChanged()
     {
         getGameModel().addGameEventListener(new BoardViewGameEventAdapter());
+        getGameModel().setWhiteBallPlacementHandler(this);
 
         if (getGameModel().isInMotion())
         {
@@ -284,21 +334,62 @@ public class BoardView extends JPanel implements GameChangeListener
 
         buttonWasPressed = false;
 
-        final GameModel gameModel = getGameModel();
-
-        if (!gameModel.isTurnHolder(getGameContext().getMyPlayer()) || gameModel.isInMotion())
+        if (placingWhiteBall)
         {
-            return;
+
+            Vector2d position = new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT);
+
+            if (!whiteBallPlacementConstraints.checkPosition(position))
+            {
+                return;
+            }
+
+            if (getGameModel().canPlaceWhiteBallAtPosition(position))
+            {
+                getGameModel().placeWhiteBall(position);
+                placingWhiteBall = false;
+            }
+
         }
+        else
+        {
 
-        timer.cancel();
+            final GameModel gameModel = getGameModel();
 
-        Ball whiteBall = gameModel.getWhiteBall();
-        Vector2d distance =
-            new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(whiteBall.getPosition());
-        double angle = distance.getAngle();
+            if (!gameModel.isTurnHolder(getGameContext().getMyPlayer()) || gameModel.isInMotion())
+            {
+                return;
+            }
 
-        gameModel.takeShot(getGameContext().getMyPlayer(), angle, gauge.getValue() * GlobalConstants.MAX_VELOCITY / 100);
+            if (timer != null)
+            {
+                timer.cancel();
+            }
+
+            Ball whiteBall = gameModel.getWhiteBall();
+            Vector2d distance =
+                new Vector2d(e.getX() - BORDER_WIDTH, e.getY() - BORDER_HEIGHT).subtract(whiteBall.getPosition());
+            double angle = distance.getAngle();
+
+            gameModel.takeShot(getGameContext().getMyPlayer(), angle, gauge.getValue() * GlobalConstants.MAX_VELOCITY
+                                                                      / 100);
+
+        }
+    }
+
+    public void placeWhiteBall(BallPlacementConstraints c, boolean isFoul)
+    {
+        if (getGameModel().isTurnHolder(getGameContext().getMyPlayer()))
+        {
+
+            placingWhiteBall = true;
+            whiteBallPlacementConstraints = c;
+            if (isFoul)
+            {
+                JOptionPane.showMessageDialog(null, Constants.MSG_PLACE_WHITE_BALL);
+            }
+
+        }
     }
 
 }

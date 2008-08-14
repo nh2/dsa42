@@ -301,4 +301,9 @@ public class Ball implements Serializable
 
         checkVelocity();
     }
+
+    public boolean overlapsWithBallAtPosition(Vector2d position2)
+    {
+        return position.subtract(position2).getSquaredLength() <= 4 * BALL_RADIUS * BALL_RADIUS;
+    }
 }

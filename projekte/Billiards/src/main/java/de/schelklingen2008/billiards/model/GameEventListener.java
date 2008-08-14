@@ -9,11 +9,13 @@ public interface GameEventListener
 
     public void ballPocketed(BallPocketedEvent e);
 
-    public void ballSet(BallSetEvent e);
+    public void ballPlaced(BallPlacedEvent e);
 
     public void ballMappingSet(BallMappingSetEvent e);
 
     public void gameEnded(GameEndEvent e);
+
+    public void gameRestarted();
 
     public void turnHolderChanged(TurnHolderChangeEvent e);
 

@@ -19,15 +19,25 @@ import de.schelklingen2008.billiards.model.Ball.BallType;
 public class BallPanel extends JPanel
 {
 
+    private final class BallPanelGameEventListener extends GameEventAdapter
+    {
+
+        @Override
+        public void ballPocketed(BallPocketedEvent e)
+        {
+            repaint();
+        }
+    }
+
     /**
      * 
      */
     private static final long serialVersionUID = -8866337375992404949L;
-    Controller controller = null;
+    private final Controller controller;
 
-    public BallPanel(Controller controller)
+    public BallPanel(Controller c)
     {
-        this.controller = controller;
+        controller = c;
         setOpaque(false);
 
         controller.addChangeListener(new GameChangeListener()
@@ -35,34 +45,26 @@ public class BallPanel extends JPanel
 
             public void gameChanged()
             {
+                controller.getGameContext().getGameModel().addGameEventListener(new BallPanelGameEventListener());
                 repaint();
             }
 
         });
 
-        controller.getGameContext().getGameModel().addGameEventListener(new GameEventAdapter()
-        {
-
-            @Override
-            public void ballPocketed(BallPocketedEvent e)
-            {
-                repaint();
-            }
-
-        });
+        controller.getGameContext().getGameModel().addGameEventListener(new BallPanelGameEventListener());
     }
 
     @Override
     public Dimension getPreferredSize()
     {
-        return new Dimension(600, 60);
+        return new Dimension(600, 90);
     }
 
     @Override
     public void paint(Graphics g)
     {
-        // TODO Auto-generated method stub
         super.paint(g);
+
         Graphics2D gfx = (Graphics2D) g;
         gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -92,7 +94,7 @@ public class BallPanel extends JPanel
                     gfx.setColor(ball.getColor());
                 }
 
-                gfx.fillOval(i * 50 + 10, j * 50 + 10, 40, 40);
+                gfx.fillOval(i * 50 + 5, j * 50 + 5, 40, 40);
 
                 final int x =
                     (int) Math.round(Math.sqrt(1 - 0.25 * STRIPE_HEIGHT / BALL_RADIUS * STRIPE_HEIGHT / BALL_RADIUS)
@@ -105,15 +107,16 @@ public class BallPanel extends JPanel
                 if (ball.getType() == BallType.STRIPED)
                 {
                     gfx.setColor(ball.getColor());
-                    gfx.fillArc(Math.round(i * 50 + 10), Math.round(j * 50 + 10), (int) Math.round(2 * BALL_RADIUS),
+                    gfx.fillArc(Math.round(i * 50 + 5), Math.round(j * 50 + 5), (int) Math.round(2 * BALL_RADIUS),
                                 (int) Math.round(2 * BALL_RADIUS), -angle, 2 * angle);
 
-                    gfx.fillArc(Math.round(i * 50 + 10), Math.round(j * 50 + 10), (int) Math.round(2 * BALL_RADIUS),
+                    gfx.fillArc(Math.round(i * 50 + 5), Math.round(j * 50 + 5), (int) Math.round(2 * BALL_RADIUS),
                                 (int) Math.round(2 * BALL_RADIUS), 180 - angle, 2 * angle);
-                    gfx.fillRect((int) (i * 50 + 10 - x + BALL_RADIUS), (int) (j * 50 + 10 + BALL_RADIUS - y), 2 * x,
+                    gfx.fillRect((int) (i * 50 + 5 - x + BALL_RADIUS), (int) (j * 50 + 5 + BALL_RADIUS - y), 2 * x,
                                  2 * y);
                 }
             }
         }
     }
+
 }

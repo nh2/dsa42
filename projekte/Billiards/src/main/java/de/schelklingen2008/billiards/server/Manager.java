@@ -9,6 +9,7 @@ import com.threerings.parlor.game.server.GameManager;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Player;
 import de.schelklingen2008.billiards.transport.SharedState;
+import de.schelklingen2008.billiards.util.Vector2d;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
@@ -28,7 +29,7 @@ public class Manager extends GameManager
 
             while (gameModel.isInMotion())
             {
-                gameModel.processTimeStep(0.01d);
+                gameModel.processTimeStep(0.001d);
                 // milliSecondsPassed += 10;
             }
 
@@ -97,6 +98,20 @@ public class Manager extends GameManager
 
         startShotCalculationThread();
 
+    }
+
+    public void placeWhiteBall(BodyObject client, double x, double y)
+    {
+        logger.info(String.format("White ball was placed by %s, sending game state to other clients.", client.username));
+
+        Vector2d position = new Vector2d(x, y);
+
+        if (gameModel.canPlaceWhiteBallAtPosition(position) && gameModel.isTurnHolder(getPlayer(client)))
+        {
+            gameModel.placeWhiteBall(position);
+        }
+
+        updateSharedState();
     }
 
     private void startShotCalculationThread()

@@ -24,6 +24,7 @@ import de.schelklingen2008.billiards.client.Constants;
 import de.schelklingen2008.billiards.client.model.GameContext;
 import de.schelklingen2008.billiards.client.view.BoardView;
 import de.schelklingen2008.billiards.client.view.GamePanel;
+import de.schelklingen2008.billiards.model.BallPlacedEvent;
 import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.ShotEvent;
 import de.schelklingen2008.billiards.transport.SharedState;
@@ -112,7 +113,18 @@ public class Controller extends GameController
                 sharedState.manager.invoke("takeShot", e.getAngle(), e.getVelocity());
             }
 
+            @Override
+            public void ballPlaced(BallPlacedEvent e)
+            {
+                sLogger.info("Invoking placeWhiteBall");
+                sharedState.manager.invoke("placeWhiteBall", e.getBall().getPosition().getX(), e.getBall()
+                                                                                                .getPosition()
+                                                                                                .getY());
+            }
+
         });
+
+        sLogger.info("Receiving new game model.");
 
         fireGameChange();
     }

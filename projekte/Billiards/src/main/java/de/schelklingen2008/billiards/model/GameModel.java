@@ -1,5 +1,6 @@
 package de.schelklingen2008.billiards.model;
 
+import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_X;
 import static de.schelklingen2008.billiards.GlobalConstants.MAX_Y;
 import static de.schelklingen2008.billiards.GlobalConstants.PLAYERS;
@@ -33,17 +34,31 @@ public class GameModel implements Serializable
          */
         private static final long serialVersionUID = -1327349770200883433L;
 
-        private boolean foul, doNotChangeTurnholder;
+        private boolean foul, doNotChangeTurnholder, touchedWallAfterTouchedFirstBall, restartGame;
+        private Ball firstBallTouched;
 
         private void reset()
         {
             foul = false;
             doNotChangeTurnholder = false;
+            firstBallTouched = null;
+            touchedWallAfterTouchedFirstBall = false;
+            restartGame = false;
         }
 
         public void ballCollisionHappened(BallCollisionEvent e)
         {
-
+            if (firstBallTouched == null)
+            {
+                if (e.getBall1().equals(whiteBall))
+                {
+                    firstBallTouched = e.getBall2();
+                }
+                else if (e.getBall1().equals(whiteBall))
+                {
+                    firstBallTouched = e.getBall1();
+                }
+            }
         }
 
         public void ballCollisionImminent(BallCollisionEvent e)
@@ -53,7 +68,7 @@ public class GameModel implements Serializable
 
         public void wallCollisionHappened(WallCollisionEvent e)
         {
-
+            touchedWallAfterTouchedFirstBall = true;
         }
 
         public void wallCollisionImminent(WallCollisionEvent e)
@@ -70,7 +85,7 @@ public class GameModel implements Serializable
             if (ballMappingFixed())
             {
                 ballsOfPlayer = 0;
-                for (Ball ball : getBallsOnTable())
+                for (Ball ball : ballsOnTable)
                 {
                     if (ball.getType().equals(playersBallType))
                     {
@@ -86,7 +101,11 @@ public class GameModel implements Serializable
             if (e.getBall().getType() == Ball.BallType.BLACK)
             {
 
-                if (!ballMappingFixed())
+                if (!breakHasHappened)
+                {
+                    restartGame = true;
+                }
+                else if (!ballMappingFixed())
                 {
                     setWinner(getOtherPlayer(player));
                 }
@@ -147,7 +166,7 @@ public class GameModel implements Serializable
             reset();
         }
 
-        public void ballSet(BallSetEvent e)
+        public void ballPlaced(BallPlacedEvent e)
         {
 
         }
@@ -164,31 +183,77 @@ public class GameModel implements Serializable
 
         public void boardStoppedMoving()
         {
+            if (restartGame)
+            {
+                restartGame();
+            }
+
+            int ballsOfPlayer;
+            Ball.BallType playersBallType = getPlayersBallType(turnHolder);
+            Ball.BallType otherPlayersBallType = getPlayersBallType(getOtherPlayer(turnHolder));
+
+            if (ballMappingFixed())
+            {
+                ballsOfPlayer = 0;
+                for (Ball ball : ballsOnTable)
+                {
+                    if (ball.getType().equals(playersBallType))
+                    {
+                        ballsOfPlayer++;
+                    }
+                }
+            }
+            else
+            {
+                ballsOfPlayer = -1;
+            }
+
+            if (!foul && firstBallTouched == null || !touchedWallAfterTouchedFirstBall || ballMappingFixed()
+                && firstBallTouched.getType().equals(otherPlayersBallType) || ballsOfPlayer == 0
+                && firstBallTouched.getType().equals(BallType.BLACK))
+            {
+                foul = true;
+            }
+
+            if (!doNotChangeTurnholder || foul)
+            {
+                changeTurnHolder();
+            }
+
             if (foul)
             {
-                BallConstraints c;
+                BallPlacementConstraints c;
 
                 if (getWhiteBall().isPocketed() && !breakHasHappened)
                 {
-                    c = new BallConstraints(0, 0, 0.25d * GlobalConstants.MAX_X, 0.5d * GlobalConstants.MAX_Y);
+                    c =
+                        new BallPlacementConstraints(21 + BALL_RADIUS,
+                                                     21 + BALL_RADIUS,
+                                                     0.25d * GlobalConstants.MAX_X,
+                                                     GlobalConstants.MAX_Y - 21 - BALL_RADIUS);
                 }
                 else
                 {
-                    c = new BallConstraints(0, 0, GlobalConstants.MAX_X, GlobalConstants.MAX_Y);
+                    c =
+                        new BallPlacementConstraints(21 + BALL_RADIUS,
+                                                     21 + BALL_RADIUS,
+                                                     GlobalConstants.MAX_X - 21 - BALL_RADIUS,
+                                                     GlobalConstants.MAX_Y - 21 - BALL_RADIUS);
                 }
 
-                placeWhiteBall(c);
-            }
-
-            if (!doNotChangeTurnholder)
-            {
-                changeTurnHolder();
+                placeWhiteBall(c, true);
             }
 
         }
 
         public void ballMappingSet(BallMappingSetEvent e)
         {
+
+        }
+
+        public void gameRestarted()
+        {
+            // TODO Auto-generated method stub
 
         }
 
@@ -224,25 +289,64 @@ public class GameModel implements Serializable
 
     private WhiteBallPlacementHandler whiteBallPlacementHandler;
 
+    private BallPlacementConstraints whiteBallPlacementConstraints;
+
+    private boolean gamePaused;
+
     public boolean isInMotion()
     {
         return inMotion;
     }
 
-    void placeWhiteBall(BallConstraints c)
+    void placeWhiteBall(BallPlacementConstraints c, boolean isFoul)
     {
-        if (whiteBallPlacementHandler == null)
+        whiteBallPlacementConstraints = c;
+        gamePaused = true;
+
+        if (getWhiteBallPlacementHandler() != null)
         {
-            throw new IllegalStateException("No white ball placement handler defined.");
+            getWhiteBallPlacementHandler().placeWhiteBall(c, isFoul);
         }
 
-        resetWhiteBall();
-        Vector2d position = whiteBallPlacementHandler.placeWhiteBall(c);
+    }
 
-        if (!c.checkPosition(position))
+    public boolean isGamePaused()
+    {
+        return gamePaused;
+    }
+
+    public void placeWhiteBall(Vector2d position)
+    {
+
+        gamePaused = false;
+
+        if (whiteBallPlacementConstraints == null)
+        {
+            throw new IllegalStateException("White ball does not have to be placed.");
+        }
+
+        if (!whiteBallPlacementConstraints.checkPosition(position))
         {
             throw new IllegalStateException("White ball placed out of allowed area.");
         }
+
+        if (!canPlaceWhiteBallAtPosition(position))
+        {
+            throw new IllegalStateException("White ball may not touch any other balls when placed.");
+        }
+
+        whiteBall.setPosition(position);
+        whiteBall.setPocketed(false);
+        if (!ballsOnTable.contains(whiteBall))
+        {
+            ballsOnTable.add(whiteBall);
+        }
+
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.ballPlaced(new BallPlacedEvent(whiteBall));
+        }
+
     }
 
     public List<Ball> getBalls()
@@ -252,7 +356,7 @@ public class GameModel implements Serializable
 
     public List<Ball> getBallsOnTable()
     {
-        return ballsOnTable;
+        return new ArrayList<Ball>(ballsOnTable);
     }
 
     private void addPlayers()
@@ -348,8 +452,6 @@ public class GameModel implements Serializable
             throw new IllegalStateException("Player is not the turnholder.");
         }
 
-        breakHasHappened = true;
-
         whiteBall.setVelocity(Vector2d.getPolarVector(angle, velocity));
         inMotion = true;
 
@@ -372,6 +474,15 @@ public class GameModel implements Serializable
 
         setUpGame();
 
+    }
+
+    public void restartGame()
+    {
+        setUpGame();
+        for (GameEventListener listener : gameEventListeners)
+        {
+            listener.gameRestarted();
+        }
     }
 
     private void addRuleManager()
@@ -413,6 +524,10 @@ public class GameModel implements Serializable
             listener.gameStarted();
         }
 
+        placeWhiteBall(new BallPlacementConstraints(21 + BALL_RADIUS, 21 + BALL_RADIUS, 0.25d * MAX_X, MAX_Y - 21
+                                                                                                       - BALL_RADIUS),
+                       false);
+
     }
 
     private void resetBalls()
@@ -427,7 +542,7 @@ public class GameModel implements Serializable
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
         Collections.shuffle(tmpBalls);
 
-        whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
+        ballsOnTable.remove(whiteBall);
         blackBall.setPosition(new Vector2d(0.75d * MAX_X, 0.5d * MAX_Y));
 
         if (tmpBalls.get(tmpBalls.size() - 1).getType().equals(tmpBalls.get(tmpBalls.size() - 5).getType()))
@@ -436,7 +551,7 @@ public class GameModel implements Serializable
                 tmpBalls.get(tmpBalls.size() - 1).getType() == BallType.SOLID ? BallType.STRIPED : BallType.SOLID;
             for (int i = 0; i < tmpBalls.size(); i++)
             {
-                if (tmpBalls.get(i).getType() == ball2Type)
+                if (tmpBalls.get(i).getType().equals(ball2Type))
                 {
                     Collections.swap(tmpBalls, i, tmpBalls.size() - 1);
                     break;
@@ -690,10 +805,13 @@ public class GameModel implements Serializable
         if (!tmpInMotion)
         {
             inMotion = false;
+
             for (GameEventListener listener : gameEventListeners)
             {
                 listener.boardStoppedMoving();
             }
+
+            breakHasHappened = true;
         }
 
     }
@@ -741,9 +859,52 @@ public class GameModel implements Serializable
 
         for (GameEventListener listener : gameEventListeners)
         {
-            listener.ballSet(new BallSetEvent(whiteBall));
+            listener.ballPlaced(new BallPlacedEvent(whiteBall));
         }
 
+    }
+
+    public boolean canPlaceWhiteBallAtPosition(Vector2d position)
+    {
+        if (whiteBallPlacementConstraints == null)
+        {
+            return false;
+        }
+
+        for (Ball ball : ballsOnTable)
+        {
+            if (ball.equals(whiteBall))
+            {
+                continue;
+            }
+
+            if (ball.overlapsWithBallAtPosition(position))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void setWhiteBallPlacementHandler(WhiteBallPlacementHandler whiteBallPlacementHandler)
+    {
+        if (this.whiteBallPlacementHandler == null && whiteBallPlacementHandler != null
+            && whiteBallPlacementConstraints != null)
+        {
+            this.whiteBallPlacementHandler = whiteBallPlacementHandler;
+            getWhiteBallPlacementHandler().placeWhiteBall(whiteBallPlacementConstraints, false);
+        }
+        else
+        {
+            this.whiteBallPlacementHandler = whiteBallPlacementHandler;
+        }
+
+    }
+
+    public WhiteBallPlacementHandler getWhiteBallPlacementHandler()
+    {
+        return whiteBallPlacementHandler;
     }
 
 }

@@ -71,6 +71,8 @@ public class GamePanel extends JPanel implements PlaceView
         BoardView boardView = new BoardView(controller, ballGauge);
         BallPanel ballPanel = new BallPanel(controller);
 
+        boardView.setBackground(new Color(0x6699CC));
+
         box.add(boardView);
         box.add(ballPanel);
         box2.add(box);

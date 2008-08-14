@@ -26,15 +26,15 @@ public class BoardProcessThread extends Thread
             long tick = System.currentTimeMillis();
 
             boardView.repaint();
-            for (int i = 0; i < tick - lastTick; i += 10)
+            for (int i = 0; i < tick - lastTick; i += 1)
             {
-                controller.getGameContext().getGameModel().processTimeStep(0.01d);
+                controller.getGameContext().getGameModel().processTimeStep(0.001d);
             }
             lastTick = tick;
 
             try
             {
-                Thread.sleep(50);
+                Thread.sleep(20);
             }
             catch (InterruptedException e)
             {
