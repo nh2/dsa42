@@ -11,6 +11,7 @@ public class Spieler implements Serializable
     private Blatt        blatt;
     private List<Karte>  gewinnstapel;
     public List<Integer> rundenpunkte;
+    public Team          team;
 
     public Spieler(String name)
     {

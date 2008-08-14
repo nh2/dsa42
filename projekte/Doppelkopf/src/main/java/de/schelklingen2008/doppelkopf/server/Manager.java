@@ -85,6 +85,13 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
+    public void hochzeitErsterFremder(BodyObject client)
+    {
+        Spieler spieler = getPlayer(client);
+
+        gameModel.hochzeitErsterFremderAngefordert(spieler);
+    }
+
     /**
      * Updates the shared state and thus send changes to all clients.
      */

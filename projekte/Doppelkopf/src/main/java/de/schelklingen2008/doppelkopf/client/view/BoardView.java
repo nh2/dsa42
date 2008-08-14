@@ -295,24 +295,9 @@ public class BoardView extends JPanel implements GameChangeListener
             int i = 0;
             for (; i < mitte.size(); i++)
                 mittenPlatzMap.get(spiel.getTisch().getMittenspieler().get(i)).inhalt = new ZeichenKarte(mitte.get(i));
-            // for (; i < mittenKarten.length; i++)
-            // mittenPlatzMap.get(spiel.getTisch().getMittenspieler().get(i)).inhalt = null;
             mitte.clear();
         }
         repaint();
-
-        // if (spiel != null)
-        // {
-        // int x = spiel.getTisch().getMitte().size();
-        // if (spiel.getTisch().getMitte().size() == 4) try
-        // {
-        // Thread.sleep(2000);
-        // }
-        // catch (InterruptedException e)
-        // {
-        // logger.log(Level.SEVERE, "Fehler beim Pausieren.");
-        // }
-        // }
     }
 
     private GameModel getGameModel()

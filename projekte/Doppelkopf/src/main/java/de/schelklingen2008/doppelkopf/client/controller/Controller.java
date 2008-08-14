@@ -164,4 +164,9 @@ public class Controller extends GameController
     {
         sharedState.manager.invoke("karteAusspielen", klickKarte.farbe, klickKarte.bild);
     }
+
+    public void ersterFremderButtonClicked()
+    {
+        sharedState.manager.invoke("hochzeitErsterFremder");
+    }
 }

@@ -16,8 +16,21 @@ public class Tisch implements Serializable
     private Spieler       anDerReihe;
     private int           stichAnzahl;
     private SpielerListe  spielerliste;
-    private Set<Spieler>  re, contra;
-    public int            zusatzpunkte;
+    private Spieler       hochzeitSpieler;
+
+    public Spieler getHochzeitSpieler()
+    {
+        return hochzeitSpieler;
+    }
+
+    public SpielerListe getSpielerliste()
+    {
+        return spielerliste;
+    }
+
+    private Set<Spieler> re, contra;
+    public int           zusatzpunkte;
+    public int           refuchs, contrafuchs;
 
     public Tisch(SpielerListe spielerliste)
     {
@@ -55,10 +68,17 @@ public class Tisch implements Serializable
     {
         for (Spieler p : spielerliste)
             if (p.getBlatt().getKarte(Farbe.Kreuz, Bild.Dame) != null)
+            {
                 re.add(p);
+                p.team = Team.Re;
+            }
             else
+            {
                 contra.add(p);
-
+                p.team = Team.Contra;
+            }
+        // Hochzeit-Spieler ermitteln
+        if (getTeamRe().size() == 1) hochzeitSpieler = getTeamRe().iterator().next();
     }
 
     private Stack<Karte> erzeugeStapel()

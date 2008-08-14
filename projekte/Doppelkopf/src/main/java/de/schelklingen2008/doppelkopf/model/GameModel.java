@@ -14,15 +14,16 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameModel implements Serializable
 {
 
-    private static final Logger logger       = LoggerFactory.create();
+    private static final Logger logger                   = LoggerFactory.create();
 
     private Tisch               tisch;
 
-    private SpielerListe        spielerliste = new SpielerListe();
+    private SpielerListe        spielerliste             = new SpielerListe();
     private Spieler             kommtRaus;
     private boolean             rundeBeendet;
-    private boolean             pause        = false;
-    private List<String>        nachrichten  = new ArrayList<String>();
+    private boolean             pause                    = false;
+    private List<String>        nachrichten              = new ArrayList<String>();
+    private boolean             ersterFremderAngefordert = false;
 
     public GameModel()
     {
@@ -51,24 +52,59 @@ public class GameModel implements Serializable
         addNachricht("Neues Spiel.");
 
         // Spiel starten
-        neuesSpiel();
+        neuesSpiel(true);
     }
 
-    private void neuesSpiel()
+    private void neuesSpiel(boolean rotieren)
     {
         logger.log(Level.INFO, "Starte neues Spiel.");
-        kommtRaus = spielerliste.next();
+        if (rotieren) kommtRaus = spielerliste.next();
         tisch = new Tisch(spielerliste);
         tisch.gibKarten();
 
-        // TODO testen
+        // Fünf oder mehr Neunen
+        // TODO Fünf oder mehr Neunen testen
         for (Spieler p : spielerliste)
+            if (hatFuenfNeunen(p))
+            {
+                neuesSpiel(false);
+                return;
+            }
+
+        // Armut
+        for (Spieler p : spielerliste)
+            if (hatArmut(p))
+            {
+                neuesSpiel(false);
+                return;
+            }
+
+    }
+
+    private boolean hatFuenfNeunen(Spieler p)
+    {
+        int anzahlNeunen = 0;
+        for (Karte k : p.getBlatt().getKarten())
+            if (k.bild == Bild.Neun) anzahlNeunen++;
+        if (anzahlNeunen >= 5)
         {
-            int anzahlNeunen = 0;
-            for (Karte k : p.getBlatt().getKarten())
-                if (k.bild == Bild.Neun) anzahlNeunen++;
-            if (anzahlNeunen >= 5) neuesSpiel();
+            addNachricht(p.toString() + " hat " + anzahlNeunen + " Neunen. Das arme Schwein. Es wird neu gegeben.");
+            return true;
         }
+        return false;
+    }
+
+    private boolean hatArmut(Spieler p)
+    {
+        int anzahlTrumpf = 0;
+        for (Karte k : p.getBlatt().getKarten())
+            if (k.isTrumpf() && !(k.farbe == Farbe.Karo && k.bild == Bild.As)) anzahlTrumpf++;
+        if (anzahlTrumpf < 4)
+        {
+            addNachricht(p.toString() + " hat Armut. Armer Irrer. Es wird neu gegeben.");
+            return true;
+        }
+        return false;
     }
 
     public boolean isFinished()
@@ -132,7 +168,7 @@ public class GameModel implements Serializable
         {
 
             // Zug ausführen
-            addNachricht(spieler.toString() + " legte Karte " + karte.toString() + ".");
+            // addNachricht(spieler.toString() + " legte Karte " + karte.toString() + ".");
             logger.log(Level.INFO, "Gültiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
@@ -154,6 +190,8 @@ public class GameModel implements Serializable
         Spieler stichsieger = tisch.getMittenspieler().get(position);
         stichsieger.getGewinnstapel().addAll(mitte);
 
+        addNachricht(stichsieger.toString() + " gewinnt den Stich. ");
+
         // Doppelkopf
         int punkte = 0;
         for (Karte k : mitte)
@@ -167,13 +205,36 @@ public class GameModel implements Serializable
             addNachricht(stichsieger.toString() + " erzielte einen Doppelkopf!");
         }
 
+        // Füchse
+        // TODO Füchse testen
+        for (int i = 0; i < spielerliste.size(); i++)
+        {
+            if (mitte.get(i).farbe == Farbe.Karo && mitte.get(i).bild == Bild.As)
+            {
+                // Bestimme, wem der Fuchs gehört
+                Spieler fuchsspieler = tisch.getSpielerliste().get(i);
+                if (fuchsspieler.team != stichsieger.team)
+                {
+                    if (stichsieger.team == Team.Re)
+                    {
+                        tisch.zusatzpunkte++;
+                        tisch.refuchs++;
+                    }
+                    else
+                    {
+                        tisch.zusatzpunkte--;
+                        tisch.contrafuchs++;
+                    }
+                }
+            }
+        }
+
         tisch.stichGespielt();
         spielerliste.setAnDerReihe(stichsieger);
 
         if (tisch.getStichAnzahl() == 12) // letzter Stich gespielt
         {
             int rundenpunkte = berechneRundenpunkte(tisch.getRePunkte(), tisch.getContraPunkte());
-            rundenpunkte += tisch.zusatzpunkte;
 
             // Karlchen
             if (hoechsteKarte.istKarte(Farbe.Kreuz, Bild.Bube))
@@ -182,8 +243,16 @@ public class GameModel implements Serializable
                     tisch.zusatzpunkte++;
                 else
                     tisch.zusatzpunkte--;
-                addNachricht(stichsieger.toString() + " hat sich das Karlchen geschnappt!");
+                addNachricht(stichsieger.toString() + " hat mit Karlchen den Stich gemacht!");
             }
+            rundenpunkte += tisch.zusatzpunkte;
+
+            addNachricht("Spiel beendet.");
+
+            if (tisch.refuchs == 1) addNachricht("Team Re hat einen Fuchs gefangen.");
+            if (tisch.refuchs == 2) addNachricht("Team Re hat zwei Füchse gefangen.");
+            if (tisch.contrafuchs == 1) addNachricht("Team Contra hat einen Fuchs gefangen.");
+            if (tisch.contrafuchs == 2) addNachricht("Team Contra hat zwei Füchse gefangen.");
 
             if (tisch.getTeamRe().size() == 1) // Solo
                 for (Spieler p : tisch.getTeamRe())
@@ -196,7 +265,15 @@ public class GameModel implements Serializable
             for (Spieler p : tisch.getTeamContra())
                 p.rundenpunkte.add(-rundenpunkte);
 
-            neuesSpiel();
+            {
+                addNachricht("Das Ergebnis des Spiels:");
+                addNachricht("Re: " + tisch.getRePunkte() + " Punkte, Contra: " + tisch.getContraPunkte() + " Punkte.");
+                String punktenachricht = "";
+                for (Spieler p : spielerliste)
+                    punktenachricht = p.toString() + ": " + p.rundenpunkte.get(p.rundenpunkte.size() - 1) + "  ";
+                addNachricht(punktenachricht);
+            }
+            neuesSpiel(true);
         }
     }
 
@@ -212,6 +289,7 @@ public class GameModel implements Serializable
         {
             if (repunkte != contrapunkte) rundenpunkte--;
             rundenpunkte--; // "Gegen die Alten"
+            addNachricht("Gegen die Alten.");
             rundenpunkte -= (120 - repunkte - 1) / 30;
         }
 
@@ -222,5 +300,13 @@ public class GameModel implements Serializable
     public boolean isPause()
     {
         return pause;
+    }
+
+    public void hochzeitErsterFremderAngefordert(Spieler spieler)
+    {
+        if (tisch.getHochzeitSpieler() == spieler)
+        {
+            ersterFremderAngefordert = true;
+        }
     }
 }
