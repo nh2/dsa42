@@ -48,6 +48,11 @@ public class BoardView extends JPanel implements GameChangeListener
     private boolean[]           isCardSelected;
     private boolean             isDiscardSelected;
 
+    public boolean isDiscardSelected()
+    {
+        return isDiscardSelected;
+    }
+
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
      */

@@ -40,7 +40,7 @@ public class BoardPanel extends JPanel
             {
                 sLogger.info("pressed NewOutlay");
 
-                controller.makeOutlay(view.getSelectedCardNumbers());
+                controller.makeOutlay(view.getSelectedCardNumbers(), view.isDiscardSelected());
             }
         };
 
