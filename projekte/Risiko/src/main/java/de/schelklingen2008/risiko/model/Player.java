@@ -9,11 +9,12 @@ import java.io.Serializable;
 public class Player implements Serializable
 {
 
-    private String name;
-    private int    units;
-    private int    index;
-    private Color  c;
-    private int    unitstoset;
+    private String  name;
+    private int     units;
+    private int     index;
+    private Color   c;
+    private int     unitstoset;
+    private boolean isplaying;
 
     public Player(String pName, int pIndex, Color pColor)
     {
@@ -22,6 +23,17 @@ public class Player implements Serializable
         index = pIndex;
         c = pColor;
         unitstoset = 0;
+        isplaying = true;
+    }
+
+    public boolean IsPlaying()
+    {
+        return isplaying;
+    }
+
+    public void setIsPlaying(boolean b)
+    {
+        isplaying = b;
     }
 
     public Color getPlayerColor()

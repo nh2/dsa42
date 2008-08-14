@@ -92,6 +92,7 @@ public class Controller extends GameController
 
     public void leaveButtonClicked()
     {
+
         toyBoxContext.getLocationDirector().moveBack();
     }
 

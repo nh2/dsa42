@@ -495,7 +495,10 @@ public class GameModel implements Serializable
         turnholderIndex++;
         if (turnholderIndex == getPlayerCount()) turnholderIndex = 0;
         turnholder = p[turnholderIndex];
-
+        if (!turnholder.IsPlaying())
+        {
+            setNextTurnholder();
+        }
         turnholder.setUnitsToSet(getUnitsforPlayer(turnholder));
 
         history[0] = " ";
@@ -705,6 +708,10 @@ public class GameModel implements Serializable
             defender.setOccupier(attacker.getOccupier());
             defender.setUnits(attacker.getUnits() / 2);
             attacker.setUnits(attacker.getUnits() - attacker.getUnits() / 2);
+        }
+        if (defender.getOccupier().getCountrys(c) == 0)
+        {
+            defender.getOccupier().setIsPlaying(false);
         }
         history[0] = "   " + attacker.getName() + "  -  " + defender.getName();
         history[1] = "Verluste  " + attlostunits + "  -  " + deflostunits;
