@@ -103,11 +103,11 @@ public class BoardView extends JPanel implements GameChangeListener
                     sLogger.info("pressed CardStack " + area.getAreaNumber());
                     controller.cardStackClicked(getSelectedCardNumbers(), area.getAreaNumber());
                 }
-                else if (area.getName().equals("NewOutlay"))
-                {
-                    sLogger.info("pressed NewOutlay");
-                    controller.makeOutlay(getSelectedCardNumbers());
-                }
+                // else if (area.getName().equals("NewOutlay"))
+                // {
+                // sLogger.info("pressed NewOutlay");
+                // controller.makeOutlay(getSelectedCardNumbers());
+                // }
                 else if (area.getName().equals("Discard"))
                 {
                     /**
@@ -474,9 +474,12 @@ public class BoardView extends JPanel implements GameChangeListener
 
         if (getGameContext().getMyPlayer() == player)
         {
-            areas.add(new SensitiveArea("NewOutlay", x, y, 5, 5));
-            gfx.setPaint(new Color(0xFF00FF));
-            gfx.drawRect(x, y, 5, 5);
+            // TODO irgendwas
+
+            // areas.add(new SensitiveArea("NewOutlay", x, y, 5, 5));
+            // gfx.setPaint(new Color(0xFF00FF));
+            // gfx.drawRect(x, y, 5, 5);
+
         }
 
         // some debugging
