@@ -7,9 +7,11 @@ public interface GameEventListener
 
     public void shotTaken(ShotEvent e);
 
-    public void ballSunk(BallSunkEvent e);
+    public void ballPocketed(BallPocketedEvent e);
 
     public void ballSet(BallSetEvent e);
+
+    public void ballMappingSet(BallMappingSetEvent e);
 
     public void gameEnded(GameEndEvent e);
 

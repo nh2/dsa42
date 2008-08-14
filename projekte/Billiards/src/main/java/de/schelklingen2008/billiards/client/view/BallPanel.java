@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.model.Ball;
-import de.schelklingen2008.billiards.model.BallSunkEvent;
+import de.schelklingen2008.billiards.model.BallPocketedEvent;
 import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 
-public class BallView extends JPanel
+public class BallPanel extends JPanel
 {
 
     /**
@@ -25,7 +25,7 @@ public class BallView extends JPanel
     private static final long serialVersionUID = -8866337375992404949L;
     Controller controller = null;
 
-    public BallView(Controller controller)
+    public BallPanel(Controller controller)
     {
         this.controller = controller;
         setOpaque(false);
@@ -44,7 +44,7 @@ public class BallView extends JPanel
         {
 
             @Override
-            public void ballSunk(BallSunkEvent e)
+            public void ballPocketed(BallPocketedEvent e)
             {
                 repaint();
             }
@@ -78,7 +78,7 @@ public class BallView extends JPanel
             for (int j = 0; j < 2; j++)
             {
                 Ball ball = gameModel.getBalls().get(i * 2 + j + 2);
-                if (ball.isSunk())
+                if (ball.isPocketed())
                 {
                     continue;
                 }

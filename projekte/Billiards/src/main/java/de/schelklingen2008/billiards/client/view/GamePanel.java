@@ -69,10 +69,10 @@ public class GamePanel extends JPanel implements PlaceView
 
         BallGauge ballGauge = new BallGauge();
         BoardView boardView = new BoardView(controller, ballGauge);
-        BallView ballView = new BallView(controller);
+        BallPanel ballPanel = new BallPanel(controller);
 
         box.add(boardView);
-        box.add(ballView);
+        box.add(ballPanel);
         box2.add(box);
         box2.add(Box.createHorizontalStrut(5));
         box2.add(ballGauge);

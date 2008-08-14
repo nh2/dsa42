@@ -93,7 +93,7 @@ public class Ball implements Serializable
     private Color color;
     private Vector2d position;
     private Vector2d velocity;
-    private boolean sunk;
+    private boolean pocketed;
 
     public Ball(BallType type, Color color)
     {
@@ -144,14 +144,14 @@ public class Ball implements Serializable
         this.velocity = velocity;
     }
 
-    public boolean isSunk()
+    public boolean isPocketed()
     {
-        return sunk;
+        return pocketed;
     }
 
-    void setSunk(boolean sunk)
+    void setPocketed(boolean pocketed)
     {
-        this.sunk = sunk;
+        this.pocketed = pocketed;
     }
 
     double getNextBallCollision(Ball other)

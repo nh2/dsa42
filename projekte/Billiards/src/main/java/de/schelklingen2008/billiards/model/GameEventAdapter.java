@@ -3,7 +3,7 @@ package de.schelklingen2008.billiards.model;
 public class GameEventAdapter implements GameEventListener
 {
 
-    public void ballSunk(BallSunkEvent e)
+    public void ballPocketed(BallPocketedEvent e)
     {
 
     }
@@ -34,6 +34,11 @@ public class GameEventAdapter implements GameEventListener
     }
 
     public void boardStoppedMoving()
+    {
+
+    }
+
+    public void ballMappingSet(BallMappingSetEvent e)
     {
 
     }

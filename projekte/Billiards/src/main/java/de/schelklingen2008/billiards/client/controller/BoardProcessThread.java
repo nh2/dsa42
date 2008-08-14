@@ -1,16 +1,12 @@
 package de.schelklingen2008.billiards.client.controller;
 
-import java.util.logging.Logger;
-
 import de.schelklingen2008.billiards.client.view.BoardView;
-import de.schelklingen2008.util.LoggerFactory;
 
 public class BoardProcessThread extends Thread
 {
 
     private Controller controller;
     private BoardView boardView;
-    private Logger logger = LoggerFactory.create();
 
     public BoardProcessThread(Controller controller, BoardView boardView)
     {

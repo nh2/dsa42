@@ -207,7 +207,7 @@ public class BoardView extends JPanel implements GameChangeListener
         GameModel gameModel = getGameModel();
 
         Ball whiteBall = gameModel.getWhiteBall();
-        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion() && !whiteBall.isSunk()
+        if (gameModel.isTurnHolder(getGameContext().getMyPlayer()) && !gameModel.isInMotion() && !whiteBall.isPocketed()
             && !gameModel.isInMotion() && cursorPosX != -1)
         {
             gfx.drawLine((int) Math.round(whiteBall.getPosition().getX() + BORDER_WIDTH),

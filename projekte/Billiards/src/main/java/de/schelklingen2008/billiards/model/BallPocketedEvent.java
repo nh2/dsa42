@@ -1,12 +1,12 @@
 package de.schelklingen2008.billiards.model;
 
-public class BallSunkEvent
+public class BallPocketedEvent
 {
 
     private final Ball ball;
     private final Player player;
 
-    public BallSunkEvent(Ball ball, Player player)
+    public BallPocketedEvent(Ball ball, Player player)
     {
         this.ball = ball;
         this.player = player;

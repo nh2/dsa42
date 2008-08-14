@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+import de.schelklingen2008.billiards.GlobalConstants;
 import de.schelklingen2008.billiards.model.Ball.BallType;
 import de.schelklingen2008.billiards.util.Vector2d;
 
@@ -32,12 +33,11 @@ public class GameModel implements Serializable
          */
         private static final long serialVersionUID = -1327349770200883433L;
 
-        private boolean foul, resetWhiteBall, doNotChangeTurnholder;
+        private boolean foul, doNotChangeTurnholder;
 
         private void reset()
         {
             foul = false;
-            resetWhiteBall = false;
             doNotChangeTurnholder = false;
         }
 
@@ -61,7 +61,7 @@ public class GameModel implements Serializable
 
         }
 
-        public void ballSunk(BallSunkEvent e)
+        public void ballPocketed(BallPocketedEvent e)
         {
             Player player = e.getPlayer();
             Ball.BallType playersBallType = getPlayersBallType(player);
@@ -135,21 +135,6 @@ public class GameModel implements Serializable
                 }
             }
 
-            if (getWhiteBall().isSunk())
-            {
-                resetWhiteBall = true;
-            }
-
-            if (foul)
-            {
-                // TODO Handle fouls
-            }
-
-            if (resetWhiteBall)
-            {
-                resetWhiteBall();
-            }
-
         }
 
         public void gameStarted()
@@ -179,15 +164,32 @@ public class GameModel implements Serializable
 
         public void boardStoppedMoving()
         {
-            if (resetWhiteBall)
+            if (foul)
             {
-                resetWhiteBall();
+                BallConstraints c;
+
+                if (getWhiteBall().isPocketed() && !breakHasHappened)
+                {
+                    c = new BallConstraints(0, 0, 0.25d * GlobalConstants.MAX_X, 0.5d * GlobalConstants.MAX_Y);
+                }
+                else
+                {
+                    c = new BallConstraints(0, 0, GlobalConstants.MAX_X, GlobalConstants.MAX_Y);
+                }
+
+                placeWhiteBall(c);
             }
 
             if (!doNotChangeTurnholder)
             {
                 changeTurnHolder();
             }
+
+        }
+
+        public void ballMappingSet(BallMappingSetEvent e)
+        {
+
         }
 
     }
@@ -220,9 +222,27 @@ public class GameModel implements Serializable
 
     protected Player winner;
 
+    private WhiteBallPlacementHandler whiteBallPlacementHandler;
+
     public boolean isInMotion()
     {
         return inMotion;
+    }
+
+    void placeWhiteBall(BallConstraints c)
+    {
+        if (whiteBallPlacementHandler == null)
+        {
+            throw new IllegalStateException("No white ball placement handler defined.");
+        }
+
+        resetWhiteBall();
+        Vector2d position = whiteBallPlacementHandler.placeWhiteBall(c);
+
+        if (!c.checkPosition(position))
+        {
+            throw new IllegalStateException("White ball placed out of allowed area.");
+        }
     }
 
     public List<Ball> getBalls()
@@ -378,7 +398,7 @@ public class GameModel implements Serializable
 
         for (Ball ball : balls)
         {
-            ball.setSunk(false);
+            ball.setPocketed(false);
         }
 
         ballsOnTable.clear();
@@ -401,7 +421,7 @@ public class GameModel implements Serializable
         for (Ball ball : balls)
         {
             ball.setVelocity(Vector2d.ZERO);
-            ball.setSunk(false);
+            ball.setPocketed(false);
         }
 
         List<Ball> tmpBalls = new ArrayList<Ball>(balls);
@@ -440,18 +460,25 @@ public class GameModel implements Serializable
     {
         playersBallTypes = new HashMap<Player, BallType>();
         playersBallTypes.put(player, ballType);
+
+        Player otherPlayer = getOtherPlayer(player);
+        Ball.BallType otherPlayersBalls;
+
         if (ballType == Ball.BallType.SOLID)
         {
-            playersBallTypes.put(getOtherPlayer(player), Ball.BallType.STRIPED);
+            otherPlayersBalls = Ball.BallType.STRIPED;
         }
         else
         {
-            playersBallTypes.put(getOtherPlayer(player), Ball.BallType.SOLID);
+            otherPlayersBalls = Ball.BallType.SOLID;
         }
+
+        playersBallTypes.put(player, ballType);
+        playersBallTypes.put(otherPlayer, otherPlayersBalls);
 
         for (GameEventListener listener : gameEventListeners)
         {
-            listener.ballMappingSet(new BallMappingSetEvent(player, ballType));
+            listener.ballMappingSet(new BallMappingSetEvent(player, otherPlayer, ballType, otherPlayersBalls));
         }
     }
 
@@ -477,12 +504,12 @@ public class GameModel implements Serializable
         return player.equals(turnHolder);
     }
 
-    private void sinkBall(Ball ball)
+    private void pocketBall(Ball ball)
     {
-        ball.setSunk(true);
+        ball.setPocketed(true);
         for (GameEventListener listener : gameEventListeners)
         {
-            listener.ballSunk(new BallSunkEvent(ball, turnHolder));
+            listener.ballPocketed(new BallPocketedEvent(ball, turnHolder));
         }
     }
 
@@ -536,7 +563,7 @@ public class GameModel implements Serializable
             {
                 if (hole.ballIsSunk(ball))
                 {
-                    sinkBall(ball);
+                    pocketBall(ball);
                     ballIterator.remove();
                     break;
                 }
@@ -678,7 +705,13 @@ public class GameModel implements Serializable
 
     void setWinner(Player player)
     {
+        if (winner == null)
+        {
+            return;
+        }
+
         winner = player;
+        turnHolder = null;
         for (GameEventListener listener : gameEventListeners)
         {
             listener.gameEnded(new GameEndEvent(winner));
@@ -697,13 +730,13 @@ public class GameModel implements Serializable
 
     void resetWhiteBall()
     {
-        if (!whiteBall.isSunk())
+        if (!whiteBall.isPocketed())
         {
             return;
         }
 
         whiteBall.setPosition(new Vector2d(0.25d * MAX_X, 0.5d * MAX_Y));
-        whiteBall.setSunk(false);
+        whiteBall.setPocketed(false);
         ballsOnTable.add(whiteBall);
 
         for (GameEventListener listener : gameEventListeners)
