@@ -102,9 +102,9 @@ public class Manager extends GameManager
     private Player getPlayer(BodyObject client)
     {
         String clientName = client.username.toString();
-        for (Iterator iterator = gameModel.getPlayerList().iterator(); iterator.hasNext();)
+        for (Iterator<Player> iterator = gameModel.getPlayerList().iterator(); iterator.hasNext();)
         {
-            Player player = (Player) iterator.next();
+            Player player = iterator.next();
             if (player.getName().equals(clientName)) return player;
         }
         throw new IllegalStateException("did not find player: " + clientName);
