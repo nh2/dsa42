@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.samskivert.swing.GroupLayout;
@@ -18,12 +19,16 @@ import com.threerings.toybox.client.ToyBoxUI;
 
 import de.schelklingen2008.dasverruecktelabyrinth.client.Constants;
 import de.schelklingen2008.dasverruecktelabyrinth.client.controller.Controller;
+import de.schelklingen2008.dasverruecktelabyrinth.client.model.GameContext;
+import de.schelklingen2008.dasverruecktelabyrinth.model.GameModel;
 
 /**
  * Contains the primary client interface for the game.
  */
 public class GamePanel extends JPanel implements PlaceView
 {
+
+    private Controller controller;
 
     private class ActionListenerImplementation implements ActionListener
     {
@@ -46,6 +51,9 @@ public class GamePanel extends JPanel implements PlaceView
      */
     public GamePanel(Controller controller)
     {
+
+        this.controller = controller;
+
         LabyPlusPlayerPanel labyPlusPP = new LabyPlusPlayerPanel(controller);
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -66,6 +74,13 @@ public class GamePanel extends JPanel implements PlaceView
         vlabel.setAntiAliased(true);
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
+
+        // add the player's name
+        JLabel playersName = new JLabel("You Are: " + getGameContext().getMyName());
+        playersName.setBackground(Color.WHITE);
+        playersName.setBorder(BorderFactory.createLineBorder(Color.black));
+        sidePanel.add(playersName, GroupLayout.FIXED);
+        playersName.setOpaque(true);
 
         // add a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
@@ -97,4 +112,15 @@ public class GamePanel extends JPanel implements PlaceView
     public void willEnterPlace(PlaceObject placeObject)
     {
     }
+
+    private GameContext getGameContext()
+    {
+        return controller.getGameContext();
+    }
+
+    private GameModel getGameModel()
+    {
+        return getGameContext().getGameModel();
+    }
+
 }
