@@ -289,6 +289,7 @@ public class GameModel implements Serializable
         phase++;
         highestBet = 0;
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 1);
+        if (playerList.get(actPlayerIndex).hasLost()) actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
         highestBetIndex = actPlayerIndex;
         for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext();)
         {
@@ -422,6 +423,7 @@ public class GameModel implements Serializable
         fillStack();
         for (Player player : playerList)
         {
+            if (player.getBalance() == 0) player.setLost(true);
             player.setOwnBet(0);
             player.setAllIn(false);
             player.setCard1(null);
