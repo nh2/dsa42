@@ -94,25 +94,39 @@ public class Controller extends GameController
             sLogger.info("Ich bin nicht dran!");
             return;
         }
+        if (gameContext.getGameModel().hasDrawn())
+        {
+            sLogger.info("Es wurde schon eine Karte gezogen!");
+            return;
+        }
         sharedState.manager.invoke("drawCard");
     }
 
-    public void discardClicked(int[] selectedCardNumbers)
+    public void discardClicked(int[] selectedCardNumbers, boolean isDiscardSelected)
     {
-        if (!gameContext.isMyTurn())
+        if (gameContext.getGameModel().hasDrawn())
         {
-            sLogger.info("Ich bin nicht dran!");
-            return;
-        }
+            // discard card
+            if (!gameContext.isMyTurn())
+            {
+                sLogger.info("Ich bin nicht dran!");
+                return;
+            }
 
-        if (selectedCardNumbers.length != 1)
+            if (selectedCardNumbers.length != 1)
+            {
+                sLogger.info("Select exactly one card please!");
+                sLogger.info(Arrays.toString(selectedCardNumbers));
+                return;
+            }
+
+            sharedState.manager.invoke("discardCard", selectedCardNumbers[0]);
+        }
+        else
         {
-            sLogger.info("selectedCards contains multiple cards!");
-            sLogger.info(Arrays.toString(selectedCardNumbers));
-            return;
-        }
+            // pick up pile
 
-        sharedState.manager.invoke("discardCard", selectedCardNumbers[0]);
+        }
     }
 
     public void makeOutlay(int[] selectedCardNumbers)

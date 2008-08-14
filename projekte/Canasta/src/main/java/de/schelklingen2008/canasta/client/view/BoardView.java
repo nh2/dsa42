@@ -46,6 +46,7 @@ public class BoardView extends JPanel implements GameChangeListener
     private List<SensitiveArea> areas   = new ArrayList<SensitiveArea>();
 
     private boolean[]           isCardSelected;
+    private boolean             isDiscardSelected;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -89,13 +90,8 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 if (area.getName().equals("Talon"))
                 {
-                    if (!getGameModel().hasDrawn())
-                    {
-                        sLogger.info("pressed Talon");
-                        controller.talonClicked();
-                    }
-                    else
-                        sLogger.info("only one card from talon each turn");
+                    sLogger.info("pressed Talon");
+                    controller.talonClicked();
                 }
                 else if (area.getName().equals("HandCard"))
                 {
@@ -118,8 +114,16 @@ public class BoardView extends JPanel implements GameChangeListener
                      * TODO the discard pile cannot be picked up
                      */
                     sLogger.info("pressed Discard");
-
-                    controller.discardClicked(getSelectedCardNumbers());
+                    if (getGameModel().hasDrawn())
+                    {
+                        controller.discardClicked(getSelectedCardNumbers(), isDiscardSelected);
+                    }
+                    else
+                    {
+                        isDiscardSelected = !isDiscardSelected;
+                        repaint();
+                    }
+                    sLogger.info(((Boolean) isDiscardSelected).toString());
                 }
                 else
                 {
@@ -512,7 +516,13 @@ public class BoardView extends JPanel implements GameChangeListener
         }
         else
         {
-            gfx.drawImage(getCardImage(topCard, 50, false), 350, 380, null);
+            BufferedImage cardImage = getCardImage(topCard, 50, false);
+            if (isDiscardSelected)
+            {
+                gfx.setColor(new Color(0xFFFF00));
+                gfx.fillRect(345, 375, cardImage.getWidth() + 10, cardImage.getHeight() + 10);
+            }
+            gfx.drawImage(cardImage, 350, 380, null);
         }
 
         areas.add(new SensitiveArea("Discard", 350, 380, 50, 71));

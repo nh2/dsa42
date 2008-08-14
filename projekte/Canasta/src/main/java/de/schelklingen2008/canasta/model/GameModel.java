@@ -199,17 +199,24 @@ public class GameModel implements Serializable
         if (cards.length <= 0) return false;
 
         Rank rank = GameModel.getRank(cards);
-        if (!rank.isWildcard() && rank != cardStack.getRank())
-        {
-            return false;
-        }
+        boolean isJokerCountOk = (Card.getJokerCount(cards) + cardStack.getJokerCount()) * 2 < cardStack.size()
+                                                                                               + cards.length;
 
-        if ((Card.getJokerCount(cards) + cardStack.getJokerCount()) * 2 >= cardStack.size() + cards.length)
+        if (rank.isWildcard())
         {
-            return false;
+            if (isJokerCountOk)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-
-        return true;
+        else
+        {
+            return isJokerCountOk && rank == cardStack.getRank();
+        }
     }
 
     public static Rank getRank(Card[] cards)
