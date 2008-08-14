@@ -167,11 +167,15 @@ public class BoardView extends JPanel implements GameChangeListener
         gfx.setColor(Color.BLACK);
         for (int i = 0; i < getGameModel().getCountryArray().length; i++)
         {
+            gfx.setColor(Color.BLACK);
             int lUnits = getGameModel().getCountry(i).getUnits();
             gfx.drawString("" + lUnits + " " + getGameModel().getCountry(i).getOccupier().getPlayerName(),
                            getGameModel().getCountry(i).getPositionNameX(), getGameModel().getCountry(i)
                                                                                           .getPositionNameY() + 10);
+            gfx.setColor(getGameModel().getCountry(i).getOccupier().getPlayerColor());
+            gfx.fillOval(getGameModel().getCountry(i).getPositionNameX() - 10, getGameModel().getCountry(i)
+                                                                                             .getPositionNameY() + 2,
+                         10, 10);
         }
     }
-
 }

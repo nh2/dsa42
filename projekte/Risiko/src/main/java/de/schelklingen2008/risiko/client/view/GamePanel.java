@@ -145,7 +145,11 @@ public class GamePanel extends JPanel implements PlaceView, GameChangeListener
         if (controller.getGameContext().getGameModel().getnewHistory()[0] != null)
         {
             addHistoryLine(controller.getGameContext().getGameModel().getnewHistory()[0]);
-            addHistoryLine(controller.getGameContext().getGameModel().getnewHistory()[1]);
+            if (controller.getGameContext().getGameModel().getnewHistory()[1] != null)
+            {
+                addHistoryLine(controller.getGameContext().getGameModel().getnewHistory()[1]);
+            }
+
             controller.getGameContext().getGameModel().removenewHistory();
         }
 

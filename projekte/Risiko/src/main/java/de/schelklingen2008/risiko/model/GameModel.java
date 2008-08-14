@@ -35,9 +35,13 @@ public class GameModel implements Serializable
         distributeCountrys();
 
         history = new String[2];
+
         turnholderIndex = 0;
         turnholder = p[0];
-        p[0].setUnitsToSet(5);
+        p[0].setUnitsToSet(4);
+
+        history[0] = "-         " + turnholder.getPlayerName() + "         -";
+        history[1] = null;
     }
 
     private void initAreas()
@@ -166,7 +170,7 @@ public class GameModel implements Serializable
     {
         c[0] = new Country("Island", 0, 90, 160, 255, 255, 0);
         c[1] = new Country("Irland", 1, 128, 498, 216, 230, 40);
-        c[2] = new Country("Groﬂbritanien", 2, 210, 518, 248, 199, 5);
+        c[2] = new Country("Groﬂbritannien", 2, 210, 518, 248, 199, 5);
         c[3] = new Country("Norwegen", 3, 378, 307, 74, 37, 0);
         c[4] = new Country("Finnland", 4, 578, 253, 199, 98, 31);
         c[5] = new Country("Schweden", 5, 467, 346, 128, 128, 0);
@@ -494,6 +498,9 @@ public class GameModel implements Serializable
         turnholder = p[turnholderIndex];
 
         turnholder.setUnitsToSet(getUnitsforPlayer(turnholder));
+
+        history[0] = " ";
+        history[1] = "-         " + turnholder.getPlayerName() + "         -";
     }
 
     public Player valueOf(int playerIndex)
@@ -612,6 +619,10 @@ public class GameModel implements Serializable
     {
         c.setUnits(c.getUnits() + 1);
         c.getOccupier().setUnitsToSet(c.getOccupier().getUnitsToSet() - 1);
+
+        history[0] = "Setzt eine Einheit auf " + c.getName();
+        history[1] = null;
+
     }
 
     public void attack(Country attacker, Country defender)

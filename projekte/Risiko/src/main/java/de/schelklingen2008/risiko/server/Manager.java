@@ -38,7 +38,9 @@ public class Manager extends GameManager
         }
         gameModel = new GameModel(names);
         gameModel.getCountryArray()[0].setOccupier(gameModel.getPlayerArray()[0]);
+
         updateSharedState();
+        gameModel.removenewHistory();
     }
 
     /**
@@ -53,6 +55,7 @@ public class Manager extends GameManager
     {
         gameModel.placeUnit(gameModel.getCountry(index));
         updateSharedState();
+        gameModel.removenewHistory();
     }
 
     public void EndofTurn(BodyObject client)
@@ -60,6 +63,7 @@ public class Manager extends GameManager
 
         gameModel.setNextTurnholder();
         updateSharedState();
+        gameModel.removenewHistory();
     }
 
     public void moveUnit(BodyObject client, int fromindex, int toindex)

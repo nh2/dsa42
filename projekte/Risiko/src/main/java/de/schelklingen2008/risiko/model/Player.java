@@ -29,6 +29,11 @@ public class Player implements Serializable
         return c;
     }
 
+    public void setPlayerColor(Color c)
+    {
+        this.c = c;
+    }
+
     public int getPlayerIndex()
 
     {
