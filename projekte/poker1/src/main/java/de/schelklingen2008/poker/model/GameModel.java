@@ -316,6 +316,9 @@ public class GameModel implements Serializable
     public void computeWinner()
     {
         int highestPattern = 0;
+        int highestValue1 = -1;
+        int highestValue2 = -1;
+
         for (Iterator iterator = playerList.iterator(); iterator.hasNext();) // herausfinden, wie hoch das
         // höchste Pattern ist
         {
@@ -328,7 +331,11 @@ public class GameModel implements Serializable
                 cards.add(player.getCard2());
                 System.out.println(cards.size());
                 PatternChecker checker = new PatternChecker(cards);
-                if (checker.getHighestPatternValue() > highestPattern) highestPattern = checker.getHighestPatternValue();
+                if (checker.getHighestPatternValue() > highestPattern)
+                {
+                    highestPattern = checker.getHighestPatternValue();
+                    highestValue1 = checker.getPairCard1();
+                }
             }
         }
 
@@ -348,6 +355,7 @@ public class GameModel implements Serializable
                 PatternChecker checker = new PatternChecker(cards);
                 if (checker.getHighestPatternValue() == highestPattern)
                 {
+
                     winnerList.add(player);
                 }
             }

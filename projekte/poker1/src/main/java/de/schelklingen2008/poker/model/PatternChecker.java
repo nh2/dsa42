@@ -8,12 +8,13 @@ public class PatternChecker
 
     // private static final int PAIR = 2;
     // private static final int FOUR_OF_A_KIND = 8;
-    private static final int ANZAHL  = 7;
-    public int               counter = 0;
+    private static final int ANZAHL       = 7;
+    public int               counter      = 0;
     private List<Card>       cards;
 
-    private int              value1  = -1;
-    private int              value2  = -1;
+    private int              pairCard1    = -1;
+    private int              pairCard2    = -1;
+    private int              straightCard = -1;
 
     public PatternChecker(List<Card> cards)
     {
@@ -115,7 +116,7 @@ public class PatternChecker
                 if (pairFound)
                     return false;
                 else
-                    value1 = i;
+                    pairCard1 = i;
                 pairFound = true;
             }
         }
@@ -131,10 +132,10 @@ public class PatternChecker
             if (getCount(i) == 2)
             {
                 pairCounter++;
-                if (value1 == -1)
-                    value1 = i;
+                if (pairCard1 == -1)
+                    pairCard1 = i;
                 else
-                    value2 = i;
+                    pairCard2 = i;
             }
         }
         if (pairCounter == 2) return true; // falls es genau zwei Pärchen gibt
@@ -152,7 +153,10 @@ public class PatternChecker
                 if (toakFound)
                     return false;
                 else
+                {
+                    pairCard2 = i;
                     toakFound = true;
+                }
             }
         }
         return toakFound;
@@ -169,7 +173,11 @@ public class PatternChecker
                 if (foakFound)
                     return false;
                 else
+                {
+                    pairCard1 = i;
                     foakFound = true;
+                }
+
             }
         }
         return foakFound;
@@ -196,9 +204,21 @@ public class PatternChecker
 
     public boolean isStraight()
     {
-        if (straight(0, 5)) return true;
-        if (straight(1, 5)) return true;
-        if (straight(2, 5)) return true;
+        if (straight(0, 5))
+        {
+            straightCard = cards.get(0).getValueInt();
+            return true;
+        }
+        if (straight(1, 5))
+        {
+            straightCard = cards.get(1).getValueInt();
+            return true;
+        }
+        if (straight(2, 5))
+        {
+            straightCard = cards.get(2).getValueInt();
+            return true;
+        }
         return false;
     }
 
@@ -261,6 +281,21 @@ public class PatternChecker
 
         return i;
 
+    }
+
+    public int getPairCard1()
+    {
+        return pairCard1;
+    }
+
+    public int getPairCard2()
+    {
+        return pairCard2;
+    }
+
+    public int getStraightCard()
+    {
+        return straightCard;
     }
 
 }
