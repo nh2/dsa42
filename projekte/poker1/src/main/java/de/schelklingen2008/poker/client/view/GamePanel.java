@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
-        sidePanel.add(historyPanel);
+        // sidePanel.add(historyPanel);
 
         // add a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
