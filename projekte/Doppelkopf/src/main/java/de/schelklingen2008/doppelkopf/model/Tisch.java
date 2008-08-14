@@ -48,6 +48,10 @@ public class Tisch implements Serializable
 
     public void gibKarten()
     {
+        // TODO Spielerkarten leeren!
+        for (Spieler p : spielerliste)
+            p.getBlatt().getKarten().clear();
+
         Stack<Karte> stapel = erzeugeStapel(); // Ausgabekartenstapel erzeugen
         mischeStapel(stapel); // Stapel mischen
         for (Karte k : stapel)

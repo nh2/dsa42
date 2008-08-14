@@ -229,16 +229,16 @@ public class GameModel implements Serializable
             }
         }
 
+        if (tisch.getStichAnzahl() > 3)
+        {
+            Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
+            hochzeitSpieler = null;
+        }
+
         // Hochzeit: erster Fremder verarbeiten
         if (ersterFremderAngefordert)
         {
-            if (tisch.getStichAnzahl() > 3)
-            {
-                ersterFremderAngefordert = false;
-                Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
-                hochzeitSpieler = null;
-            }
-            else if (stichsieger != tisch.getHochzeitSpieler())
+            if (stichsieger != tisch.getHochzeitSpieler())
             {
                 tisch.getTeamRe().add(stichsieger);
                 stichsieger.team = Team.Re;

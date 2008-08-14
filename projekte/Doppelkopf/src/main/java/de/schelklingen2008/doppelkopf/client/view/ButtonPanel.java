@@ -57,6 +57,7 @@ public class ButtonPanel extends JPanel implements GameChangeListener
         nachrichtenBox.setText(inhalt);
 
         // Hochzeitsbutton
+        remove(hochzeitButton);
         if (spiel.getTisch().getHochzeitSpieler() == ich) add(hochzeitButton);
     }
 
