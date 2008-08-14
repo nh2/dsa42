@@ -127,17 +127,33 @@ public class BoardView extends JPanel implements GameChangeListener
             {
                 actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_TURNHOLDER)));
             }
+            else
+            {
+                actPlayerPanel.add(createLabel(""));
+            }
             if (!getGameModel().getPlayerList().get(i).isStillIn())
             {
                 actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_FOLDED)));
+            }
+            else
+            {
+                actPlayerPanel.add(createLabel(""));
             }
             if (getGameModel().getPlayerList().get(i).isStillIn() && model.getPlayerList().get(i).getBalance() == 0)
             {
                 actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_ALLIN)));
             }
+            else
+            {
+                actPlayerPanel.add(createLabel(""));
+            }
             if (model.getPlayerList().get(i).hasLost())
             {
                 actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_LOST)));
+            }
+            else
+            {
+                actPlayerPanel.add(createLabel(""));
             }
 
             JPanel actPlayerCardPanel = new JPanel();
@@ -175,29 +191,28 @@ public class BoardView extends JPanel implements GameChangeListener
         List<Card> cardList = model.getCardList();
         for (Card card : cardList)
         {
-            JLabel cardLabel = createLabel("");
-            cardLabel.setIcon(iconBuffer[card.getSuitInt()][card.getValueInt()]);
-            cardPanel.add(cardLabel);
+            cardPanel.add(createLabel(iconBuffer[card.getSuitInt()][card.getValueInt()]));
             cardPanel.add(Box.createHorizontalStrut(5));
         }
         for (int i = cardList.size(); i < 5; i++)
         {
-            JLabel cardLabel = createLabel("");
-            cardLabel.setIcon(iconBack);
-            cardPanel.add(cardLabel);
+            cardPanel.add(createLabel(iconBack));
             cardPanel.add(Box.createHorizontalStrut(5));
         }
 
         potPanel.add(Box.createVerticalStrut(30));
         if (model.getPhase() != 4)
-            potPanel.add(createLabel(model.getPot() + controller.getMessage(Constants.MSG_EUROS_IN_POT)));
+            potPanel.add(createLabel(model.getPot() + " " + controller.getMessage(Constants.MSG_EUROS_IN_POT)));
         else
         {
             for (Player player : model.getWinnerList())
             {
                 potPanel.add(createLabel(player.getName()
+                                         + " "
                                          + controller.getMessage(Constants.MSG_WON)
+                                         + " "
                                          + model.getWinnerValue()
+                                         + " "
                                          + controller.getMessage(Constants.MSG_EUROS)));
             }
         }
@@ -209,10 +224,7 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(createLabel(getMyPlayer().getName()
-                                    + ": "
-                                    + controller.getMessage(Constants.MSG_YOUR_CARDS)
-                                    + ":"));
+        myCardPanel.add(createLabel(getMyPlayer().getName() + ": " + controller.getMessage(Constants.MSG_YOUR_CARDS)));
         myCardPanel.add(Box.createVerticalStrut(5));
         myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
@@ -233,6 +245,7 @@ public class BoardView extends JPanel implements GameChangeListener
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(createLabel(model.getHighestBet()
                                     - getMyPlayer().getOwnBet()
+                                    + " "
                                     + controller.getMessage(Constants.MSG_EUROS_MUST_BE_SET)));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(myButtonPanel);
