@@ -30,7 +30,7 @@ public class ReversiStrategyDadaLena implements ReversiStrategy
         {
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(move.getX(), move.getY(), me);
-            int value = mnval(clone, 3);
+            int value = mnval(clone, 3, move);
 
             if (value > best)
             {
@@ -41,12 +41,12 @@ public class ReversiStrategyDadaLena implements ReversiStrategy
         return bestMove;
     }
 
-    private int mnval(GameModel model, int depth)
+    private int mnval(GameModel model, int depth, Piece move1)
     {
         Player turnHolder = model.getTurnHolder();
         if (depth == 0 || turnHolder == null)
         {
-            return evalFunction.evaluatePosition(model, me);
+            return evalFunction.evaluatePosition(model, me, move1);
         }
 
         boolean max = turnHolder.equals(me);
@@ -61,11 +61,11 @@ public class ReversiStrategyDadaLena implements ReversiStrategy
             best = Integer.MAX_VALUE;
         }
 
-        for (Piece move : model.getLegalMovesSet(turnHolder))
+        for (Piece move2 : model.getLegalMovesSet(turnHolder))
         {
             GameModel clone = new GameModel(model);
-            clone.placePiece(move.getX(), move.getY(), turnHolder);
-            int val = mnval(clone, depth - 1);
+            clone.placePiece(move2.getX(), move2.getY(), turnHolder);
+            int val = mnval(clone, depth - 1, move2);
 
             if (max)
             {
