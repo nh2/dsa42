@@ -18,8 +18,7 @@ public class Player implements Serializable
     private boolean isAllIn;
     private boolean stillIn;     // Ist der Spieler noch in der Runde
     private boolean lost;        // true, wenn der Spieler am Ende einer Runde kein Geld mehr hat, also
-
-    // verloren hat
+                                  // verloren hat
 
     public Player(String name)
     {

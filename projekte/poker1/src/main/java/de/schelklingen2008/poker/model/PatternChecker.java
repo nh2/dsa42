@@ -6,10 +6,10 @@ import java.util.List;
 public class PatternChecker
 {
 
-    private static final int PAIR           = 2;
-    private static final int FOUR_OF_A_KIND = 8;
-    private static final int ANZAHL         = 7;
-    public int               counter        = 0;
+    // private static final int PAIR = 2;
+    // private static final int FOUR_OF_A_KIND = 8;
+    private static final int ANZAHL  = 7;
+    public int               counter = 0;
     private List<Card>       cards;
 
     public PatternChecker(List<Card> cards)

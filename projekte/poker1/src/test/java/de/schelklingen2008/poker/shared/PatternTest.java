@@ -170,5 +170,9 @@ public class PatternTest extends TestCase
         test2(cardList, checker);
         test3(cardList, checker);
 
+        List<Card> cards = new ArrayList<Card>();
+        cards.addAll(cardList);
+        System.out.println(cards.size());
+
     }
 }
