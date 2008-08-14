@@ -46,7 +46,7 @@ public class ReversiStrategyDadaLena implements ReversiStrategy
         Player turnHolder = model.getTurnHolder();
         if (depth == 0 || turnHolder == null)
         {
-            return evalFunction.evaluatePosition(model, me, move1);
+            return evalFunction.evaluatePosition(model, me);
         }
 
         boolean max = turnHolder.equals(me);
