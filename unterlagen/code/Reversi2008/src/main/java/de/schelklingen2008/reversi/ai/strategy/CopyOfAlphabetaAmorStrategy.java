@@ -5,7 +5,7 @@ import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
 
-public class AmorStrategy implements ReversiStrategy
+public class CopyOfAlphabetaAmorStrategy implements ReversiStrategy
 {
 
     private final EvaluationFunction evalFunction;
@@ -16,7 +16,7 @@ public class AmorStrategy implements ReversiStrategy
     private int                      count;
     Player                           player;
 
-    public AmorStrategy(EvaluationFunction evalFunction, int depth)
+    public CopyOfAlphabetaAmorStrategy(EvaluationFunction evalFunction, int depth)
     {
         this.depth = depth;
         this.evalFunction = evalFunction;
@@ -42,7 +42,7 @@ public class AmorStrategy implements ReversiStrategy
             clone = new GameModel(gameModel);
             clone.placePiece(piece);
             // value = AlphaBetaNegaMax(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone);
-            value = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone);
+            value = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone, true);
 
             if (value >= best)
             {
@@ -56,22 +56,15 @@ public class AmorStrategy implements ReversiStrategy
 
     }
 
-    private int max(int depth, int alpha, int beta, GameModel gameModel)
+    private int max(int depth, int alpha, int beta, GameModel gameModel, boolean kannWeiterSuchen)
     {
         if (depth == 0)
         {
             count++;
-            int position = evalFunction.evaluatePosition(gameModel, player);
-            setDurschnitt(getDurschnitt() + position);
-            if (position < minimalst)
-            {
-                setMinimalst(position);
-            }
-            if (position > maximalst)
-            {
-                setMaximalst(position);
-            }
-            return position;
+            return  evalFunction.evaluatePosition(gameModel, player);
+
+
+
         }
 
         for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
@@ -79,7 +72,7 @@ public class AmorStrategy implements ReversiStrategy
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
 
-            alpha = Math.max(alpha, min(depth - 1, alpha, beta, clone));
+            alpha = Math.max(alpha, min(depth - 1, alpha, beta, clone, true));
 
             if (alpha >= beta)
             {
@@ -91,24 +84,13 @@ public class AmorStrategy implements ReversiStrategy
 
     }
 
-    private int min(int depth, int alpha, int beta, GameModel gameModel)
+    private int min(int depth, int alpha, int beta, GameModel gameModel, boolean kannWeiterSuchen)
     {
         if (depth == 0)
         {
             count++;
-            int position = evalFunction.evaluatePosition(gameModel, player);
-            setDurschnitt(getDurschnitt() + position);
-            if (position < minimalst)
-            {
-                setMinimalst(position);
-            }
-            if (position > maximalst)
-            {
-                setMaximalst(position);
-            }
+            return evalFunction.evaluatePosition(gameModel, player);
 
-
-            return position;
         }
 
         for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
@@ -116,7 +98,7 @@ public class AmorStrategy implements ReversiStrategy
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
 
-            beta = Math.min(beta, max(depth - 1, alpha, beta, clone));
+            beta = Math.min(beta, max(depth - 1, alpha, beta, clone, true));
 
             if (beta <= alpha)
             {
