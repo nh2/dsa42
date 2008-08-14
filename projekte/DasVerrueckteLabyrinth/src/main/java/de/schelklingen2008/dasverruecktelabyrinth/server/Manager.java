@@ -32,14 +32,6 @@ public class Manager extends GameManager
         return sharedState = new SharedState();
     }
 
-    public void placePlayer(BodyObject client, int x, int y)
-    {
-        gameModel.placePlayer(x, y, getPlayerType(client));
-        // updateSharedState();
-        if (gameModel.isFinished()) endGame();
-        updateSharedState();
-    }
-
     @Override
     protected void gameWillStart()
     {
@@ -53,25 +45,22 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
-    // TODO add methods to make a move, etc. that can be called by clients
-
     public void rechtsDrehen(BodyObject client)
     {
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
             gameModel.rechtsDrehen();
+            updateSharedState();
         }
-        updateSharedState();
     }
 
     public void linksDrehen(BodyObject client)
     {
-
         if (getPlayerType(client) == gameModel.getTurnHolder())
         {
             gameModel.linksDrehen();
+            updateSharedState();
         }
-        updateSharedState();
     }
 
     public void insert(BodyObject client, PushButton pPushButton)
@@ -79,10 +68,17 @@ public class Manager extends GameManager
         if (gameModel.getTurnHolder() == getPlayerType(client))
         {
             sLogger.fine("insert: " + pPushButton);
-            if (getPlayerType(client) == gameModel.getTurnHolder())
-            {
-                gameModel.insert(pPushButton);
-            }
+            gameModel.insert(pPushButton);
+            updateSharedState();
+        }
+    }
+
+    public void placePlayer(BodyObject client, int x, int y)
+    {
+        if (gameModel.getTurnHolder() == getPlayerType(client))
+        {
+            gameModel.placePlayer(x, y, getPlayerType(client));
+            if (gameModel.isFinished()) endGame();
             updateSharedState();
         }
     }

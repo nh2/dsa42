@@ -2,6 +2,7 @@ package de.schelklingen2008.dasverruecktelabyrinth.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,29 +20,29 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameModel implements Serializable
 {
 
-    private static final PlayerType[] TYPES          = new PlayerType[] { PlayerType.WHITE, PlayerType.BLACK,
-            PlayerType.RED, PlayerType.GREEN        };
+    private static final PlayerType[]    TYPES          = new PlayerType[] { PlayerType.WHITE, PlayerType.BLACK,
+            PlayerType.RED, PlayerType.GREEN           };
 
-    public static final int           SIZE           = 7;
-    public static final PlayerType    PLAYER_START   = PlayerType.WHITE;
+    public static final int              SIZE           = 7;
+    public static final PlayerType       PLAYER_START   = PlayerType.WHITE;
 
-    private Tile[][]                  board;                                                    // Spielbrett
-    private PlayerType                turnHolder;                                               // Wer ist
+    private Tile[][]                     board;                                                    // Spielbrett
+    private PlayerType                   turnHolder;                                               // Wer ist
     // dran
-    private boolean                   walk           = false;                                   // false =
+    private boolean                      walk           = false;                                   // false =
     // Phase
     // 1
 
     // true = Phase2
-    private Tile                      insert         = new Tile(true, true, false, false, null); // einschiebbare
+    private Tile                         insert         = new Tile(true, true, false, false, null); // einschiebbare
     // Spielfeldkarte
 
-    Map<PlayerType, Player>           player         = new HashMap<PlayerType, Player>();
-    Map<PlayerType, PlayerCards>      playerCardsMap = new HashMap<PlayerType, PlayerCards>();
+    private Map<PlayerType, Player>      players        = new HashMap<PlayerType, Player>();
+    private Map<PlayerType, PlayerCards> playerCardsMap = new HashMap<PlayerType, PlayerCards>();
 
-    private static final Random       RAND           = new Random();
+    private static final Random          RAND           = new Random();
 
-    private static final Logger       sLogger        = LoggerFactory.create();
+    private static final Logger          sLogger        = LoggerFactory.create();
 
     public GameModel(String[] names)
     {
@@ -61,8 +62,6 @@ public class GameModel implements Serializable
             }
         }
 
-        setUnmoveable(board);
-
         setTurnHolder(PLAYER_START);
         insert = tiles.get(board.length * board.length);
 
@@ -70,7 +69,7 @@ public class GameModel implements Serializable
         {
             int x = RAND.nextInt(board.length);
             int y = RAND.nextInt(board.length);
-            player.put(TYPES[i], new Player(TYPES[i], names[i], x, y)); // TODO brauch ich placePlayerStart
+            players.put(TYPES[i], new Player(TYPES[i], names[i], x, y)); // TODO brauch ich placePlayerStart
             // noch?
         }
 
@@ -149,101 +148,26 @@ public class GameModel implements Serializable
 
     private void generateTreasureCards()
     {
-        List<TreasureCard> temp = new ArrayList<TreasureCard>();
+        List<TreasureCard> treasureCards = Arrays.asList(TreasureCard.values());
+        Collections.shuffle(treasureCards);
 
-        temp.add(TreasureCard.BIBEL);
-        temp.add(TreasureCard.DRACHE);
-        temp.add(TreasureCard.EIDECHSE);
-        temp.add(TreasureCard.EULE);
-        temp.add(TreasureCard.FEE);
-        temp.add(TreasureCard.FLASCHENGEIST);
-        temp.add(TreasureCard.FLEDERMAUS);
-        temp.add(TreasureCard.GELDBEUTEL);
-        temp.add(TreasureCard.GESPENST);
-        temp.add(TreasureCard.HELM);
-        temp.add(TreasureCard.KARTE);
-        temp.add(TreasureCard.KRONE);
-        temp.add(TreasureCard.LEUCHTER);
-        temp.add(TreasureCard.MAUS);
-        temp.add(TreasureCard.MOTTE);
-        temp.add(TreasureCard.RING);
-        temp.add(TreasureCard.SCARABAEUS);
-        temp.add(TreasureCard.SCHLÜSSEL);
-        temp.add(TreasureCard.SCHMUCKKASTEN);
-        temp.add(TreasureCard.SCHWERT);
-        temp.add(TreasureCard.SMARAGD);
-        temp.add(TreasureCard.SPINNE);
-        temp.add(TreasureCard.TOTENKOPF);
-        temp.add(TreasureCard.TROLL);
-
-        Collections.shuffle(temp);
         int noOfPlayers = getPlayers().size();
-        int cardsPerPlayer = 24 / noOfPlayers;
-        getPlayers();
 
-        if (noOfPlayers > 1)
+        List<Player> players = new ArrayList<Player>(getPlayers());
+        for (int i = 0; i < treasureCards.size(); i++)
         {
-            PlayerCards temp2 = new PlayerCards();
-            PlayerCards temp3 = new PlayerCards();
-
-            for (int i = 0, j = 0; i < cardsPerPlayer; i++, j++)
+            TreasureCard tc = treasureCards.get(i);
+            Player player = players.get(i % noOfPlayers);
+            PlayerType playerType = player.getPlayerType();
+            PlayerCards playerCards = playerCardsMap.get(playerType);
+            if (playerCards == null)
             {
-
-                temp2.getHiddenCards().add(j, temp.get(i));
+                playerCards = new PlayerCards();
+                playerCardsMap.put(playerType, playerCards);
             }
-            playerCardsMap.put(PlayerType.WHITE, temp2);
-
-            for (int i = cardsPerPlayer, j = 0; i < 2 * cardsPerPlayer; i++, j++)
-            {
-
-                temp3.getHiddenCards().add(j, temp.get(i));
-            }
-            playerCardsMap.put(PlayerType.BLACK, temp3);
-
-            if (noOfPlayers > 2)
-            {
-
-                PlayerCards temp4 = new PlayerCards();
-
-                for (int i = cardsPerPlayer * 2, j = 0; i < 3 * cardsPerPlayer; i++, j++)
-                {
-                    temp4.getHiddenCards().add(j, temp.get(i));
-                }
-                playerCardsMap.put(PlayerType.RED, temp4);
-
-                if (noOfPlayers > 3)
-                {
-                    PlayerCards temp5 = new PlayerCards();
-                    for (int i = cardsPerPlayer * 3, j = 0; i < 4 * cardsPerPlayer; i++, j++)
-                    {
-                        temp5.getHiddenCards().add(j, temp.get(i));
-                    }
-                    playerCardsMap.put(PlayerType.GREEN, temp5);
-
-                }
-
-            }
-        }
-
-    }
-
-    // WHITE, BLACK, RED, GREEN;
-
-    private void setUnmoveable(Tile[][] pBoard)
-    {
-        for (int i = 0; i < pBoard.length; i++)
-        {
-            for (int j = 0; j < pBoard.length; j++)
-            {
-                if (i % 2 == 0 && j % 2 == 0)
-                {
-                    pBoard[i][j].setUnmoveable(true);
-                }
-            }
+            playerCards.getHiddenCards().add(tc);
         }
     }
-
-    // TODO hasLegalMoved()
 
     public Player getWinner()
     {
@@ -254,10 +178,10 @@ public class GameModel implements Serializable
         List<TreasureCard> hiddenRed = playerCardsMap.get(PlayerType.RED).getHiddenCards();
         List<TreasureCard> hiddenGreen = playerCardsMap.get(PlayerType.GREEN).getHiddenCards();
 
-        if (hiddenWhite == null) return player.get(PlayerType.WHITE);
-        if (hiddenBlack == null) return player.get(PlayerType.BLACK);
-        if (hiddenRed == null) return player.get(PlayerType.RED);
-        if (hiddenGreen == null) return player.get(PlayerType.GREEN);
+        if (hiddenWhite == null) return players.get(PlayerType.WHITE);
+        if (hiddenBlack == null) return players.get(PlayerType.BLACK);
+        if (hiddenRed == null) return players.get(PlayerType.RED);
+        if (hiddenGreen == null) return players.get(PlayerType.GREEN);
 
         return null;
 
@@ -276,7 +200,7 @@ public class GameModel implements Serializable
 
         if (board[x][y].getTC() == null) return;
 
-        PlayerCards playerCards = playerCardsMap.get(player.get(pPlayer));
+        PlayerCards playerCards = playerCardsMap.get(pPlayer.getPlayerType());
 
         if (board[x][y].getTC() != playerCards.getFirstHidden()) return;
 
@@ -284,21 +208,12 @@ public class GameModel implements Serializable
 
     }
 
-    private void placePlayerStart(Player pPlayer)
-    {
-        int x = (int) Math.random() * board.length;
-        int y = (int) Math.random() * board.length;
-
-        pPlayer.setXKoordinate(x);
-        pPlayer.setYKoordinate(y);
-    }
-
     // setzt den Turnholder im normalen Spiel
     public void placePlayer(int x, int y, PlayerType pPlayerType)
     {
         if (walk)
         {
-            Player pPlayer = player.get(pPlayerType);
+            Player pPlayer = getPlayer(pPlayerType);
             if (isLegalMove(x, y, pPlayer))
             {
                 pPlayer.setXKoordinate(x);
@@ -320,7 +235,7 @@ public class GameModel implements Serializable
     // Spiel
     public void placePlayerOutOfBounds(int x, int y, PlayerType pPlayerType)
     {
-        Player temp = player.get(pPlayerType);
+        Player temp = getPlayer(pPlayerType);
 
         temp.setXKoordinate(x);
         temp.setYKoordinate(y);
@@ -354,22 +269,22 @@ public class GameModel implements Serializable
         if (isInBounds(right.getX(), right.getY())
             && !last.contains(right)
             && board[start.getX()][start.getY()].getRight()
-            && board[right.getX()][right.getY()].getLeft())
-            result = findWay(right, end, last);
-        else if (isInBounds(left.getX(), left.getY())
-                 && !last.contains(left)
-                 && board[start.getX()][start.getY()].getLeft()
-                 && board[left.getX()][left.getY()].getRight())
-            result = findWay(left, end, last);
-        else if (isInBounds(up.getX(), up.getY())
-                 && !last.contains(up)
-                 && board[start.getX()][start.getY()].getUp()
-                 && board[up.getX()][up.getY()].getDown())
-            result = findWay(up, end, last);
-        else if (isInBounds(down.getX(), down.getY())
-                 && !last.contains(down)
-                 && board[start.getX()][start.getY()].getDown()
-                 && board[down.getX()][down.getY()].getUp()) result = findWay(down, end, last);
+            && board[right.getX()][right.getY()].getLeft()) result = findWay(right, end, last);
+        if (result == null
+            && isInBounds(left.getX(), left.getY())
+            && !last.contains(left)
+            && board[start.getX()][start.getY()].getLeft()
+            && board[left.getX()][left.getY()].getRight()) result = findWay(left, end, last);
+        if (result == null
+            && isInBounds(up.getX(), up.getY())
+            && !last.contains(up)
+            && board[start.getX()][start.getY()].getUp()
+            && board[up.getX()][up.getY()].getDown()) result = findWay(up, end, last);
+        if (result == null
+            && isInBounds(down.getX(), down.getY())
+            && !last.contains(down)
+            && board[start.getX()][start.getY()].getDown()
+            && board[down.getX()][down.getY()].getUp()) result = findWay(down, end, last);
 
         last.pop();
         if (result == null) return null;
@@ -401,22 +316,28 @@ public class GameModel implements Serializable
     {
         if (getPlayers().size() == 2)
         {
-            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
-            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.WHITE;
+            if (turnHolder == PlayerType.WHITE)
+                turnHolder = PlayerType.BLACK;
+            else if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.WHITE;
         }
         if (getPlayers().size() == 3)
         {
-            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
-            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
-            if (turnHolder == PlayerType.RED) turnHolder = PlayerType.WHITE;
+            if (turnHolder == PlayerType.WHITE)
+                turnHolder = PlayerType.BLACK;
+            else if (turnHolder == PlayerType.BLACK)
+                turnHolder = PlayerType.RED;
+            else if (turnHolder == PlayerType.RED) turnHolder = PlayerType.WHITE;
         }
         if (getPlayers().size() == 4)
         {
 
-            if (turnHolder == PlayerType.WHITE) turnHolder = PlayerType.BLACK;
-            if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.RED;
-            if (turnHolder == PlayerType.RED) turnHolder = PlayerType.GREEN;
-            if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
+            if (turnHolder == PlayerType.WHITE)
+                turnHolder = PlayerType.BLACK;
+            else if (turnHolder == PlayerType.BLACK)
+                turnHolder = PlayerType.RED;
+            else if (turnHolder == PlayerType.RED)
+                turnHolder = PlayerType.GREEN;
+            else if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
         }
 
     }
@@ -510,115 +431,91 @@ public class GameModel implements Serializable
 
     private void einschiebenNord(int x, int y)
     {
-        Tile temp = insert;
+        Tile topTile = insert;
         insert = board[x][board.length - 1];
         for (int i = board.length - 1; i >= 1; i--)
         {
-            // board[x][i].setMoved(true);
             board[x][i] = board[x][i - 1];
 
         }
-        board[x][0] = temp;
+        board[x][0] = topTile;
+
         for (PlayerType pt : PlayerType.values())
         {
-            Player playerTemp = player.get(pt);
+            Player player = getPlayer(pt);
+            if (player == null) continue;
 
-            if (playerTemp == null) continue;
-
-            int pX = playerTemp.getXKoordinate();
-            int pY = playerTemp.getYKoordinate();
-
-            if (pX == x && pY == 6) placePlayerOutOfBounds(x, 0, pt);
-            // if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(pY - 1);
+            if (player.getXKoordinate() == x) player.setYKoordinate((player.getYKoordinate() + 1) % 7);
         }
 
     }
 
     private void einschiebenSued(int x, int y)
     {
-        Tile temp = insert;
+        Tile tileBottom = insert;
         insert = board[x][0];
         for (int i = 0; i < board.length - 1; i++)
         {
-            // board[x][i].setMoved(true);
             board[x][i] = board[x][i + 1];
 
         }
-        board[x][(board.length - 1)] = temp;
+        board[x][(board.length - 1)] = tileBottom;
+
         for (PlayerType pt : PlayerType.values())
         {
-            Player playerTemp = player.get(pt);
+            Player player = getPlayer(pt);
+            if (player == null) continue;
 
-            if (playerTemp == null) continue;
-
-            int pX = playerTemp.getXKoordinate();
-            int pY = playerTemp.getYKoordinate();
-
-            if (pX == x && pY == 0) placePlayerOutOfBounds(x, 6, pt);
-            // if (board[pX][pY].isMoved() == true) playerTemp.setYKoordinate(pY + 1);
+            if (player.getXKoordinate() == x) player.setYKoordinate((player.getYKoordinate() - 1 + 7) % 7);
         }
-
     }
 
     private void einschiebenOst(int x, int y)
     {
 
-        Tile temp = insert;
+        Tile tileEast = insert;
         insert = board[0][y];
         for (int i = 0; i < board.length - 1; i++)
         {
-            // board[i][y].setMoved(true);
             board[i][y] = board[i + 1][y];
 
         }
-        board[(board.length - 1)][y] = temp;
+        board[(board.length - 1)][y] = tileEast;
+
         for (PlayerType pt : PlayerType.values())
         {
-            Player playerTemp = player.get(pt);
+            Player player = getPlayer(pt);
+            if (player == null) continue;
 
-            if (playerTemp == null) continue;
-
-            int pX = playerTemp.getXKoordinate();
-            int pY = playerTemp.getYKoordinate();
-
-            if (pX == 0 && pY == y) placePlayerOutOfBounds(6, 6, pt);
-            // if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(pX + 1);
+            if (player.getYKoordinate() == y) player.setXKoordinate((player.getXKoordinate() - 1 + 7) % 7);
         }
 
     }
 
     private void einschiebenWest(int x, int y)
     {
-        Tile temp = insert;
+        Tile tileWest = insert;
         insert = board[board.length - 1][y];
         for (int i = board.length - 1; i >= 1; i--)
         {
-            // board[i][y].setMoved(true);
             board[i][y] = board[i - 1][y];
-
         }
-        board[0][y] = temp;
+        board[0][y] = tileWest;
+
         for (PlayerType pt : PlayerType.values())
         {
-            Player playerTemp = player.get(pt);
+            Player player = getPlayer(pt);
+            if (player == null) continue;
 
-            if (playerTemp == null) continue;
-
-            int pX = playerTemp.getXKoordinate();
-            int pY = playerTemp.getYKoordinate();
-
-            if (pX == 6 && pY == y) placePlayerOutOfBounds(0, y, pt);
-
-            // if (board[pX][pY].isMoved() == true) playerTemp.setXKoordinate(pX - 1);
+            if (player.getYKoordinate() == y) player.setXKoordinate((player.getXKoordinate() + 1) % 7);
         }
-
     }
 
     public boolean hasLegalMoves()
     {
         for (int y = 0; y < SIZE; y++)
             for (int x = 0; x < SIZE; x++)
-                if (isLegalMove(x, y, player.get(getTurnHolder()))) return true;
+                if (isLegalMove(x, y, players.get(getTurnHolder()))) return true;
         return false;
     }
 
@@ -679,7 +576,7 @@ public class GameModel implements Serializable
         if (getTurnHolder() != player) return result;
         for (int x = 0; x < SIZE; x++)
             for (int y = 0; y < SIZE; y++)
-                result[x][y] = isLegalMove(x, y, this.player.get(player));
+                result[x][y] = isLegalMove(x, y, getPlayer(player));
         return result;
     }
 
@@ -700,24 +597,29 @@ public class GameModel implements Serializable
         return insert;
     }
 
-    public Collection<Player> getPlayers()
-    {
-        return player.values();
-    }
-
     public String getName(PlayerType playerType)
     {
-        Player p = player.get(playerType);
+        Player p = getPlayer(playerType);
         if (p == null) return null;
         return p.getName();
+    }
+
+    public Collection<Player> getPlayers()
+    {
+        return players.values();
     }
 
     public Player getPlayer(String name)
     {
         if (name == null) return null;
-        for (Player p : player.values())
+        for (Player p : players.values())
             if (name.equals(p.getName())) return p;
         return null;
+    }
+
+    public Player getPlayer(PlayerType pt)
+    {
+        return players.get(pt);
     }
 
     public static class Position

@@ -100,19 +100,19 @@ public class GameModelTest extends TestCase
         board[2][1] = Tile.VERTICAL;
         board[3][1] = Tile.CROSS;
 
-        model.player.get(model.getTurnHolder()).setXKoordinate(0);
-        model.player.get(model.getTurnHolder()).setYKoordinate(0);
+        model.getPlayer(model.getTurnHolder()).setXKoordinate(0);
+        model.getPlayer(model.getTurnHolder()).setYKoordinate(0);
 
-        assertEquals(0, model.player.get(model.getTurnHolder()).getXKoordinate());
-        assertEquals(0, model.player.get(model.getTurnHolder()).getYKoordinate());
+        assertEquals(0, model.getPlayer(model.getTurnHolder()).getXKoordinate());
+        assertEquals(0, model.getPlayer(model.getTurnHolder()).getYKoordinate());
 
         PlayerType turnHolder = model.getTurnHolder();
         model.setWalk(true);
 
         model.placePlayer(3, 1, model.getTurnHolder());
 
-        assertEquals(3, model.player.get(turnHolder).getXKoordinate());
-        assertEquals(1, model.player.get(turnHolder).getYKoordinate());
+        assertEquals(3, model.getPlayer(turnHolder).getXKoordinate());
+        assertEquals(1, model.getPlayer(turnHolder).getYKoordinate());
 
     }
 }

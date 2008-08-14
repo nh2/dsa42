@@ -14,10 +14,8 @@ public class Tile implements Serializable
     public static final Tile CURVE3     = new Tile(true, false, true, false, null);
     public static final Tile CURVE4     = new Tile(true, false, false, true, null);
 
-    private boolean          unmoveable = false;
     private boolean          up, down, right, left;
     private TreasureCard     tc         = null;
-    private boolean          isMoved    = false;
 
     public Tile(boolean pUp, boolean pDown, boolean pRight, boolean pLeft, TreasureCard pTc)
     {
@@ -26,11 +24,6 @@ public class Tile implements Serializable
         right = pRight;
         left = pLeft;
         tc = pTc;
-    }
-
-    public boolean getUnmoveable()
-    {
-        return unmoveable;
     }
 
     public boolean getUp()
@@ -58,36 +51,25 @@ public class Tile implements Serializable
 
     public void turnRight()
     {
-        left = getDown();
-        up = getLeft();
-        down = getRight();
-        right = getUp();
-
+        boolean t = left;
+        left = down;
+        down = right;
+        right = up;
+        up = t;
     }
 
     public void turnLeft()
     {
-        left = getUp();
-        up = getRight();
-        down = getLeft();
-        right = getDown();
-
+        boolean t = left;
+        left = up;
+        up = right;
+        right = down;
+        down = t;
     }
 
     public TreasureCard getTC()
     {
         return tc;
-    }
-
-    public void setUnmoveable(boolean pboolean)
-    {
-        unmoveable = pboolean;
-    }
-
-    public void setMoved(boolean moved)
-    {
-
-        isMoved = moved;
     }
 
     public boolean isCurve1()
@@ -125,7 +107,7 @@ public class Tile implements Serializable
         return false;
     }
 
-    public boolean isVertikal()
+    public boolean isVertical()
     {
         if (getLeft() == false && getDown() == true && getRight() == false && getUp() == true) return true;
 
@@ -139,17 +121,12 @@ public class Tile implements Serializable
         return false;
     }
 
-    public boolean isMoved()
-    {
-        return isMoved;
-    }
-
     @Override
     public String toString()
     {
         if (isCross()) return "+";
         if (isHorizontal()) return "-";
-        if (isVertikal()) return "|";
+        if (isVertical()) return "|";
         if (isCurve1()) return "1";
         if (isCurve2()) return "2";
         if (isCurve3()) return "3";
