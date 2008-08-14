@@ -34,11 +34,14 @@ public class GameModel implements Serializable
         initAreas();
         distributeCountrys();
 
+        history = new String[2];
+
+        turnholderIndex = 0;
+        turnholder = p[0];
         p[0].setUnitsToSet(4);
 
         history[0] = "-         " + turnholder.getPlayerName() + "         -";
         history[1] = null;
-        turnholder = p[0];
     }
 
     private void initAreas()
@@ -95,6 +98,7 @@ public class GameModel implements Serializable
     public void removenewHistory()
     {
         history[0] = null;
+        history[1] = null;
     }
 
     public Country getSelectedCountry()
@@ -495,6 +499,9 @@ public class GameModel implements Serializable
         turnholder = p[turnholderIndex];
 
         turnholder.setUnitsToSet(getUnitsforPlayer(turnholder));
+
+        history[0] = " ";
+        history[1] = "-         " + turnholder.getPlayerName() + "         -";
     }
 
     public Player valueOf(int playerIndex)
@@ -613,6 +620,10 @@ public class GameModel implements Serializable
     {
         c.setUnits(c.getUnits() + 1);
         c.getOccupier().setUnitsToSet(c.getOccupier().getUnitsToSet() - 1);
+
+        history[0] = "Places army in " + c.getName();
+        history[1] = null;
+
     }
 
     public void attack(Country attacker, Country defender)
