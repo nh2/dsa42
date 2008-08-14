@@ -6,38 +6,40 @@ import de.schelklingen2008.reversi.model.Player;
 public class CopyOfAlphabetaAmorEvaluationFunction implements EvaluationFunction
 {
 
-    private int[][] spielfeldbewertung = { { 50000, 100, 800, 800, 800, 800, 100, 50000 },
-                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
+    private int[][] spielfeldbewertung = { { 5000, -100, 800, 800, 800, 800, -100, 5000 },
+                                           { -100, -500, 100, 100, 100, 100, -500, -100 },
                                            { 800, 100, 200, 200, 200, 200, 100, 800 },
+                                           { 800, 100, 200, 100, 100, 200, 100, 800 },
+                                           { 800, 100, 200, 100, 100, 200, 100, 800 },
                                            { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 100, 50, 100, 100, 100, 100, 50, 100 },
-                                           { 50000, 100, 800, 800, 800, 800, 100, 50000 }, };
+                                           { -100, -500, 100, 100, 100, 100, -500, -100 },
+                                           { 5000, -100, 800, 800, 800, 800, -100, 5000 }, };
+
+
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
         return spielSteinBewertung(gameModel, player);
+        // return mobiltyBewertung(gameModel, player);
     }
-
-
 
     private int spielSteinBewertung(GameModel gameModel, Player player)
     {
 
         int playerSteinBewertung = 0;
+        Player[][] board = gameModel.getBoard();
 
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
             {
-                if (gameModel.getBoard()[i][j] == player)
+                if (board[i][j] == player)
                 {
                     playerSteinBewertung = playerSteinBewertung + getSpielfeldbewertung()[i][j];
                 }
                 else
                 {
-                    if (gameModel.getBoard()[i][j] == player.other())
+                    if (board[i][j] == player.other())
                     {
                         playerSteinBewertung = playerSteinBewertung - getSpielfeldbewertung()[i][j];
 
@@ -47,6 +49,21 @@ public class CopyOfAlphabetaAmorEvaluationFunction implements EvaluationFunction
 
         }
         return playerSteinBewertung;
+    }
+
+    private int mobiltyBewertung(GameModel gameModel, Player player)
+    {
+
+        int anzahlMoeglicheZuege = gameModel.getLegalMoves(player).length;
+        int anzahlMoeglicheZuegeAnderer = gameModel.getLegalMoves(player.other()).length;
+        return anzahlMoeglicheZuege - anzahlMoeglicheZuegeAnderer;
+
+    }
+
+    public int anzahlSteineBewertung(GameModel gameModel, Player player)
+    {
+        return gameModel.countPieces(player) - gameModel.countPieces(player.other());
+
     }
 
     public void setSpielfeldbewertung(int[][] spielfeldbewertung)

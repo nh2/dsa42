@@ -1,22 +1,15 @@
 package de.schelklingen2008.reversi.ai.evaluation;
 
-import java.util.Set;
-
 import de.schelklingen2008.reversi.model.GameModel;
-import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
 
 public class AlphabetaAmorEvaluationFunction implements EvaluationFunction
 {
 
-    private int[][] spielfeldbewertung = { { 5000, -100, 800, 800, 800, 800, -100, 5000 },
-                                           { -100, -500, 100, 100, 100, 100, -500, -100 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { 800, 100, 200, 200, 200, 200, 100, 800 },
-                                           { -100, -500, 100, 100, 100, 100, -500, -100 },
-                                           { 5000, -100, 800, 800, 800, 800, -100, 5000 }, };
+
+    private int[][] spielfeldbewertung = { { 50, -1, 8, 8, 8, 8, -1, 50 }, { -1, -5, 1, 1, 1, 1, -5, -1 },
+                                           { 8, 1, 2, 2, 2, 2, 1, 8 }, { 8, 1, 2, 1, 1, 2, 1, 8 }, { 8, 1, 2, 1, 1, 2, 1, 8 },
+                                           { 8, 1, 2, 2, 2, 2, 1, 8 }, { -1, -5, 1, 1, 1, 1, -5, -1 }, { 50, -1, 8, 8, 8, 8, -1, 50 }, };
 
     public int evaluatePosition(GameModel gameModel, Player player)
     {
@@ -51,13 +44,6 @@ public class AlphabetaAmorEvaluationFunction implements EvaluationFunction
         return playerSteinBewertung;
     }
 
-    private int mobiltyBewertung(GameModel gameModel, Player player, Set<Piece> legalMovesSet, Set<Piece> legalMovesSet2)
-    {
-        int anzahlMoeglicheZuege = legalMovesSet.size();
-        int anzahlMoeglicheZuegeAnderer = legalMovesSet2.size();
-        return anzahlMoeglicheZuege * 1000 - anzahlMoeglicheZuegeAnderer * 1000;
-
-    }
 
     public void setSpielfeldbewertung(int[][] spielfeldbewertung)
     {

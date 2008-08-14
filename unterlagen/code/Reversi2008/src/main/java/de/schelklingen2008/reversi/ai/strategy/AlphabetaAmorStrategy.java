@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.schelklingen2008.reversi.ai.evaluation.AlphabetaAmorEvaluationFunction;
+import de.schelklingen2008.reversi.ai.evaluation.EvaluationFunction;
 import de.schelklingen2008.reversi.model.GameModel;
 import de.schelklingen2008.reversi.model.Piece;
 import de.schelklingen2008.reversi.model.Player;
@@ -12,12 +12,13 @@ import de.schelklingen2008.reversi.model.Player;
 public class AlphabetaAmorStrategy implements ReversiStrategy
 {
 
-    private final AlphabetaAmorEvaluationFunction evalFunction;
-    private final int                             depth;
-    private int                                   count;
-    Player                                        player;
+    private final EvaluationFunction evalFunction;
+    private final int                depth;
+    private int                      count;
+    Player                           player;
 
-    public AlphabetaAmorStrategy(AlphabetaAmorEvaluationFunction evalFunction, int depth)
+
+    public AlphabetaAmorStrategy(EvaluationFunction evalFunction, int depth)
     {
         this.depth = depth;
         this.evalFunction = evalFunction;
@@ -30,12 +31,9 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
     public Piece move(GameModel gameModel)
     {
+
         player = gameModel.getTurnHolder();
-        int best = Integer.MIN_VALUE;
         Piece bestMove = null;
-
-        int value = 0;
-
         List<Piece> legalMoves = new ArrayList<Piece>(gameModel.getLegalMovesSet(gameModel.getTurnHolder()));
         Integer[] values = new Integer[legalMoves.size()];
         List<SecondRunner> threads = new ArrayList<SecondRunner>(legalMoves.size());
@@ -65,6 +63,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
             }
 
         bestMove = legalMoves.get(pos);
+
         // for (int i = 0; i < legalMoves.size(); i++)
         // {
         //
@@ -133,6 +132,8 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         // if (i + 1 < legalMoves.size()) i++;
         //
         // }
+        //
+
 
         return bestMove;
 
@@ -218,7 +219,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         // GameModel clone = new GameModel(gameModel);
         // clone.placePiece(piece);
 
-        List<pieceInt> liste = new weightListe(true);
+        List<pieceInt> liste = new weightListe(false);
 
         if (depth == 0 || gameModel.isFinished())
         {
@@ -229,7 +230,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         {
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
-            liste.add(new pieceInt(piece, evalFunction.evaluatePosition(clone, player)));
+            liste.add(new pieceInt(false, piece, evalFunction.evaluatePosition(clone, player)));
 
         }
         Collections.sort(liste);
@@ -267,36 +268,34 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
     public class pieceInt implements Comparable<pieceInt>
     {
 
-        public int   wert;
-        public Piece piece;
+        public int     wert;
+        public Piece   piece;
+        public boolean min;
 
-        public pieceInt(Piece piece, int wert)
+        public pieceInt(boolean min, Piece piece, int wert)
         {
             this.wert = wert;
             this.piece = piece;
-        }
-
-        public int compareTo(pieceInt o, boolean min)
-        {
-            if (min)
-            {
-                return o.wert - wert;
-            }
-            return wert - o.wert;
+            this.min = min;
 
         }
 
         public int compareTo(pieceInt o)
         {
-            // TODO Auto-generated method stub
-            return 0;
+            if (min)
+            {
+                return wert - o.wert;
+            }
+            return o.wert - wert;
+            // return 0;
         }
+
     }
 
     private int min(int depth, int alpha, int beta, GameModel gameModel)
 
     {
-        List<pieceInt> liste = new weightListe(false);
+        List<pieceInt> liste = new weightListe(true);
 
         if (depth == 0 || gameModel.isFinished())
         {
@@ -307,7 +306,7 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
         {
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
-            liste.add(new pieceInt(piece, evalFunction.evaluatePosition(clone, player)));
+            liste.add(new pieceInt(true, piece, evalFunction.evaluatePosition(clone, player)));
 
         }
         Collections.sort(liste);
@@ -331,24 +330,24 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
     }
 
-    //    class Tupel implements Comparable<Tupel>
-    //    {
+    // class Tupel implements Comparable<Tupel>
+    // {
     //
-    //        public Piece piece;
-    //        public int   value;
+    // public Piece piece;
+    // public int value;
     //
-    //        public Tupel(Piece piece, int value)
-    //        {
-    //            this.piece = piece;
-    //            this.value = value;
-    //        }
+    // public Tupel(Piece piece, int value)
+    // {
+    // this.piece = piece;
+    // this.value = value;
+    // }
     //
-    //        public int compareTo(Tupel otherTupel)
-    //        {
-    //            return value - otherTupel.value;
-    //        }
-    //    }
+    // public int compareTo(Tupel otherTupel)
+    // {
+    // return value - otherTupel.value;
+    // }
+    // }
     //
-    //    final java.util.Set<Tupel> tupelSet = new java.util.TreeSet<Tupel>();
+    // final java.util.Set<Tupel> tupelSet = new java.util.TreeSet<Tupel>();
 
 }
