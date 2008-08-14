@@ -451,6 +451,12 @@ public class GameModelTest extends TestCase
         gameModel.check(2);
         gameModel.check(0);
 
+        assertEquals(4, gameModel.getPhase());
+
+        gameModel.setOkayWithNextRound(0, true);
+        gameModel.setOkayWithNextRound(1, true);
+        gameModel.setOkayWithNextRound(2, true);
+
         assertEquals(0, gameModel.getPhase());
         assertEquals(0, gameModel.getCardList().size());
     }
@@ -490,6 +496,12 @@ public class GameModelTest extends TestCase
         gameModel.reRaise(0, 1500);
         gameModel.fold(1);
 
+        assertEquals(4, gameModel.getPhase());
+
+        gameModel.setOkayWithNextRound(0, true);
+        gameModel.setOkayWithNextRound(1, true);
+        gameModel.setOkayWithNextRound(2, true);
+
         assertEquals(0, gameModel.getPhase());
         assertEquals(0, gameModel.getCardList().size());
     }
@@ -500,6 +512,13 @@ public class GameModelTest extends TestCase
         GameModel gameModel = new GameModel(TEST_NAMES);
         gameModel.fold(0);
         gameModel.fold(1);
+
+        assertEquals(4, gameModel.getPhase());
+
+        gameModel.setOkayWithNextRound(0, true);
+        gameModel.setOkayWithNextRound(1, true);
+        gameModel.setOkayWithNextRound(2, true);
+
         assertEquals(0, gameModel.getPhase());
         assertEquals(0, gameModel.getCardList().size());
     }

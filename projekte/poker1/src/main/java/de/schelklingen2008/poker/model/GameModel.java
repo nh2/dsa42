@@ -345,13 +345,10 @@ public class GameModel implements Serializable
     public void computeWinner()
     {
         Pattern highestPattern = new Pattern(-1, -1, -1);
-        // int highestValue1 = -1;
-        // int highestValue2 = -1;
 
-        for (Iterator iterator = playerList.iterator(); iterator.hasNext();) // herausfinden, wie hoch das
+        for (Player player : playerList) // herausfinden, wie hoch das
         // höchste Pattern ist
         {
-            Player player = (Player) iterator.next();
             if (player.isStillIn())
             {
                 List<Card> cards = new ArrayList<Card>();
@@ -363,47 +360,28 @@ public class GameModel implements Serializable
                 if (checker.getHighestPattern().greaterThan(highestPattern))
                 {
                     highestPattern = checker.getHighestPattern();
-                    // highestValue1 = checker.getPairCard1();
+                    winnerList.clear();
+                    winnerList.add(player);
+                }
+                if (checker.getHighestPattern().equals(highestPattern))
+                {
+                    winnerList.add(player);
                 }
             }
         }
 
         List<Player> winnerList = new ArrayList<Player>();
 
-        for (Iterator iterator = playerList.iterator(); iterator.hasNext();) // herausfinden, welche Spieler
-        // dieses höchste Pattern haben
-        {
-            Player player = (Player) iterator.next();
-            if (player.isStillIn())
-            {
-                List<Card> cards = new ArrayList<Card>();
-                cards.addAll(cardList);
-                cards.add(player.getCard1());
-                cards.add(player.getCard2());
-                System.out.println(cards.size());
-                PatternChecker checker = new PatternChecker(cards);
-                if (checker.getHighestPattern().equals(highestPattern))
-                {
-
-                    winnerList.add(player);
-                }
-            }
-        }
-
         long winnerValue = pot / winnerList.size();
 
-        for (Iterator<Player> iterator = winnerList.iterator(); iterator.hasNext();)
+        for (Player player : winnerList)
         {
-            Player player = iterator.next();
             player.setBalance(player.getBalance() + winnerValue);
             pot = 0;
-            // PatternChecker checker = new PatternChecker()
-            // System.out.println("Highest Pattern: " + highestPattern.artToSTring());
         }
         this.winnerList.clear();
         this.winnerValue = winnerValue;
         this.winnerList = winnerList;
-
     }
 
     public String kindToString(int patternValue)
