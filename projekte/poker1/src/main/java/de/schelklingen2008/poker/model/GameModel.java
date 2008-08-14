@@ -345,6 +345,7 @@ public class GameModel implements Serializable
     public void computeWinner()
     {
         Pattern highestPattern = new Pattern(-1, -1, -1);
+        List<Player> winnerList = new ArrayList<Player>();
 
         for (Player player : playerList) // herausfinden, wie hoch das
         // höchste Pattern ist
@@ -355,7 +356,6 @@ public class GameModel implements Serializable
                 cards.addAll(cardList);
                 cards.add(player.getCard1());
                 cards.add(player.getCard2());
-                // System.out.println(cards.size());
                 PatternChecker checker = new PatternChecker(cards);
                 if (checker.getHighestPattern().greaterThan(highestPattern))
                 {
@@ -369,8 +369,6 @@ public class GameModel implements Serializable
                 }
             }
         }
-
-        List<Player> winnerList = new ArrayList<Player>();
 
         long winnerValue = pot / winnerList.size();
 
