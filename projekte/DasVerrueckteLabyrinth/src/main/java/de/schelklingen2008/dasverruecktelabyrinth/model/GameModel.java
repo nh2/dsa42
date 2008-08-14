@@ -468,7 +468,6 @@ public class GameModel implements Serializable
             {
                 einschiebenNord(3, 0);
                 walk = true;
-                sLogger.fine("TurnHolder: " + getTurnHolder().toString());
             }
             if (pPushButton == PushButton.NordRechts)
             {
