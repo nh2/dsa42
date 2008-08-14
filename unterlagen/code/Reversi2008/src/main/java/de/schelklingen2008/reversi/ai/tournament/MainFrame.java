@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import de.schelklingen2008.reversi.ai.evaluation.AmorEvaluationFunction;
+import de.schelklingen2008.reversi.ai.evaluation.AlphabetaAmorEvaluationFunction;
 import de.schelklingen2008.reversi.ai.evaluation.GeorgEvaluationFunction;
 import de.schelklingen2008.reversi.ai.evaluation.GreenGoblin;
 import de.schelklingen2008.reversi.ai.evaluation.LarsEvalDiff;
 import de.schelklingen2008.reversi.ai.evaluation.ManuelEvaluationFunction;
 import de.schelklingen2008.reversi.ai.evaluation.SophieEvaluation;
 import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategy;
-import de.schelklingen2008.reversi.ai.strategy.AmorStrategy;
+import de.schelklingen2008.reversi.ai.strategy.AlphabetaAmorStrategy;
 import de.schelklingen2008.reversi.ai.strategy.ChaosStrategy;
 import de.schelklingen2008.reversi.ai.strategy.HorstStrategy;
 import de.schelklingen2008.reversi.ai.strategy.LarsStratMmFixedDepth;
@@ -33,7 +33,8 @@ public class MainFrame
                                                                              true,
                                                                              false)));
         t.addStrategy(new TournamentStrategy("Manuel", new ManuelStrategy(new ManuelEvaluationFunction())));
-        t.addStrategy(new TournamentStrategy("Amor", new AmorStrategy(new AmorEvaluationFunction(), 6)));
+        t.addStrategy(new TournamentStrategy("Amor",
+                                             new AlphabetaAmorStrategy(new AlphabetaAmorEvaluationFunction(), 6)));
         t.addStrategy(new TournamentStrategy("Horst", new HorstStrategy(6, 2)));
         t.addStrategy(new TournamentStrategy("GreenGoblin", new ReversiStrategyNiklasLeo(new GreenGoblin(), 4)));
         t.addStrategy(new TournamentStrategy("Sophie", new SophieStrategy(new SophieEvaluation(), 4)));

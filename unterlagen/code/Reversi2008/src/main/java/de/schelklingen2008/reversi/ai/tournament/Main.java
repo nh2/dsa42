@@ -3,8 +3,8 @@ package de.schelklingen2008.reversi.ai.tournament;
 import java.util.Collections;
 import java.util.List;
 
-import de.schelklingen2008.reversi.ai.evaluation.AmorEvaluationFunction;
-import de.schelklingen2008.reversi.ai.strategy.AmorStrategy;
+import de.schelklingen2008.reversi.ai.evaluation.AlphabetaAmorEvaluationFunction;
+import de.schelklingen2008.reversi.ai.strategy.AlphabetaAmorStrategy;
 import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
 
 public class Main
@@ -14,7 +14,8 @@ public class Main
     {
         Tournament t = new Tournament(4);
         t.addStrategy(new TournamentStrategy("Simple", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Amor", new AmorStrategy(new AmorEvaluationFunction(), 6)));
+        t.addStrategy(new TournamentStrategy("Amor",
+                                             new AlphabetaAmorStrategy(new AlphabetaAmorEvaluationFunction(), 6)));
         // t.addStrategy(new TournamentStrategy("Horst", new HorstStrategy(6, 2)));
         // t.addStrategy(new TournamentStrategy("GreenGoblin", new ReversiStrategyNiklasLeo(new GreenGoblin(),
         // 4)));
