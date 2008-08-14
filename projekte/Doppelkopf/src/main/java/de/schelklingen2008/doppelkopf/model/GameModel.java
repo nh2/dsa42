@@ -229,6 +229,27 @@ public class GameModel implements Serializable
             }
         }
 
+        // Hochzeit: erster Fremder verarbeiten
+        if (ersterFremderAngefordert)
+        {
+            if (tisch.getStichAnzahl() > 3)
+            {
+                ersterFremderAngefordert = false;
+                Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
+                hochzeitSpieler = null;
+            }
+            else if (stichsieger != tisch.getHochzeitSpieler())
+            {
+                tisch.getTeamRe().add(stichsieger);
+                stichsieger.team = Team.Re;
+                ersterFremderAngefordert = false;
+                Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
+                hochzeitSpieler = null;
+                addNachricht(hochzeitSpieler + " hat " + stichsieger + " geheiratet. Herzlichen Glückwunsch.");
+
+            }
+        }
+
         tisch.stichGespielt();
         spielerliste.setAnDerReihe(stichsieger);
 
@@ -307,6 +328,7 @@ public class GameModel implements Serializable
         if (tisch.getHochzeitSpieler() == spieler)
         {
             ersterFremderAngefordert = true;
+            addNachricht(spieler.toString() + " hat Hochzeit. Erster Fremder geht mit.");
         }
     }
 }
