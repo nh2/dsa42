@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import com.samskivert.swing.GroupLayout;
 import com.samskivert.swing.MultiLineLabel;
@@ -66,9 +66,13 @@ public class GamePanel extends JPanel implements PlaceView
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
+        // history panel
+        JPanel historyPanel = new JPanel();
+        historyPanel.add(new JLabel("eXtreme"));
+
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
-        sidePanel.add(new JTextArea("Hallo"));
+        sidePanel.add(historyPanel);
 
         // add a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
