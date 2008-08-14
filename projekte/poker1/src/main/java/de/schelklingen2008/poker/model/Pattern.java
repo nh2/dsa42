@@ -46,8 +46,10 @@ public class Pattern
             case 8:
                 s = "Straight Flush";
                 break;
+            case 9:
+                s = "Royal Flush";
             default:
-                s = "";
+                s = "Falsche Zahl";
         }
         return s;
     }

@@ -360,7 +360,49 @@ public class GameModel implements Serializable
             Player player = (Player) iterator.next();
             player.setBalance(player.getBalance() + winnerValue);
             pot = 0;
+            // PatternChecker checker = new PatternChecker()
+            System.out.println("Highest Pattern: " + artToSTring(highestPattern));
         }
+    }
+
+    public String artToSTring(int patternValue)
+    {
+        String s;
+        switch (patternValue)
+        {
+            case 0:
+                s = "HighCard";
+                break;
+            case 1:
+                s = "Pärchen";
+                break;
+            case 2:
+                s = "Doppelpärchen";
+                break;
+            case 3:
+                s = "Drilling";
+                break;
+            case 4:
+                s = "Straight";
+                break;
+            case 5:
+                s = "Flush";
+                break;
+            case 6:
+                s = "Full House";
+                break;
+            case 7:
+                s = "Vierling";
+                break;
+            case 8:
+                s = "Straight Flush";
+                break;
+            case 9:
+                s = "Royal Flush";
+            default:
+                s = "Falsche Zahl";
+        }
+        return s;
     }
 
     public void nextRound()
