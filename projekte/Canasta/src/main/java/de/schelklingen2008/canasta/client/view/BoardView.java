@@ -447,8 +447,9 @@ public class BoardView extends JPanel implements GameChangeListener
                                         cardStack.size() * 6 + 40,
                                         57,
                                         i));
-            gfx.setPaint(new Color(0xFF00FF));
-            gfx.drawRect(translateX + (cardStack.size() + 5) * 2, translateY, cardStack.size() * 5 + 40, 57);
+            // gfx.setPaint(new Color(0xFF00FF));
+            // gfx.drawRect(translateX + (cardStack.size() + 5) * 2, translateY, cardStack.size() * 5 + 40,
+            // 57);
             // gfx.setFont(Font.)
 
             gfx.setPaint(new Color(0xFFFF00));
@@ -479,8 +480,8 @@ public class BoardView extends JPanel implements GameChangeListener
         }
 
         // some debugging
-        gfx.setPaint(new Color(0xFF0000));
-        gfx.drawRect(x, y, width, height);
+        // gfx.setPaint(new Color(0xFF0000));
+        // gfx.drawRect(x, y, width, height);
         // gfx.drawString(((Integer) stackCountX).toString(), width / 2 - 10, height / 2);
         // gfx.drawString(((Integer) stackCountY).toString(), width / 2 + 10, height / 2);
         // gfx.drawString(((Integer) width).toString(), width / 2 - 30, height / 2 + 20);
@@ -502,6 +503,13 @@ public class BoardView extends JPanel implements GameChangeListener
             gfx.drawImage(getCardImage(topCard, 50, true), 410, 380, null);
         }
         areas.add(new SensitiveArea("Talon", 410, 380, 50, 71));
+        gfx.setPaint(new Color(0xFFFFFF));
+
+        if (talon.size() > 9)
+            gfx.drawString(((Integer) talon.size()).toString(), 427, 370);
+        else
+            gfx.drawString(((Integer) talon.size()).toString(), 433, 370);
+
     }
 
     private void paintDiscard(Graphics2D gfx)
@@ -526,6 +534,11 @@ public class BoardView extends JPanel implements GameChangeListener
         }
 
         areas.add(new SensitiveArea("Discard", 350, 380, 50, 71));
+
+        if (discard.size() > 9)
+            gfx.drawString(((Integer) discard.size()).toString(), 367, 370);
+        else
+            gfx.drawString(((Integer) discard.size()).toString(), 373, 370);
     }
 
     private BufferedImage getCardImage(Card card, int version, boolean faceDown)
