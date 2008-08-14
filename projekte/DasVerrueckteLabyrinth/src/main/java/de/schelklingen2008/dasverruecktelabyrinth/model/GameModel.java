@@ -54,6 +54,7 @@ public class GameModel implements Serializable
     {
         List<Tile> tiles = generateTiles();
         Collections.shuffle(tiles);
+
         for (int i = 0; i < board.length; i++)
         {
             for (int j = 0; j < board.length; j++)
@@ -467,6 +468,7 @@ public class GameModel implements Serializable
             {
                 einschiebenNord(3, 0);
                 walk = true;
+                sLogger.fine("TurnHolder: " + getTurnHolder().toString());
             }
             if (pPushButton == PushButton.NordRechts)
             {

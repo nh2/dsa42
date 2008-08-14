@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements PlaceView
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
         // add the player's name
-        JLabel playersName = new JLabel("You Are: " + getGameContext().getMyName());
+        JLabel playersName = new JLabel("  You Are: " + getGameContext().getMyName());
         playersName.setBackground(Color.WHITE);
         playersName.setBorder(BorderFactory.createLineBorder(Color.black));
         sidePanel.add(playersName, GroupLayout.FIXED);
