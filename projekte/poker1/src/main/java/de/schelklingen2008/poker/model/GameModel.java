@@ -291,8 +291,9 @@ public class GameModel implements Serializable
         }
         if (isOutCount == playerList.size() - 1)
         {
-            phase = 3;
-            nextPhase();
+            phase = 4;
+            computeWinner(true);
+            return;
         }
         if (highestBetIndex == actPlayerIndex && !bigBlindNeedsToSet)
         {
@@ -319,9 +320,8 @@ public class GameModel implements Serializable
         actPlayerIndex = getRisenPlayerIndex(dealerIndex, 1);
         if (playerList.get(actPlayerIndex).hasLost()) actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
         highestBetIndex = actPlayerIndex;
-        for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext();)
+        for (Player player : playerList)
         {
-            Player player = iterator.next();
             player.setOwnBet(0);
         }
         switch (phase)
@@ -336,40 +336,48 @@ public class GameModel implements Serializable
                 fillCardList(1);
                 break;
             case 4:
-                computeWinner();
+                computeWinner(false);
                 // nextRound();
                 break;
         }
     }
 
-    public void computeWinner()
+    public void computeWinner(boolean wonByFold)
     {
-        Pattern highestPattern = new Pattern(-1, -1, -1);
         List<Player> winnerList = new ArrayList<Player>();
-
-        for (Player player : playerList) // herausfinden, wie hoch das
-        // höchste Pattern ist
+        if (!wonByFold)
         {
-            if (player.isStillIn())
+            Pattern highestPattern = new Pattern(-1, -1, -1);
+            for (Player player : playerList) // herausfinden, wie hoch das
+            // höchste Pattern ist
             {
-                List<Card> cards = new ArrayList<Card>();
-                cards.addAll(cardList);
-                cards.add(player.getCard1());
-                cards.add(player.getCard2());
-                PatternChecker checker = new PatternChecker(cards);
-                if (checker.getHighestPattern().greaterThan(highestPattern))
+                if (player.isStillIn())
                 {
-                    highestPattern = checker.getHighestPattern();
-                    winnerList.clear();
-                    winnerList.add(player);
-                }
-                if (checker.getHighestPattern().equals(highestPattern))
-                {
-                    winnerList.add(player);
+                    List<Card> cards = new ArrayList<Card>();
+                    cards.addAll(cardList);
+                    cards.add(player.getCard1());
+                    cards.add(player.getCard2());
+                    PatternChecker checker = new PatternChecker(cards);
+                    if (checker.getHighestPattern().greaterThan(highestPattern))
+                    {
+                        highestPattern = checker.getHighestPattern();
+                        winnerList.clear();
+                        winnerList.add(player);
+                    }
+                    if (checker.getHighestPattern().equals(highestPattern))
+                    {
+                        winnerList.add(player);
+                    }
                 }
             }
         }
-
+        else
+        {
+            for (Player player : playerList)
+            {
+                if (player.isStillIn()) winnerList.add(player);
+            }
+        }
         long winnerValue = pot / winnerList.size();
 
         for (Player player : winnerList)
@@ -556,7 +564,7 @@ public class GameModel implements Serializable
 
     public void fold(int playerIndex)
     {
-        if (playerIsTurnHolder(playerIndex) == true)
+        if (playerIsTurnHolder(playerIndex))
         {
             getActPlayer().setStillIn(false);
             nextPlayer();
