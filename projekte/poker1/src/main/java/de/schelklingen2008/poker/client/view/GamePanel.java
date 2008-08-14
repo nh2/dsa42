@@ -40,11 +40,10 @@ public class GamePanel extends JPanel implements PlaceView
         }
     }
 
-    public HistoryPanel historyPanel;
-
     /**
      * Creates a TestGame panel and its associated interface components.
      */
+
     public GamePanel(Controller controller)
     {
 
@@ -67,11 +66,7 @@ public class GamePanel extends JPanel implements PlaceView
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
-        // history panel
-        // JPanel historyPanel = new JPanel();
-        // historyPanel.add(new JLabel("eXtreme"));
-
-        // HistoryPanel historyPanel = new HistoryPanel();
+        // HistoryPanel historyPanel = new HistoryPanel(controller);
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));

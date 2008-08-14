@@ -11,30 +11,32 @@ import de.schelklingen2008.poker.client.Constants;
 /**
  * Maintains the rules and the state of the game.
  */
+
 public class GameModel implements Serializable
 {
 
-    private static final Random RAND       = new Random();
+    private static final Random RAND        = new Random();
 
-    private List<Player>        playerList = new ArrayList<Player>();
+    private List<Player>        playerList  = new ArrayList<Player>();
     // private List<Pot> potList = new ArrayList<Pot>();
     private long                pot;
     private long                highestBet;
     private int                 highestBetIndex;
 
-    private List<Card>          stack      = new ArrayList<Card>();  // Liste aller 52 Karten, werden mit
+    private List<Card>          stack       = new ArrayList<Card>();  // Liste aller 52 Karten, werden mit
     // der
     // Zeit an cardList und auf die Spieler
     // verteilt, d.h. die Liste wird kleiner
     // = Kartenstapel
-    private List<Card>          cardList   = new ArrayList<Card>();  // Karten in der Mitte
-    private List<Player>        winnerList = new ArrayList<Player>();
+    private List<Card>          cardList    = new ArrayList<Card>();  // Karten in der Mitte
+    private List<Player>        winnerList  = new ArrayList<Player>();
     private long                winnerValue;
     private int                 phase;
     private int                 actPlayerIndex;
     private int                 dealerIndex;
     private long                smallBlind;
     private boolean             bigBlindNeedsToSet;
+    private List<String>        historyList = new ArrayList<String>();
 
     public GameModel()
     {
@@ -63,6 +65,11 @@ public class GameModel implements Serializable
     public long getPot()
     {
         return pot;
+    }
+
+    public List<String> getHistoryList()
+    {
+        return historyList;
     }
 
     public List<Player> getPlayerList()
@@ -526,6 +533,7 @@ public class GameModel implements Serializable
             setPlayerBet(callValue, playerIndex, false);
             setHighestBetAndBetterIndex();
             nextPlayer();
+            historyList.add(getActPlayer() + " has called.");
         }
         else
             throw new IllegalStateException();
@@ -534,7 +542,7 @@ public class GameModel implements Serializable
     public void check(int playerIndex)
     {
         if (!mustCheckOrRaise(playerIndex)) throw new IllegalStateException();
-
+        historyList.add(getActPlayer() + " has checked.");
         nextPlayer();
     }
 
@@ -544,6 +552,7 @@ public class GameModel implements Serializable
         {
             setPlayerBet(raiseValue, playerIndex, true);
             setHighestBetAndBetterIndex();
+            historyList.add(getActPlayer() + " has raised.");
             nextPlayer();
         }
         else
@@ -560,6 +569,7 @@ public class GameModel implements Serializable
         {
             setPlayerBet(highestBet + reRaiseValue, playerIndex, true);
             setHighestBetAndBetterIndex();
+            historyList.add(getActPlayer() + " has reraised.");
             nextPlayer();
         }
         else
@@ -571,6 +581,7 @@ public class GameModel implements Serializable
         if (playerIsTurnHolder(playerIndex))
         {
             getActPlayer().setStillIn(false);
+            historyList.add(getActPlayer() + " has folded.");
             nextPlayer();
         }
         else
@@ -597,4 +608,5 @@ public class GameModel implements Serializable
             System.out.println(card.getValue());
         }
     }
+
 }

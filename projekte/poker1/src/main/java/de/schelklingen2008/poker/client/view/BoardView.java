@@ -26,7 +26,12 @@ import de.schelklingen2008.poker.model.Player;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Controller    controller;
+    private Controller controller;
+
+    public Controller getController()
+    {
+        return controller;
+    }
 
     private ImageIcon[][] iconBuffer      = new ImageIcon[4][13];
     private ImageIcon[][] smallIconBuffer = new ImageIcon[4][13];
