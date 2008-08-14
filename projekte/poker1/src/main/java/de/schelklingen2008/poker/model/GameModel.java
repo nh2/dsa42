@@ -299,6 +299,10 @@ public class GameModel implements Serializable
         {
             nextPhase();
         }
+        if (playerList.get(actPlayerIndex).isAllIn())
+        {
+            nextPlayer();
+        }
         if (!playerList.get(actPlayerIndex).isStillIn() || playerList.get(actPlayerIndex).hasLost())
         {
             nextPlayer();
@@ -337,7 +341,6 @@ public class GameModel implements Serializable
                 break;
             case 4:
                 computeWinner(false);
-                // nextRound();
                 break;
         }
     }
@@ -390,7 +393,7 @@ public class GameModel implements Serializable
         this.winnerList = winnerList;
     }
 
-    public String kindToString(int patternValue)
+    public String patternToString(int patternValue)
     {
         String s;
         switch (patternValue)
@@ -467,6 +470,7 @@ public class GameModel implements Serializable
             player.setOwnBet(betValue);
             player.setBalance(0);
             pot += betValue;
+            player.setAllIn(true);
         }
         else
         {
@@ -591,7 +595,6 @@ public class GameModel implements Serializable
             Card card = iterator.next();
             System.out.println(card.getSuit());
             System.out.println(card.getValue());
-
         }
     }
 }

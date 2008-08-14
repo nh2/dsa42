@@ -101,4 +101,5 @@ public class GamePanel extends JPanel implements PlaceView
     public void willEnterPlace(PlaceObject placeObject)
     {
     }
+
 }

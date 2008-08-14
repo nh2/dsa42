@@ -281,6 +281,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + controller.getMessage(Constants.MSG_EUROS));
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
+                if (model.getMinBet() > getMyPlayer().getBalance()) controller.raiseButtonClicked(longBetrag);
                 if (betrag < model.getMinBet() || betrag > model.getMaxBet()) return;
                 controller.raiseButtonClicked(longBetrag);
             }
@@ -320,8 +321,10 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + String.valueOf(model.getMaxBet())
                                                                    + controller.getMessage(Constants.MSG_EUROS));
                 int betrag = Integer.parseInt(s);
-                if (betrag < model.getMinBet() || betrag > model.getMaxBet()) return;
                 long longBetrag = betrag;
+                if (model.getMinBet() > getMyPlayer().getBalance()) controller.reRaiseButtonClicked(longBetrag);
+                if (betrag < model.getMinBet() || betrag > model.getMaxBet()) return;
+
                 controller.reRaiseButtonClicked(longBetrag);
             }
         };
