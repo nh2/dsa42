@@ -64,108 +64,8 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
         bestMove = legalMoves.get(pos);
 
-        // for (int i = 0; i < legalMoves.size(); i++)
-        // {
-        //
-        // FirstRunner t1 = null, t2 = null;
-        // Piece bestPiece;
-        // // GameModel clone;
-        // // clone = new GameModel(gameModel);
-        // // Piece toPlace = legalMoves.get(i);
-        // // clone.placePiece(toPlace);
-        // // value = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone, true);
-        //
-        // t1 = new FirstRunner(gameModel, legalMoves.get(i));
-        // t1.start();
-        // if (i + 1 < legalMoves.size())
-        // {
-        // t2 = new FirstRunner(gameModel, legalMoves.get(i + 1));
-        // t2.start();
-        //
-        // }
-        // try
-        // {
-        // t1.join();
-        // }
-        // catch (InterruptedException e)
-        // {
-        // }
-        // if (i + 1 < legalMoves.size()) try
-        // {
-        // t2.join();
-        //
-        // }
-        // catch (InterruptedException e)
-        // {
-        // }
-        //
-        // int value1 = 0, value2 = 0;
-        //
-        // value1 = t1.getResult();
-        // if (i + 1 < legalMoves.size()) value2 = t2.getResult();
-        //
-        // if (i + 1 < legalMoves.size())
-        // {
-        // if (value1 >= value2)
-        // {
-        // value = value1;
-        // bestPiece = t1.piece;
-        // }
-        // else
-        // {
-        // value = value2;
-        // bestPiece = t2.piece;
-        // }
-        // }
-        // else
-        // {
-        // value = value1;
-        // bestPiece = t1.piece;
-        // }
-        //
-        // if (value >= best)
-        // {
-        //
-        // best = value;
-        // bestMove = bestPiece;
-        // }
-        // if (i + 1 < legalMoves.size()) i++;
-        //
-        // }
-        //
-
-
         return bestMove;
-
     }
-
-    class FirstRunner extends Thread
-    {
-
-        GameModel   game;
-        Piece       piece;
-        private int result = 0;
-
-        public FirstRunner(GameModel game, Piece piece)
-        {
-            this.game = game;
-            this.piece = piece;
-        }
-
-        @Override
-        public void run()
-        {
-            GameModel clone;
-            clone = new GameModel(game);
-            clone.placePiece(piece);
-            result = min(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, clone);
-        }
-
-        public int getResult()
-        {
-            return result;
-        }
-    };
 
     class SecondRunner extends Thread
     {
@@ -196,29 +96,6 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
     private int max(int depth, int alpha, int beta, GameModel gameModel)
     {
 
-        // if (depth == 0)
-        // {
-        // return evalFunction.evaluatePosition(gameModel, player);
-        // }
-        //
-        // Set<Tupel> tupelList = new TreeSet<Tupel>();
-        //
-        // for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
-        // {
-        // GameModel clone = new GameModel(gameModel);
-        // clone.placePiece(piece);
-        // tupelList.add(new Tupel(piece, evalFunction.evaluatePosition(gameModel, player)));
-        // }
-        //
-        // List<Piece> movesList = new ArrayList<Piece>(tupelList.size());
-        // for (Tupel t : tupelList)
-        // movesList.add(t.piece);
-        //
-        // for (Piece piece : movesList)
-        // {
-        // GameModel clone = new GameModel(gameModel);
-        // clone.placePiece(piece);
-
         List<pieceInt> liste = new weightListe(false);
 
         if (depth == 0 || gameModel.isFinished())
@@ -231,7 +108,6 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
             GameModel clone = new GameModel(gameModel);
             clone.placePiece(piece);
             liste.add(new pieceInt(false, piece, evalFunction.evaluatePosition(clone, player)));
-
         }
         Collections.sort(liste);
 
@@ -287,7 +163,6 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
                 return wert - o.wert;
             }
             return o.wert - wert;
-            // return 0;
         }
 
     }
@@ -330,24 +205,6 @@ public class AlphabetaAmorStrategy implements ReversiStrategy
 
     }
 
-    // class Tupel implements Comparable<Tupel>
-    // {
-    //
-    // public Piece piece;
-    // public int value;
-    //
-    // public Tupel(Piece piece, int value)
-    // {
-    // this.piece = piece;
-    // this.value = value;
-    // }
-    //
-    // public int compareTo(Tupel otherTupel)
-    // {
-    // return value - otherTupel.value;
-    // }
-    // }
-    //
-    // final java.util.Set<Tupel> tupelSet = new java.util.TreeSet<Tupel>();
+
 
 }
