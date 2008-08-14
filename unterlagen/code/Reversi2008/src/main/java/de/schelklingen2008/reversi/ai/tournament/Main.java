@@ -3,6 +3,7 @@ package de.schelklingen2008.reversi.ai.tournament;
 import java.util.Collections;
 import java.util.List;
 
+import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
 import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
 
 public class Main
@@ -12,7 +13,8 @@ public class Main
     {
         Tournament t = new Tournament(20);
         t.addStrategy(new TournamentStrategy("Ben", new SimpleStrategy()));
-        t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
+        // t.addStrategy(new TournamentStrategy("Georg", new SimpleStrategy()));
+        t.addStrategy(new TournamentStrategy("Daniel", new ReversiStrategyDadaLena()));
 
         t.prepare();
         long startzeit = System.currentTimeMillis();

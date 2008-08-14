@@ -10,7 +10,7 @@ import com.threerings.presents.net.UsernamePasswordCreds;
 import com.threerings.util.Name;
 
 import de.schelklingen2008.reversi.ai.strategy.ReversiStrategy;
-import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
+import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
 
 /**
  * The launcher application for all ToyBox games.
@@ -18,7 +18,7 @@ import de.schelklingen2008.reversi.ai.strategy.SimpleStrategy;
 public class AIToyBoxApp
 {
 
-    public static final ReversiStrategy REVERSI_STRATEGY = new SimpleStrategy();
+    public static final ReversiStrategy REVERSI_STRATEGY = new ReversiStrategyDadaLena();
 
     public static void main(final String[] args) throws Exception
     {

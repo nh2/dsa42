@@ -9,13 +9,17 @@ import java.util.Map;
 public class Tournament
 {
 
-    public static final int          MATCH_COUNT_DEFAULT = 30;
+    private static final int         POINTS_DRAW            = 1;
+    private static final int         POINTS_WIN             = 2;
+    public static final int          MATCH_COUNT            = 50;
+    private static final long        TIME_LIMIT_PER_MOVE_MS = 1000;
+    public static final int          MATCH_COUNT_DEFAULT    = 30;
 
-    private int                      matchCount          = MATCH_COUNT_DEFAULT;
+    private int                      matchCount             = MATCH_COUNT_DEFAULT;
 
-    private List<TournamentStrategy> strategies          = new ArrayList<TournamentStrategy>();
+    private List<TournamentStrategy> strategies             = new ArrayList<TournamentStrategy>();
 
-    private Map<String, List<Match>> matches             = new HashMap<String, List<Match>>();
+    private Map<String, List<Match>> matches                = new HashMap<String, List<Match>>();
 
     public Tournament()
     {
