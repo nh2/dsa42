@@ -19,9 +19,11 @@ import de.schelklingen2008.billiards.client.Constants;
 import de.schelklingen2008.billiards.client.controller.Controller;
 import de.schelklingen2008.billiards.client.controller.GameChangeListener;
 import de.schelklingen2008.billiards.client.model.GameContext;
+import de.schelklingen2008.billiards.model.BallMappingSetEvent;
 import de.schelklingen2008.billiards.model.GameEventAdapter;
 import de.schelklingen2008.billiards.model.GameModel;
 import de.schelklingen2008.billiards.model.Player;
+import de.schelklingen2008.billiards.model.TurnHolderChangeEvent;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -31,6 +33,18 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
     private class TurnPanelGameEventAdapter extends GameEventAdapter
     {
+
+        @Override
+        public void turnHolderChanged(TurnHolderChangeEvent e)
+        {
+            refreshPlayers();
+        }
+
+        @Override
+        public void ballMappingSet(BallMappingSetEvent e)
+        {
+            refreshPlayers();
+        }
 
         @Override
         public void boardStoppedMoving()
@@ -90,7 +104,7 @@ public class TurnPanel extends JPanel implements GameChangeListener
             String name = getGameContext().getName(i);
             JLabel label = new JLabel(name);
 
-            if (getGameModel().getTurnHolder().getId() == i)
+            if (getGameModel().getTurnHolder() != null && getGameModel().getTurnHolder().getId() == i)
             {
                 if (getGameModel().ballMappingFixed())
                 {

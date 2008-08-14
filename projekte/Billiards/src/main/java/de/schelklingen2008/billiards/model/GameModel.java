@@ -837,6 +837,14 @@ public class GameModel implements Serializable
             }
 
             breakHasHappened = true;
+
+            if (winner != null)
+            {
+                for (GameEventListener listener : gameEventListeners)
+                {
+                    listener.gameEnded(new GameEndEvent(winner));
+                }
+            }
         }
 
     }
@@ -848,17 +856,13 @@ public class GameModel implements Serializable
 
     void setWinner(Player player)
     {
-        if (winner == null)
+        if (player == null)
         {
             return;
         }
 
         winner = player;
         turnHolder = null;
-        for (GameEventListener listener : gameEventListeners)
-        {
-            listener.gameEnded(new GameEndEvent(winner));
-        }
     }
 
     public boolean isFinished()

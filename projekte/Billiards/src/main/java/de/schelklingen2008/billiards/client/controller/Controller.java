@@ -126,6 +126,11 @@ public class Controller extends GameController
 
         sLogger.info("Receiving new game model.");
 
+        if (sharedState.getPlayerCount() < 2)
+        {
+            boardProcessThread.cancel();
+        }
+
         fireGameChange();
     }
 

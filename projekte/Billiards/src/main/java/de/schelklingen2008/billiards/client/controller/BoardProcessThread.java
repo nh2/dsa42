@@ -7,6 +7,7 @@ public class BoardProcessThread extends Thread
 
     private Controller controller;
     private BoardView boardView;
+    private boolean doCancel;
 
     public BoardProcessThread(Controller controller, BoardView boardView)
     {
@@ -20,13 +21,12 @@ public class BoardProcessThread extends Thread
 
         long lastTick = System.currentTimeMillis();
 
-        while (controller.getGameContext().getGameModel().isInMotion())
+        while (!doCancel && controller.getGameContext().getGameModel().isInMotion())
         {
-
             long tick = System.currentTimeMillis();
 
             boardView.repaint();
-            for (int i = 0; i < tick - lastTick; i += 1)
+            for (int i = 0; i < tick - lastTick && !doCancel; i += 1)
             {
                 controller.getGameContext().getGameModel().processTimeStep(0.001d);
             }
@@ -42,6 +42,11 @@ public class BoardProcessThread extends Thread
 
         }
 
+    }
+
+    public void cancel()
+    {
+        doCancel = true;
     }
 
 }
