@@ -129,7 +129,7 @@ public class BoardView extends JPanel implements GameChangeListener
             }
             else
             {
-                actPlayerPanel.add(createLabel(""));
+                actPlayerPanel.add(createLabel(" "));
             }
             if (!getGameModel().getPlayerList().get(i).isStillIn())
             {
@@ -137,7 +137,7 @@ public class BoardView extends JPanel implements GameChangeListener
             }
             else
             {
-                actPlayerPanel.add(createLabel(""));
+                actPlayerPanel.add(createLabel(" "));
             }
             if (getGameModel().getPlayerList().get(i).isStillIn() && model.getPlayerList().get(i).getBalance() == 0)
             {
@@ -145,7 +145,7 @@ public class BoardView extends JPanel implements GameChangeListener
             }
             else
             {
-                actPlayerPanel.add(createLabel(""));
+                actPlayerPanel.add(createLabel(" "));
             }
             if (model.getPlayerList().get(i).hasLost())
             {
@@ -153,7 +153,7 @@ public class BoardView extends JPanel implements GameChangeListener
             }
             else
             {
-                actPlayerPanel.add(createLabel(""));
+                actPlayerPanel.add(createLabel(" "));
             }
 
             JPanel actPlayerCardPanel = new JPanel();
