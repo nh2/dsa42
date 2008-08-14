@@ -301,9 +301,9 @@ public class GameModel implements Serializable
         ukraine.add(0, c[13]);// Polen
         ukraine.add(1, c[11]);// Weißrussland
         ukraine.add(2, c[7]);// Russland
-        ukraine.add(4, c[29]);// Ungarn
-        ukraine.add(5, c[27]);// Slowakei
-        ukraine.add(6, c[18]);// Bulgarien
+        ukraine.add(3, c[29]);// Ungarn
+        ukraine.add(4, c[27]);// Slowakei
+        ukraine.add(5, c[18]);// Bulgarien
         c[12].setNeighbours(ukraine);
 
         // init neighbours Polen
