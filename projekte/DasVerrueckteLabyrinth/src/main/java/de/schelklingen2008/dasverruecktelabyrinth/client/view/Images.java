@@ -28,13 +28,13 @@ public class Images
     {
         try
         {
-            curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/curveOne.png"));
-            curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/curveTwo.png"));
-            curveThree = ImageIO.read(new File("src/main/resources/TilesBilder/curveThree.png"));
-            curveFour = ImageIO.read(new File("src/main/resources/TilesBilder/curveFour.png"));
-            horizontal = ImageIO.read(new File("src/main/resources/TilesBilder/horizontal.png"));
-            vertikal = ImageIO.read(new File("src/main/resources/TilesBilder/vertikal.png"));
-            cross = ImageIO.read(new File("src/main/resources/TilesBilder/Cross.png"));
+            curveOne = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/curveOne.png"));
+            curveTwo = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/curveTwo.png"));
+            curveThree = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/curveThree.png"));
+            curveFour = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/curveFour.png"));
+            horizontal = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/horizontal.png"));
+            vertikal = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/vertikal.png"));
+            cross = ImageIO.read(new File("src/main/resources/TilesBilderKrakeligAberSchoen/Cross.png"));
 
             // curveOne = ImageIO.read(new File("src/main/resources/TilesBilder/Curve1.tif"));
             // curveTwo = ImageIO.read(new File("src/main/resources/TilesBilder/Curve2.tif"));
