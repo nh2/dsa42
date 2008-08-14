@@ -3,8 +3,21 @@ package de.schelklingen2008.reversi.ai.tournament;
 import java.util.Collections;
 import java.util.List;
 
+import de.schelklingen2008.reversi.ai.evaluation.AmorEvaluationFunction;
 import de.schelklingen2008.reversi.ai.evaluation.GeorgEvaluationFunction;
-import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategyMultiThread;
+import de.schelklingen2008.reversi.ai.evaluation.GreenGoblin;
+import de.schelklingen2008.reversi.ai.evaluation.LarsEvalDiff;
+import de.schelklingen2008.reversi.ai.evaluation.ManuelEvaluationFunction;
+import de.schelklingen2008.reversi.ai.evaluation.SophieEvaluation;
+import de.schelklingen2008.reversi.ai.strategy.AlphaBetaStrategy;
+import de.schelklingen2008.reversi.ai.strategy.AmorStrategy;
+import de.schelklingen2008.reversi.ai.strategy.ChaosStrategy;
+import de.schelklingen2008.reversi.ai.strategy.HorstStrategy;
+import de.schelklingen2008.reversi.ai.strategy.LarsStratMmFixedDepth;
+import de.schelklingen2008.reversi.ai.strategy.ManuelStrategy;
+import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyDadaLena;
+import de.schelklingen2008.reversi.ai.strategy.ReversiStrategyNiklasLeo;
+import de.schelklingen2008.reversi.ai.strategy.SophieStrategy;
 
 public class Main
 {
@@ -12,18 +25,33 @@ public class Main
     public static void main(String[] args)
     {
         Tournament t = new Tournament(10);
-        t.addStrategy(new TournamentStrategy("Georg5", new AlphaBetaStrategyMultiThread(new GeorgEvaluationFunction(),
-                                                                                        5,
-                                                                                        1,
-                                                                                        2,
-                                                                                        true,
-                                                                                        true)));
-        t.addStrategy(new TournamentStrategy("Multi5", new AlphaBetaStrategyMultiThread(new GeorgEvaluationFunction(),
-                                                                                        7,
-                                                                                        1,
-                                                                                        2,
-                                                                                        true,
-                                                                                        true)));
+        // t.addStrategy(new TournamentStrategy("Simple", new SimpleStrategy()));
+        t.addStrategy(new TournamentStrategy("Amor", new AmorStrategy(new AmorEvaluationFunction(), 6)));
+        t.addStrategy(new TournamentStrategy("Horst", new HorstStrategy(6, 2)));
+        t.addStrategy(new TournamentStrategy("GreenGoblin", new ReversiStrategyNiklasLeo(new GreenGoblin(), 4)));
+        t.addStrategy(new TournamentStrategy("Sophie", new SophieStrategy(new SophieEvaluation(), 4)));
+        t.addStrategy(new TournamentStrategy("Lars", new LarsStratMmFixedDepth(new LarsEvalDiff(), 4)));
+        t.addStrategy(new TournamentStrategy("DaDaLena", new ReversiStrategyDadaLena()));
+        t.addStrategy(new TournamentStrategy("Chaos", new ChaosStrategy(5)));
+        t.addStrategy(new TournamentStrategy("Manuel", new ManuelStrategy(new ManuelEvaluationFunction())));
+
+        t.addStrategy(new TournamentStrategy("Georg5", new AlphaBetaStrategy(new GeorgEvaluationFunction(),
+                                                                             5,
+                                                                             15,
+                                                                             true,
+                                                                             false)));
+        t.addStrategy(new TournamentStrategy("Georg1", new AlphaBetaStrategy(new GeorgEvaluationFunction(),
+                                                                             1,
+                                                                             1,
+                                                                             true,
+                                                                             false)));
+        // t.addStrategy(new TournamentStrategy("Multi5", new AlphaBetaStrategyMultiThread(new
+        // GeorgEvaluationFunction(),
+        // 7,
+        // 1,
+        // 2,
+        // true,
+        // true)));
 
         t.prepare();
         long startzeit = System.currentTimeMillis();
