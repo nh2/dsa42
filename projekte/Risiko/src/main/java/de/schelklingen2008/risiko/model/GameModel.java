@@ -496,6 +496,7 @@ public class GameModel implements Serializable
         if (!turnholder.IsPlaying())
         {
             setNextTurnholder();
+            return;
         }
         turnholder.setUnitsToSet(getUnitsforPlayer(turnholder));
 
