@@ -255,6 +255,16 @@ public class GameModel implements Serializable
     public void nextPlayer()
     {
         actPlayerIndex = getRisenPlayerIndex(actPlayerIndex, 1);
+        int isOutCount = 0;
+        for (Player player : playerList)
+        {
+            if (!player.isStillIn()) isOutCount++;
+        }
+        if (isOutCount == playerList.size() - 1)
+        {
+            phase = 3;
+            nextPhase();
+        }
         if (!playerList.get(actPlayerIndex).isStillIn() || playerList.get(actPlayerIndex).hasLost())
         {
             nextPlayer();
@@ -265,7 +275,6 @@ public class GameModel implements Serializable
         {
             nextPhase();
         }
-
         int bigBlindIndex = getRisenPlayerIndex(dealerIndex, 2);
         boolean isBigBlind = bigBlindIndex == actPlayerIndex;
         if (isBigBlind && bigBlindNeedsToSet && highestBetIndex == bigBlindIndex)

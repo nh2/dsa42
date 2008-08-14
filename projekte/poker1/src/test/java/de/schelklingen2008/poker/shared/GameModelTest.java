@@ -494,4 +494,14 @@ public class GameModelTest extends TestCase
         assertEquals(0, gameModel.getCardList().size());
     }
 
+    public void testAllFold() throws Exception
+    {
+        String[] TEST_NAMES = new String[] { "Tobias", "Matthias", "Georg" };
+        GameModel gameModel = new GameModel(TEST_NAMES);
+        gameModel.fold(0);
+        gameModel.fold(1);
+        assertEquals(0, gameModel.getPhase());
+        assertEquals(0, gameModel.getCardList().size());
+    }
+
 }
