@@ -304,6 +304,22 @@ public class GameModel implements Serializable
         return true;
     }
 
+    public boolean legalMovePossible()
+    {
+        Player player = players.get(turnHolder);
+        int playerX = player.getXKoordinate();
+        int playerY = player.getYKoordinate();
+
+        boolean possible = false;
+
+        if (findWay(playerX, playerY, playerX + 1, playerY) != null) possible = true;
+        if (findWay(playerX, playerY, playerX - 1, playerY) != null) possible = true;
+        if (findWay(playerX, playerY, playerX, playerY + 1) != null) possible = true;
+        if (findWay(playerX, playerY, playerX, playerY - 1) != null) possible = true;
+
+        return possible;
+    }
+
     private boolean isTurnHolder(Player player2)
     {
         boolean temp = false;
