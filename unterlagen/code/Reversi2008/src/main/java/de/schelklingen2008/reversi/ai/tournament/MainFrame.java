@@ -26,7 +26,7 @@ public class MainFrame
 
     public static void main(String[] args)
     {
-        Tournament t = new Tournament(4);
+        Tournament t = new Tournament(6);
         t.addStrategy(new TournamentStrategy("GeBen1", new AlphaBetaStrategy(new GeorgEvaluationFunction(),
                                                                              1,
                                                                              1,
