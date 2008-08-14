@@ -98,6 +98,7 @@ public class GameModel implements Serializable
     public void removenewHistory()
     {
         history[0] = null;
+        history[1] = null;
     }
 
     public Country getSelectedCountry()
