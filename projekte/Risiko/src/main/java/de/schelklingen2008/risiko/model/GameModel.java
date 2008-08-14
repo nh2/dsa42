@@ -330,8 +330,7 @@ public class GameModel implements Serializable
         ArrayList<Country> griechenland = new ArrayList<Country>();
         griechenland.add(0, c[17]);// Albanien
         griechenland.add(1, c[16]);// Jugoslawien
-        griechenland.add(2, c[18]);// Bulgarien
-        griechenland.add(3, c[19]);// Rumänien
+        griechenland.add(2, c[19]);// Rumänien
         c[15].setNeighbours(griechenland);
 
         // init neighbours Jugoslawien
@@ -356,17 +355,15 @@ public class GameModel implements Serializable
         ArrayList<Country> bulgarien = new ArrayList<Country>();
         bulgarien.add(0, c[16]);// Jugoslawien
         bulgarien.add(1, c[19]);// Rumänien
-        bulgarien.add(2, c[15]);// Griechenland
+        bulgarien.add(2, c[29]);// Ungarn
         bulgarien.add(3, c[12]);// Ukraine
         c[18].setNeighbours(bulgarien);
 
         // init neighbours Rumänien
         ArrayList<Country> rumaenien = new ArrayList<Country>();
-        rumaenien.add(0, c[29]);// Ungarn
-        rumaenien.add(1, c[12]);// Ukraine
-        rumaenien.add(2, c[18]);// Bulgarien
-        rumaenien.add(3, c[16]);// Jugoslawien
-        rumaenien.add(4, c[15]);// Griechenland
+        rumaenien.add(0, c[18]);// Bulgarien
+        rumaenien.add(1, c[16]);// Jugoslawien
+        rumaenien.add(2, c[15]);// Griechenland
         c[19].setNeighbours(rumaenien);
 
         // init neighbours Portugal
@@ -383,6 +380,7 @@ public class GameModel implements Serializable
         frankreich.add(4, c[14]); // Italien
         frankreich.add(5, c[22]); // Spanien
         c[21].setNeighbours(frankreich);
+
         // init neighbours Spanien
         ArrayList<Country> spanien = new ArrayList<Country>();
         spanien.add(0, c[20]); // Portugal
@@ -447,7 +445,7 @@ public class GameModel implements Serializable
         ArrayList<Country> ungarn = new ArrayList<Country>();
         ungarn.add(0, c[27]);// Slowakei
         ungarn.add(1, c[12]);// Ukraine
-        ungarn.add(2, c[19]);// Rumänien
+        ungarn.add(2, c[18]);// Bulgarien
         ungarn.add(3, c[16]);// Jugoslawien
         ungarn.add(4, c[28]);// Österreich
         c[29].setNeighbours(ungarn);
