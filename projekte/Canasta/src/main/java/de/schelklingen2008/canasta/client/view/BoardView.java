@@ -486,14 +486,35 @@ public class BoardView extends JPanel implements GameChangeListener
     private void paintTalon(Graphics2D gfx)
     {
         Talon talon = getGameModel().getTalon();
-        gfx.drawImage(getCardImage(talon.peek(), 50, true), 410, 380, null);
+        Card topCard = talon.peek();
+
+        if (topCard == null)
+        {
+            gfx.setColor(new Color(0xFFFFFF));
+            gfx.drawRoundRect(410, 380, 50, 71, 3, 3);
+        }
+        else
+        {
+            gfx.drawImage(getCardImage(topCard, 50, true), 410, 380, null);
+        }
         areas.add(new SensitiveArea("Talon", 410, 380, 50, 71));
     }
 
     private void paintDiscard(Graphics2D gfx)
     {
         Discard discard = getGameModel().getDiscard();
-        gfx.drawImage(getCardImage(discard.peek(), 50, false), 350, 380, null);
+        Card topCard = discard.peek();
+
+        if (topCard == null)
+        {
+            gfx.setColor(new Color(0xFFFFFF));
+            gfx.drawRoundRect(350, 380, 50, 71, 3, 3);
+        }
+        else
+        {
+            gfx.drawImage(getCardImage(topCard, 50, false), 350, 380, null);
+        }
+
         areas.add(new SensitiveArea("Discard", 350, 380, 50, 71));
     }
 
