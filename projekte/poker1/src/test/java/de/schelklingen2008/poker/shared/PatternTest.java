@@ -129,7 +129,7 @@ public class PatternTest extends TestCase
         System.out.println("Vierling: " + checker.isFourOfAKind());
         System.out.println("Straight Flush: " + checker.isStraightFlush());
         System.out.println("Royal Flush: " + checker.isRoyalFlush());
-        System.out.println(checker.getHighestPatternValue());
+        // System.out.println(checker.getHighestPatternValue());
     }
 
     public void test2(List<Card> cardList, PatternChecker checker)

@@ -266,20 +266,63 @@ public class PatternChecker
         return false;
     }
 
-    public int getHighestPatternValue()
+    public Pattern getHighestPattern()
     {
         int i = 0;
-        if (isPair()) i = 1;
-        if (isTwoPair()) i = 2;
-        if (isThreeOfAKind()) i = 3;
-        if (isStraight()) i = 4;
+        int val1 = -1;
+        int val2 = -1;
+
+        if (isPair())
+        {
+            i = 1;
+            val1 = pairCard1;
+        }
+        if (isTwoPair())
+        {
+            i = 2;
+            if (pairCard1 >= pairCard2)
+            {
+                val1 = pairCard1;
+                val2 = pairCard2;
+            }
+            else
+            {
+                val1 = pairCard2;
+                val2 = pairCard1;
+            }
+        }
+        if (isThreeOfAKind())
+        {
+            i = 3;
+            val1 = pairCard2;
+        }
+        if (isStraight())
+        {
+            i = 4;
+            val1 = straightCard;
+        }
         if (isFlush()) i = 5;
-        if (isFullHouse()) i = 6;
-        if (isFourOfAKind()) i = 7;
-        if (isStraightFlush()) i = 8;
+        if (isFullHouse())
+        {
+            i = 6;
+            val1 = pairCard2; // Kartenart des Drillings
+            val2 = pairCard1; // Kartenart des Pärchens
+        }
+        if (isFourOfAKind())
+        {
+            i = 7;
+            val1 = pairCard1;
+        }
+        if (isStraightFlush())
+        {
+            i = 8;
+            val1 = straightCard;
+        }
         if (isRoyalFlush()) i = 9;
 
-        return i;
+        Pattern pattern = new Pattern(i, val1, val2);
+
+        return pattern;
 
     }
 

@@ -4,13 +4,13 @@ public class Pattern
 {
 
     private int art;       // Art des Patterns, z.B. HighCard, Pärchen,...Straße, Flush...
-    private int pairCard1 = 0;
+    private int value1 = 0;
     private int value2 = 0;
 
     public Pattern(int art, int value1, int value2)
     {
         this.art = art;
-        this.pairCard1 = value1;
+        this.value1 = value1;
         this.value2 = value2;
     }
 
@@ -54,4 +54,41 @@ public class Pattern
         return s;
     }
 
+    public boolean greaterThan(Pattern other)
+    {
+        if (art > other.art) return true;
+        if (art < other.art) return false;
+        // wenn art gleich ist
+        if (value1 > other.value1) return true;
+        if (value1 < other.value1) return false;
+        // wenn auch value1 gleich ist
+        if (value2 > other.value2) return true;
+        if (value2 < other.value2) return false;
+
+        return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + art;
+        result = prime * result + value1;
+        result = prime * result + value2;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Pattern other = (Pattern) obj;
+        if (art != other.art) return false;
+        if (value1 != other.value1) return false;
+        if (value2 != other.value2) return false;
+        return true;
+    }
 }
