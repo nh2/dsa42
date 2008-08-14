@@ -304,13 +304,12 @@ public class GameModel implements Serializable
                 pPlayer.setXKoordinate(x);
                 pPlayer.setYKoordinate(y);
                 placedOnSearchCard(pPlayer);
-                pPlayer.Moved(true);
                 walk = false;
             }
-            if (walk == false && hasLegalMoved(pPlayer) == true)
+            if (walk == false)
             {
+                sLogger.fine("lolz pls ruf mich auf");
                 changeTurnHolder();
-                pPlayer.Moved(false);
             }
 
         }
@@ -388,12 +387,6 @@ public class GameModel implements Serializable
         if (way == null) return false;
 
         return true;
-    }
-
-    public boolean hasLegalMoved(Player player)
-    {
-        boolean hasMoved = player.hasMoved();
-        return hasMoved;
     }
 
     private boolean isTurnHolder(Player player2)
