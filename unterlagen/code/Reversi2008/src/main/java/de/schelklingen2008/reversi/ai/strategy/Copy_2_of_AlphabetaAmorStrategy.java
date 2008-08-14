@@ -2,7 +2,6 @@ package de.schelklingen2008.reversi.ai.strategy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +15,11 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
 {
 
     private final AlphabetaAmorEvaluationFunction evalFunction;
-    private final int                depth;
-    private int                      count;
-    Player                           player;
+    private final int                             depth;
+    private int                                   count;
+    Player                                        player;
 
-    List<HelpGameModel> hgmlist;
+    List<HelpGameModel>                           hgmlist;
 
     public Copy_2_of_AlphabetaAmorStrategy(int depth)
     {
@@ -77,7 +76,7 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
     class SecondRunner extends Thread
     {
 
-        HelpGameModel         game;
+        HelpGameModel     game;
         Piece             piece;
         private Integer[] values;
         private int       pos;
@@ -103,41 +102,41 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
 
     private int max(int depth, int alpha, int beta, HelpGameModel gameModel, int pos)
     {
-
-        List<pieceInt> liste = new weightListe(false);
-
-        if (depth == 0 || gameModel.isFinished())
-        {
-            return evalFunction.evaluatePosition(gameModel, player);
-        }
-
-        for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
-        {
-            HelpGameModel clone = hgmlist.get(pos);
-            clone.clone(gameModel);
-            clone.placePiece(piece);
-            liste.add(new pieceInt(false, piece, evalFunction.evaluatePosition(clone, player)));
-        }
-        Collections.sort(liste);
-
-        for (int i = 0; i < liste.size(); i++)
-        {
-
-            HelpGameModel clone = hgmlist.get(pos);
-            clone.clone(gameModel);
-            clone.placePiece(liste.get(i).piece);
-
-            alpha = Math.max(alpha, min(depth - 1, alpha, beta, clone, pos));
-
-            if (alpha >= beta)
-            {
-                return beta;
-            }
-
-        }
-
+        //
+        // List<pieceInt> liste = new weightListe(false);
+        //
+        // if (depth == 0 || gameModel.isFinished())
+        // {
+        // return evalFunction.evaluatePosition(gameModel, player);
+        // }
+        //
+        // for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
+        // {
+        // HelpGameModel clone = hgmlist.get(pos);
+        // clone.clone(gameModel);
+        // clone.placePiece(piece);
+        // liste.add(new pieceInt(false, piece, evalFunction.evaluatePosition(clone, player)));
+        // }
+        // Collections.sort(liste);
+        //
+        // for (int i = 0; i < liste.size(); i++)
+        // {
+        //
+        // HelpGameModel clone = hgmlist.get(pos);
+        // clone.clone(gameModel);
+        // clone.placePiece(liste.get(i).piece);
+        //
+        // alpha = Math.max(alpha, min(depth - 1, alpha, beta, clone, pos));
+        //
+        // if (alpha >= beta)
+        // {
+        // return beta;
+        // }
+        //
+        // }
+        //
         return alpha;
-
+        // return 0;
     }
 
     public class weightListe extends ArrayList<pieceInt>
@@ -180,68 +179,67 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
     private int min(int depth, int alpha, int beta, HelpGameModel gameModel, int pos)
 
     {
-        List<pieceInt> liste = new weightListe(true);
-
-        if (depth == 0 || gameModel.isFinished())
-        {
-            return evalFunction.evaluatePosition(gameModel, player);
-        }
-
-        for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
-        {
-            HelpGameModel clone = hgmlist.get(pos);
-            clone.clone(gameModel);
-            clone.placePiece(piece);
-            liste.add(new pieceInt(true, piece, evalFunction.evaluatePosition(clone, player)));
-
-        }
-        Collections.sort(liste);
-
-        for (int i = 0; i < liste.size(); i++)
-        {
-
-            HelpGameModel clone = hgmlist.get(pos);
-            clone.clone(gameModel);
-            clone.placePiece(liste.get(i).piece);
-
-            beta = Math.min(beta, max(depth - 1, alpha, beta, clone, pos));
-
-            if (beta <= alpha)
-            {
-                return alpha;
-            }
-
-        }
+        // List<pieceInt> liste = new weightListe(true);
+        //
+        // if (depth == 0 || gameModel.isFinished())
+        // {
+        // return evalFunction.evaluatePosition(gameModel, player);
+        // }
+        //
+        // for (Piece piece : gameModel.getLegalMovesSet(gameModel.getTurnHolder()))
+        // {
+        // HelpGameModel clone = hgmlist.get(pos);
+        // clone.clone(gameModel);
+        // clone.placePiece(piece);
+        // liste.add(new pieceInt(true, piece, evalFunction.evaluatePosition(clone, player)));
+        //
+        // }
+        // Collections.sort(liste);
+        //
+        // for (int i = 0; i < liste.size(); i++)
+        // {
+        //
+        // HelpGameModel clone = hgmlist.get(pos);
+        // clone.clone(gameModel);
+        // clone.placePiece(liste.get(i).piece);
+        //
+        // beta = Math.min(beta, max(depth - 1, alpha, beta, clone, pos));
+        //
+        // if (beta <= alpha)
+        // {
+        // return alpha;
+        // }
+        //
+        // }
 
         return beta;
 
     }
 
-
     public class HelpGameModel implements Serializable
     {
 
-        public static final int       SIZE             = 8;
+        public static final int SIZE             = 8;
 
-        private final Player   PLAYER_START     = Player.WHITE;
+        private final Player    PLAYER_START     = Player.WHITE;
 
         /** The initial set of pieces. */
-        private final int[]    SX               = { 3, 3, 4, 4 };
-        private final int[]    SY               = { 3, 4, 3, 4 };
-        private final Player[] SO               = { Player.BLACK, Player.WHITE, Player.WHITE, Player.BLACK };
-        private final int      STARTERS_COUNT   = SX.length;
+        private final int[]     SX               = { 3, 3, 4, 4 };
+        private final int[]     SY               = { 3, 4, 3, 4 };
+        private final Player[]  SO               = { Player.BLACK, Player.WHITE, Player.WHITE, Player.BLACK };
+        private final int       STARTERS_COUNT   = SX.length;
 
         /** The eight directions NW, N, NE, E, SE, S, SW, W. */
-        private final int[]    DX               = { -1, -1, -1, 0, 1, 1, 1, 0 };
-        private final int[]    DY               = { -1, 0, 1, 1, 1, 0, -1, -1 };
-        private final int      DIRECTIONS_COUNT = DX.length;
+        private final int[]     DX               = { -1, -1, -1, 0, 1, 1, 1, 0 };
+        private final int[]     DY               = { -1, 0, 1, 1, 1, 0, -1, -1 };
+        private final int       DIRECTIONS_COUNT = DX.length;
 
-
-        public Player[][]            board;
-        public Player                turnHolder;
+        public Player[][]       board;
+        public Player           turnHolder;
 
         public HelpGameModel()
-        {}
+        {
+        }
 
         public HelpGameModel(GameModel other)
         {
@@ -294,6 +292,7 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
 
             advanceTurnHolder();
         }
+
         public boolean isFinished()
         {
             return getTurnHolder() == null;
@@ -365,6 +364,7 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
         {
             return getWinner() == player;
         }
+
         public Player getWinner()
         {
             if (!isFinished()) return null;
@@ -373,6 +373,7 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
             if (diff < 0) return Player.BLACK;
             return null;
         }
+
         public int countPieces(Player player)
         {
             int count = 0;
@@ -418,23 +419,22 @@ public class Copy_2_of_AlphabetaAmorStrategy implements ReversiStrategy
             board[x][y] = player;
         }
 
-        //        private static Player[][] copyBoard(Player[][] s)
-        //        {
-        //            Player[][] copy = new Player[SIZE][SIZE];
-        //            for (int x = 0; x < SIZE; x++)
-        //                for (int y = 0; y < SIZE; y++)
-        //                    copy[x][y] = s[x][y];
-        //            return copy;
-        //        }
+        // private static Player[][] copyBoard(Player[][] s)
+        // {
+        // Player[][] copy = new Player[SIZE][SIZE];
+        // for (int x = 0; x < SIZE; x++)
+        // for (int y = 0; y < SIZE; y++)
+        // copy[x][y] = s[x][y];
+        // return copy;
+        // }
 
         /**
          * Returns a copy of the board.
          */
-        //        public Player[][] getBoard()
-        //        {
-        //            return copyBoard(board);
-        //        }
-
+        // public Player[][] getBoard()
+        // {
+        // return copyBoard(board);
+        // }
         public Player getTurnHolder()
         {
             return turnHolder;
