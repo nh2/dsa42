@@ -56,31 +56,31 @@ public class GamePanel extends JPanel implements PlaceView
         box.add(new BoardView(controller));
         add(box, BorderLayout.CENTER);
 
-        // create a side panel to hold our chat and other extra interfaces
+        // creates a side panel for our chat conversations and other extra interfaces
         JPanel sidePanel = GroupLayout.makeVStretchBox(5);
         sidePanel.setOpaque(false);
 
-        // add a big fat label
+        // adds a big bold label
         MultiLineLabel vlabel = new MultiLineLabel(controller.getMessage(Constants.MSG_TITLE));
         vlabel.setAntiAliased(true);
         vlabel.setFont(ToyBoxUI.fancyFont);
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
-        // add a standard turn display
+        // adds a standard turn display
         TurnPanel turnDisplay = new TurnPanel(controller);
         turnDisplay.setOpaque(false);
         sidePanel.add(turnDisplay, GroupLayout.FIXED);
 
-        // add a chat box
+        // adds a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
 
-        // add a "back to lobby" button
+        // adds a "back to lobby" button
         JButton back = new JButton();
         back.addActionListener(new ActionListenerImplementation(controller));
         back.setText(controller.getMessage(Constants.MSG_BACK_TO_LOBBY));
         sidePanel.add(back, GroupLayout.FIXED);
 
-        // add our side panel to the main display
+        // adds our side panel to the main display
         add(sidePanel, BorderLayout.EAST);
     }
 

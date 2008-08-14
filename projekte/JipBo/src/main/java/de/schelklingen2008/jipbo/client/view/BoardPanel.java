@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
+import de.schelklingen2008.jipbo.client.Constants;
 import de.schelklingen2008.jipbo.client.controller.Controller;
 import de.schelklingen2008.jipbo.model.Card;
 import de.schelklingen2008.util.LoggerFactory;
@@ -50,6 +51,8 @@ public class BoardPanel extends JPanel
                     @Override
                     public void mouseClicked(MouseEvent e)
                     {
+                        if (!mController.getGameContext().isMyTurn()) return;
+
                         CardPanel cardPanel = (CardPanel) e.getComponent();
 
                         if (kBoardPanel != null)
@@ -70,31 +73,29 @@ public class BoardPanel extends JPanel
                                 cardPlace = j;
                             }
                         }
+
                         if (!isPublicCards())
                         {
                             mController.setOwnSelectedCard(cardPlace, isDrawPile(), cardPanel.getValue());
 
-                            cardPanel.setBorder(mController.getSelectedOwnCardIndex() == cardPanel.getValue());
-
+                            int newPlace = mController.getSelectedOwnCardPlace();
+                            if (newPlace >= 0 && mController.getGameContext().isMyTurn())
+                            {
+                                boolean newIsHand = mController.isSelectedOwnCardInHand();
+                                boolean drawMyPanel = newIsHand && mIsDrawPile || !newIsHand && !mIsDrawPile;
+                                BoardPanel newPanel = drawMyPanel ? BoardPanel.this : kBoardPanel;
+                                newPanel.getCardPanel()[newPlace].setBorder(true);
+                                newPanel.repaint();
+                            }
                         }
                         else
                         {
-                            if (mController.getSelectedOwnCardIndex() != -2
-                                && (mController.getSelectedPublicCardIndex() == -2
-                                    && mController.getSelectedOwnCardIndex() == 1
-                                    || mController.getSelectedPublicCardIndex() == mController.getSelectedOwnCardIndex() - 1 || mController.getSelectedOwnCardIndex() == 0))
-                            {
-                                mController.setPublicSelectedCard(cardPlace, cardPanel.getValue());
-                                cardPanel.setBorder(mController.getSelectedPublicCardIndex() == cardPanel.getValue());
-                            }
+                            mController.setPublicSelectedCard(cardPlace, cardPanel.getValue());
                         }
+
                         repaint();
 
-                        sLogger.fine("send own card "
-                                     + mController.getSelectedOwnCardIndex()
-                                     + " and public card "
-                                     + mController.getSelectedPublicCardIndex()
-                                     + " to controller");
+                        sLogger.fine("send own card " + mController.getSelectedOwnCardIndex() + " to controller");
                     }
                 });
 
@@ -118,12 +119,12 @@ public class BoardPanel extends JPanel
 
     public boolean isMyBoardPanel()
     {
-        return !isDrawPile() && !isPublicCards() ? true : false;
+        return !isDrawPile() && !isPublicCards();
     }
 
     public boolean isPublicCards()
     {
-        return mCards[4].getNumber() == -1 ? true : false;
+        return mCards[4].getNumber() == Constants.COVER;
     }
 
     public CardPanel[] getCardPanel()

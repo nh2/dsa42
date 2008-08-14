@@ -23,4 +23,8 @@ public final class Constants
     /** board colors */
     public static final Color  COL_BOARD_BACKGROUND = Color.decode("#0000688B");
     public static final Color  COL_BOARD_GRID       = Color.DARK_GRAY;
+
+    public static final int    EMPTY                = -2;
+    public static final int    COVER                = -1;
+    public static final int    JOKER                = 0;
 }

@@ -75,7 +75,7 @@ public class BoardView extends JPanel implements GameChangeListener
         removeAll();
         if (getGameModel().getTurnHolder().equals(getGameModel().getPlayerIDByName(getGameContext().getMyName())))
         {
-            getGameModel().refreshDrawPile(getGameModel().getPlayerByName(getGameContext().getMyName()));
+            getGameModel().refreshDrawPile(getGameContext().getMyName());
         }
 
         // Other Players Panel
@@ -86,7 +86,7 @@ public class BoardView extends JPanel implements GameChangeListener
                 JLabel playerLabel = new JLabel(getGameModel().getPlayerNameIndexOf(i));
                 playerLabel.setAlignmentX(CENTER_ALIGNMENT);
                 // playerLabel.setForeground(Color.decode("#00CD0000"));
-                playerLabel.setForeground(Color.GREEN);
+                playerLabel.setForeground(Color.decode("#0000FF7F"));
                 Font newFontP = playerLabel.getFont().deriveFont(15.0f);
                 playerLabel.setFont(newFontP);
                 add(playerLabel);
@@ -115,7 +115,7 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                             getGameModel().getPlayerIDByName(
                                                                                                              getGameContext().getMyName())));
         myNameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        myNameLabel.setForeground(Color.GREEN);
+        myNameLabel.setForeground(Color.decode("#0000FF7F"));
         Font newFontI = myNameLabel.getFont().deriveFont(15.0f);
         myNameLabel.setFont(newFontI);
         add(myNameLabel);

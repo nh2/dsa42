@@ -3,6 +3,8 @@ package de.schelklingen2008.jipbo.model;
 import java.io.Serializable;
 import java.util.List;
 
+import de.schelklingen2008.jipbo.client.Constants;
+
 /**
  * Is a simple abstraction for a player entity.
  */
@@ -57,7 +59,7 @@ public class Player implements Serializable
         return mStockPile;
     }
 
-    public void removeLastStockPile()
+    public void removeLastCardFromStockPile()
     {
         mStockPile.remove(mStockPile.size() - 1);
     }
@@ -74,7 +76,7 @@ public class Player implements Serializable
 
     public void removeDrawPileCard(int pPlace)
     {
-        mDrawPile[pPlace].setNumber(-2);// -2 <=> no card
+        mDrawPile[pPlace].setNumber(Constants.EMPTY);
     }
 
     public Card[] getDiscardPile()

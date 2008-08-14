@@ -42,6 +42,13 @@ public class GameContext
         this.myName = myName;
     }
 
+    public boolean isMyTurn()
+    {
+        sLogger.finest("isMyTurn: " + myName);
+        Player me = gameModel.getPlayerByName(myName);
+        return gameModel.isTurnHolder(me);
+    }
+
     public Player getMyPlayer()
     {
         return gameModel.getPlayerByName(myName);

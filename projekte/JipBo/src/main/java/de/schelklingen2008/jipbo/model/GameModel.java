@@ -161,62 +161,72 @@ public class GameModel implements Serializable
         return mPlayers[getPlayerIDByName(pName)];
     }
 
-    public void putCard(String pPlayerName, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
+    public void putCard(String pPlayerName, int pFromPlace, boolean pFromHand, int pToPlace)
     {
-        // TODO INDEXOUTOFBOUNCE
         int playerID = getPlayerIDByName(pPlayerName);
         Player player = mPlayers[playerID];
         if (!player.equals(turnHolder)) throw new IllegalStateException("It is not the players turn: "
-                                                                        + player.getName()
-                                                                        + " (pC)");
-        // TODO fixit
-        // if(pFromHand
-        // && mPlayers[playerID].getDrawPile()[pFromPlace].getNumber() == pCard
-        // || !pFromHand
-        // && (pFromPlace < 4 && mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == pCard ||
-        // mPlayers[playerID].getLastStockPile()
-        // .getNumber() == pCard))
-        if (pCard != 0
-            || mPlayers[playerID].getDiscardPile()[pFromPlace].getNumber() == 0
-            || mPlayers[playerID].getLastStockPile().getNumber() == 0)
-        {
-            // here comes the joker
-            if (pCard == 0)
-            {
-                if (mBuildPile[pToPlace].getNumber() == -2)
-                {
-                    pCard = 1;
-                }
-                else
-                {
-                    pCard = mBuildPile[pToPlace].getNumber() + 1;
-                }
-            }
-            // update BuildPile
-            mBuildPile[pToPlace].setNumber(pCard);
+                                                                        + player.getName());
 
-            // remove PlayerPiles
-            if (pFromHand)
+        int cardToPlace = 0;
+        if (pFromHand)
+        {
+            cardToPlace = player.getDrawPile()[pFromPlace].getNumber();
+        }
+        else
+        {
+            if (pFromPlace < 4)
             {
-                mPlayers[playerID].removeDrawPileCard(pFromPlace);
+                cardToPlace = player.getDiscardPile()[pFromPlace].getNumber();
             }
             else
             {
-                if (pFromPlace < 4)
-                {
-                    mPlayers[playerID].removeDiscardPileCard(pFromPlace);
-                }
-                else
-                {
-                    mPlayers[playerID].removeLastStockPile();
-                }
+                cardToPlace = player.getLastStockPile().getNumber();
+            }
+        }
+
+        Card targetCard = mBuildPile[pToPlace];
+        int targetNumber = targetCard.getNumber();
+        // here comes the joker
+        if (targetNumber == Constants.EMPTY)
+        {
+            if (cardToPlace == 0) cardToPlace = 1;
+            if (cardToPlace != 1) throw new IllegalArgumentException("Card must be a 1 or a joker: " + cardToPlace);
+        }
+        else
+        {
+            if (cardToPlace == 0) cardToPlace = targetNumber + 1;
+            if (cardToPlace != targetNumber + 1)
+            {
+                String errMsg = "Card must be one higher than " + targetNumber + ", but was: " + cardToPlace;
+                throw new IllegalArgumentException(errMsg);
+            }
+        }
+
+        // update BuildPile
+        targetCard.setNumber(cardToPlace);
+
+        // remove PlayerPiles
+        if (pFromHand)
+        {
+            player.removeDrawPileCard(pFromPlace);
+        }
+        else
+        {
+            if (pFromPlace < 4)
+            {
+                player.removeDiscardPileCard(pFromPlace);
+            }
+            else
+            {
+                player.removeLastCardFromStockPile();
             }
         }
     }
 
     public void placeCardInDiscardPile(String pPlayerName, int pFromPlace, int pCard, int pToPlace)
     {
-        if (pCard >= 0 && pToPlace < 4)// must be a normal card - protect from IndexOutOfBounce
+        if (pCard >= 0 && pToPlace < 4) // must be a normal card - protect from IndexOutOfBounds
         {
             int playerID = getPlayerIDByName(pPlayerName);
             Player player = mPlayers[playerID];
@@ -227,15 +237,20 @@ public class GameModel implements Serializable
 
             playerDiscardPile[pToPlace].setNumber(pCard);
             player.removeDrawPileCard(pFromPlace);
-            int newPlayerID = 0;
-            if (getPlayerSize() - 1 != playerID)
-            {
-                newPlayerID = playerID + 1;
-            }
-
-            setTurnHolder(getPlayerIndexOf(newPlayerID));
-
+            advanceTurn();
         }
+    }
+
+    private void advanceTurn()
+    {
+        int currentTurnHolder = getPlayerIDByName(turnHolder.getName());
+        int newTurnHolder = 0;
+        if (getPlayerSize() - 1 != currentTurnHolder)
+        {
+            newTurnHolder = currentTurnHolder + 1;
+        }
+        setTurnHolder(getPlayerIndexOf(newTurnHolder));
+        refreshDrawPile(turnHolder.getName());
     }
 
     public Player getTurnHolder()
@@ -243,11 +258,9 @@ public class GameModel implements Serializable
         return turnHolder;
     }
 
-    public boolean setTurnHolder(Player pTurnHolder)
+    public void setTurnHolder(Player pTurnHolder)
     {
-        boolean changed = turnHolder != pTurnHolder;
         turnHolder = pTurnHolder;
-        return changed;
     }
 
     public boolean isTurnHolder(Player player)

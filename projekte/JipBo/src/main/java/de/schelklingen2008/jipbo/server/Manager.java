@@ -35,18 +35,17 @@ public class Manager extends GameManager
         for (int i = 0; i < playerNames.length; i++)
             playerNames[i] = getPlayer(i).username.toString();
 
-        gameModel = new GameModel();
-        gameModel.createGame(playerNames);
+        gameModel = new GameModel(playerNames);
         updateSharedState();
     }
 
     // TODO add methods to make a move, etc. that can be called by clients
 
-    public void putCard(BodyObject client, int pFromPlace, int pCard, boolean pFromHand, int pToPlace)
+    public void putCard(BodyObject client, int pFromPlace, boolean pFromHand, int pToPlace)
     {
         // TODO fix me
         getPlayer(client);
-        gameModel.putCard(client.username.toString(), pFromPlace, pCard, pFromHand, pToPlace);
+        gameModel.putCard(client.username.toString(), pFromPlace, pFromHand, pToPlace);
         updateSharedState();
     }
 
