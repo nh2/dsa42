@@ -2,6 +2,7 @@ package de.schelklingen2008.billiards.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -105,6 +106,18 @@ public class GamePanel extends JPanel implements PlaceView
 
         // add our side panel to the main display
         add(sidePanel, BorderLayout.EAST);
+    }
+
+    @Override
+    public Dimension getMaximumSize()
+    {
+        return new Dimension(1089, 611);
+    }
+
+    @Override
+    public Dimension getMinimumSize()
+    {
+        return new Dimension(1089, 611);
     }
 
     /** The interface PlaceView is only implemented as a marker interface. Nothing to do here. */

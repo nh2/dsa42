@@ -20,4 +20,9 @@ public final class Constants
     public static final String MSG_TITLE = "m.title";
     public static final String MSG_WINNER = "m.winner";
     public static final String MSG_DRAW = "m.draw";
+
+    public static final String BG_IMAGE_FILENAME = "src/main/resources/images/billiardtable.png";
+    public static final String ICON_SOLID_FILENAME = "src/main/resources/images/solid.png";
+    public static final String ICON_STRIPED_FILENAME = "src/main/resources/images/striped.png";
+
 }

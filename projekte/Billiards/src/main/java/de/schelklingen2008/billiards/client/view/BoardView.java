@@ -1,7 +1,6 @@
 package de.schelklingen2008.billiards.client.view;
 
 import static de.schelklingen2008.billiards.GlobalConstants.BALL_RADIUS;
-import static de.schelklingen2008.billiards.GlobalConstants.BG_IMAGE_FILENAME;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_HEIGHT;
 import static de.schelklingen2008.billiards.GlobalConstants.BORDER_WIDTH;
 import static de.schelklingen2008.billiards.GlobalConstants.STRIPE_HEIGHT;
@@ -143,11 +142,11 @@ public class BoardView extends JPanel implements GameChangeListener, WhiteBallPl
 
         try
         {
-            bg = ImageIO.read(new File(BG_IMAGE_FILENAME));
+            bg = ImageIO.read(new File(Constants.BG_IMAGE_FILENAME));
         }
         catch (IOException e)
         {
-            logger.severe(String.format("Could not open file: %s", BG_IMAGE_FILENAME));
+            logger.severe(String.format("Could not open file: %s", Constants.BG_IMAGE_FILENAME));
             throw new RuntimeException("Could not open file: %s", e);
         }
 

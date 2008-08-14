@@ -35,6 +35,7 @@ public class GameModel implements Serializable
         private static final long serialVersionUID = -1327349770200883433L;
 
         private boolean foul, doNotChangeTurnholder, touchedWallAfterTouchedFirstBall, restartGame;
+        private int ballsOfPlayerBeforeShot;
         private Ball firstBallTouched;
 
         private void reset()
@@ -54,7 +55,7 @@ public class GameModel implements Serializable
                 {
                     firstBallTouched = e.getBall2();
                 }
-                else if (e.getBall1().equals(whiteBall))
+                else if (e.getBall2().equals(whiteBall))
                 {
                     firstBallTouched = e.getBall1();
                 }
@@ -134,6 +135,7 @@ public class GameModel implements Serializable
             {
                 setBallMapping(e.getPlayer(), e.getBall().getType());
                 doNotChangeTurnholder = true;
+                touchedWallAfterTouchedFirstBall = true;
             }
             else
             {
@@ -151,6 +153,7 @@ public class GameModel implements Serializable
                 else
                 {
                     doNotChangeTurnholder = true;
+                    touchedWallAfterTouchedFirstBall = true;
                 }
             }
 
@@ -163,7 +166,23 @@ public class GameModel implements Serializable
 
         public void shotTaken(ShotEvent e)
         {
+            Ball.BallType playersBallType = getPlayersBallType(turnHolder);
             reset();
+            if (ballMappingFixed())
+            {
+                ballsOfPlayerBeforeShot = 0;
+                for (Ball ball : ballsOnTable)
+                {
+                    if (ball.getType().equals(playersBallType))
+                    {
+                        ballsOfPlayerBeforeShot++;
+                    }
+                }
+            }
+            else
+            {
+                ballsOfPlayerBeforeShot = -1;
+            }
         }
 
         public void ballPlaced(BallPlacedEvent e)
@@ -188,9 +207,13 @@ public class GameModel implements Serializable
                 restartGame();
             }
 
+            if (winner != null)
+            {
+                return;
+            }
+
             int ballsOfPlayer;
             Ball.BallType playersBallType = getPlayersBallType(turnHolder);
-            Ball.BallType otherPlayersBallType = getPlayersBallType(getOtherPlayer(turnHolder));
 
             if (ballMappingFixed())
             {
@@ -208,9 +231,9 @@ public class GameModel implements Serializable
                 ballsOfPlayer = -1;
             }
 
-            if (!foul && firstBallTouched == null || !touchedWallAfterTouchedFirstBall || ballMappingFixed()
-                && firstBallTouched.getType().equals(otherPlayersBallType) || ballsOfPlayer == 0
-                && firstBallTouched.getType().equals(BallType.BLACK))
+            if (!foul && firstBallTouched == null || breakHasHappened && !touchedWallAfterTouchedFirstBall
+                || ballsOfPlayerBeforeShot > 0 && !firstBallTouched.getType().equals(playersBallType)
+                || ballsOfPlayerBeforeShot == 0 && !firstBallTouched.getType().equals(BallType.BLACK))
             {
                 foul = true;
             }
@@ -346,6 +369,8 @@ public class GameModel implements Serializable
         {
             listener.ballPlaced(new BallPlacedEvent(whiteBall));
         }
+
+        whiteBallPlacementConstraints = null;
 
     }
 
