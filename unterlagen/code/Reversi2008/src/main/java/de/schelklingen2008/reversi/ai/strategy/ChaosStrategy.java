@@ -22,7 +22,7 @@ public class ChaosStrategy implements ReversiStrategy
     public ChaosStrategy(int pDepth)
     {
         mEvalFunction = new ChaosEvaluation();
-        mDepth = 5;
+        mDepth = 6;
         mCounter = 0;
     }
 
