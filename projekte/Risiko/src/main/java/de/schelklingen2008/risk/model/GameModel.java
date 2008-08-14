@@ -189,7 +189,7 @@ public class GameModel implements Serializable
         c[17] = new Country("Albania", 17, 605, 819, 128, 0, 255);
         c[18] = new Country("Bulgaria", 18, 652, 672, 255, 128, 255);
         c[19] = new Country("Rumania", 19, 688, 758, 128, 0, 128);
-        c[20] = new Country("Portugal", 30, 45, 803, 100, 2, 2);
+        c[20] = new Country("Portugal", 30, 44, 803, 100, 2, 2);
         c[21] = new Country("France", 21, 247, 674, 234, 67, 11);
         c[22] = new Country("Spain", 22, 113, 826, 234, 0, 11);
         c[23] = new Country("BeNeLux", 23, 313, 549, 0, 0, 160);
