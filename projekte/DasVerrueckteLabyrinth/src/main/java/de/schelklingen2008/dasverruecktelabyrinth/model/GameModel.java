@@ -399,6 +399,7 @@ public class GameModel implements Serializable
             if (turnHolder == PlayerType.WHITE)
                 turnHolder = PlayerType.BLACK;
             else if (turnHolder == PlayerType.BLACK) turnHolder = PlayerType.WHITE;
+            walk = false;
         }
         if (getPlayers().size() == 3)
         {
@@ -407,6 +408,7 @@ public class GameModel implements Serializable
             else if (turnHolder == PlayerType.BLACK)
                 turnHolder = PlayerType.RED;
             else if (turnHolder == PlayerType.RED) turnHolder = PlayerType.WHITE;
+            walk = false;
         }
         if (getPlayers().size() == 4)
         {
@@ -418,6 +420,8 @@ public class GameModel implements Serializable
             else if (turnHolder == PlayerType.RED)
                 turnHolder = PlayerType.GREEN;
             else if (turnHolder == PlayerType.GREEN) turnHolder = PlayerType.WHITE;
+
+            walk = false;
         }
 
     }
