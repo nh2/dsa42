@@ -39,9 +39,9 @@ public class HorstEvaluation implements EvaluationFunction
             }
 
         }
-        values = new int[][] { { 10, 5, 5, 5, 5, 5, 5, 10 }, { 3, -1, -1, -1, -1, -1, -1, 3 },
-                { 3, -1, 2, 2, 2, 2, -1, 3 }, { 3, -1, 2, 1, 1, 1, -1, 3 }, { 3, -1, 2, 1, 1, 2, -1, 3 },
-                { 3, -1, 2, 2, 2, 2, -1, 3 }, { 3, -1, -1, -1, -1, -1, -1, 3 }, { 10, 5, 5, 5, 5, 5, 5, 10 } };
+        values = new int[][] { { 100, 5, 5, 5, 5, 5, 5, 100 }, { 30, -1, -1, -1, -1, -1, -1, 30 },
+                { 30, -1, 2, 2, 2, 2, -1, 30 }, { 30, -1, 2, 1, 1, 1, -1, 30 }, { 3, -1, 2, 1, 1, 2, -1, 30 },
+                { 30, -1, 2, 2, 2, 2, -1, 30 }, { 30, -1, -1, -1, -1, -1, -1, 30 }, { 100, 5, 5, 5, 5, 5, 5, 100 } };
     }
 
     public int evaluatePosition(GameModel game, Player player)
@@ -62,9 +62,10 @@ public class HorstEvaluation implements EvaluationFunction
             {
                 Player besetzt = game.getPlayer(i, k);
                 if (besetzt == null) continue;
-                if (besetzt == player) result += values[i][k];
-                // else
-                // result -= values[i][k];
+                if (besetzt == player)
+                    result += values[i][k];
+                else
+                    result -= values[i][k];
             }
         }
 
