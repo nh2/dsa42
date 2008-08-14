@@ -12,7 +12,7 @@ public class Main
 
     public static void main(String[] args)
     {
-        Tournament t = new Tournament(10);
+        Tournament t = new Tournament(4);
         t.addStrategy(new TournamentStrategy("Simple", new SimpleStrategy()));
         t.addStrategy(new TournamentStrategy("Amor", new AmorStrategy(new AmorEvaluationFunction(), 6)));
         // t.addStrategy(new TournamentStrategy("Horst", new HorstStrategy(6, 2)));
