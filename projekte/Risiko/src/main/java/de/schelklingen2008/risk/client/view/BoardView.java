@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client.view;
+package de.schelklingen2008.risk.client.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import de.schelklingen2008.risiko.client.controller.Controller;
-import de.schelklingen2008.risiko.client.controller.GameChangeListener;
-import de.schelklingen2008.risiko.client.model.GameContext;
-import de.schelklingen2008.risiko.model.GameModel;
+import de.schelklingen2008.risk.client.controller.Controller;
+import de.schelklingen2008.risk.client.controller.GameChangeListener;
+import de.schelklingen2008.risk.client.model.GameContext;
+import de.schelklingen2008.risk.model.GameModel;
 import de.schelklingen2008.util.LoggerFactory;
 
 /**

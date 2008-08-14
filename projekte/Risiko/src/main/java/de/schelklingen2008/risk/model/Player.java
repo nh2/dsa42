@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.model;
+package de.schelklingen2008.risk.model;
 
 import java.awt.Color;
 import java.io.Serializable;

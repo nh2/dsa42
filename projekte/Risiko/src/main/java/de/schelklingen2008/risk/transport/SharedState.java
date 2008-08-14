@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.transport;
+package de.schelklingen2008.risk.transport;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 import com.threerings.parlor.game.data.GameObject;
 
-import de.schelklingen2008.risiko.model.GameModel;
+import de.schelklingen2008.risk.model.GameModel;
 
 /**
  * Keeps the shared state of the game for client-server communication and updates. Note, that all fields must

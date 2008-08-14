@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client;
+package de.schelklingen2008.risk.client;
 
 /**
  * Keeps all constant values that are of global interest for the client.

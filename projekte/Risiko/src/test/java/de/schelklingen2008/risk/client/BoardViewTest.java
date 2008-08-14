@@ -1,13 +1,13 @@
-package de.schelklingen2008.risiko.client;
+package de.schelklingen2008.risk.client;
 
 import javax.swing.JComponent;
 
 import com.threerings.toybox.util.GameViewTest;
 import com.threerings.toybox.util.ToyBoxContext;
 
-import de.schelklingen2008.risiko.client.controller.Controller;
-import de.schelklingen2008.risiko.client.model.GameContext;
-import de.schelklingen2008.risiko.client.view.BoardView;
+import de.schelklingen2008.risk.client.controller.Controller;
+import de.schelklingen2008.risk.client.model.GameContext;
+import de.schelklingen2008.risk.client.view.BoardView;
 
 /**
  * A test harness for our board view.

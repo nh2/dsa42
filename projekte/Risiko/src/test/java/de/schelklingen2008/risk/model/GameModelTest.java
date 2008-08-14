@@ -1,5 +1,6 @@
-package de.schelklingen2008.risiko.model;
+package de.schelklingen2008.risk.model;
 
+import de.schelklingen2008.risk.model.GameModel;
 import junit.framework.TestCase;
 
 public class GameModelTest extends TestCase

@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client.controller;
+package de.schelklingen2008.risk.client.controller;
 
 public interface GameChangeListener
 {

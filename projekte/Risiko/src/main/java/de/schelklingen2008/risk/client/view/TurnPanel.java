@@ -1,4 +1,4 @@
-package de.schelklingen2008.risiko.client.view;
+package de.schelklingen2008.risk.client.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -12,11 +12,11 @@ import javax.swing.JPanel;
 
 import com.samskivert.swing.ShapeIcon;
 
-import de.schelklingen2008.risiko.client.controller.Controller;
-import de.schelklingen2008.risiko.client.controller.GameChangeListener;
-import de.schelklingen2008.risiko.client.model.GameContext;
-import de.schelklingen2008.risiko.model.GameModel;
-import de.schelklingen2008.risiko.model.Player;
+import de.schelklingen2008.risk.client.controller.Controller;
+import de.schelklingen2008.risk.client.controller.GameChangeListener;
+import de.schelklingen2008.risk.client.model.GameContext;
+import de.schelklingen2008.risk.model.GameModel;
+import de.schelklingen2008.risk.model.Player;
 
 /**
  * Displays a list of players and turn change information in a turn-based game.
@@ -36,7 +36,7 @@ public class TurnPanel extends JPanel implements GameChangeListener
         this.controller = controller;
         controller.addChangeListener(this);
 
-        msgWin = controller.getMessage(de.schelklingen2008.risiko.client.Constants.MSG_WINNER);
+        msgWin = controller.getMessage(de.schelklingen2008.risk.client.Constants.MSG_WINNER);
 
         gameChanged();
     }
