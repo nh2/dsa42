@@ -28,6 +28,8 @@ public class GameModel implements Serializable
     // verteilt, d.h. die Liste wird kleiner
     // = Kartenstapel
     private List<Card>          cardList   = new ArrayList<Card>();  // Karten in der Mitte
+    private List<Player>        winnerList = new ArrayList<Player>();
+    private long                winnerValue;
     private int                 phase;
     private int                 actPlayerIndex;
     private int                 dealerIndex;
@@ -41,6 +43,16 @@ public class GameModel implements Serializable
     public GameModel(String[] names)
     {
         setPlayers(names);
+    }
+
+    public List<Player> getWinnerList()
+    {
+        return winnerList;
+    }
+
+    public long getWinnerValue()
+    {
+        return winnerValue;
     }
 
     public boolean isFinished()
@@ -153,6 +165,23 @@ public class GameModel implements Serializable
                 stack.add(new Card(i, j));
             }
         }
+    }
+
+    public void setOkayWithNextRound(int playerIndex, boolean isOkayWithNextRound)
+    {
+        Player player = playerList.get(playerIndex);
+        player.setOkayWithNextRound(isOkayWithNextRound);
+        int count = 0;
+        for (Player playerFor : playerList)
+        {
+            if (playerFor.isOkayWithNextRound()) count++;
+        }
+        if (count == playerList.size() - 1) nextRound();
+    }
+
+    public boolean isOkayWithNextRound(int playerIndex)
+    {
+        return playerList.get(playerIndex).isOkayWithNextRound();
     }
 
     private void initGame()
@@ -309,7 +338,7 @@ public class GameModel implements Serializable
                 break;
             case 4:
                 computeWinner();
-                nextRound();
+                // nextRound();
                 break;
         }
     }
@@ -330,7 +359,7 @@ public class GameModel implements Serializable
                 cards.addAll(cardList);
                 cards.add(player.getCard1());
                 cards.add(player.getCard2());
-                System.out.println(cards.size());
+                // System.out.println(cards.size());
                 PatternChecker checker = new PatternChecker(cards);
                 if (checker.getHighestPattern().greaterThan(highestPattern))
                 {
@@ -364,17 +393,21 @@ public class GameModel implements Serializable
 
         long winnerValue = pot / winnerList.size();
 
-        for (Iterator iterator = winnerList.iterator(); iterator.hasNext();)
+        for (Iterator<Player> iterator = winnerList.iterator(); iterator.hasNext();)
         {
-            Player player = (Player) iterator.next();
+            Player player = iterator.next();
             player.setBalance(player.getBalance() + winnerValue);
             pot = 0;
             // PatternChecker checker = new PatternChecker()
-            System.out.println("Highest Pattern: " + highestPattern.artToSTring());
+            // System.out.println("Highest Pattern: " + highestPattern.artToSTring());
         }
+        this.winnerList.clear();
+        this.winnerValue = winnerValue;
+        this.winnerList = winnerList;
+
     }
 
-    public String artToSTring(int patternValue)
+    public String kindToString(int patternValue)
     {
         String s;
         switch (patternValue)
@@ -429,6 +462,7 @@ public class GameModel implements Serializable
             player.setCard1(null);
             player.setCard2(null);
             player.setStillIn(true);
+            player.setOkayWithNextRound(false);
         }
         bigBlindNeedsToSet = true;
         dealerIndex = getRisenPlayerIndex(dealerIndex, 1);

@@ -85,6 +85,12 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
+    public void okay(BodyObject client)
+    {
+        gameModel.setOkayWithNextRound(getPlayerIndex(client), true);
+        updateSharedState();
+    }
+
     /**
      * Updates the shared state and thus send changes to all clients.
      */

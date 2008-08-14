@@ -28,8 +28,10 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private Controller    controller;
 
-    private ImageIcon[][] iconBuffer = new ImageIcon[4][13];
-    private ImageIcon     iconBack   = null;
+    private ImageIcon[][] iconBuffer      = new ImageIcon[4][13];
+    private ImageIcon[][] smallIconBuffer = new ImageIcon[4][13];
+    private ImageIcon     iconBack        = null;
+    private ImageIcon     smallIconBack   = null;
 
     /**
      * Constructs a view which will initialize itself and prepare to display the game board.
@@ -42,9 +44,9 @@ public class BoardView extends JPanel implements GameChangeListener
         paintBoard();
     }
 
-    public static String getFileName(Card card)
+    public static String getFileName(Card card, int size)
     {
-        return card.getSuit() + "-" + card.getValue() + "-150.png";
+        return card.getSuit() + "-" + card.getValue() + "-" + size + ".png";
     }
 
     public void fillImageArray()
@@ -53,17 +55,21 @@ public class BoardView extends JPanel implements GameChangeListener
         {
             for (int j = 0; j < 13; j++)
             {
-                iconBuffer[i][j] = new ImageIcon("src/main/resources/cards/" + getFileName(new Card(i, j)));
+                iconBuffer[i][j] = new ImageIcon("src/main/resources/cards/" + getFileName(new Card(i, j), 150));
+                smallIconBuffer[i][j] = new ImageIcon("src/main/resources/cards/" + getFileName(new Card(i, j), 40));
             }
         }
         iconBack = new ImageIcon("src/main/resources/cards/back-blue-150-1.png");
+        smallIconBack = new ImageIcon("src/main/resources/cards/back-blue-40-1.png");
     }
 
     private void paintBoard()
     {
         removeAll();
 
-        if (getGameModel() == null) return;
+        GameModel model = getGameModel();
+
+        if (model == null) return;
 
         JPanel playerPanel = new JPanel();
         JPanel middlePanel = new JPanel();
@@ -107,8 +113,6 @@ public class BoardView extends JPanel implements GameChangeListener
         add(myPanel);
         add(Box.createVerticalStrut(10));
 
-        GameModel model = getGameModel();
-
         playerPanel.add(Box.createHorizontalStrut(5));
         for (int i = 0; i < getGameModel().getPlayerList().size(); i++)
         {
@@ -116,23 +120,49 @@ public class BoardView extends JPanel implements GameChangeListener
             actPlayerPanel.setLayout(new BoxLayout(actPlayerPanel, BoxLayout.PAGE_AXIS));
             actPlayerPanel.setOpaque(false);
             actPlayerPanel.add(createLabel(i + 1 + ": " + model.getPlayerList().get(i).getName()));
-            actPlayerPanel.add(createLabel("Kontostand: " + model.getPlayerList().get(i).getBalance()));
-            if (getGameModel().getPlayerList().get(i).isStillIn() == false)
+            actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_BALANCE)
+                                           + ": "
+                                           + model.getPlayerList().get(i).getBalance()));
+            if (getGameModel().getActPlayerIndex() == i)
             {
-                actPlayerPanel.add(createLabel("Folded"));
+                actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_TURNHOLDER)));
             }
-            if (getGameModel().getPlayerList().get(i).isStillIn() == true
-                && model.getPlayerList().get(i).getBalance() == 0)
+            if (!getGameModel().getPlayerList().get(i).isStillIn())
             {
-                actPlayerPanel.add(createLabel("All-in"));
+                actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_FOLDED)));
             }
-            if (model.getPlayerList().get(i).hasLost() == true)
+            if (getGameModel().getPlayerList().get(i).isStillIn() && model.getPlayerList().get(i).getBalance() == 0)
             {
-                actPlayerPanel.add(createLabel("VERLOREN!"));
+                actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_ALLIN)));
+            }
+            if (model.getPlayerList().get(i).hasLost())
+            {
+                actPlayerPanel.add(createLabel(controller.getMessage(Constants.MSG_LOST)));
             }
 
+            JPanel actPlayerCardPanel = new JPanel();
+            actPlayerCardPanel.setLayout(new BoxLayout(actPlayerCardPanel, BoxLayout.LINE_AXIS));
+            actPlayerCardPanel.setOpaque(false);
+            actPlayerCardPanel.add(Box.createVerticalStrut(5));
+            if (getGameModel().getPhase() == 4)
+            {
+                Card card1 = getGameModel().getPlayerList().get(i).getCard1();
+                Card card2 = getGameModel().getPlayerList().get(i).getCard2();
+                actPlayerCardPanel.add(createLabel(smallIconBuffer[card1.getSuitInt()][card1.getValueInt()]));
+                actPlayerCardPanel.add(Box.createHorizontalStrut(5));
+                actPlayerCardPanel.add(createLabel(smallIconBuffer[card2.getSuitInt()][card2.getValueInt()]));
+            }
+            else
+            {
+                actPlayerCardPanel.add(createLabel(smallIconBack));
+                actPlayerCardPanel.add(Box.createHorizontalStrut(5));
+                actPlayerCardPanel.add(createLabel(smallIconBack));
+            }
+            actPlayerCardPanel.add(Box.createHorizontalStrut(5));
+            actPlayerPanel.add(actPlayerCardPanel);
             playerPanel.add(actPlayerPanel);
             playerPanel.add(Box.createHorizontalStrut(5));
+
         }
 
         middlePanel.add(Box.createHorizontalStrut(5));
@@ -159,8 +189,18 @@ public class BoardView extends JPanel implements GameChangeListener
         }
 
         potPanel.add(Box.createVerticalStrut(30));
-        potPanel.add(createLabel("Es sind " + model.getPot() + " Euro im Pot"));
-        potPanel.add(Box.createVerticalStrut(30));
+        if (model.getPhase() != 4)
+            potPanel.add(createLabel(model.getPot() + controller.getMessage(Constants.MSG_EUROS_IN_POT)));
+        else
+        {
+            for (Player player : model.getWinnerList())
+            {
+                potPanel.add(createLabel(player.getName()
+                                         + controller.getMessage(Constants.MSG_WON)
+                                         + model.getWinnerValue()
+                                         + controller.getMessage(Constants.MSG_EUROS)));
+            }
+        }
 
         myPanel.add(Box.createVerticalStrut(5));
         myPanel.add(myCardPanel);
@@ -169,46 +209,47 @@ public class BoardView extends JPanel implements GameChangeListener
         myPanel.add(Box.createVerticalStrut(5));
 
         myCardPanel.add(Box.createVerticalStrut(5));
-        myCardPanel.add(createLabel(getMyPlayer().getName() + ": Ihre Karten:"));
+        myCardPanel.add(createLabel(getMyPlayer().getName()
+                                    + ": "
+                                    + controller.getMessage(Constants.MSG_YOUR_CARDS)
+                                    + ":"));
         myCardPanel.add(Box.createVerticalStrut(5));
         myCardPanel.add(twoCardsPanel);
         myCardPanel.add(Box.createVerticalStrut(5));
 
-        JLabel myCard1 = createLabel("");
-        myCard1.setIcon(iconBuffer[getMyPlayer().getCard1().getSuitInt()][getMyPlayer().getCard1().getValueInt()]);
-        JLabel myCard2 = createLabel("");
-        myCard2.setIcon(iconBuffer[getMyPlayer().getCard2().getSuitInt()][getMyPlayer().getCard2().getValueInt()]);
-
         twoCardsPanel.add(Box.createHorizontalStrut(5));
-        twoCardsPanel.add(myCard1);
+        twoCardsPanel.add(createLabel(iconBuffer[getMyPlayer().getCard1().getSuitInt()][getMyPlayer().getCard1()
+                                                                                                     .getValueInt()]));
         twoCardsPanel.add(Box.createHorizontalStrut(5));
-        twoCardsPanel.add(myCard2);
+        twoCardsPanel.add(createLabel(iconBuffer[getMyPlayer().getCard2().getSuitInt()][getMyPlayer().getCard2()
+                                                                                                     .getValueInt()]));
         twoCardsPanel.add(Box.createHorizontalStrut(5));
 
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        myInfoPanel.add(createLabel("Ihr Kontostand:"));
+        myInfoPanel.add(createLabel(controller.getMessage(Constants.MSG_YOUR_BALANCE)));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         long myBal = getMyPlayer().getBalance();
-        myInfoPanel.add(createLabel("" + myBal));
+        myInfoPanel.add(createLabel(String.valueOf(myBal)));
         myInfoPanel.add(Box.createHorizontalStrut(5));
-        myInfoPanel.add(createLabel("Sie müssen " + model.getHighestBet() + " Euro setzen"));
+        myInfoPanel.add(createLabel(model.getHighestBet()
+                                    - getMyPlayer().getOwnBet()
+                                    + controller.getMessage(Constants.MSG_EUROS_MUST_BE_SET)));
         myInfoPanel.add(Box.createHorizontalStrut(5));
         myInfoPanel.add(myButtonPanel);
         myInfoPanel.add(Box.createHorizontalStrut(5));
 
-        JButton callButton = new JButton("Call");
-        JButton raiseButton = new JButton("Raise");
-        JButton foldButton = new JButton("Fold");
-        JButton checkButton = new JButton("Check");
-        JButton reRaiseButton = new JButton("Re-Raise");
+        JButton callButton = new JButton(controller.getMessage(Constants.MSG_CALL));
+        JButton raiseButton = new JButton(controller.getMessage(Constants.MSG_RAISE));
+        JButton foldButton = new JButton(controller.getMessage(Constants.MSG_FOLD));
+        JButton checkButton = new JButton(controller.getMessage(Constants.MSG_CHECK));
+        JButton reRaiseButton = new JButton(controller.getMessage(Constants.MSG_RERAISE));
+        JButton okayButton = new JButton(controller.getMessage(Constants.MSG_OKAY));
 
         ActionListener callListener = new ActionListener()
         {
 
             public void actionPerformed(ActionEvent e)
             {
-                System.out.print(getActPlayer().getName());
-                System.out.println(" hat gecallt.");
                 controller.callButtonClicked();
             }
         };
@@ -218,14 +259,16 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                String s = javax.swing.JOptionPane.showInputDialog("Bitte geben Sie Ihren Einsatz an:\n"
-                                                                   + "(min.: "
-                                                                   + String.valueOf(getGameModel().getMinBet())
-                                                                   + " Euro, max.: "
-                                                                   + String.valueOf(getGameModel().getMaxBet())
-                                                                   + " Euro)");
+                GameModel model = getGameModel();
+                String s = javax.swing.JOptionPane.showInputDialog(controller.getMessage(Constants.MSG_HOW_MUCH_RAISE)
+                                                                   + controller.getMessage(Constants.MSG_MIN)
+                                                                   + String.valueOf(model.getMinBet())
+                                                                   + controller.getMessage(Constants.MSG_MAX)
+                                                                   + String.valueOf(model.getMaxBet())
+                                                                   + controller.getMessage(Constants.MSG_EUROS));
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
+                if (betrag < model.getMinBet() || betrag > model.getMaxBet()) return;
                 controller.raiseButtonClicked(longBetrag);
             }
         };
@@ -254,21 +297,30 @@ public class BoardView extends JPanel implements GameChangeListener
 
             public void actionPerformed(ActionEvent e)
             {
-                String s = javax.swing.JOptionPane.showInputDialog("Die "
-                                                                   + (getGameModel().getHighestBet() - getGameModel().getActPlayer()
-                                                                                                                     .getOwnBet())
-                                                                   + " Euro wurden bereits in den Pot gezahlt.\n"
-                                                                   + " Wie viel wollen Sie noch extra drauflegen?\n"
-                                                                   + "(min.: "
-                                                                   + String.valueOf(getGameModel().getMinBet())
-                                                                   + " Euro, max.: "
-                                                                   + String.valueOf(getGameModel().getMaxBet())
-                                                                   + " Euro)");
+                GameModel model = getGameModel();
+                String s = javax.swing.JOptionPane.showInputDialog(model.getHighestBet()
+                                                                   - model.getActPlayer().getOwnBet()
+                                                                   + controller.getMessage(Constants.MSG_HOW_MUCH_RERAISE)
+                                                                   + controller.getMessage(Constants.MSG_MIN)
+                                                                   + String.valueOf(model.getMinBet())
+                                                                   + controller.getMessage(Constants.MSG_MAX)
+                                                                   + String.valueOf(model.getMaxBet())
+                                                                   + controller.getMessage(Constants.MSG_EUROS));
                 int betrag = Integer.parseInt(s);
+                if (betrag < model.getMinBet() || betrag > model.getMaxBet()) return;
                 long longBetrag = betrag;
                 controller.reRaiseButtonClicked(longBetrag);
-
             }
+        };
+
+        ActionListener okayListener = new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                controller.okayClicked();
+            }
+
         };
 
         callButton.addActionListener(callListener);
@@ -276,6 +328,7 @@ public class BoardView extends JPanel implements GameChangeListener
         raiseButton.addActionListener(raiseListener);
         checkButton.addActionListener(checkListener);
         reRaiseButton.addActionListener(reRaiseListener);
+        okayButton.addActionListener(okayListener);
 
         callButton.setEnabled(false);
         foldButton.setEnabled(false);
@@ -298,21 +351,38 @@ public class BoardView extends JPanel implements GameChangeListener
         }
 
         myButtonPanel.add(Box.createHorizontalStrut(5));
-        myButtonPanel.add(checkButton);
-        myButtonPanel.add(Box.createHorizontalStrut(5));
-        myButtonPanel.add(callButton);
-        myButtonPanel.add(Box.createHorizontalStrut(5));
-        myButtonPanel.add(raiseButton);
-        myButtonPanel.add(Box.createHorizontalStrut(5));
-        myButtonPanel.add(reRaiseButton);
-        myButtonPanel.add(Box.createHorizontalStrut(5));
-        myButtonPanel.add(foldButton);
+
+        if (model.getPhase() != 4)
+        {
+            myButtonPanel.add(checkButton);
+            myButtonPanel.add(Box.createHorizontalStrut(5));
+            myButtonPanel.add(callButton);
+            myButtonPanel.add(Box.createHorizontalStrut(5));
+            myButtonPanel.add(raiseButton);
+            myButtonPanel.add(Box.createHorizontalStrut(5));
+            myButtonPanel.add(reRaiseButton);
+            myButtonPanel.add(Box.createHorizontalStrut(5));
+            myButtonPanel.add(foldButton);
+        }
+        else
+        {
+            myButtonPanel.add(okayButton);
+        }
         myButtonPanel.add(Box.createHorizontalStrut(5));
     }
 
     private JLabel createLabel(String text)
     {
         JLabel label = new JLabel(text);
+        label.setOpaque(false);
+        label.setForeground(Color.WHITE);
+        label.setBackground(Constants.BACK_GREEN);
+        return label;
+    }
+
+    private JLabel createLabel(ImageIcon icon)
+    {
+        JLabel label = new JLabel(icon);
         label.setOpaque(false);
         label.setForeground(Color.WHITE);
         label.setBackground(Constants.BACK_GREEN);

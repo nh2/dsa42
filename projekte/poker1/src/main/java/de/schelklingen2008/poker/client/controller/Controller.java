@@ -183,4 +183,9 @@ public class Controller extends GameController
             updateGameContext();
         }
     }
+
+    public void okayClicked()
+    {
+        sharedState.manager.invoke("okay");
+    }
 }
