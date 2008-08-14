@@ -174,7 +174,7 @@ public class GameModel implements Serializable
             mitte.add(karte);
             tisch.getMittenspieler().add(spieler);
 
-            // getSpieler().next();
+            getSpieler().rotieren();
 
             return;
         }
@@ -244,8 +244,8 @@ public class GameModel implements Serializable
                 stichsieger.team = Team.Re;
                 ersterFremderAngefordert = false;
                 Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
-                hochzeitSpieler = null;
                 addNachricht(hochzeitSpieler + " hat " + stichsieger + " geheiratet. Herzlichen Glückwunsch.");
+                hochzeitSpieler = null;
 
             }
         }

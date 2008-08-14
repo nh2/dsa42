@@ -1,5 +1,6 @@
 package de.schelklingen2008.doppelkopf.client.view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -30,7 +31,8 @@ public class ButtonPanel extends JPanel implements GameChangeListener
         controller = pController;
         pController.addChangeListener(this);
 
-        scroller = new JScrollPane(nachrichtenBox);
+        scroller = new JScrollPane();
+        scroller.setViewportView(nachrichtenBox);
 
         hochzeitButton = new JButton("Der erste Fremde");
         hochzeitButton.addActionListener(new ActionListener()
@@ -42,6 +44,8 @@ public class ButtonPanel extends JPanel implements GameChangeListener
             }
         });
         add(scroller);
+
+        setPreferredSize(new Dimension(800, 100));
 
     }
 
