@@ -23,7 +23,7 @@
 \newpage
 
 \section[Wozu Exceptions?]{Wozu Exceptions? [JLS 11]}
-Exceptions, zu Deutsch \enquote{Ausnahmen}, sind ein Konzept in vielen Programmiersprachen, das es erlaubt, auf Fehler, die in einem Programm auftreten zu reagieren. Bemerkt ein Programmteil einen Fehler, zum Beispiel  beim Versuch, eine nicht existente Datei zu laden, so löst er eine Exception aus. Diese Exception wird durch die Aufrufhierarchie des Programms nach oben weitergereicht, bis sie einen Programmteil erreicht, der sie verarbeiten kann, und von ihm abgefangen wird. Ohne Exceptions müsste jede Funktion eine Fehlerbehandlung durchführen, wofür sie auch sämtliche relevanten Informationen zur Reaktion auf den Fehler erhalten müsste. Dies macht den Programmcode unübersichtlich und unflexibel.
+Exceptions, zu Deutsch \enquote{Ausnahmen}, sind ein Konzept in vielen Programmiersprachen, das es erlaubt, auf Fehler, die in einem Programm auftreten, zu reagieren. Bemerkt ein Programmteil einen Fehler, zum Beispiel  beim Versuch, eine nicht existente Datei zu laden, so löst er eine Exception aus. Diese Exception wird durch die Aufrufhierarchie des Programms nach oben weitergereicht, bis sie einen Programmteil erreicht, der sie verarbeiten kann, und von ihm abgefangen wird. Ohne Exceptions müsste jede Funktion eine Fehlerbehandlung durchführen, wofür sie auch sämtliche relevanten Informationen zur Reaktion auf den Fehler erhalten müsste. Dies macht den Programmcode unübersichtlich und unflexibel.
 
 \section{Exceptions und Errors in Java}
 \subsection[Throwables]{Throwables [Insel S. 476 f.]}
@@ -39,7 +39,7 @@ Abbildung: Klassenhierarchie der Throwables in Java\\
 \end{footnotesize}
 
 \subsection[Checked und unchecked Exceptions]{Checked und unchecked Exceptions [Insel S. 480]}
-In Java wird ein besonderes Prinzip von Exceptions verwendet: Es gibt checked und unchecked Exceptions. Java prüft bereits bei der Kompilierung des Programmcodes, ob alle checked Exceptions, die in einer Methode auftreten können, auch gefangen oder (per 'throws') an die aufrufende Funktion weitergeleitet werden. Ist dies nicht der Fall, wird die Kompilierung mit einen Fehler abgebrochen. Unchecked Exceptions werden normalerweise, weil sie nicht gefangen werden, durch die gesamte Aufrufhierarchie nach oben gereicht, bis sie von der Java-Umgebung abgefangen werden und dadurch das Programm abgebrochen wird.
+In Java wird ein besonderes Prinzip von Exceptions verwendet: Es gibt checked und unchecked Exceptions, wobei letzere vom Typ RuntimeException sind oder von ihm ableiten und erstere nicht. Java prüft bereits bei der Kompilierung des Programmcodes, ob alle checked Exceptions, die in einer Methode auftreten können, auch gefangen oder (per 'throws') an die aufrufende Funktion weitergeleitet werden. Ist dies nicht der Fall, wird die Kompilierung mit einen Fehler abgebrochen. Unchecked Exceptions werden normalerweise, weil sie nicht gefangen werden, durch die gesamte Aufrufhierarchie nach oben gereicht, bis sie von der Java-Umgebung abgefangen werden und dadurch das Programm abgebrochen wird.
 
 \subsection{Syntax in Bezug auf Throwables in Java}
 Um eine Exception auszulösen, wird in Java das Schlüsselwort \enquote{throw} verwendet:\\
@@ -49,7 +49,7 @@ throw new IllegalArgumentException("Ungültiger Parameter: "+param);
 \end{lstlisting}
 
 \noindent
-'IllegalArgumentException' ist hierbei der Typ des Fehlers, dieser Typ wird ausgelöst, wenn eine Funktion einen ungültigen Wert übergeben bekommen hat. '"Ungültiger Parameter. "+param' ist die Fehlermeldung, die möglichst aussagekräftig sein sollte, um sofort auf den Grund des Fehlers schließen zu können.
+'IllegalArgumentException' ist hierbei der Typ des Fehlers. Dieser Typ wird ausgelöst, wenn eine Funktion einen ungültigen Wert übergeben bekommen hat. '\enquote{Ungültiger Parameter. }+param' ist die Fehlermeldung, die möglichst aussagekräftig sein sollte, um sofort auf den Grund des Fehlers schließen zu können.
 
 \subsubsection{Behandeln von Throwables}
 \textbf{try-catch/finally-Block [Insel S. 465 ff., S. 472 ff.]}:\\
@@ -77,7 +77,7 @@ public void foo() throws Exception1
 \end{lstlisting}
 
 \noindent
-Errors und RuntimeExceptions sind unchecked und sollten sowieso nicht gefangen werden, deshalb müssen sie auch nicht in die throws-Deklaration mit aufgenommen werden.
+Errors und RuntimeExceptions sind unchecked und sollten in den meisten Fällen nicht gefangen werden, deshalb müssen sie auch nicht in die throws-Deklaration mit aufgenommen werden.
 
 \subsection[Exceptions]{Exceptions [Insel S. 465]}
 \enquote{Normale} Exceptions, das heißt, Typen die von Exception (nicht aber von RuntimeException oder einem ihrer Untertypen) abgeleitet sind, werden in Java für Fehler benutzt, mit denen in einer normalen Ausführung des Programms gerechnet werden muss, ein gutes Beispiel ist das oben genannte Problem einer nicht gefundenen Datei (FileNotFoundException).
@@ -86,13 +86,13 @@ Errors und RuntimeExceptions sind unchecked und sollten sowieso nicht gefangen w
 In Java gibt es außer Exceptions noch Errors, die sich ebenso wie Exceptions auslösen und fangen lassen, aber unchecked sind. Errors jedoch sind Fehler, die abnormale Zustände repräsentieren, die aus einer Fehlfunktion der Java-Umgebung resultieren, und deshalb nicht gefangen werden sollten. In den meisten Fällen handelt es sich dabei um fatale Fehler, bei denen die Programmausführung sofort beendet werden muss. Ein Beispiel hierfür ist der HeapOverflowError, die von der Java-Umgebung augelöst werden, wenn kein freier Speicher mehr vorhanden ist, was meistens auf Programmierfehler zurückzuführen ist.
 
 \noindent
-RuntimeExceptions sind ebenfalls unchecked sollten nicht gefangen werden, da sie im normalen Programmablauf nicht auftreten sollten. Anders als bei Errors arbeitet die Java-Umgebung hier jedoch korrekt, der Fehler liegt im Programmcode. Ein Beispiel für eine RuntimeException ist die NullPointerException, die ausgelöst wird, wenn versucht wird, auf ein nicht instantiiertes Objekt zuzugreifen. RuntimeExceptions sollten vom Programmierer behoben, nicht gefangen werden.
+RuntimeExceptions sind ebenfalls unchecked sollten in den meisten Fällen nicht gefangen werden, da sie im normalen Programmablauf nicht auftreten sollten. Anders als bei Errors arbeitet die Java-Umgebung hier jedoch korrekt, der Fehler liegt im Programmcode. Ein Beispiel für eine RuntimeException ist die NullPointerException, die ausgelöst wird, wenn versucht wird, auf ein nicht instantiiertes Objekt zuzugreifen. RuntimeExceptions sollten vom Programmierer behoben, nicht gefangen werden.
 
 \subsection[Vor- und Nachteile des Exceptionmodells in Java]{Vor- und Nachteile des Exceptionmodells in Java [JLS 11.2]}
 Einer der großen Vorteile von checked Exceptions ist es, dass der Programmierer nicht vergessen kann, bestimmte Exceptions zu behandeln, da der Programmcode ohne eine entsprechende Behandlung nicht kompiliert. Dadurch erhält das Programm eine geringere Fehleranfälligkeit, sofern die Fehlerbehandlung richtig implementiert wird.
 
 \noindent
-Ein Nachteil dieses Modells ist, dass bei strenger Einhaltung des Exceptionmodells die throws-Deklarationen von Methoden sehr groß werden, da aufgerufene Methoden viele verschiedene Exceptions erzeugen können, sämtliche auftretenden Fehler jedoch in einer Methode, die in der Aufrufhierarchie weit oben steht, etwa der Benutzeroberfläche, abgefangen und dem Benutzer gemeldet werden sollen. In diesem Fall bietet es sich an, das Exceptionmodell von Java mithilfe von RuntimeExceptions zu umgehen.\\
+Ein Nachteil dieses Modells ist, dass bei strenger Einhaltung des Exceptionmodells die throws-Deklarationen von Methoden sehr groß werden, da aufgerufene Methoden viele verschiedene Exceptions erzeugen können, sämtliche auftretenden Fehler jedoch in einer Methode, die in der Aufrufhierarchie weit oben steht, etwa der Benutzeroberfläche, abgefangen und dem Benutzer gemeldet werden sollen. In diesem Fall bietet es sich an, RuntimeExceptions zu verwenden.\\
 Hierfür werden auch nichtkritische Fehler im Programm in eine RuntimeException (oder eine davon abgeleitete Exception) \enquote{verpackt}, von einer passenden Methode, die die Fehlerbehandlung durchführen kann, etwa einer Methode der Benutzeroberfläche, abgefangen und an eine Fehlerbehandlungsmethode weitergegeben, die zum Beispiel eine Fehlermeldung anzeigt.
 
 \section[Logging]{Logging [Insel S. 1385 ff.]}
