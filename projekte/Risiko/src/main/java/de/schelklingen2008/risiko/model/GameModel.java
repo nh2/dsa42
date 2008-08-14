@@ -189,7 +189,7 @@ public class GameModel implements Serializable
         c[17] = new Country("Albanien", 17, 605, 819, 128, 0, 255);
         c[18] = new Country("Bulgarien", 18, 652, 672, 255, 128, 255);
         c[19] = new Country("Rum‰nien", 19, 688, 758, 128, 0, 128);
-        c[20] = new Country("Portugal", 20, 25, 803, 100, 2, 2);
+        c[20] = new Country("Portugal", 30, 25, 803, 100, 2, 2);
         c[21] = new Country("Frankreich", 21, 247, 674, 234, 67, 11);
         c[22] = new Country("Spanien", 22, 113, 826, 234, 0, 11);
         c[23] = new Country("BeNeLux", 23, 313, 549, 0, 0, 160);
@@ -301,7 +301,6 @@ public class GameModel implements Serializable
         ukraine.add(0, c[13]);// Polen
         ukraine.add(1, c[11]);// Weiﬂrussland
         ukraine.add(2, c[7]);// Russland
-        ukraine.add(3, c[19]);// Rum‰nien
         ukraine.add(4, c[29]);// Ungarn
         ukraine.add(5, c[27]);// Slowakei
         ukraine.add(6, c[18]);// Bulgarien
