@@ -53,6 +53,11 @@ public class Blatt implements Serializable
         return new HashSet<Karte>(karten);
     }
 
+    public void leereKarten()
+    {
+        karten.clear();
+    }
+
     public List<Karte> getKartenSortiert()
     {
         List<Karte> sortierteKarten = new ArrayList<Karte>(karten);
