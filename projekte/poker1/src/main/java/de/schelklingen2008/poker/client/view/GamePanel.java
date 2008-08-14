@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.samskivert.swing.GroupLayout;
@@ -41,6 +40,8 @@ public class GamePanel extends JPanel implements PlaceView
         }
     }
 
+    public HistoryPanel historyPanel;
+
     /**
      * Creates a TestGame panel and its associated interface components.
      */
@@ -67,8 +68,10 @@ public class GamePanel extends JPanel implements PlaceView
         sidePanel.add(vlabel, GroupLayout.FIXED);
 
         // history panel
-        JPanel historyPanel = new JPanel();
-        historyPanel.add(new JLabel("eXtreme"));
+        // JPanel historyPanel = new JPanel();
+        // historyPanel.add(new JLabel("eXtreme"));
+
+        // HistoryPanel historyPanel = new HistoryPanel();
 
         // add a chat box
         sidePanel.add(new ChatPanel(controller.getToyBoxContext()));
