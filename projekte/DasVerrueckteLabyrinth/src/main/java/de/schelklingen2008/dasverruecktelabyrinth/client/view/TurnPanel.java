@@ -60,7 +60,6 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         PlayerType turnHolder = getGameModel().getTurnHolder();
         int cardsFromBeginning = 24 / getGameModel().getPlayers().size();
-        
 
         for (PlayerType playerType : PlayerType.values())
         {
@@ -70,12 +69,12 @@ public class TurnPanel extends JPanel implements GameChangeListener
             add(turnHolderLabel, turnHolderConstraints);
 
             String name = getGameModel().getName(playerType);
-            
+
             Map<PlayerType, PlayerCards> pcMap = getGameModel().getPlayerCardsMap();
-            PlayerCards openCards = pcMap.get(getGameContext().getMyPlayerType());
+            PlayerCards openCards = pcMap.get(playerType);
             List<TreasureCard> open = openCards.getOpenCards();
-            int score = open.size();
-            
+            int score = open.size() - 1;
+
             Color color = Constants.COL_PIECE.get(playerType);
 
             JLabel namesAndCountsLabel = new JLabel(name + ": " + score);
