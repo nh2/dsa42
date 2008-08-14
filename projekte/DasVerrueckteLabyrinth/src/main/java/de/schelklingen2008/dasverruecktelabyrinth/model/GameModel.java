@@ -213,19 +213,24 @@ public class GameModel implements Serializable
     {
         if (walk)
         {
-            Player pPlayer = getPlayer(pPlayerType);
-            if (isLegalMove(x, y, pPlayer))
+            if (legalMovePossible() == true)
             {
-                pPlayer.setXKoordinate(x);
-                pPlayer.setYKoordinate(y);
-                placedOnSearchCard(pPlayer);
-                walk = false;
+                Player pPlayer = getPlayer(pPlayerType);
+                if (isLegalMove(x, y, pPlayer))
+                {
+                    pPlayer.setXKoordinate(x);
+                    pPlayer.setYKoordinate(y);
+                    placedOnSearchCard(pPlayer);
+                    walk = false;
+                }
+                if (walk == false)
+                {
+                    sLogger.fine("lolz pls ruf mich auf");
+                    changeTurnHolder();
+                }
             }
-            if (walk == false)
-            {
-                sLogger.fine("lolz pls ruf mich auf");
+            else
                 changeTurnHolder();
-            }
 
         }
 
