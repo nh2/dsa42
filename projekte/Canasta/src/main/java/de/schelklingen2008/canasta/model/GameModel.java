@@ -160,6 +160,75 @@ public class GameModel implements Serializable
         goOut();
     }
 
+    public void takeDiscard(Player player, int[] whichCards)
+    {
+        Card[] cards = player.getHand().getAll(whichCards);
+        takeDiscard(player, cards);
+    }
+
+    public void takeDiscard(Player player, Card[] cards)
+    {
+        if (!isTurnHolder(player)) return;
+        if (hasDrawn) return;
+
+        cards = Arrays.copyOf(cards, cards.length + 1);
+        cards[cards.length - 1] = discard.peek();
+
+        if (isMeldLegal(cards))
+        {
+            sLogger.info("Badaboom!");
+            CardStack cardStack = new CardStack();
+
+            for (Card card : cards)
+            {
+                cardStack.add(card);
+                player.getHand().remove(card);
+            }
+            discard.pop();
+
+            while (discard.size() > 0)
+            {
+                player.getHand().add(discard.pop());
+            }
+
+            discard.clear();
+
+            player.getOutlay().add(cardStack);
+            hasDrawn = true;
+        }
+        else
+        {
+            sLogger.info("Illegal Outlay!");
+        }
+    }
+
+    public void takeDiscard(Player player, Card[] cards, CardStack cardStack)
+    {
+        if (!isTurnHolder(player)) return;
+        if (hasDrawn) return;
+
+        Arrays.copyOf(cards, cards.length + 1);
+        cards[cards.length - 1] = discard.peek();
+
+        if (isMeldLegal(cards, cardStack))
+        {
+            for (Card card : cards)
+            {
+                cardStack.add(card);
+                player.getHand().remove(card);
+            }
+            discard.pop();
+
+            player.getHand().addAll(cardStack);
+            discard.clear();
+
+        }
+        else
+        {
+            sLogger.info("Illegal Outly!");
+        }
+    }
+
     public static boolean isFirstMeldLegal(Player player, Card[] cards)
     {
         int minScore = Constants.GAME_FIRST_MELD[0];
@@ -191,7 +260,18 @@ public class GameModel implements Serializable
             cardScore += getCardValue(card);
         }
 
+        sLogger.info("is " + cardScore + " and needs " + minScore);
+
         return cardScore >= minScore;
+    }
+
+    public static boolean isMeldLegal(Card[] cards)
+    {
+        if (cards.length <= 0) return false;
+
+        CardStack cardStack = new CardStack();
+        boolean isLegal = isMeldLegal(cards, cardStack);
+        return isLegal;
     }
 
     public static boolean isMeldLegal(Card[] cards, CardStack cardStack)
@@ -201,6 +281,11 @@ public class GameModel implements Serializable
         Rank rank = GameModel.getRank(cards);
         boolean isJokerCountOk = (Card.getJokerCount(cards) + cardStack.getJokerCount()) * 2 < cardStack.size()
                                                                                                + cards.length;
+
+        if (cardStack.size() == 0)
+        {
+            return isJokerCountOk;
+        }
 
         if (rank.isWildcard())
         {

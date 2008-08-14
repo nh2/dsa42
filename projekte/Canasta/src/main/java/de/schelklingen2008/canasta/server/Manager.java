@@ -81,6 +81,19 @@ public class Manager extends GameManager
         updateSharedState();
     }
 
+    public void takeDiscard(BodyObject client, int[] cardNumbers)
+    {
+        Player player = getPlayer(client);
+
+        if (player != gameModel.getPlayers()[gameModel.getTurnHolder()]) return;
+
+        sLogger.info("take Discard on Server: " + Arrays.toString(cardNumbers));
+
+        gameModel.takeDiscard(player, cardNumbers);
+
+        updateSharedState();
+    }
+
     public void addCardsToStack(BodyObject client, int[] selectedCardNumbers, int whichCardStack)
     {
         Player player = getPlayer(client);

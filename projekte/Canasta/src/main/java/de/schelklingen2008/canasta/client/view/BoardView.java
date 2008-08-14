@@ -103,11 +103,11 @@ public class BoardView extends JPanel implements GameChangeListener
                     sLogger.info("pressed CardStack " + area.getAreaNumber());
                     controller.cardStackClicked(getSelectedCardNumbers(), area.getAreaNumber());
                 }
-                // else if (area.getName().equals("NewOutlay"))
-                // {
-                // sLogger.info("pressed NewOutlay");
-                // controller.makeOutlay(getSelectedCardNumbers());
-                // }
+                else if (area.getName().equals("NewOutlay"))
+                {
+                    sLogger.info("pressed NewOutlay");
+                    controller.makeOutlay(getSelectedCardNumbers(), isDiscardSelected);
+                }
                 else if (area.getName().equals("Discard"))
                 {
                     /**
@@ -205,6 +205,12 @@ public class BoardView extends JPanel implements GameChangeListener
         final int hand_space = Constants.BOARD_WIDTH - Constants.HAND_BORDER - border * 2;
 
         double cardSpace = (double) hand_space / (double) cardCount;
+        int maxSpace = cardImage.getWidth() - Constants.MIN_CARD_OVERLAY;
+
+        if (cardSpace > maxSpace)
+        {
+            cardSpace = maxSpace;
+        }
 
         cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
 
@@ -242,6 +248,12 @@ public class BoardView extends JPanel implements GameChangeListener
         double cardSpace = (double) hand_space / (double) cardCount;
 
         cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+        int maxSpace = cardImage.getWidth() - Constants.MIN_CARD_OVERLAY;
+
+        if (cardSpace > maxSpace)
+        {
+            cardSpace = maxSpace;
+        }
 
         gfx.translate((border + cardImage.getHeight()), border);
         gfx.rotate(Math.PI / 2);
@@ -273,6 +285,12 @@ public class BoardView extends JPanel implements GameChangeListener
         double cardSpace = (double) hand_space / (double) cardCount;
 
         cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+        int maxSpace = cardImage.getWidth() - Constants.MIN_CARD_OVERLAY;
+
+        if (cardSpace > maxSpace)
+        {
+            cardSpace = maxSpace;
+        }
 
         int i = 0;
         for (Card card : hand)
@@ -301,6 +319,12 @@ public class BoardView extends JPanel implements GameChangeListener
         double cardSpace = (double) hand_space / (double) cardCount;
 
         cardSpace += (cardSpace - cardImage.getWidth()) / (cardCount - 1);
+        int maxSpace = cardImage.getWidth() - Constants.MIN_CARD_OVERLAY;
+
+        if (cardSpace > maxSpace)
+        {
+            cardSpace = maxSpace;
+        }
 
         gfx.translate((Constants.BOARD_WIDTH - border - cardImage.getHeight()), (Constants.BOARD_HEIGHT - border));
         gfx.rotate(-Math.PI / 2);

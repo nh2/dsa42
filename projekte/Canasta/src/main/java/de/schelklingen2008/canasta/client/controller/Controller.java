@@ -24,6 +24,7 @@ import com.threerings.util.MessageBundle;
 import de.schelklingen2008.canasta.client.Constants;
 import de.schelklingen2008.canasta.client.model.GameContext;
 import de.schelklingen2008.canasta.client.view.GamePanel;
+import de.schelklingen2008.canasta.model.Card;
 import de.schelklingen2008.canasta.model.GameModel;
 import de.schelklingen2008.canasta.model.Player;
 import de.schelklingen2008.canasta.transport.SharedState;
@@ -104,33 +105,26 @@ public class Controller extends GameController
 
     public void discardClicked(int[] selectedCardNumbers, boolean isDiscardSelected)
     {
-        if (gameContext.getGameModel().hasDrawn())
+        // discard card
+        if (!gameContext.isMyTurn())
         {
-            // discard card
-            if (!gameContext.isMyTurn())
-            {
-                sLogger.info("Ich bin nicht dran!");
-                return;
-            }
-
-            if (selectedCardNumbers.length != 1)
-            {
-                sLogger.info("Select exactly one card please!");
-                sLogger.info(Arrays.toString(selectedCardNumbers));
-                return;
-            }
-
-            sharedState.manager.invoke("discardCard", selectedCardNumbers[0]);
+            sLogger.info("Ich bin nicht dran!");
+            return;
         }
-        else
+
+        if (selectedCardNumbers.length != 1)
         {
-            // pick up pile
-
+            sLogger.info("Select exactly one card please!");
+            sLogger.info(Arrays.toString(selectedCardNumbers));
+            return;
         }
+
+        sharedState.manager.invoke("discardCard", selectedCardNumbers[0]);
     }
 
-    public void makeOutlay(int[] selectedCardNumbers)
+    public void makeOutlay(int[] selectedCardNumbers, boolean isDiscardSelected)
     {
+        sLogger.info("make Outlay");
         if (!gameContext.isMyTurn())
         {
             sLogger.info("Ich bin nicht dran!");
@@ -138,21 +132,57 @@ public class Controller extends GameController
         }
 
         Player player = getGameContext().getMyPlayer();
-        if (GameModel.getRank(player.getHand().getAll(selectedCardNumbers)) == null)
-        {
-            sLogger.info("cards in a cardstack must have the same rank!");
-            return;
-        }
 
-        getGameContext().getGameModel();
-        if (player.getOutlay().size() <= 0
-            && !GameModel.isFirstMeldLegal(player, player.getHand().getAll(selectedCardNumbers)))
-        {
-            sLogger.info("first meld not enough points!");
-            return;
-        }
+        Card[] cards = player.getHand().getAll(selectedCardNumbers);
 
-        sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
+        if (getGameContext().getGameModel().hasDrawn())
+        {
+            // outlay machen
+
+            if (GameModel.getRank(cards) == null)
+            {
+                sLogger.info("cards in a cardstack must have the same rank!");
+                return;
+            }
+
+            if (player.getOutlay().size() <= 0 && !GameModel.isFirstMeldLegal(player, cards))
+            {
+                sLogger.info("first meld not enough points!");
+                return;
+            }
+
+            sharedState.manager.invoke("makeOutlay", selectedCardNumbers);
+        }
+        else
+        {
+            // discard nehmen
+            if (!isDiscardSelected)
+            {
+                sLogger.info("draw card first!");
+                return;
+            }
+
+            cards = Arrays.copyOf(cards, cards.length + 1);
+            cards[cards.length - 1] = getGameContext().getGameModel().getDiscard().peek();
+
+            if (!GameModel.isMeldLegal(cards))
+            {
+                sLogger.info("impossible!");
+                return;
+            }
+
+            if (player.getOutlay().size() <= 0 && !GameModel.isFirstMeldLegal(player, cards))
+            {
+                sLogger.info("first meld not enough points!");
+                for (Card card : cards)
+                {
+                    sLogger.info(card.toString());
+                }
+
+                return;
+            }
+            sharedState.manager.invoke("takeDiscard", selectedCardNumbers);
+        }
     }
 
     public void cardStackClicked(int[] selectedCardNumbers, int whichCardStack)

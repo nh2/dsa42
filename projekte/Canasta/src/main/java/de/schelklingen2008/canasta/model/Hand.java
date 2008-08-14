@@ -1,6 +1,7 @@
 package de.schelklingen2008.canasta.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,6 +17,11 @@ public class Hand implements Iterable<Card>, Serializable
         super();
 
         cards = new LinkedList<Card>();
+    }
+
+    public boolean addAll(Collection<? extends Card> c)
+    {
+        return cards.addAll(c);
     }
 
     public boolean add(Card e)
