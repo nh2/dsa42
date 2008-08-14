@@ -186,7 +186,9 @@ public class PatternChecker
 
     public boolean straight(int pos, int length)
     {
+
         if (pos + length - 1 > 7) return false;
+
         if (length == 1) return true;
 
         // falls zwei aufeinanderfolgende Karten die gleiche Zahl haben
@@ -197,7 +199,9 @@ public class PatternChecker
 
         // falls die aufeinanderfolgenden karten nicht die gleiche Zahl haben
         if (nextValue != thisValue + 1) return false;
+
         if (straight(pos + 1, length - 1)) return true;
+
         return false;
         // falls die nächste Karte genau um eins höher ist und es danach mit der Straße weitergeht
     }

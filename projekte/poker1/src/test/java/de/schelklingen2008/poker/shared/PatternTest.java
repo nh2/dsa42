@@ -101,6 +101,21 @@ public class PatternTest extends TestCase
 
     }
 
+    public List<Card> fill7(List<Card> cards)
+    {
+
+        cards.add(new Card(3, 1));
+        cards.add(new Card(1, 1));
+        cards.add(new Card(2, 3));
+        cards.add(new Card(2, 4));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(1, 5));
+        cards.add(new Card(3, 6));
+
+        return cards;
+
+    }
+
     // public void output(List<Card> list, PatternChecker checker)
     // {
     // list = PatternChecker.sort(list);
@@ -122,6 +137,7 @@ public class PatternTest extends TestCase
     {
 
         System.out.println("Paar: " + checker.isPair());
+        System.out.println("Doppelpaar: " + checker.isTwoPair());
         System.out.println("Drilling: " + checker.isThreeOfAKind());
         System.out.println("Straﬂe: " + checker.isStraight());
         System.out.println("Flush: " + checker.isFlush());
@@ -155,6 +171,20 @@ public class PatternTest extends TestCase
         ueberpruefung(checker);
     }
 
+    public void test4(List<Card> cardList, PatternChecker checker)
+    {
+
+        cardList.clear();
+        fill7(cardList);
+        cardList = PatternChecker.sort(cardList);
+        for (Iterator iterator = cardList.iterator(); iterator.hasNext();)
+        {
+            Card card = (Card) iterator.next();
+            System.out.println(card.getName());
+        }
+        ueberpruefung(checker);
+    }
+
     public void testHaupt()
     {
         List<Card> cardList = new ArrayList<Card>();
@@ -167,8 +197,9 @@ public class PatternTest extends TestCase
         // System.out.println(checker.isPair());
         // cardList = fill3(cardList);
         // assertTrue(checker.isFlush());
-        test2(cardList, checker);
-        test3(cardList, checker);
+        // test2(cardList, checker);
+        // test3(cardList, checker);
+        test4(cardList, checker);
 
         List<Card> cards = new ArrayList<Card>();
         cards.addAll(cardList);
