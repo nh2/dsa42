@@ -169,36 +169,36 @@ public class GameModel implements Serializable
 
     private void initCountrys()
     {
-        c[0] = new Country("Island", 0, 90, 160, 255, 255, 0);
-        c[1] = new Country("Irland", 1, 128, 498, 216, 230, 40);
-        c[2] = new Country("Groﬂbritannien", 2, 210, 518, 248, 199, 5);
-        c[3] = new Country("Norwegen", 3, 378, 307, 74, 37, 0);
-        c[4] = new Country("Finnland", 4, 578, 253, 199, 98, 31);
-        c[5] = new Country("Schweden", 5, 467, 346, 128, 128, 0);
-        c[6] = new Country("D‰nemark", 6, 383, 439, 128, 64, 0);
-        c[7] = new Country("Russland", 7, 822, 336, 0, 255, 128);
-        c[8] = new Country("Estland", 8, 607, 351, 0, 255, 0);
-        c[9] = new Country("Lettland", 9, 598, 403, 0, 64, 0);
-        c[10] = new Country("Litauen", 10, 595, 444, 18, 180, 22);
-        c[11] = new Country("Weiﬂrussland", 11, 660, 485, 128, 255, 0);
+        c[0] = new Country("Iceland", 0, 90, 160, 255, 255, 0);
+        c[1] = new Country("Ireland", 1, 128, 498, 216, 230, 40);
+        c[2] = new Country("Great Britain", 2, 210, 518, 248, 199, 5);
+        c[3] = new Country("Norway", 3, 378, 307, 74, 37, 0);
+        c[4] = new Country("Finland", 4, 578, 253, 199, 98, 31);
+        c[5] = new Country("Sweden", 5, 467, 346, 128, 128, 0);
+        c[6] = new Country("Denmark", 6, 383, 439, 128, 64, 0);
+        c[7] = new Country("Russia", 7, 822, 336, 0, 255, 128);
+        c[8] = new Country("Estonia", 8, 607, 351, 0, 255, 0);
+        c[9] = new Country("Latvia", 9, 598, 403, 0, 64, 0);
+        c[10] = new Country("Lithuania", 10, 595, 444, 18, 180, 22);
+        c[11] = new Country("Belarus", 11, 660, 485, 128, 255, 0);
         c[12] = new Country("Ukraine", 12, 710, 562, 0, 136, 45);
-        c[13] = new Country("Polen", 13, 527, 528, 1, 41, 12);
-        c[14] = new Country("Italien", 14, 400, 740, 255, 128, 128);
-        c[15] = new Country("Griechenland", 15, 652, 848, 255, 0, 255);
-        c[16] = new Country("Jugoslawien", 16, 546, 732, 255, 0, 128);
-        c[17] = new Country("Albanien", 17, 605, 819, 128, 0, 255);
-        c[18] = new Country("Bulgarien", 18, 652, 672, 255, 128, 255);
-        c[19] = new Country("Rum‰nien", 19, 688, 758, 128, 0, 128);
-        c[20] = new Country("Portugal", 30, 25, 803, 100, 2, 2);
-        c[21] = new Country("Frankreich", 21, 247, 674, 234, 67, 11);
-        c[22] = new Country("Spanien", 22, 113, 826, 234, 0, 11);
+        c[13] = new Country("Poland", 13, 527, 528, 1, 41, 12);
+        c[14] = new Country("Italy", 14, 400, 740, 255, 128, 128);
+        c[15] = new Country("Greece", 15, 652, 848, 255, 0, 255);
+        c[16] = new Country("Yugoslavia", 16, 546, 732, 255, 0, 128);
+        c[17] = new Country("Albania", 17, 605, 819, 128, 0, 255);
+        c[18] = new Country("Bulgaria", 18, 652, 672, 255, 128, 255);
+        c[19] = new Country("Rumania", 19, 688, 758, 128, 0, 128);
+        c[20] = new Country("Portugal", 30, 45, 803, 100, 2, 2);
+        c[21] = new Country("France", 21, 247, 674, 234, 67, 11);
+        c[22] = new Country("Spain", 22, 113, 826, 234, 0, 11);
         c[23] = new Country("BeNeLux", 23, 313, 549, 0, 0, 160);
-        c[24] = new Country("Deutschland", 24, 380, 564, 0, 128, 255);
-        c[25] = new Country("Tschechien", 25, 480, 610, 0, 64, 128);
-        c[26] = new Country("Schweiz", 26, 367, 685, 0, 196, 196);
-        c[27] = new Country("Slowakei", 27, 557, 633, 196, 196, 255);
-        c[28] = new Country("÷sterreich", 28, 465, 675, 13, 13, 255);
-        c[29] = new Country("Ungarn", 29, 550, 673, 44, 162, 224);
+        c[24] = new Country("Germany", 24, 380, 564, 0, 128, 255);
+        c[25] = new Country("Czech Republic", 25, 480, 610, 0, 64, 128);
+        c[26] = new Country("Switzerland", 26, 367, 685, 0, 196, 196);
+        c[27] = new Country("Slovakia", 27, 557, 633, 196, 196, 255);
+        c[28] = new Country("Austria", 28, 465, 675, 13, 13, 255);
+        c[29] = new Country("Hungary", 29, 550, 673, 44, 162, 224);
     }
 
     private void initNeigbours()
@@ -620,7 +620,7 @@ public class GameModel implements Serializable
         c.setUnits(c.getUnits() + 1);
         c.getOccupier().setUnitsToSet(c.getOccupier().getUnitsToSet() - 1);
 
-        history[0] = "Setzt eine Einheit auf " + c.getName();
+        history[0] = "Places a army on " + c.getName();
         history[1] = null;
 
     }
@@ -712,7 +712,7 @@ public class GameModel implements Serializable
             defender.getOccupier().setIsPlaying(false);
         }
         history[0] = "   " + attacker.getName() + "  -  " + defender.getName();
-        history[1] = "Verluste  " + attlostunits + "  -  " + deflostunits;
+        history[1] = "Casualties  " + attlostunits + "  -  " + deflostunits;
 
     }
 

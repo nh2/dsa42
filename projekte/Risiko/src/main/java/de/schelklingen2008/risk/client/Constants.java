@@ -7,7 +7,7 @@ public final class Constants
 {
 
     /** must correspond to the name of the message properties file */
-    public static final String BUNDLE_NAME       = "Risiko";
+    public static final String BUNDLE_NAME       = "Risk";
 
     /** names of message properties */
     public static final String MSG_BACK_TO_LOBBY = "m.back_to_lobby";
