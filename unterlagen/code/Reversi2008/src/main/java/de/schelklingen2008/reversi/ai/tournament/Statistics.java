@@ -1,4 +1,4 @@
-package de.schelklingen2008.reversi.ai.strategy;
+package de.schelklingen2008.reversi.ai.tournament;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
