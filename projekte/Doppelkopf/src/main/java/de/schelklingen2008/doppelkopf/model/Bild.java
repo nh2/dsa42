@@ -1,5 +1,8 @@
 package de.schelklingen2008.doppelkopf.model;
 
+/**
+ * Speichert die Bilder der Karten.
+ */
 public enum Bild
 {
     As(11), Zehn(10), Koenig(4), Dame(3), Bube(2), Neun(0);
