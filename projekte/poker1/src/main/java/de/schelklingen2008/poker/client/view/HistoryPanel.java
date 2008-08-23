@@ -39,8 +39,18 @@ public class HistoryPanel extends JPanel implements GameChangeListener
 
         for (String s : historyList)
         {
+            if (historyList.size() >= 25) historyList.remove(0);
             add(createLabel(s));
         }
+        if (historyList.size() < 25)
+        {
+            for (int i = historyList.size(); i < 25; i++)
+            {
+                add(createLabel(" "));
+            }
+        }
+        revalidate();
+        repaint();
     }
 
     private JLabel createLabel(String text)

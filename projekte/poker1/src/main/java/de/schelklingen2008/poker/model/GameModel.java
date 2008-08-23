@@ -533,7 +533,7 @@ public class GameModel implements Serializable
             setPlayerBet(callValue, playerIndex, false);
             setHighestBetAndBetterIndex();
             nextPlayer();
-            historyList.add(getActPlayer() + " has called.");
+            historyList.add(getActPlayer().getName() + " has called.");
         }
         else
             throw new IllegalStateException();
@@ -542,7 +542,7 @@ public class GameModel implements Serializable
     public void check(int playerIndex)
     {
         if (!mustCheckOrRaise(playerIndex)) throw new IllegalStateException();
-        historyList.add(getActPlayer() + " has checked.");
+        historyList.add(getActPlayer().getName() + " has checked.");
         nextPlayer();
     }
 
@@ -552,7 +552,7 @@ public class GameModel implements Serializable
         {
             setPlayerBet(raiseValue, playerIndex, true);
             setHighestBetAndBetterIndex();
-            historyList.add(getActPlayer() + " has raised.");
+            historyList.add(getActPlayer().getName() + " has raised.");
             nextPlayer();
         }
         else
@@ -569,7 +569,7 @@ public class GameModel implements Serializable
         {
             setPlayerBet(highestBet + reRaiseValue, playerIndex, true);
             setHighestBetAndBetterIndex();
-            historyList.add(getActPlayer() + " has reraised.");
+            historyList.add(getActPlayer().getName() + " has reraised.");
             nextPlayer();
         }
         else
@@ -581,7 +581,7 @@ public class GameModel implements Serializable
         if (playerIsTurnHolder(playerIndex))
         {
             getActPlayer().setStillIn(false);
-            historyList.add(getActPlayer() + " has folded.");
+            historyList.add(getActPlayer().getName() + " has folded.");
             nextPlayer();
         }
         else
@@ -597,16 +597,6 @@ public class GameModel implements Serializable
             playerList.add(new Player(names[i]));
         }
         initGame();
-    }
-
-    public void printCards()
-    {
-        for (Iterator<Card> iterator = cardList.iterator(); iterator.hasNext();)
-        {
-            Card card = iterator.next();
-            System.out.println(card.getSuit());
-            System.out.println(card.getValue());
-        }
     }
 
 }

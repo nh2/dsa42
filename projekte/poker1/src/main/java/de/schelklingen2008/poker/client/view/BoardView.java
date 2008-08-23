@@ -283,7 +283,8 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + String.valueOf(model.getMinBet())
                                                                    + controller.getMessage(Constants.MSG_MAX)
                                                                    + String.valueOf(model.getMaxBet())
-                                                                   + controller.getMessage(Constants.MSG_EUROS));
+                                                                   + controller.getMessage(Constants.MSG_EUROS)
+                                                                   + ")");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
                 if (model.getMinBet() > getMyPlayer().getBalance()) controller.raiseButtonClicked(longBetrag);
@@ -324,7 +325,8 @@ public class BoardView extends JPanel implements GameChangeListener
                                                                    + String.valueOf(model.getMinBet())
                                                                    + controller.getMessage(Constants.MSG_MAX)
                                                                    + String.valueOf(model.getMaxBet())
-                                                                   + controller.getMessage(Constants.MSG_EUROS));
+                                                                   + controller.getMessage(Constants.MSG_EUROS)
+                                                                   + ")");
                 int betrag = Integer.parseInt(s);
                 long longBetrag = betrag;
                 if (model.getMinBet() > getMyPlayer().getBalance()) controller.reRaiseButtonClicked(longBetrag);
@@ -390,6 +392,8 @@ public class BoardView extends JPanel implements GameChangeListener
             myButtonPanel.add(okayButton);
         }
         myButtonPanel.add(Box.createHorizontalStrut(5));
+        revalidate();
+        repaint();
     }
 
     private JLabel createLabel(String text)
@@ -413,16 +417,6 @@ public class BoardView extends JPanel implements GameChangeListener
     private int getMyIndex()
     {
         return getGameContext().getMyIndex();
-    }
-
-    private int getActIndex()
-    {
-        return getGameModel().getActPlayerIndex();
-    }
-
-    private Player getActPlayer()
-    {
-        return getGameModel().getPlayerList().get(getGameModel().getActPlayerIndex());
     }
 
     private Player getMyPlayer()
