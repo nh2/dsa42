@@ -139,7 +139,7 @@ public class GameModel implements Serializable
         temp.add(new Tile(false, true, false, true, TreasureCard.SCHMUCKKASTEN));
         temp.add(new Tile(false, true, false, true, null));
 
-        temp.add(new Tile(true, false, true, false, TreasureCard.SCHLÜSSEL));
+        temp.add(new Tile(true, false, true, false, TreasureCard.SCHLUESSEL));
         temp.add(new Tile(true, false, true, false, null));
         temp.add(new Tile(true, false, true, false, TreasureCard.SCHWERT));
         temp.add(new Tile(true, false, true, false, null));

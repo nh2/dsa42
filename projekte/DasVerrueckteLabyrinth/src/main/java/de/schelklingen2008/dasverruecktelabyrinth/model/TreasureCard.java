@@ -19,7 +19,7 @@ public enum TreasureCard
     MOTTE,
     RING,
     SCARABAEUS,
-    SCHLÜSSEL,
+    SCHLUESSEL,
     SCHMUCKKASTEN,
     SCHWERT,
     SMARAGD,

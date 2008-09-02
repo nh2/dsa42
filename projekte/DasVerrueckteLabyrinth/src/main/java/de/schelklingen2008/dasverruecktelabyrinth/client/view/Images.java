@@ -138,7 +138,7 @@ public class Images
         if (tc == TreasureCard.HELM) return helm;
         if (tc == TreasureCard.LEUCHTER) return leuchter;
         if (tc == TreasureCard.SCHMUCKKASTEN) return schmuckkasten;
-        if (tc == TreasureCard.SCHL‹SSEL) return schluessel;
+        if (tc == TreasureCard.SCHLUESSEL) return schluessel;
         if (tc == TreasureCard.SCHWERT) return schwert;
         if (tc == TreasureCard.GESPENST) return gespenst;
         throw new IllegalStateException("Unbekanntes kleines Bild " + tc);
@@ -168,7 +168,7 @@ public class Images
         if (tc == TreasureCard.HELM) return helm80;
         if (tc == TreasureCard.LEUCHTER) return leuchter80;
         if (tc == TreasureCard.SCHMUCKKASTEN) return schmuckkasten80;
-        if (tc == TreasureCard.SCHL‹SSEL) return schluessel80;
+        if (tc == TreasureCard.SCHLUESSEL) return schluessel80;
         if (tc == TreasureCard.SCHWERT) return schwert80;
         if (tc == TreasureCard.GESPENST) return gespenst80;
         throw new IllegalStateException("Unbekanntes groﬂes Bild " + tc);
