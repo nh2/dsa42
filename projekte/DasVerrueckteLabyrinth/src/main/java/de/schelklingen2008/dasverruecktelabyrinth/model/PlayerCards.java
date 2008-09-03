@@ -22,6 +22,7 @@ public class PlayerCards implements Serializable
 
     public List<TreasureCard> getHiddenCards()
     {
+    	if (hidden == null) return null;
         return hidden;
     }
 

@@ -56,18 +56,21 @@ public class TurnPanel extends JPanel implements GameChangeListener
 
         PlayerType turnHolder = getGameModel().getTurnHolder();
 
-        for (PlayerType playerType : PlayerType.values())
+        for (int i = 0; i < getGameModel().getPlayers().size(); i++)
         {
+        	PlayerType playerType = PlayerType.valueOf(i);
             JLabel turnHolderLabel = new JLabel();
             turnHolderLabel.setForeground(Color.BLACK);
             if (playerType.equals(turnHolder)) turnHolderLabel.setIcon(ICON_TURN);
             add(turnHolderLabel, turnHolderConstraints);
 
             String name = getGameModel().getName(playerType);
+            
+            int neededTCs = getGameModel().getHiddenCards(playerType).size();
 
             Color color = Constants.COL_PIECE.get(playerType);
 
-            JLabel namesLabel = new JLabel(name);
+            JLabel namesLabel = new JLabel(name + " sucht noch " + neededTCs + " SchŠtze.");
             namesLabel.setIcon(new ShapeIcon(CIRCLE, color, null));
             add(namesLabel, namesConstraints);
         }

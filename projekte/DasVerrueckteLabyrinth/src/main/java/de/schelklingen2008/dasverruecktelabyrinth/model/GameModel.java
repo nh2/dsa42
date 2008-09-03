@@ -687,6 +687,16 @@ public class GameModel implements Serializable
         if (p == null) return null;
         return p.getName();
     }
+    
+    public List<TreasureCard> getHiddenCards(PlayerType playerType)
+    {
+    	Player p = getPlayer(playerType);
+    	if (p == null) return null;
+    	
+		List<TreasureCard> neededTCs = playerCardsMap.get(playerType).getHiddenCards();		
+
+    	return neededTCs;
+    }
 
     public Collection<Player> getPlayers()
     {
