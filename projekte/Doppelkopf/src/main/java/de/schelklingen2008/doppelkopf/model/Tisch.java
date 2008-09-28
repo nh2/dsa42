@@ -10,7 +10,9 @@ import java.util.Stack;
 
 public class Tisch implements Serializable
 {
-
+	public static final int SONDERVERTEILUNG_NONE		= 0;
+	public static final int SONDERVERTEILUNG_HOCHZEIT	= 1;
+	
     private List<Karte>   mitte;
     private List<Spieler> mittenSpieler;
     private Spieler       anDerReihe;
@@ -21,6 +23,11 @@ public class Tisch implements Serializable
     public Spieler getHochzeitSpieler()
     {
         return hochzeitSpieler;
+    }
+    
+    public void unsetHochzeitSpieler() 
+    {
+    	hochzeitSpieler = null;
     }
 
     public SpielerListe getSpielerliste()
@@ -46,7 +53,7 @@ public class Tisch implements Serializable
         anDerReihe = spielerliste.getAnDerReihe();
     }
 
-    public void gibKarten()
+    public void gibKarten(int SONDERVERTEILUNG)
     {
         // TODO Spielerkarten leeren!
         for (Spieler p : spielerliste)
@@ -58,14 +65,49 @@ public class Tisch implements Serializable
             System.out.println(k.toString());
 
         // Karten verteilen
+        switch (SONDERVERTEILUNG) {
+			case SONDERVERTEILUNG_HOCHZEIT:
+				verteileKartenHochzeit(stapel);
+				break;
+			default:
+				verteileKartenNormal(stapel);
+				break;
+		}
 
+        teileTeamsZu();
+    }
+
+    private void verteileKartenNormal(Stack<Karte> stapel) {
         while (!stapel.isEmpty())
         {
             anDerReihe.getBlatt().add(stapel.pop());
             anDerReihe = spielerliste.next();
         }
+    }
+    
+    private void verteileKartenHochzeit(Stack<Karte> stapel) {
 
-        teileTeamsZu();
+    	// Die beiden Kreuzdamen an den ersten Spieler verteilen
+    	for(int anz=1; anz<=2; anz++) {
+	    	int i=0;
+	    	for(Karte k : stapel)
+	    		if(k.farbe == Farbe.Kreuz && k.bild == Bild.Dame)
+	    			break;
+	    		else
+	    			i++;
+	    	
+	        anDerReihe.getBlatt().add(stapel.remove(i));
+    	}
+    	
+    	// Den anderen 3 Spielern jeweils 2 Karten geben
+    	anDerReihe = spielerliste.next();
+    	for(int anz=1; anz<=3; anz++) {
+            anDerReihe.getBlatt().add(stapel.pop());
+            anDerReihe = spielerliste.next();
+    	}
+    	
+    	// Die restlichen Karten normal verteilen
+    	verteileKartenNormal(stapel);
     }
 
     private void teileTeamsZu()

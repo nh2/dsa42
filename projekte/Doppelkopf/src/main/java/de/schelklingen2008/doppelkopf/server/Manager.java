@@ -90,6 +90,7 @@ public class Manager extends GameManager
         Spieler spieler = getPlayer(client);
 
         gameModel.hochzeitErsterFremderAngefordert(spieler);
+        updateSharedState();
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -52,6 +53,7 @@ public class ButtonPanel extends JPanel implements GameChangeListener
             public void actionPerformed(ActionEvent e)
             {
                 controller.ersterFremderButtonClicked();
+                hochzeitButton.setEnabled(false);
             }
         });
         add(hochzeitButton);
@@ -76,9 +78,10 @@ public class ButtonPanel extends JPanel implements GameChangeListener
         nachrichtenBox.setText(inhalt);
 
         // Hochzeitsbutton
-        hochzeitButton.setVisible(false);
         if (spiel.getTisch().getHochzeitSpieler() == ich)
-        	hochzeitButton.setVisible(true);;
+        	hochzeitButton.setVisible(true);
+        else
+        	hochzeitButton.setVisible(false);
     }
 
 }

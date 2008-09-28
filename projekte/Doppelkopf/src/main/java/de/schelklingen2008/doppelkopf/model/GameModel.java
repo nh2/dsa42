@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.tools.ant.types.LogLevel;
+
 import de.schelklingen2008.util.LoggerFactory;
 
 /**
@@ -14,7 +16,9 @@ import de.schelklingen2008.util.LoggerFactory;
 public class GameModel implements Serializable
 {
 
-    private static final Logger logger                   = LoggerFactory.create();
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger logger                   = LoggerFactory.create();
 
     private Tisch               tisch;
 
@@ -59,7 +63,7 @@ public class GameModel implements Serializable
         addNachricht("Neues Spiel.");
         if (rotieren) kommtRaus = spielerliste.next();
         tisch = new Tisch(spielerliste);
-        tisch.gibKarten();
+        tisch.gibKarten(Tisch.SONDERVERTEILUNG_HOCHZEIT);
 
         // Fünf oder mehr Neunen
         // TODO Fünf oder mehr Neunen testen
@@ -242,10 +246,10 @@ public class GameModel implements Serializable
                 tisch.getTeamRe().add(stichsieger);
                 stichsieger.team = Team.Re;
                 ersterFremderAngefordert = false;
-                Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
-                addNachricht(hochzeitSpieler + " hat " + stichsieger + " geheiratet. Herzlichen Glückwunsch.");
-                hochzeitSpieler = null;
-
+                logger.log(Level.INFO, tisch.getHochzeitSpieler() + " hat " + stichsieger + " geheiratet.");
+                addNachricht(tisch.getHochzeitSpieler() + " hat " + stichsieger + " geheiratet. Herzlichen Glückwunsch.");
+                ersterFremderAngefordert = false;
+                tisch.unsetHochzeitSpieler();
             }
         }
 
