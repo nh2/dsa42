@@ -40,7 +40,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
     private Controller        controller;
 
-    private Color             tischFarbe     = Color.decode("#00008800");
+    public static final Color tischFarbe     = Color.decode("#00008800");
     private Set<ZeichenKarte> karten         = new HashSet<ZeichenKarte>();
     private BufferedImage     rueckseite;
 
@@ -128,7 +128,7 @@ public class BoardView extends JPanel implements GameChangeListener
 
         // String gueltigMeldung = "Zug ist ";
         // if (!gueltig) gueltigMeldung += "nicht ";
-        // gueltigMeldung += "gültig.";
+        // gueltigMeldung += "gÃ¼ltig.";
         // JOptionPane.showMessageDialog(this, "Karte "
         // + klickKarte
         // + ": "

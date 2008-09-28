@@ -1,5 +1,5 @@
 Bedienregel OK
-Ermitteln, wem der Stich gehört OK
+Ermitteln, wem der Stich gehÃ¶rt OK
 zuteilen, rauskommen OK
 Tisch leeren OK
 Kartenwertigkeit OK
@@ -8,31 +8,4 @@ Spiel beendet / Neues Spiel
 Punkteliste
 
 View:
-Tischplätze der Mitte zuordnen
-
-sarah
-niklas
-dick
-doof
-
-* sarah Kreuz As
-niklas Herz Neun
-dick Kreuz As
-doof Herz As
-
-* sarah Pik Bube
-niklas Karo As
-dick Herz König
-doof Herz Neun
-
-* sarah Herz Bube
-niklas Pik Bube
-dick Karo Neun
-doof Kreuz Zehn
-
-* niklas Herz As
-dick Pik Neun
-doof Herz König
-sarah Kreuz König
-
-* sarah
+TischplÃ¤tze der Mitte zuordnen

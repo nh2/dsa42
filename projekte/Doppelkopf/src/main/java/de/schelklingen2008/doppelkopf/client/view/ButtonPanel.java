@@ -1,10 +1,14 @@
 package de.schelklingen2008.doppelkopf.client.view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,14 +31,21 @@ public class ButtonPanel extends JPanel implements GameChangeListener
 
     public ButtonPanel(Controller pController)
     {
-
+    	this.setBackground(BoardView.tischFarbe);
+    	this.setLayout(new FlowLayout());
+    	
         controller = pController;
         pController.addChangeListener(this);
 
+        nachrichtenBox.setEditable(false);
+        nachrichtenBox.setBackground(Color.decode("#0000AA00"));
+        
         scroller = new JScrollPane();
+        scroller.setPreferredSize(new Dimension(500, 80));
         scroller.setViewportView(nachrichtenBox);
 
         hochzeitButton = new JButton("Der erste Fremde");
+        hochzeitButton.setVisible(false);
         hochzeitButton.addActionListener(new ActionListener()
         {
 
@@ -43,8 +54,8 @@ public class ButtonPanel extends JPanel implements GameChangeListener
                 controller.ersterFremderButtonClicked();
             }
         });
+        add(hochzeitButton);
         add(scroller);
-
         setPreferredSize(new Dimension(800, 100));
 
     }
@@ -65,8 +76,9 @@ public class ButtonPanel extends JPanel implements GameChangeListener
         nachrichtenBox.setText(inhalt);
 
         // Hochzeitsbutton
-        remove(hochzeitButton);
-        if (spiel.getTisch().getHochzeitSpieler() == ich) add(hochzeitButton);
+        hochzeitButton.setVisible(false);
+        if (spiel.getTisch().getHochzeitSpieler() == ich)
+        	hochzeitButton.setVisible(true);;
     }
 
 }

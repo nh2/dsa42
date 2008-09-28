@@ -41,15 +41,13 @@ public class GameModel implements Serializable
 
     public GameModel(String[] spielerNamen)
     {
-        if (spielerNamen.length != 4) throw new RuntimeException("Falsche Spieleranzahl für Doppelkopf");
+        if (spielerNamen.length != 4) throw new RuntimeException("Falsche Spieleranzahl fÃ¼r Doppelkopf");
 
-        // Spieler hinzufügen
+        // Spieler hinzufÃ¼gen
         for (String spielername : spielerNamen)
             spielerliste.add(new Spieler(spielername));
 
         logger.log(Level.INFO, spielerliste.toString());
-
-        addNachricht("Neues Spiel.");
 
         // Spiel starten
         neuesSpiel(true);
@@ -58,12 +56,13 @@ public class GameModel implements Serializable
     private void neuesSpiel(boolean rotieren)
     {
         logger.log(Level.INFO, "Starte neues Spiel.");
+        addNachricht("Neues Spiel.");
         if (rotieren) kommtRaus = spielerliste.next();
         tisch = new Tisch(spielerliste);
         tisch.gibKarten();
 
-        // Fünf oder mehr Neunen
-        // TODO Fünf oder mehr Neunen testen
+        // FÃ¼nf oder mehr Neunen
+        // TODO FÃ¼nf oder mehr Neunen testen
         for (Spieler p : spielerliste)
             if (hatFuenfNeunen(p))
             {
@@ -167,9 +166,9 @@ public class GameModel implements Serializable
         if (zugGueltig)
         {
 
-            // Zug ausführen
+            // Zug ausfÃ¼hren
             // addNachricht(spieler.toString() + " legte Karte " + karte.toString() + ".");
-            logger.log(Level.INFO, "Gültiger Zug. ");
+            logger.log(Level.INFO, "GÃ¼ltiger Zug. ");
             blatt.remove(karte);
             mitte.add(karte);
             tisch.getMittenspieler().add(spieler);
@@ -178,7 +177,7 @@ public class GameModel implements Serializable
 
             return;
         }
-        logger.log(Level.INFO, "Ungültiger Zug. ");
+        logger.log(Level.INFO, "UngÃ¼ltiger Zug. ");
     }
 
     public void stichFertigAktion()
@@ -205,13 +204,13 @@ public class GameModel implements Serializable
             addNachricht(stichsieger.toString() + " erzielte einen Doppelkopf!");
         }
 
-        // Füchse
-        // TODO Füchse testen
+        // FÃ¼chse
+        // TODO FÃ¼chse testen
         for (int i = 0; i < spielerliste.size(); i++)
         {
             if (mitte.get(i).farbe == Farbe.Karo && mitte.get(i).bild == Bild.As)
             {
-                // Bestimme, wem der Fuchs gehört
+                // Bestimme, wem der Fuchs gehÃ¶rt
                 Spieler fuchsspieler = tisch.getSpielerliste().get(i);
                 if (fuchsspieler.team != stichsieger.team)
                 {
@@ -244,7 +243,7 @@ public class GameModel implements Serializable
                 stichsieger.team = Team.Re;
                 ersterFremderAngefordert = false;
                 Spieler hochzeitSpieler = tisch.getHochzeitSpieler();
-                addNachricht(hochzeitSpieler + " hat " + stichsieger + " geheiratet. Herzlichen Glückwunsch.");
+                addNachricht(hochzeitSpieler + " hat " + stichsieger + " geheiratet. Herzlichen GlÃ¼ckwunsch.");
                 hochzeitSpieler = null;
 
             }
@@ -271,9 +270,9 @@ public class GameModel implements Serializable
             addNachricht("Spiel beendet.");
 
             if (tisch.refuchs == 1) addNachricht("Team Re hat einen Fuchs gefangen.");
-            if (tisch.refuchs == 2) addNachricht("Team Re hat zwei Füchse gefangen.");
+            if (tisch.refuchs == 2) addNachricht("Team Re hat zwei FÃ¼chse gefangen.");
             if (tisch.contrafuchs == 1) addNachricht("Team Contra hat einen Fuchs gefangen.");
-            if (tisch.contrafuchs == 2) addNachricht("Team Contra hat zwei Füchse gefangen.");
+            if (tisch.contrafuchs == 2) addNachricht("Team Contra hat zwei FÃ¼chse gefangen.");
 
             if (tisch.getTeamRe().size() == 1) // Solo
                 for (Spieler p : tisch.getTeamRe())
