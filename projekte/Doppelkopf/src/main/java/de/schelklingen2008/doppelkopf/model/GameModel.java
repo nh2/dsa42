@@ -244,6 +244,7 @@ public class GameModel implements Serializable
             if (stichsieger != tisch.getHochzeitSpieler())
             {
                 tisch.getTeamRe().add(stichsieger);
+                tisch.getTeamContra().remove(stichsieger);
                 stichsieger.team = Team.Re;
                 ersterFremderAngefordert = false;
                 logger.log(Level.INFO, tisch.getHochzeitSpieler() + " hat " + stichsieger + " geheiratet.");
