@@ -103,6 +103,7 @@ public class Tisch implements Serializable
     	anDerReihe = spielerliste.next();
     	for(int anz=1; anz<=3; anz++) {
             anDerReihe.getBlatt().add(stapel.pop());
+            anDerReihe.getBlatt().add(stapel.pop());
             anDerReihe = spielerliste.next();
     	}
     	
