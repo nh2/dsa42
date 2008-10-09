@@ -8,4 +8,4 @@ Spiel beendet / Neues Spiel
 Punkteliste
 
 View:
-Tischplätze der Mitte zuordnen OK
+Tischplätze der Mitte zuordnen OK 
