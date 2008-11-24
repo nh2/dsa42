@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Karte implements Serializable, Comparable<Karte>
 {
-
+	private static final long serialVersionUID = 1L;
+	
     public Farbe farbe;
     public Bild  bild;
 
@@ -61,7 +62,7 @@ public class Karte implements Serializable, Comparable<Karte>
             if (other.isTrumpf()) return -1;
         }
 
-        // Standard: nach Reihenfolge der Aufzählung vergleichen
+        // Standard: nach Reihenfolge der AufzÃ¤hlung vergleichen
         if (farbe != other.farbe)
         {
             return -farbe.compareTo(other.farbe);
@@ -87,7 +88,6 @@ public class Karte implements Serializable, Comparable<Karte>
         {
             if (stapel.get(i + 1).sticht(stapel.get(hoechste))) hoechste = i + 1;
         }
-        Karte k = stapel.get(hoechste);
         return stapel.get(hoechste);
     }
 

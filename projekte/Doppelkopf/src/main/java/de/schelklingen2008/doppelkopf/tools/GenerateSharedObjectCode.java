@@ -27,6 +27,7 @@ import com.threerings.presents.tools.SourceFile;
 /**
  * Generates necessary additional distributed object declarations and methods.
  */
+@SuppressWarnings("unchecked")
 public class GenerateSharedObjectCode
 {
 
@@ -96,7 +97,7 @@ public class GenerateSharedObjectCode
     }
 
     /** Processes a resolved distributed object class instance. */
-    private static void processObject(File source, Class oclass)
+	private static void processObject(File source, Class oclass)
     {
         if (!dObjectClass.isAssignableFrom(oclass) || dObjectClass.equals(oclass)) return;
         ArrayList<Field> flist = new ArrayList<Field>();

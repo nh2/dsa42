@@ -36,7 +36,9 @@ import de.schelklingen2008.util.LoggerFactory;
 public class BoardView extends JPanel implements GameChangeListener
 {
 
-    private Logger            logger         = LoggerFactory.create();
+	private static final long serialVersionUID = 1L;
+
+	private Logger            logger         = LoggerFactory.create();
 
     private Controller        controller;
 
@@ -123,7 +125,7 @@ public class BoardView extends JPanel implements GameChangeListener
         if (karteVonLinks >= ich.getBlatt().getKartenanzahl()) karteVonLinks = ich.getBlatt().getKartenanzahl() - 1;
         Karte klickKarte = ich.getBlatt().getKartenSortiert().get(karteVonLinks);
 
-        boolean gueltig = true;
+//        boolean gueltig = true;
         controller.karteClicked(klickKarte);
 
         // String gueltigMeldung = "Zug ist ";

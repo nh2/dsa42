@@ -14,7 +14,8 @@ import de.schelklingen2008.doppelkopf.client.view.BoardView;
  */
 public class BoardViewTest extends GameViewTest
 {
-
+	private static final long serialVersionUID = 1L;
+	
     public static void main(String[] args)
     {
         BoardViewTest test = new BoardViewTest();

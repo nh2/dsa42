@@ -15,7 +15,8 @@ import de.schelklingen2008.doppelkopf.model.Spieler;
  */
 public class TurnPanel extends JPanel implements GameChangeListener
 {
-
+	private static final long serialVersionUID = 1L;
+	
     private Controller controller;
 
     public TurnPanel(Controller controller)

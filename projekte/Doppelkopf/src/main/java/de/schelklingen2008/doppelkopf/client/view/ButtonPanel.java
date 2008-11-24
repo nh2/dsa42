@@ -1,6 +1,5 @@
 package de.schelklingen2008.doppelkopf.client.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,12 +19,13 @@ import de.schelklingen2008.doppelkopf.model.Spieler;
 
 public class ButtonPanel extends JPanel implements GameChangeListener
 {
-
+	private static final long serialVersionUID = 1L;
+	
     GameModel          spiel;
     private Controller controller;
-    JButton            hochzeitButton;
+    JButton            hochzeitButton, pingbutton;
+    JTextArea          nachrichtenBox;
     JScrollPane        scroller;
-    JTextArea          nachrichtenBox = new JTextArea();
     Spieler            ich;
 
     public ButtonPanel(Controller pController)
@@ -38,12 +36,16 @@ public class ButtonPanel extends JPanel implements GameChangeListener
         controller = pController;
         pController.addChangeListener(this);
 
+        nachrichtenBox = new JTextArea(5, 40);
+        nachrichtenBox.setLineWrap(true);
+        nachrichtenBox.setWrapStyleWord(true);
         nachrichtenBox.setEditable(false);
         nachrichtenBox.setBackground(Color.decode("#0000AA00"));
+        scroller = new JScrollPane(nachrichtenBox);
         
-        scroller = new JScrollPane();
-        scroller.setPreferredSize(new Dimension(500, 80));
-        scroller.setViewportView(nachrichtenBox);
+        
+//        scroller.setPreferredSize(new Dimension(500, 80));
+//        scroller.setViewportView(nachrichtenBox);
 
         hochzeitButton = new JButton("Der erste Fremde");
         hochzeitButton.setVisible(false);
@@ -57,6 +59,19 @@ public class ButtonPanel extends JPanel implements GameChangeListener
             }
         });
         add(hochzeitButton);
+        
+        pingbutton = new JButton("Ping");
+        pingbutton.setVisible(true);
+        pingbutton.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                controller.pingButtonClicked();
+            }
+        });
+        add(pingbutton);
+        
         add(scroller);
         setPreferredSize(new Dimension(800, 100));
 
@@ -76,7 +91,9 @@ public class ButtonPanel extends JPanel implements GameChangeListener
             inhalt += "\n";
         }
         nachrichtenBox.setText(inhalt);
+//        nachrichtenBox.repaint();
 
+        
         // Hochzeitsbutton
         if (spiel.getTisch().getHochzeitSpieler() == ich)
         	hochzeitButton.setVisible(true);

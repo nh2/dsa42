@@ -10,6 +10,8 @@ import java.util.Stack;
 
 public class Tisch implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	public static final int SONDERVERTEILUNG_NONE		= 0;
 	public static final int SONDERVERTEILUNG_HOCHZEIT	= 1;
 	

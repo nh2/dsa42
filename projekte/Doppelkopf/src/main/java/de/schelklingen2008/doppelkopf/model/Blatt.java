@@ -9,8 +9,9 @@ import java.util.Set;
 
 public class Blatt implements Serializable
 {
-
-    private Set<Karte> karten;
+	private static final long serialVersionUID = 1L;
+	
+	private Set<Karte> karten;
 
     public Blatt()
     {
@@ -43,7 +44,7 @@ public class Blatt implements Serializable
     }
 
     /**
-     * Erzeugt eine Kopie des Spielerblattes. Das gewährleistet, dass das Spielerblatt nicht direkt ge�ndert
+     * Erzeugt eine Kopie des Spielerblattes. Das gewÃ¤hrleistet, dass das Spielerblatt nicht direkt geändert
      * werden kann.
      * 
      * @return Kopie des Spielerblattes

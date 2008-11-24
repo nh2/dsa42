@@ -92,6 +92,12 @@ public class Manager extends GameManager
         gameModel.hochzeitErsterFremderAngefordert(spieler);
         updateSharedState();
     }
+    
+    public void ping(BodyObject client)
+    {
+        gameModel.addNachricht("ping");
+        updateSharedState();
+    }
 
     /**
      * Updates the shared state and thus send changes to all clients.

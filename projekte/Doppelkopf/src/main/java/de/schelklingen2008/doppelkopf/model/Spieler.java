@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Spieler implements Serializable
 {
-
+	private static final long serialVersionUID = 1L;
+	
     private String       name;
     private Blatt        blatt;
     private List<Karte>  gewinnstapel;

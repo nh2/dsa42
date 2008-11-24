@@ -32,7 +32,8 @@ import de.schelklingen2008.util.LoggerFactory;
 public class AIDirector implements GameEventListener
 {
 
-    private static final String AI_PREFIX       = "cc";
+    @SuppressWarnings("unused")
+	private static final String AI_PREFIX       = "cc";
 
     private static final Logger sLogger         = LoggerFactory.create();
 

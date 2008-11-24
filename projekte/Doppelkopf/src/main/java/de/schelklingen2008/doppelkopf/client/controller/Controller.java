@@ -30,6 +30,7 @@ import de.schelklingen2008.util.LoggerFactory;
 /**
  * Handles the client side of the game.
  */
+@SuppressWarnings("unchecked")
 public class Controller extends GameController
 {
 
@@ -168,5 +169,10 @@ public class Controller extends GameController
     public void ersterFremderButtonClicked()
     {
         sharedState.manager.invoke("hochzeitErsterFremder");
+    }
+    
+    public void pingButtonClicked()
+    {
+        sharedState.manager.invoke("ping");
     }
 }

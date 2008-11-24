@@ -25,7 +25,8 @@ import de.schelklingen2008.doppelkopf.client.controller.Controller;
  */
 public class GamePanel extends JPanel implements PlaceView
 {
-
+	private static final long serialVersionUID = 1L;
+	
     private class ActionListenerImplementation implements ActionListener
     {
 

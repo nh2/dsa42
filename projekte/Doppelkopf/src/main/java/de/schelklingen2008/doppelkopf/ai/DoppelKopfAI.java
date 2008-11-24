@@ -18,6 +18,7 @@ import de.schelklingen2008.doppelkopf.model.GameModel;
 import de.schelklingen2008.doppelkopf.transport.SharedState;
 import de.schelklingen2008.util.LoggerFactory;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class DoppelKopfAI extends Observable
 {
 
@@ -27,7 +28,7 @@ public class DoppelKopfAI extends Observable
 
     private static int                sScore        = 0;
 
-    private static int                sGamesPlayed  = 0;
+	private static int                sGamesPlayed  = 0;
 
     private final GameContext         gameContext;
 

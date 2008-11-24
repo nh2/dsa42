@@ -13,6 +13,7 @@ import de.schelklingen2008.util.LoggerFactory;
 /**
  * Maintains the rules and the state of the game.
  */
+@SuppressWarnings("unused")
 public class GameModel implements Serializable
 {
 
